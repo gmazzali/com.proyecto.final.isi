@@ -91,7 +91,7 @@ public class Rule extends Entity<Integer> {
 	 * @return El estado en el que se encuentra la regla.
 	 */
 	@Column(name = "ACTIVE",
-			columnDefinition = "bit",
+			columnDefinition = "boolean",
 			nullable = false)
 	public Boolean getActive() {
 		return this.active;

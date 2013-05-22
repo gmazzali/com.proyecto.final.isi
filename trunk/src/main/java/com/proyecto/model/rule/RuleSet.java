@@ -84,7 +84,7 @@ public class RuleSet extends Entity<Integer> {
 	 * @return El conjunto de las reglas.
 	 */
 	@ManyToMany
-	@JoinTable(name = "rules_in_sets",
+	@JoinTable(name = "RULES_IN_SETS",
 			joinColumns =
 				{ @JoinColumn(name = "id_rule_set") },
 			inverseJoinColumns =
