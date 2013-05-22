@@ -18,12 +18,15 @@ import com.common.util.model.Entity;
 @Table(name = "RULES")
 public class Rule extends Entity<Integer> {
 
+	private static final long serialVersionUID = -7668405363416480227L;
+
 	/**
 	 * @see Entity.Attributes
 	 */
 	public interface Attributes extends Entity.Attributes {
-		public static final String DESCRIPTION = "description";
-		public static final String RULE = "rule";
+		static final String DESCRIPTION = "description";
+		static final String RULE = "rule";
+		static final String ACTIVE = "active";
 	}
 
 	/**

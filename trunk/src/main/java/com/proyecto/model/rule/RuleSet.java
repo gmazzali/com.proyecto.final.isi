@@ -23,6 +23,17 @@ import com.common.util.model.Entity;
 @Table(name = "RULES_SETS")
 public class RuleSet extends Entity<Integer> {
 
+	private static final long serialVersionUID = 5095579130173244421L;
+
+	/**
+	 * @see Entity.Attributes
+	 */
+	public interface Attributes extends Entity.Attributes {
+		static final String DESCRIPTION = "description";
+		static final String RULES = "rules";
+		static final String ACTIVE = "active";
+	}
+
 	/**
 	 * La descripción del conjunto de las reglas.
 	 */
