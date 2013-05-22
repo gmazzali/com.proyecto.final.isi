@@ -61,12 +61,7 @@
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" depends-on="dataSource">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="classpath:com/proyecto/*" />
-		<property name="annotatedClasses">
-			<list>
-				<value>/com/proyecto/model/*</value>
-			</list>
-		</property>
+		<property name="packagesToScan" value="com.proyecto.*" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
@@ -77,5 +72,5 @@
 				<prop key="hibernate.hbm2ddl.auto">${jdbc.hbm_to_ddl}</prop>
 			</props>
 		</property>
-	</bean>
+	</bean>	
 </beans>
