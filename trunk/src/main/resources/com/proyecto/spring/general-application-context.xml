@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- La lectura de las clases autoescaneadas de los DAO y los servicios -->
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.proyecto.*" />
+
+	<!-- Cargamos las propiedades que tienen los mensaje del sistema -->
+
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>file:///${proyecto.configuration.dir}/messages/messages</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="holderMessage" class="com.common.util.holder.HolderMessage">
+		<property name="resources" ref="messageSource" />
+	</bean>
+
+	<!-- Cargamos las propiedades de los parámetros para el sistema -->
+
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>file:///${proyecto.configuration.dir}/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Cargamos la configuración del log4j -->
+
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>file:///${proyecto.configuration.dir}/log4j.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Creamos la conexión, la sessionFactory y el controlador de transacciones a la base de datos -->
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" depends-on="properties">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" depends-on="dataSource">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="classpath:com/proyecto/*" />
+		<property name="annotatedClasses">
+			<list>
+				<value>/com/proyecto/model/*</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
+				<prop key="hibernate.show_sql">${jdbc.show_sql}</prop>
+				<prop key="hibernate.format_sql">${jdbc.format_sql}</prop>
+				<prop key="hibernate.connection.pool_size">${jdbc.pool_size}</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">${jdbc.use_reflection_optimizer}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${jdbc.hbm_to_ddl}</prop>
+			</props>
+		</property>
+	</bean>
+</beans>
