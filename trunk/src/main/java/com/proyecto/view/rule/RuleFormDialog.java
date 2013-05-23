@@ -13,20 +13,41 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.common.util.annotations.View;
+import com.common.util.exception.CheckedException;
+import com.common.util.holder.HolderApplicationContext;
+import com.proyecto.model.rule.Rule;
+import com.proyecto.service.rule.RuleService;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@View
 public class RuleFormDialog extends JDialog {
 
+    @Autowired
+	private RuleService ruleService;
+    
+    private Rule rule = new Rule();
+	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField ruleTextField;
+	private JTextPane descriptionTextPane;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			RuleFormDialog dialog = new RuleFormDialog();
+
+			String[] files =
+				{ "/com/proyecto/spring/general-application-context.xml" };
+			HolderApplicationContext.initApplicationContext(files);
+			
+			RuleFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleFormDialog.class);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -51,7 +72,7 @@ public class RuleFormDialog extends JDialog {
 			contentPanel.add(descriptionLabel);
 		}
 		
-		JTextPane descriptionTextPane = new JTextPane();
+		descriptionTextPane = new JTextPane();
 		descriptionTextPane.setFont(new Font("Arial", Font.PLAIN, 11));
 		descriptionTextPane.setBounds(10, 36, 624, 58);
 		contentPanel.add(descriptionTextPane);
@@ -64,6 +85,7 @@ public class RuleFormDialog extends JDialog {
 		ruleTextField = new JTextField();
 		ruleTextField.setBounds(10, 141, 624, 20);
 		contentPanel.add(ruleTextField);
+		
 		ruleTextField.setColumns(10);
 		{
 			JPanel buttonPane = new JPanel();
@@ -74,7 +96,7 @@ public class RuleFormDialog extends JDialog {
 				okButton.setFont(new Font("Arial", Font.BOLD, 12));
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JOptionPane.showConfirmDialog(null, "Accion que va a cargar el grid padre");
+						saveRule();	
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -93,5 +115,22 @@ public class RuleFormDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	protected void saveRule() {
+		fromDialogToRule();
+		
+		try {
+		ruleService.save(rule);
+	} catch (CheckedException e) {
+		e.printStackTrace();
+	}
+		dispose();
+	}
+
+	private void fromDialogToRule() {
+		rule.setDescription(this.descriptionTextPane.getText());
+		rule.setRule(this.ruleTextField.getText());
+		rule.setActive(false);
 	}
 }

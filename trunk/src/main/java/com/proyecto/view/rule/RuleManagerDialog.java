@@ -2,34 +2,48 @@ package com.proyecto.view.rule;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JTable;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.common.util.annotations.View;
+import com.common.util.holder.HolderApplicationContext;
+
+@View
 public class RuleManagerDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable rulesTable;
+	
+	@Autowired
+	private EditRuleFormDialog editRuleFormDialog;
+	@Autowired
+	private RuleFormDialog RuleFormDialog;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			RuleManagerDialog dialog = new RuleManagerDialog();
+
+			String[] files =
+				{ "/com/proyecto/spring/general-application-context.xml" };
+			HolderApplicationContext.initApplicationContext(files);
+			
+			RuleManagerDialog dialog = HolderApplicationContext.getContext().getBean(RuleManagerDialog.class);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.editRuleFormDialog.fillList();
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,7 +62,7 @@ public class RuleManagerDialog extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(10, 40, 230, 29);
+		comboBox.setBounds(10, 40, 396, 29);
 		contentPanel.add(comboBox);
 		
 		JLabel setRuleLabel = new JLabel("Conjuntos");
@@ -59,8 +73,6 @@ public class RuleManagerDialog extends JDialog {
 		JButton newRuleButton = new JButton("Nuevo");
 		newRuleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				EditRuleFormDialog editRuleFormDialog = new EditRuleFormDialog();
 				editRuleFormDialog.setVisible(true);
 			}
 		});
@@ -95,8 +107,7 @@ public class RuleManagerDialog extends JDialog {
 		JButton btnNuevoRegla = new JButton("Nueva Regla");
 		btnNuevoRegla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RuleFormDialog ruleFormDialog = new RuleFormDialog();
-				ruleFormDialog.setVisible(true);
+				RuleFormDialog.setVisible(true);
 			}
 		});
 		btnNuevoRegla.setBounds(11, 5, 129, 23);
