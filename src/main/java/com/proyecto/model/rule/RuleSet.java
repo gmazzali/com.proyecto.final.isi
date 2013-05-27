@@ -1,7 +1,9 @@
 package com.proyecto.model.rule;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,7 +43,7 @@ public class RuleSet extends Entity<Integer> {
 	/**
 	 * Las reglas que pertenecen a este conjunto.
 	 */
-	private Set<Rule> rules;
+	private List<Rule> rules;
 	/**
 	 * El valor booleano que nos determina el estado en el que se encuentra el conjunto de reglas.
 	 */
@@ -51,6 +53,14 @@ public class RuleSet extends Entity<Integer> {
 	 * El constructor por omisión.
 	 */
 	public RuleSet() {
+		this.description = null;
+		this.rules = new ArrayList<Rule>();
+		this.active = false;
+	}
+
+	@Override
+	public String toString() {
+		return this.description;
 	}
 
 	/**
@@ -83,13 +93,13 @@ public class RuleSet extends Entity<Integer> {
 	 * 
 	 * @return El conjunto de las reglas.
 	 */
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "RULES_IN_SETS",
 			joinColumns =
 				{ @JoinColumn(name = "id_rule_set") },
 			inverseJoinColumns =
 				{ @JoinColumn(name = "id_rule") })
-	public Set<Rule> getRules() {
+	public List<Rule> getRules() {
 		return this.rules;
 	}
 
@@ -121,7 +131,7 @@ public class RuleSet extends Entity<Integer> {
 	 * @param rules
 	 *            El conjunto de las reglas que tenemos dentro.
 	 */
-	public void setRules(Set<Rule> rules) {
+	public void setRules(List<Rule> rules) {
 		this.rules = rules;
 	}
 
@@ -132,6 +142,11 @@ public class RuleSet extends Entity<Integer> {
 	 *            El valor booleano que le vamos a poner al conjunto de las reglas.
 	 */
 	public void setActive(Boolean active) {
-		this.active = active;
+		if (active != null) {
+			// for (Rule r : this.rules) {
+			// r.setActive(active);
+			// }
+			this.active = active;
+		}
 	}
 }

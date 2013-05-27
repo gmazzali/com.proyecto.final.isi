@@ -37,15 +37,18 @@ public class Rule extends Entity<Integer> {
 	 * La regla en si misma.
 	 */
 	private String rule;
-	/**
-	 * El valor booleano que nos dice si la regla va a estar activa o no.
-	 */
-	private Boolean active;
 
 	/**
 	 * Constructor por default de una regla.
 	 */
 	public Rule() {
+		this.description = null;
+		this.rule = null;
+	}
+
+	@Override
+	public String toString() {
+		return this.description;
 	}
 
 	/**
@@ -86,18 +89,6 @@ public class Rule extends Entity<Integer> {
 	}
 
 	/**
-	 * La función que retorna el estado en el que se encuentra la regla.
-	 * 
-	 * @return El estado en el que se encuentra la regla.
-	 */
-	@Column(name = "ACTIVE",
-			columnDefinition = "boolean",
-			nullable = false)
-	public Boolean getActive() {
-		return this.active;
-	}
-
-	/**
 	 * La función que setea la descripción de la regla.
 	 * 
 	 * @param description
@@ -115,15 +106,5 @@ public class Rule extends Entity<Integer> {
 	 */
 	public void setRule(String rule) {
 		this.rule = rule;
-	}
-
-	/**
-	 * La función que setea el estado en el que se encuentra la regla.
-	 * 
-	 * @param active
-	 *            El valor booleano que le vamos a poner a la regla.
-	 */
-	public void setActive(Boolean active) {
-		this.active = active;
 	}
 }

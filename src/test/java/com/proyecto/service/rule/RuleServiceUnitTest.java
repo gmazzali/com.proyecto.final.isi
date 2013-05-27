@@ -26,13 +26,12 @@ public class RuleServiceUnitTest {
 	}
 
 	@Test
-	public void test() {
+	public void pruebaDeCreacionDeRegla() {
 		// Creamos una nueva regla.
 		Rule rule = new Rule();
 
 		rule.setDescription("descripcion de prueba");
 		rule.setRule("regla de prueba");
-		rule.setActive(true);
 
 		RuleService service = HolderApplicationContext.getContext().getBean(RuleService.class);
 
@@ -44,7 +43,6 @@ public class RuleServiceUnitTest {
 
 		// Modificamos la regla.
 		rule.setDescription("otra descripcion");
-		rule.setActive(false);
 
 		try {
 			service.update(rule);

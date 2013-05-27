@@ -17,9 +17,11 @@ import com.proyecto.model.rule.RuleSet;
 @Service
 public class RuleSetServiceImpl extends GenericServiceImpl<RuleSet, Integer> implements RuleSetService {
 
+	@Override
 	public void validate(RuleSet entity) throws CheckedException {
 	}
 
+	@Override
 	@Autowired
 	public void setRuleSetDao(RuleSetDao ruleSetDao) {
 		this.setDao(ruleSetDao);
