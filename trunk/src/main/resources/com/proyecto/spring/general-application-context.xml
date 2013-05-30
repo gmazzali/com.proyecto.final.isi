@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<!-- La lectura de las clases autoescaneadas de los DAO y los servicios -->
+	<!-- La lectura de las clases auto-escaneadas de los DAO y los servicios -->
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.proyecto.*" />
@@ -24,7 +24,7 @@
 		</property>
 	</bean>
 
-	<bean id="holderMessage" class="com.common.util.holder.HolderMessage">
+	<bean id="holderMessage" class="com.common.util.holder.HolderMessage" lazy-init="false">
 		<property name="resources" ref="messageSource" />
 	</bean>
 

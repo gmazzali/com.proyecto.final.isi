@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -77,8 +78,11 @@ public class RuleSetFormDialog extends JDialog {
 		this.init();
 	}
 
+	/**
+	 * La función encargada
+	 */
 	public void init() {
-		this.setTitle("Grupos de Reglas");
+		this.setResizable(false);
 		this.setBounds(100, 100, 832, 428);
 		this.getContentPane().setLayout(new BorderLayout());
 
@@ -96,19 +100,27 @@ public class RuleSetFormDialog extends JDialog {
 		this.descriptionTextPane.setBounds(10, 36, 794, 58);
 		contentPanel.add(this.descriptionTextPane);
 
+		JScrollPane enableRulesScrollPane = new JScrollPane();
+		enableRulesScrollPane.setBounds(10, 130, 341, 216);
+		contentPanel.add(enableRulesScrollPane);
+
 		this.enableRuleModelList = new DefaultListModel<Rule>();
 		this.enableRulesList = new JList<Rule>();
 		this.enableRulesList.setModel(this.enableRuleModelList);
 		this.enableRulesList.setFont(new Font("Arial", Font.BOLD, 11));
-		this.enableRulesList.setBounds(10, 130, 341, 216);
-		contentPanel.add(this.enableRulesList);
+		enableRulesScrollPane.add(this.enableRulesList);
+		enableRulesScrollPane.setViewportView(this.enableRulesList);
+
+		JScrollPane disableRulesScrollPane = new JScrollPane();
+		disableRulesScrollPane.setBounds(463, 130, 341, 216);
+		contentPanel.add(disableRulesScrollPane);
 
 		this.disableRuleModelList = new DefaultListModel<Rule>();
 		this.disableRulesList = new JList<Rule>();
 		this.disableRulesList.setModel(this.disableRuleModelList);
 		this.disableRulesList.setFont(new Font("Arial", Font.BOLD, 11));
-		this.disableRulesList.setBounds(463, 130, 341, 216);
-		contentPanel.add(this.disableRulesList);
+		disableRulesScrollPane.add(this.disableRulesList);
+		disableRulesScrollPane.setViewportView(this.disableRulesList);
 
 		JLabel enableRuleLabel = new JLabel("Reglas Activas");
 		enableRuleLabel.setFont(new Font("Arial", Font.BOLD, 11));
@@ -120,7 +132,7 @@ public class RuleSetFormDialog extends JDialog {
 		disableRuleLabel.setBounds(571, 105, 125, 14);
 		contentPanel.add(disableRuleLabel);
 
-		JButton enableRuleButton = new JButton("Agregar >>");
+		JButton enableRuleButton = new JButton("<< Activar");
 		enableRuleButton.setFont(new Font("Arial", Font.BOLD, 11));
 		enableRuleButton.setBounds(361, 130, 92, 38);
 		enableRuleButton.addActionListener(new ActionListener() {
@@ -131,7 +143,7 @@ public class RuleSetFormDialog extends JDialog {
 		});
 		contentPanel.add(enableRuleButton);
 
-		JButton disableRuleButton = new JButton("Eliminar <<");
+		JButton disableRuleButton = new JButton("Quitar >>");
 		disableRuleButton.setFont(new Font("Arial", Font.BOLD, 11));
 		disableRuleButton.setBounds(361, 179, 92, 38);
 		disableRuleButton.addActionListener(new ActionListener() {
@@ -174,6 +186,8 @@ public class RuleSetFormDialog extends JDialog {
 	 * La función encargada de recuperar todas las reglas que tenemos dentro del sistema y cargarlas dentro de la lista de reglas desactivadas.
 	 */
 	private void loadDisableRules() {
+		this.enableRuleModelList.clear();
+		this.disableRuleModelList.clear();
 		try {
 			for (Rule r : this.ruleService.findAll()) {
 				this.disableRuleModelList.addElement(r);
@@ -237,8 +251,6 @@ public class RuleSetFormDialog extends JDialog {
 	 */
 	private void emptyField() {
 		this.descriptionTextPane.setText("");
-		this.enableRuleModelList.clear();
-		this.disableRuleModelList.clear();
 		this.loadDisableRules();
 	}
 
@@ -267,6 +279,7 @@ public class RuleSetFormDialog extends JDialog {
 
 		// El conjunto de las reglas.
 		if (this.enableRuleModelList.getSize() > 0) {
+			this.ruleSet.getRules().clear();
 			for (Object o : this.enableRuleModelList.toArray()) {
 				this.ruleSet.getRules().add((Rule) o);
 			}
@@ -306,13 +319,15 @@ public class RuleSetFormDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
 			String[] files =
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			RuleSetFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleSetFormDialog.class).createNewDialog();
+			RuleSet r = HolderApplicationContext.getContext().getBean(RuleSetService.class).findById(16);
+			RuleSetFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleSetFormDialog.class).createEditDialog(r);
+
+			// RuleSetFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleSetFormDialog.class).createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

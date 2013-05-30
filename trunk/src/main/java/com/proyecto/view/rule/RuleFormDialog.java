@@ -66,6 +66,7 @@ public class RuleFormDialog extends JDialog {
 	 * La función encargada de inicializar la ventana de edición de reglas.
 	 */
 	private void init() {
+		this.setResizable(false);
 		this.setBounds(100, 100, 660, 300);
 		this.getContentPane().setLayout(new BorderLayout());
 
@@ -105,7 +106,6 @@ public class RuleFormDialog extends JDialog {
 				RuleFormDialog.this.saveRule();
 			}
 		});
-		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		this.getRootPane().setDefaultButton(okButton);
 
@@ -117,7 +117,6 @@ public class RuleFormDialog extends JDialog {
 				RuleFormDialog.this.dispose();
 			}
 		});
-		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
 	}
 
@@ -209,7 +208,10 @@ public class RuleFormDialog extends JDialog {
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			RuleFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleFormDialog.class).createNewDialog();
+			Rule r = HolderApplicationContext.getContext().getBean(RuleService.class).findById(28);
+			RuleFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleFormDialog.class).createEditDialog(r);
+
+			// RuleFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleFormDialog.class).createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
