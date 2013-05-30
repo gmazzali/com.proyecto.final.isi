@@ -344,16 +344,32 @@ public class RuleManagerDialog extends JDialog {
 	 * La función para modificar una regla.
 	 */
 	private void modifyRule() {
-		// TODO falta lo de modificar una regla.
-		this.refresh();
+		if (this.ruleTable.getSelectedRow() != -1) {
+			Rule rule = this.ruleList.get(this.ruleTable.convertRowIndexToModel(this.ruleTable.getSelectedRow()));
+			RuleFormDialog dialog = this.ruleFormDialog.createEditDialog(rule);
+			dialog.setLocationRelativeTo(this);
+			dialog.setModal(true);
+			dialog.setVisible(true);
+			this.refresh();
+		}
 	}
 
 	/**
 	 * La función para eliminar una regla.
 	 */
 	private void deleteRule() {
-		// TODO Falta lo de borrar una regla.
-		this.refresh();
+		if (this.ruleTable.getSelectedRow() != -1) {
+			Rule rule = this.ruleList.get(this.ruleTable.convertRowIndexToModel(this.ruleTable.getSelectedRow()));
+			if (JOptionPane.showConfirmDialog(this, "Está seguro de borrar la regla \"" + rule.getDescription() + "\"?", "Confirmación",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				try {
+					this.ruleService.delete(rule);
+					this.refresh();
+				} catch (CheckedException ex) {
+					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
 	}
 
 	/**
