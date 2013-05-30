@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
-public class ruleSetListDialog extends JDialog {
+public class RuleSetListDialogs extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
@@ -22,7 +22,7 @@ public class ruleSetListDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ruleSetListDialog dialog = new ruleSetListDialog();
+			RuleSetListDialogs dialog = new RuleSetListDialogs();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -33,7 +33,7 @@ public class ruleSetListDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ruleSetListDialog() {
+	public RuleSetListDialogs() {
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setTitle("Lista de Conjutos");
 		setBounds(100, 100, 486, 405);
