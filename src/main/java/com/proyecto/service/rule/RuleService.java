@@ -13,7 +13,7 @@ import com.proyecto.model.rule.Rule;
 public interface RuleService extends GenericService<Rule, Integer> {
 
 	/**
-	 * La función encargada de setear el DAO para este servicio.
+	 * La función encargada de cargar el DAO para este servicio.
 	 * 
 	 * @param ruleDao
 	 *            El dao para el servicio de las reglas.

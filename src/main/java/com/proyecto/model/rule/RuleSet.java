@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -93,12 +94,14 @@ public class RuleSet extends Entity<Integer> {
 	 * 
 	 * @return El conjunto de las reglas.
 	 */
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade =
+		{ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH },
+			fetch = FetchType.LAZY)
 	@JoinTable(name = "RULES_IN_SETS",
 			joinColumns =
-				{ @JoinColumn(name = "id_rule_set") },
+				{ @JoinColumn(name = "ID_RULE_SET") },
 			inverseJoinColumns =
-				{ @JoinColumn(name = "id_rule") })
+				{ @JoinColumn(name = "ID_RULE") })
 	public List<Rule> getRules() {
 		return this.rules;
 	}
@@ -109,14 +112,14 @@ public class RuleSet extends Entity<Integer> {
 	 * @return El estado en el que se encuentra el conjunto de las reglas.
 	 */
 	@Column(name = "ACTIVE",
-			columnDefinition = "bit",
+			columnDefinition = "boolean",
 			nullable = false)
 	public Boolean getActive() {
 		return this.active;
 	}
 
 	/**
-	 * La función que permite setear la descripción del conjunto de reglas que tenemos.
+	 * La función que permite cargar la descripción del conjunto de reglas que tenemos.
 	 * 
 	 * @param description
 	 *            La descripción del conjunto de reglas.
@@ -126,7 +129,7 @@ public class RuleSet extends Entity<Integer> {
 	}
 
 	/**
-	 * La función que permite setear el conjunto de las reglas que tenemos.
+	 * La función que permite cargar el conjunto de las reglas que tenemos.
 	 * 
 	 * @param rules
 	 *            El conjunto de las reglas que tenemos dentro.
@@ -136,16 +139,13 @@ public class RuleSet extends Entity<Integer> {
 	}
 
 	/**
-	 * La función que setea el estado en el que se encuentra el conjunto de las reglas.
+	 * La función que carga el estado en el que se encuentra el conjunto de las reglas.
 	 * 
 	 * @param active
 	 *            El valor booleano que le vamos a poner al conjunto de las reglas.
 	 */
 	public void setActive(Boolean active) {
 		if (active != null) {
-			// for (Rule r : this.rules) {
-			// r.setActive(active);
-			// }
 			this.active = active;
 		}
 	}
