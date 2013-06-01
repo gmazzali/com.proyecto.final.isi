@@ -6,7 +6,7 @@ import com.common.util.dao.GenericDao;
 import com.common.util.model.Persistence;
 
 /**
- * La interfaz que define el DAO base para los demas DAOs del sistema de ontologias.
+ * La interfaz que define el DAO base para los demás DAOs del sistema de ontologías.
  * 
  * @author Guillermo Mazzali
  * @version 1.0

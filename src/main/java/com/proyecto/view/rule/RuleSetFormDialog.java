@@ -76,7 +76,7 @@ public class RuleSetFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada
+	 * La función encargada de crear la ventana de edición de conjuntos.
 	 */
 	public void init() {
 		this.setResizable(false);
@@ -156,29 +156,27 @@ public class RuleSetFormDialog extends JDialog {
 		contentPanel.add(disableRuleButton);
 
 		JButton cancelButton = new JButton("Cancelar");
-		cancelButton.setBounds(725, 357, 100, 30);
-		contentPanel.add(cancelButton);
 		cancelButton.setFont(new Font("Arial", Font.BOLD, 12));
+		cancelButton.setBounds(725, 357, 100, 30);
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleSetFormDialog.this.dispose();
 			}
 		});
-		cancelButton.setActionCommand("Cancel");
+		contentPanel.add(cancelButton);
 
-		JButton okButton = new JButton("Aceptar");
-		okButton.setBounds(615, 357, 100, 30);
-		contentPanel.add(okButton);
-		okButton.setFont(new Font("Arial", Font.BOLD, 12));
-		okButton.setActionCommand("OK");
-		okButton.addActionListener(new ActionListener() {
+		JButton commitButton = new JButton("Aceptar");
+		commitButton.setFont(new Font("Arial", Font.BOLD, 12));
+		commitButton.setBounds(615, 357, 100, 30);
+		commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleSetFormDialog.this.saveRuleSet();
 			}
 		});
-		this.getRootPane().setDefaultButton(okButton);
+		contentPanel.add(commitButton);
+		this.getRootPane().setDefaultButton(commitButton);
 	}
 
 	/**
@@ -215,7 +213,7 @@ public class RuleSetFormDialog extends JDialog {
 		int[] indexs = this.enableRulesList.getSelectedIndices();
 		if (indexs.length > 0) {
 			for (int i = 0; i < indexs.length; i++) {
-				Rule rule = this.enableRuleModelList.getElementAt(i);
+				Rule rule = this.enableRuleModelList.getElementAt(indexs[i]);
 				this.enableRuleModelList.removeElement(rule);
 				this.disableRuleModelList.addElement(rule);
 			}
@@ -230,7 +228,7 @@ public class RuleSetFormDialog extends JDialog {
 		int[] indexs = this.disableRulesList.getSelectedIndices();
 		if (indexs.length > 0) {
 			for (int i = 0; i < indexs.length; i++) {
-				Rule rule = this.disableRuleModelList.getElementAt(i);
+				Rule rule = this.disableRuleModelList.getElementAt(indexs[i]);
 				this.disableRuleModelList.removeElement(rule);
 				this.enableRuleModelList.addElement(rule);
 			}

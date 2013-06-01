@@ -86,7 +86,9 @@ public class RuleListDialog extends JDialog {
 		this.ruleList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				RuleListDialog.this.modifyRule();
+				if (e.getClickCount() == 2) {
+					RuleListDialog.this.modifyRule();
+				}
 			}
 		});
 		this.ruleList.setModel(this.ruleModelList);
