@@ -9,7 +9,7 @@ import com.common.util.dao.impl.HibernateGenericDaoImpl;
 import com.common.util.model.Persistence;
 
 /**
- * La clase que va a implementar el DAO base para todos los DAO del sistema de ontologias.
+ * La clase que va a implementar el DAO base para todos los DAO del sistema de ontologías.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -19,7 +19,8 @@ import com.common.util.model.Persistence;
  * @param <PK>
  *            La clase que va a hacer de identificador de la clase manejada.
  */
-public class ProyectoDaoImpl<E extends Persistence<PK>, PK extends Serializable> extends HibernateGenericDaoImpl<E, PK> implements ProyectoDao<E, PK> {
+public abstract class ProyectoDaoImpl<E extends Persistence<PK>, PK extends Serializable> extends HibernateGenericDaoImpl<E, PK> implements
+		ProyectoDao<E, PK> {
 
 	@Override
 	@Autowired

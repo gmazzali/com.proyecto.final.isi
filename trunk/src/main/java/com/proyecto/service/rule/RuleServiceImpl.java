@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.Service;
 import com.common.util.exception.CheckedException;
-import com.common.util.service.impl.GenericServiceImpl;
 import com.proyecto.dao.rule.RuleDao;
 import com.proyecto.model.rule.Rule;
+import com.proyecto.service.ProyectoServiceImpl;
 
 /**
  * La clase que nos permite implementar la interfaz de los servicios de las reglas que tenemos dentro del sistema.
@@ -15,13 +15,15 @@ import com.proyecto.model.rule.Rule;
  * @version 1.0
  */
 @Service
-public class RuleServiceImpl extends GenericServiceImpl<Rule, Integer> implements RuleService {
+public class RuleServiceImpl extends ProyectoServiceImpl<Rule, Integer> implements RuleService {
 
+	@Override
 	@Autowired
 	public void setRuleDao(RuleDao ruleDao) {
 		this.setDao(ruleDao);
 	}
 
+	@Override
 	public void validate(Rule entity) throws CheckedException {
 	}
 }

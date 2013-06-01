@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 
 /**
@@ -14,6 +15,7 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@Model
 @javax.persistence.Entity(name = "Rule")
 @Table(name = "RULES")
 public class Rule extends Entity<Integer> {
@@ -69,9 +71,7 @@ public class Rule extends Entity<Integer> {
 	 * 
 	 * @return La descripción de la regla.
 	 */
-	@Column(name = "DESCRIPTION",
-			columnDefinition = "varchar(100)",
-			nullable = false)
+	@Column(name = "DESCRIPTION", columnDefinition = "varchar(100)", nullable = false)
 	public String getDescription() {
 		return this.description;
 	}
@@ -81,9 +81,7 @@ public class Rule extends Entity<Integer> {
 	 * 
 	 * @return La regla en si misma.
 	 */
-	@Column(name = "RULE",
-			columnDefinition = "text",
-			nullable = false)
+	@Column(name = "RULE", columnDefinition = "text", nullable = false)
 	public String getRule() {
 		return this.rule;
 	}

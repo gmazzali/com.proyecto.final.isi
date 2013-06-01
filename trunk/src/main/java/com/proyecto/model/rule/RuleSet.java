@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 
 /**
@@ -22,6 +23,7 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@Model
 @javax.persistence.Entity(name = "RuleSet")
 @Table(name = "RULES_SETS")
 public class RuleSet extends Entity<Integer> {
@@ -82,9 +84,7 @@ public class RuleSet extends Entity<Integer> {
 	 * 
 	 * @return La descripción del conjunto de las reglas.
 	 */
-	@Column(name = "DESCRIPTION",
-			columnDefinition = "varchar(100)",
-			nullable = false)
+	@Column(name = "DESCRIPTION", columnDefinition = "varchar(100)", nullable = false)
 	public String getDescription() {
 		return this.description;
 	}
@@ -95,13 +95,10 @@ public class RuleSet extends Entity<Integer> {
 	 * @return El conjunto de las reglas.
 	 */
 	@ManyToMany(cascade =
-		{ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH },
-			fetch = FetchType.LAZY)
-	@JoinTable(name = "RULES_IN_SETS",
-			joinColumns =
-				{ @JoinColumn(name = "ID_RULE_SET") },
-			inverseJoinColumns =
-				{ @JoinColumn(name = "ID_RULE") })
+		{ CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@JoinTable(name = "RULES_IN_SETS", joinColumns =
+		{ @JoinColumn(name = "ID_RULE_SET") }, inverseJoinColumns =
+		{ @JoinColumn(name = "ID_RULE") })
 	public List<Rule> getRules() {
 		return this.rules;
 	}
@@ -111,9 +108,7 @@ public class RuleSet extends Entity<Integer> {
 	 * 
 	 * @return El estado en el que se encuentra el conjunto de las reglas.
 	 */
-	@Column(name = "ACTIVE",
-			columnDefinition = "boolean",
-			nullable = false)
+	@Column(name = "ACTIVE", columnDefinition = "boolean", nullable = false)
 	public Boolean getActive() {
 		return this.active;
 	}

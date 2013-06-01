@@ -29,7 +29,7 @@ public class RuleSetServiceUnitTest {
 	/**
 	 * Pruebas de creación.
 	 */
-	// @Test
+	@Test
 	public void pruebaDeCreacionDeConjuntoDeReglas() {
 		// Creamos un nuevo conjunto de reglas.
 		RuleSet ruleSet = new RuleSet();
@@ -71,7 +71,7 @@ public class RuleSetServiceUnitTest {
 		ruleSet.setDescription("descripcion de prueba con reglas");
 		ruleSet.setActive(true);
 
-		RuleSetService service = HolderApplicationContext.getContext().getBean(RuleSetService.class);
+		RuleSetService ruleSetService = HolderApplicationContext.getContext().getBean(RuleSetService.class);
 
 		// Creamos un par de reglas.
 		Rule rule = new Rule();
@@ -94,25 +94,46 @@ public class RuleSetServiceUnitTest {
 		rule.setRule("regla 4");
 		ruleSet.getRules().add(rule);
 
+		RuleService ruleService = HolderApplicationContext.getContext().getBean(RuleService.class);
+		Rule deleteRule = ruleSet.getRules().get(0);
+
 		try {
-			service.save(ruleSet);
+			for (Rule r : ruleSet.getRules()) {
+				ruleService.save(r);
+			}
+		} catch (CheckedException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			ruleSetService.save(ruleSet);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
 
 		// Modificamos el conjunto de regla.
 		ruleSet.setDescription("otra descripcion con reglas");
+		ruleSet.getRules().remove(deleteRule);
 		ruleSet.setActive(false);
 
 		try {
-			service.update(ruleSet);
+			ruleSetService.update(ruleSet);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
 
 		// La borramos.
 		try {
-			service.delete(ruleSet);
+			ruleSetService.delete(ruleSet);
+		} catch (CheckedException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			for (Rule r : ruleSet.getRules()) {
+				ruleService.delete(r);
+			}
+			ruleService.delete(deleteRule);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
