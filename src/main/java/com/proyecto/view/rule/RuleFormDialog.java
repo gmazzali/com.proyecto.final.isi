@@ -1,7 +1,7 @@
 package com.proyecto.view.rule;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,16 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.border.LineBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
-import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.service.rule.RuleService;
 import com.proyecto.util.Validator;
@@ -67,7 +64,7 @@ public class RuleFormDialog extends JDialog {
 	 */
 	private void init() {
 		this.setResizable(false);
-		this.setBounds(100, 100, 660, 300);
+		this.setBounds(100, 100, 694, 312);
 		this.getContentPane().setLayout(new BorderLayout());
 
 		JPanel contentPanel = new JPanel();
@@ -76,48 +73,51 @@ public class RuleFormDialog extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		JLabel descriptionLabel = new JLabel("Descripci\u00F3n");
-		descriptionLabel.setBounds(10, 11, 65, 14);
+		descriptionLabel.setBounds(10, 11, 162, 14);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		contentPanel.add(descriptionLabel);
 
 		this.descriptionTextPane = new JTextPane();
+		this.descriptionTextPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		this.descriptionTextPane.setBackground(Color.WHITE);
 		this.descriptionTextPane.setFont(new Font("Arial", Font.PLAIN, 11));
-		this.descriptionTextPane.setBounds(10, 36, 624, 60);
+		this.descriptionTextPane.setBounds(10, 37, 668, 60);
 		contentPanel.add(this.descriptionTextPane);
 
 		JLabel ruleLabel = new JLabel("Regla");
 		ruleLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleLabel.setBounds(10, 116, 46, 14);
+		ruleLabel.setBounds(10, 116, 162, 14);
 		contentPanel.add(ruleLabel);
 
 		this.ruleTextField = new JTextPane();
-		this.ruleTextField.setBounds(10, 141, 624, 60);
+		this.ruleTextField.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		this.ruleTextField.setBounds(10, 141, 668, 90);
 		contentPanel.add(this.ruleTextField);
 
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		this.getContentPane().add(buttonPane, BorderLayout.SOUTH);
-
-		JButton okButton = new JButton("Aceptar");
-		okButton.setFont(new Font("Arial", Font.BOLD, 12));
-		okButton.addActionListener(new ActionListener() {
+		JButton commitButton = new JButton("Aceptar");
+		commitButton.setLocation(468, 243);
+		commitButton.setFont(new Font("Arial", Font.BOLD, 12));
+		commitButton.setSize(100, 30);
+		commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleFormDialog.this.saveRule();
 			}
 		});
-		buttonPane.add(okButton);
-		this.getRootPane().setDefaultButton(okButton);
+		contentPanel.add(commitButton);
+		this.getRootPane().setDefaultButton(commitButton);
 
 		JButton cancelButton = new JButton("Cancelar");
+		cancelButton.setLocation(578, 243);
 		cancelButton.setFont(new Font("Arial", Font.BOLD, 12));
+		cancelButton.setSize(100, 30);
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				RuleFormDialog.this.dispose();
 			}
 		});
-		buttonPane.add(cancelButton);
+		contentPanel.add(cancelButton);
 	}
 
 	/**
@@ -146,7 +146,6 @@ public class RuleFormDialog extends JDialog {
 		} else {
 			throw new CheckedException("rule.description.empty");
 		}
-
 		// La regla en si misma.
 		if (Validator.ruleValidator(this.ruleTextField.getText())) {
 			this.rule.setRule(this.ruleTextField.getText());
@@ -195,27 +194,5 @@ public class RuleFormDialog extends JDialog {
 		this.rule = editRule;
 		this.fromRuleToDialog();
 		return this;
-	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-
-			UIManager.setLookAndFeel(new NimbusLookAndFeel());
-			String[] files =
-				{ "/com/proyecto/spring/general-application-context.xml" };
-			HolderApplicationContext.initApplicationContext(files);
-
-			Rule r = HolderApplicationContext.getContext().getBean(RuleService.class).findById(28);
-			RuleFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleFormDialog.class).createEditDialog(r);
-
-			// RuleFormDialog dialog = HolderApplicationContext.getContext().getBean(RuleFormDialog.class).createNewDialog();
-			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }
