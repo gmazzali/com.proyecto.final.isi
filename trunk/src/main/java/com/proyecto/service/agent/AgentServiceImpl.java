@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.Service;
 import com.common.util.exception.CheckedException;
+import com.common.util.model.filter.Filter;
 import com.proyecto.dao.agent.AgentDao;
 import com.proyecto.model.agent.Agent;
 import com.proyecto.service.ProyectoServiceImpl;
@@ -25,5 +26,16 @@ public class AgentServiceImpl extends ProyectoServiceImpl<Agent, Integer> implem
 
 	@Override
 	public void validate(Agent entity) throws CheckedException {
+	}
+
+	@Override
+	public Agent findByName(String agentName) {
+		Agent agent = null;
+		try {
+			Filter filter = Filter.like(Agent.Attributes.NAME, agentName);
+			agent = this.dao.findByFilter(filter).get(0);
+		} catch (Exception ex) {
+		}
+		return agent;
 	}
 }

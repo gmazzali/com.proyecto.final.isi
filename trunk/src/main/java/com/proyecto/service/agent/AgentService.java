@@ -19,4 +19,13 @@ public interface AgentService extends ProyectoService<Agent, Integer> {
 	 *            El DAO para los servicios de los agentes.
 	 */
 	public void setAgentDao(AgentDao agentDao);
+
+	/**
+	 * La función encargada de recuperar un agente dado su nombre de logueo.
+	 * 
+	 * @param agentName
+	 *            El nombre del agente que queremos recuperar.
+	 * @return El agente que corresponde con el nombre que recibimos, en caso de que no se encuentre retornamos un objeto NULL.
+	 */
+	public Agent findByName(String agentName);
 }

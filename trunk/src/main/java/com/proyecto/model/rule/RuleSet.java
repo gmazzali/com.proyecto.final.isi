@@ -24,8 +24,8 @@ import com.common.util.model.Entity;
  * @version 1.0
  */
 @Model
-@javax.persistence.Entity(name = "RuleSet")
 @Table(name = "RULES_SETS")
+@javax.persistence.Entity(name = "RuleSet")
 public class RuleSet extends Entity<Integer> {
 
 	private static final long serialVersionUID = 5095579130173244421L;
@@ -84,7 +84,7 @@ public class RuleSet extends Entity<Integer> {
 	 * 
 	 * @return La descripción del conjunto de las reglas.
 	 */
-	@Column(name = "DESCRIPTION", columnDefinition = "varchar(100)", nullable = false)
+	@Column(name = "DESCRIPTION", columnDefinition = "varchar(255)", nullable = false)
 	public String getDescription() {
 		return this.description;
 	}

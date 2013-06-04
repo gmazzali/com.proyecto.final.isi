@@ -24,8 +24,8 @@ import com.common.util.model.Entity;
  * @version 1.0
  */
 @Model
-@javax.persistence.Entity(name = "Agent")
 @Table(name = "AGENTS")
+@javax.persistence.Entity(name = "Agent")
 public class Agent extends Entity<Integer> {
 
 	private static final long serialVersionUID = -7071604791620647704L;
@@ -83,7 +83,7 @@ public class Agent extends Entity<Integer> {
 	 * 
 	 * @return El nombre de usuario del agente.
 	 */
-	@Column(name = "NAME", columnDefinition = "varchar(100)", nullable = false)
+	@Column(name = "NAME", columnDefinition = "varchar(50)", nullable = false)
 	public String getName() {
 		return this.name;
 	}
@@ -93,7 +93,7 @@ public class Agent extends Entity<Integer> {
 	 * 
 	 * @return El password del agente.
 	 */
-	@Column(name = "PASSWORD", columnDefinition = "varchar(100)", nullable = false)
+	@Column(name = "PASSWORD", columnDefinition = "varchar(50)", nullable = false)
 	public String getPassword() {
 		return this.password;
 	}

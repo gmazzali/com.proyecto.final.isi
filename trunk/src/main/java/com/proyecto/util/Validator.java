@@ -16,7 +16,7 @@ public class Validator {
 	 * @return TRUE en caso de que la descripción este acorde a los parámetros establecidos, en caso contrario retornar FALSE.
 	 */
 	public static Boolean descriptionValidator(String description) {
-		String pattern = "[\\sa-záéíóúñü]+";
+		String pattern = "[\\sa-záéíóúñü0-9]+";
 		return description == null ? false : description.toLowerCase().trim().matches(pattern);
 	}
 
@@ -28,7 +28,7 @@ public class Validator {
 	 * @return TRUE en caso de que la regla este acorde a los parámetros establecidos, en caso contrario retornar FALSE.
 	 */
 	public static Boolean ruleValidator(String rule) {
-		String pattern = "[\\sa-záéíóúñü]+";
+		String pattern = "[\\sa-záéíóúñü0-9]+";
 		return rule == null ? false : rule.toLowerCase().trim().matches(pattern);
 	}
 }

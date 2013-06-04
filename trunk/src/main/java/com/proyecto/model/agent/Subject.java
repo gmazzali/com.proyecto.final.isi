@@ -16,8 +16,8 @@ import com.common.util.model.Entity;
  * @version 1.0
  */
 @Model
-@javax.persistence.Entity(name = "Subject")
 @Table(name = "SUBJECTS")
+@javax.persistence.Entity(name = "Subject")
 public class Subject extends Entity<Integer> {
 
 	private static final long serialVersionUID = 4055617195283157310L;
@@ -64,7 +64,7 @@ public class Subject extends Entity<Integer> {
 	 * 
 	 * @return El nombre de la materia.
 	 */
-	@Column(name = "NAME", columnDefinition = "varchar(100)", nullable = false)
+	@Column(name = "NAME", columnDefinition = "varchar(50)", nullable = false)
 	public String getName() {
 		return this.name;
 	}

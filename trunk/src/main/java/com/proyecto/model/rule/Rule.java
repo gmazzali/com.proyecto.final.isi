@@ -16,8 +16,8 @@ import com.common.util.model.Entity;
  * @version 1.0
  */
 @Model
-@javax.persistence.Entity(name = "Rule")
 @Table(name = "RULES")
+@javax.persistence.Entity(name = "Rule")
 public class Rule extends Entity<Integer> {
 
 	private static final long serialVersionUID = -7668405363416480227L;
