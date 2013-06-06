@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,17 +45,30 @@ public class LoginDialog extends JDialog {
 	 */
 	@Autowired
 	private AccessControl accessControl;
+	/**
+	 * La ventana de selección de materia.
+	 */
+	@Autowired
+	private SelectSubjectDialog selectSubjectDialog;
 
 	/**
 	 * Los campos de nombre de agente y password.
 	 */
-	private final JTextField userNameTextField;
-	private final JPasswordField userPassField;
+	private JTextField userNameTextField;
+	private JPasswordField userPassField;
 
 	/**
-	 * Create the dialog.
+	 * Constructor del dialogo de login.
 	 */
 	public LoginDialog() {
+		super();
+		this.init();
+	}
+
+	/**
+	 * La función encargada de inicializar el dialogo de login.
+	 */
+	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
 		this.setTitle("Ingreso al Sistema");
@@ -130,6 +142,12 @@ public class LoginDialog extends JDialog {
 			if (agentPassword.equals(agent.getPassword())) {
 				this.accessControl.setAgentLogged(agent);
 				this.dispose();
+
+				// Abrimos la ventana de selección de materia.
+				JDialog dialog = this.selectSubjectDialog.createDialog();
+				dialog.setLocationRelativeTo(this);
+				dialog.setVisible(true);
+
 			} else {
 				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.password.invalid"), "Advertencia", JOptionPane.WARNING_MESSAGE);
 			}
@@ -149,10 +167,8 @@ public class LoginDialog extends JDialog {
 			HolderApplicationContext.initApplicationContext(files);
 
 			LoginDialog dialog = HolderApplicationContext.getContext().getBean(LoginDialog.class);
-			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			dialog.setLocationRelativeTo(null);
 			dialog.setVisible(true);
-
-			System.out.println(dialog.accessControl.getAgentLogged());
 
 		} catch (Exception e) {
 			e.printStackTrace();
