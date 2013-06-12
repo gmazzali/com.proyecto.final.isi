@@ -1,7 +1,8 @@
-package com.proyecto.dao.rule;
+package com.proyecto.dao.rule.impl;
 
 import com.common.util.annotations.Dao;
 import com.proyecto.dao.ProyectoDaoImpl;
+import com.proyecto.dao.rule.RuleDao;
 import com.proyecto.model.rule.Rule;
 
 /**

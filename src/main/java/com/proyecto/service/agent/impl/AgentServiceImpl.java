@@ -1,4 +1,4 @@
-package com.proyecto.service.agent;
+package com.proyecto.service.agent.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,6 +8,7 @@ import com.common.util.model.filter.Filter;
 import com.proyecto.dao.agent.AgentDao;
 import com.proyecto.model.agent.Agent;
 import com.proyecto.service.ProyectoServiceImpl;
+import com.proyecto.service.agent.AgentService;
 
 /**
  * La clase que implementa los servicios para los agentes que tenemos en el sistema.

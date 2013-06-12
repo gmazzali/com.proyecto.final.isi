@@ -1,4 +1,4 @@
-package com.proyecto.view.base;
+package com.proyecto.view.login;
 
 import java.awt.BorderLayout;
 import java.awt.Font;

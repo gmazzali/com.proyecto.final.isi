@@ -1,7 +1,8 @@
-package com.proyecto.dao.agent;
+package com.proyecto.dao.agent.impl;
 
 import com.common.util.annotations.Dao;
 import com.proyecto.dao.ProyectoDaoImpl;
+import com.proyecto.dao.agent.AgentDao;
 import com.proyecto.model.agent.Agent;
 
 /**

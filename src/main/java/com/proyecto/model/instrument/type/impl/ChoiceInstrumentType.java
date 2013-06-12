@@ -1,30 +1,25 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.proyecto.model.instrument.ChoiceInstrument;
-import com.proyecto.model.instrument.CompletionInstrument;
-import com.proyecto.model.instrument.CorrespondenceInstrument;
+import com.proyecto.model.instrument.MultipleChoiceInstrument;
+import com.proyecto.model.instrument.SingleChoiceInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
 
 /**
- * La enumeración que contiene los tipos de instrumentos que corresponde a los tipos de instrumentos formales objetivos.
+ * La enumeración que contiene los tipos de instrumentos que corresponde a los tipos de instrumentos formales objetivos de selección.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum ObjectiveInstrumentType implements InstrumentTypeInterface {
+public enum ChoiceInstrumentType implements InstrumentTypeInterface {
 
 	/**
-	 * El elemento que define un instrumento formal objetivo de selección.
+	 * El elemento que define un instrumento formal objetivo de selección simple.
 	 */
-	CHOICE(1, "Choice", ChoiceInstrument.class, null),
+	SINGLE_CHOICE(1, "Single choice", SingleChoiceInstrument.class, null),
 	/**
-	 * El elemento que define un instrumento formal objetivo de correspondencia.
+	 * El elemento que define un instrumento formal objetivo de selección multiple.
 	 */
-	CORRESPONDENCE(2, "Correspondence", CorrespondenceInstrument.class, null),
-	/**
-	 * El elemento que define un instrumento formal objetivo para completar.
-	 */
-	COMPLETION(3, "Completion", CompletionInstrument.class, null);
+	MULTIPLE_CHOICE(2, "Multiple choice", MultipleChoiceInstrument.class, null);
 
 	/**
 	 * El código del tipo de instrumento.
@@ -53,7 +48,7 @@ public enum ObjectiveInstrumentType implements InstrumentTypeInterface {
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private ObjectiveInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private ChoiceInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.code = code;
 		this.name = name;
 		this.instrumentClass = instrumentClass;
