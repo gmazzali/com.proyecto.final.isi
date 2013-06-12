@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
 import com.proyecto.security.AccessControl;
+import com.proyecto.view.login.SelectSubjectDialog;
 import com.proyecto.view.rule.RuleSetListDialog;
 
 /**

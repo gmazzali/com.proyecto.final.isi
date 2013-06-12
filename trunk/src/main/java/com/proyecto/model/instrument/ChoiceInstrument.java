@@ -8,7 +8,7 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ChoiceInstrument extends ObjectiveActivityInstrument {
+public abstract class ChoiceInstrument extends ObjectiveActivityInstrument {
 
 	private static final long serialVersionUID = 2343373861916155108L;
 

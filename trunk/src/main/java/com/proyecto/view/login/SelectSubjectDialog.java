@@ -1,4 +1,4 @@
-package com.proyecto.view.base;
+package com.proyecto.view.login;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -20,6 +20,7 @@ import com.common.util.annotations.View;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.agent.Subject;
 import com.proyecto.security.AccessControl;
+import com.proyecto.view.base.AssessmentManagerDialog;
 
 /**
  * La clase que crea la ventana donde van a desplegarse todas las materias a las que se encuentra inscrito el agente que esta logueado en el sistema

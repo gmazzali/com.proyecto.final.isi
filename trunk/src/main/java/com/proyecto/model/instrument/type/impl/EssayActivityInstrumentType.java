@@ -1,25 +1,25 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.proyecto.model.instrument.EssayActivityInstrument;
-import com.proyecto.model.instrument.ObjectiveActivityInstrument;
+import com.proyecto.model.instrument.RestrictedEssayActivityInstrument;
+import com.proyecto.model.instrument.UnrestrictedEssayActivityInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
 
 /**
- * La clase que define los instrumentos formales del sistema.
+ * La clase que define los instrumentos formales de ensayos del sistema.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum FormalInstrumentType implements InstrumentTypeInterface {
+public enum EssayActivityInstrumentType implements InstrumentTypeInterface {
 
 	/**
-	 * El elemento de los instrumentos formales objetivos.
+	 * El elemento de los instrumentos formales de ensayos restringidos.
 	 */
-	OBJETIVE_ACTIVITY(1, "Objetive activity", ObjectiveActivityInstrument.class, ObjectiveActivityInstrumentType.values()),
+	RESTRICTED_INSTRUMENT(1, "Restricted essay instrument", RestrictedEssayActivityInstrument.class, null),
 	/**
-	 * El elemento de los instrumentos formales de ensayos.
+	 * El elemento de los instrumentos formales de ensayos no restringidos.
 	 */
-	ESSAY_ACTIVITY(2, "Essay activity", EssayActivityInstrument.class, EssayActivityInstrumentType.values());
+	UNRESTRICTED_INSTRUMENT(2, "Unrestricted essay instrument", UnrestrictedEssayActivityInstrument.class, null);
 
 	/**
 	 * El código del tipo de instrumento.
@@ -48,7 +48,7 @@ public enum FormalInstrumentType implements InstrumentTypeInterface {
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private FormalInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private EssayActivityInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.code = code;
 		this.name = name;
 		this.instrumentClass = instrumentClass;

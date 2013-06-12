@@ -8,7 +8,7 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class RestrictedEssayInstrument extends EssayActivityInstrument {
+public class RestrictedEssayActivityInstrument extends EssayActivityInstrument {
 
 	private static final long serialVersionUID = -8910201315198314251L;
 

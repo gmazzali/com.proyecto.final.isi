@@ -1,4 +1,4 @@
-package com.proyecto.service.rule;
+package com.proyecto.service.rule.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -7,6 +7,7 @@ import com.common.util.exception.CheckedException;
 import com.proyecto.dao.rule.RuleDao;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.service.ProyectoServiceImpl;
+import com.proyecto.service.rule.RuleService;
 
 /**
  * La clase que nos permite implementar la interfaz de los servicios de las reglas que tenemos dentro del sistema.

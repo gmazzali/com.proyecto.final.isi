@@ -1,25 +1,30 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.proyecto.model.instrument.RestrictedEssayInstrument;
-import com.proyecto.model.instrument.UnrestrictedEssayInstrument;
+import com.proyecto.model.instrument.ChoiceInstrument;
+import com.proyecto.model.instrument.CompletionInstrument;
+import com.proyecto.model.instrument.CorrespondenceInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
 
 /**
- * La clase que define los instrumentos formales de ensayos del sistema.
+ * La enumeración que contiene los tipos de instrumentos que corresponde a los tipos de instrumentos formales objetivos.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum EssayInstrumentType implements InstrumentTypeInterface {
+public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 
 	/**
-	 * El elemento de los instrumentos formales de ensayos restringidos.
+	 * El elemento que define un instrumento formal objetivo de selección.
 	 */
-	RESTRICTED_INSTRUMENT(1, "Restricted instrument", RestrictedEssayInstrument.class, null),
+	CHOICE(1, "Choice", ChoiceInstrument.class, ChoiceInstrumentType.values()),
 	/**
-	 * El elemento de los instrumentos formales de ensayos no restringidos.
+	 * El elemento que define un instrumento formal objetivo de correspondencia.
 	 */
-	UNRESTRICTED_INSTRUMENT(2, "Unrestricted instrument", UnrestrictedEssayInstrument.class, null);
+	CORRESPONDENCE(2, "Correspondence", CorrespondenceInstrument.class, null),
+	/**
+	 * El elemento que define un instrumento formal objetivo para completar.
+	 */
+	COMPLETION(3, "Completion", CompletionInstrument.class, null);
 
 	/**
 	 * El código del tipo de instrumento.
@@ -48,7 +53,7 @@ public enum EssayInstrumentType implements InstrumentTypeInterface {
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private EssayInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private ObjectiveActivityInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.code = code;
 		this.name = name;
 		this.instrumentClass = instrumentClass;
