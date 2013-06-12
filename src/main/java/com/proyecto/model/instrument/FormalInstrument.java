@@ -1,48 +1,20 @@
 package com.proyecto.model.instrument;
 
+import com.common.util.model.Entity;
+
 /**
- * La clase que define los instrumentos formales del sistema.
+ * La clase que nos permite definir un instrumento formal dentro del sistema.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum FormalInstrument {
+public abstract class FormalInstrument extends Instrument {
+
+	private static final long serialVersionUID = 828654143742457389L;
 
 	/**
-	 * El elemento de los instrumentos formales de ensayos.
+	 * @see Entity.Attributes
 	 */
-	ESSAY_ACTIVITY("Essay activity"),
-	/**
-	 * El elemento de los instrumentos formales objetivos.
-	 */
-	OBJETIVE_ACTIVITY("Objetive activity");
-
-	/**
-	 * El nombre del instrumento formal.
-	 */
-	private String name;
-
-	/**
-	 * El constructor que recibe los parámetros.
-	 * 
-	 * @param name
-	 *            El nombre del instrumento formal.
-	 */
-	private FormalInstrument(String name) {
-		this.name = name;
-	}
-
-	@Override
-	public String toString() {
-		return this.name;
-	}
-
-	/**
-	 * La función que retorna el nombre del instrumento formal.
-	 * 
-	 * @return El nombre del instrumento formal.
-	 */
-	public String getName() {
-		return this.name;
+	public interface Attributes extends Instrument.Attributes {
 	}
 }
