@@ -46,11 +46,6 @@ public class Subject extends Entity<Integer> {
 		return this.name;
 	}
 
-	/**
-	 * La función encargada de retornar el id de una materia.
-	 * 
-	 * @return El identificador de una materia.
-	 */
 	@Id
 	@Column(name = "ID_SUBJECT")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

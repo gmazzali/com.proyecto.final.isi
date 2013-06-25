@@ -13,5 +13,5 @@ import com.proyecto.model.answer.Answer;
  * @param <E>
  *            La clase que vamos a utilizar como respuestas.
  */
-public abstract class AnswerDaoImpl<E extends Answer<?>> extends ProyectoDaoImpl<E, Integer> implements AnswerDao<E> {
+public abstract class AnswerDaoImpl<E extends Answer> extends ProyectoDaoImpl<E, Integer> implements AnswerDao<E> {
 }

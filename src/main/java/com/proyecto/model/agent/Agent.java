@@ -65,11 +65,6 @@ public class Agent extends Entity<Integer> {
 		return this.name;
 	}
 
-	/**
-	 * La función encargada de retornar el id de un agente.
-	 * 
-	 * @return El identificador de un agente.
-	 */
 	@Id
 	@Column(name = "ID_AGENT")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

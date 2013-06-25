@@ -12,5 +12,5 @@ import com.proyecto.service.ProyectoService;
  * @param <E>
  *            La clase que vamos a utilizar como respuestas.
  */
-public interface AnswerService<E extends Answer<?>> extends ProyectoService<E, Integer> {
+public interface AnswerService<E extends Answer> extends ProyectoService<E, Integer> {
 }

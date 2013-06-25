@@ -1,5 +1,8 @@
 package com.proyecto.model.instrument;
 
+import javax.persistence.Table;
+
+import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 
 /**
@@ -8,6 +11,9 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@Model
+@Table(name = "OBJECTIVE_INSTRUMENTS")
+@javax.persistence.Entity(name = "ObjectiveActivityInstrument")
 public abstract class ObjectiveActivityInstrument extends FormalInstrument {
 
 	private static final long serialVersionUID = -831835089600767398L;

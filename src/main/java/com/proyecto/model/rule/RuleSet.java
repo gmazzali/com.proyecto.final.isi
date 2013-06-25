@@ -66,11 +66,6 @@ public class RuleSet extends Entity<Integer> {
 		return this.description;
 	}
 
-	/**
-	 * La función encargada de retornar el id de un conjunto de reglas.
-	 * 
-	 * @return El identificador de un conjunto de reglas.
-	 */
 	@Id
 	@Column(name = "ID_RULE_SET")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
