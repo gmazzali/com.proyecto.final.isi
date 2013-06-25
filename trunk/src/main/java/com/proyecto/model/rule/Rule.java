@@ -53,11 +53,6 @@ public class Rule extends Entity<Integer> {
 		return this.description;
 	}
 
-	/**
-	 * La función que retorna el ID de la regla.
-	 * 
-	 * @return El identificador de la regla.
-	 */
 	@Id
 	@Column(name = "ID_RULE")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

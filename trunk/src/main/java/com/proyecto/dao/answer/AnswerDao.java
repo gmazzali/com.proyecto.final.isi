@@ -12,5 +12,5 @@ import com.proyecto.model.answer.Answer;
  * @param <E>
  *            La clase que vamos a utilizar como respuestas.
  */
-public interface AnswerDao<E extends Answer<?>> extends ProyectoDao<E, Integer> {
+public interface AnswerDao<E extends Answer> extends ProyectoDao<E, Integer> {
 }

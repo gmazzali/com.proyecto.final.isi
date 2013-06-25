@@ -8,7 +8,7 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class TrueFalseAnswer extends Answer<Boolean> {
+public class TrueFalseAnswer extends Answer {
 
 	private static final long serialVersionUID = -6324391499398899382L;
 

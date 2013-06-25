@@ -1,8 +1,15 @@
 package com.proyecto.model.answer;
 
-import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
+import com.proyecto.model.instrument.CorrespondenceInstrument;
 
 /**
  * La clase que nos permite definir una relación entre 2 frases para un ejercicio de correspondencia.
@@ -10,7 +17,10 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class RelationAnswer extends Answer<Serializable> {
+@Model
+@Table(name = "RELATIONS_ANSWERS")
+@javax.persistence.Entity(name = "RelationAnswer")
+public class RelationAnswer extends Answer {
 
 	private static final long serialVersionUID = -6324391499398899382L;
 
@@ -32,12 +42,23 @@ public class RelationAnswer extends Answer<Serializable> {
 	private String rightSide;
 
 	/**
+	 * El instrumento de correspondencia a la que pertenece esta relación.
+	 */
+	private CorrespondenceInstrument correspondenceInstrument;
+
+	/**
 	 * El constructor de una relación.
 	 */
 	public RelationAnswer() {
 		super();
 		this.leftSide = null;
 		this.rightSide = null;
+		this.correspondenceInstrument = null;
+	}
+
+	@Override
+	public String toString() {
+		return this.leftSide + " - " + this.rightSide;
 	}
 
 	/**
@@ -45,6 +66,7 @@ public class RelationAnswer extends Answer<Serializable> {
 	 * 
 	 * @return La frase del lado izquierdo de la relación.
 	 */
+	@Column(name = "LEFT_SIDE", columnDefinition = "text", nullable = true)
 	public String getLeftSide() {
 		return this.leftSide;
 	}
@@ -54,8 +76,21 @@ public class RelationAnswer extends Answer<Serializable> {
 	 * 
 	 * @return La frase del lado derecho de la relación.
 	 */
+	@Column(name = "RIGHT_SIDE", columnDefinition = "text", nullable = true)
 	public String getRightSide() {
 		return this.rightSide;
+	}
+
+	/**
+	 * La función encargada de retornar la correspondencia a la que pertenece esta relación.
+	 * 
+	 * @return La correspondencia a la que pertenece esta relación.
+	 */
+	@ManyToOne(cascade =
+		{ CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER, targetEntity = CorrespondenceInstrument.class, optional = false)
+	@JoinColumn(name = "ID_INSTRUMENT", referencedColumnName = "ID_INSTRUMENT", insertable = true, updatable = true, nullable = false)
+	public CorrespondenceInstrument getCorrespondenceInstrument() {
+		return this.correspondenceInstrument;
 	}
 
 	/**
@@ -76,5 +111,15 @@ public class RelationAnswer extends Answer<Serializable> {
 	 */
 	public void setRightSide(String rightSide) {
 		this.rightSide = rightSide;
+	}
+
+	/**
+	 * La función encargada de cargar la correspondencia a la que pertenece esta relación.
+	 * 
+	 * @param correspondenceInstrument
+	 *            La correspondencia a la que pertenece esta relación.
+	 */
+	public void setCorrespondenceInstrument(CorrespondenceInstrument correspondenceInstrument) {
+		this.correspondenceInstrument = correspondenceInstrument;
 	}
 }
