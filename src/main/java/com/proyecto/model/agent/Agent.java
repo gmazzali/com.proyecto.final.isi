@@ -100,7 +100,7 @@ public class Agent extends Entity<Integer> {
 	 */
 	@ManyToMany(cascade =
 		{ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY)
-	@JoinTable(name = "AGENTS_SUBJECTS", joinColumns =
+	@JoinTable(name = "AGENTS_IN_SUBJECTS", joinColumns =
 		{ @JoinColumn(name = "ID_AGENT") }, inverseJoinColumns =
 		{ @JoinColumn(name = "ID_SUBJECT") })
 	public List<Subject> getSubjects() {

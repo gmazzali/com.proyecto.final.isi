@@ -18,7 +18,7 @@ import com.proyecto.model.instrument.CorrespondenceInstrument;
  * @version 1.0
  */
 @Model
-@Table(name = "RELATIONS_ANSWERS")
+@Table(name = "RELATION_ANSWERS")
 @javax.persistence.Entity(name = "RelationAnswer")
 public class RelationAnswer extends Answer {
 
@@ -66,7 +66,7 @@ public class RelationAnswer extends Answer {
 	 * 
 	 * @return La frase del lado izquierdo de la relación.
 	 */
-	@Column(name = "LEFT_SIDE", columnDefinition = "text", nullable = true)
+	@Column(name = "LEFT_SIDE", columnDefinition = "varchar(255)", nullable = true)
 	public String getLeftSide() {
 		return this.leftSide;
 	}
@@ -76,7 +76,7 @@ public class RelationAnswer extends Answer {
 	 * 
 	 * @return La frase del lado derecho de la relación.
 	 */
-	@Column(name = "RIGHT_SIDE", columnDefinition = "text", nullable = true)
+	@Column(name = "RIGHT_SIDE", columnDefinition = "varchar(255)", nullable = true)
 	public String getRightSide() {
 		return this.rightSide;
 	}
