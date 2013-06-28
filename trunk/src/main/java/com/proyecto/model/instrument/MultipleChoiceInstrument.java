@@ -1,5 +1,8 @@
 package com.proyecto.model.instrument;
 
+import javax.persistence.Table;
+
+import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 
 /**
@@ -8,6 +11,9 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@Model
+@Table(name = "MULTIPLE_CHOICE_INSTRUMENTS")
+@javax.persistence.Entity(name = "MultipleChoiceInstrument")
 public class MultipleChoiceInstrument extends ChoiceInstrument {
 
 	private static final long serialVersionUID = 3919655075898550736L;

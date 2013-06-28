@@ -339,11 +339,11 @@ public class CorrespondenceFormDialog extends JDialog {
 	 */
 	private void addPhrase(JList<String> list, JTextField field) {
 		// Agregamos solo si tenemos algo en el campo de texto.
-		String leftSide = field.getText().trim();
+		String phrase = field.getText().trim();
 
-		if (leftSide.length() > 0) {
+		if (phrase.length() > 0) {
 			DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
-			model.addElement(leftSide);
+			model.addElement(phrase);
 			field.setText("");
 		}
 	}
@@ -357,16 +357,16 @@ public class CorrespondenceFormDialog extends JDialog {
 
 		if (index >= 0) {
 			DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
-			String editLeftSide = model.get(index);
+			String editPhrase = model.get(index);
 			model.remove(index);
 
-			String oldEditLeftSide = field.getText().trim();
+			String oldEditPhrase = field.getText().trim();
 
-			if (oldEditLeftSide.length() > 0) {
-				model.addElement(oldEditLeftSide);
+			if (oldEditPhrase.length() > 0) {
+				model.addElement(oldEditPhrase);
 			}
 
-			field.setText(editLeftSide);
+			field.setText(editPhrase);
 			field.requestFocus();
 		}
 	}
