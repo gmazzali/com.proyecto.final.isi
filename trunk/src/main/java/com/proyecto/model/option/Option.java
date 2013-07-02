@@ -10,6 +10,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.common.util.annotations.Model;
@@ -89,18 +90,6 @@ public abstract class Option extends Entity<Integer> {
 	}
 
 	/**
-	 * La función encargada de retornar el valor de respuesta de la opción.
-	 * 
-	 * @return El valor de respuesta de la opción.
-	 */
-	@ManyToOne(cascade =
-		{ CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER, targetEntity = TrueFalseAnswer.class, optional = false)
-	@JoinColumn(name = "ID_ANSWER", referencedColumnName = "ID_ANSWER", insertable = true, updatable = true, nullable = false)
-	public TrueFalseAnswer getTrueFalseAnswer() {
-		return this.trueFalseAnswer;
-	}
-
-	/**
 	 * La función encargada de retornar el instrumento al que pertenece esta opción.
 	 * 
 	 * @return El instrumento al que pertenece esta opción.
@@ -110,6 +99,16 @@ public abstract class Option extends Entity<Integer> {
 	@JoinColumn(name = "ID_INSTRUMENT", referencedColumnName = "ID_INSTRUMENT", insertable = true, updatable = true, nullable = false)
 	public ChoiceInstrument getChoiceInstrument() {
 		return this.choiceInstrument;
+	}
+
+	/**
+	 * La función encargada de retornar el valor de respuesta de la opción.
+	 * 
+	 * @return El valor de respuesta de la opción.
+	 */
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "option", targetEntity = TrueFalseAnswer.class, orphanRemoval = true)
+	public TrueFalseAnswer getTrueFalseAnswer() {
+		return this.trueFalseAnswer;
 	}
 
 	/**
@@ -123,16 +122,6 @@ public abstract class Option extends Entity<Integer> {
 	}
 
 	/**
-	 * La función encargada de cargar el valor de respuesta de la opción.
-	 * 
-	 * @param trueFalseAnswer
-	 *            El valor de respuesta de la opción.
-	 */
-	public void setTrueFalseAnswer(TrueFalseAnswer trueFalseAnswer) {
-		this.trueFalseAnswer = trueFalseAnswer;
-	}
-
-	/**
 	 * La función encargada de cargar el instrumento al que pertenece esta opción.
 	 * 
 	 * @param choiceInstrument
@@ -140,5 +129,19 @@ public abstract class Option extends Entity<Integer> {
 	 */
 	public void setChoiceInstrument(ChoiceInstrument choiceInstrument) {
 		this.choiceInstrument = choiceInstrument;
+	}
+
+	/**
+	 * La función encargada de cargar el valor de respuesta de la opción.
+	 * 
+	 * @param trueFalseAnswer
+	 *            El valor de respuesta de la opción.
+	 */
+	public void setTrueFalseAnswer(TrueFalseAnswer trueFalseAnswer) {
+		this.trueFalseAnswer = trueFalseAnswer;
+
+		if (this.trueFalseAnswer != null) {
+			this.trueFalseAnswer.setOption(this);
+		}
 	}
 }

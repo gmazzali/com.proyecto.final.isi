@@ -29,6 +29,7 @@ public class Distractor extends Option {
 	 * El constructor por omisión.
 	 */
 	public Distractor() {
-		super(TrueFalseAnswer.FALSE);
+		super(new TrueFalseAnswer(false));
+		this.setTrueFalseAnswer(this.getTrueFalseAnswer());
 	}
 }

@@ -49,7 +49,7 @@ public abstract class ChoiceInstrument extends ObjectiveActivityInstrument {
 	 * 
 	 * @return El listado de opciones que tenemos dentro de este elemento.
 	 */
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "choiceInstrument", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "choiceInstrument", targetEntity = Option.class, orphanRemoval = true)
 	public List<Option> getOptions() {
 		return this.options;
 	}

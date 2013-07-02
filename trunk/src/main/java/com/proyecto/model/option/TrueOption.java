@@ -29,6 +29,7 @@ public class TrueOption extends Option {
 	 * El constructor por omisión.
 	 */
 	public TrueOption() {
-		super(TrueFalseAnswer.TRUE);
+		super(new TrueFalseAnswer(true));
+		this.setTrueFalseAnswer(this.getTrueFalseAnswer());
 	}
 }
