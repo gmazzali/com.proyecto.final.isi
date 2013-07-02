@@ -1,5 +1,6 @@
 package com.proyecto.service.agent;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,10 +27,25 @@ public class AgentServiceUnitTest {
 		HolderApplicationContext.initApplicationContext(files);
 	}
 
+	/**
+	 * Al finalizar dejamos un espacio en blanco en la consola.
+	 */
+	@AfterClass
+	public static void afterClass() {
+		System.out.println();
+	}
+
+	/**
+	 * Guardado de un agente sin materias.
+	 */
 	@Test
-	public void pruebaDeCreacionDeAgente() {
+	public void pruebaDeCreacionDeAgenteVacio() {
 		// Creamos el agente de prueba.
 		Agent agent = new Agent();
+
+		System.out.println("######################################################################");
+		System.out.println("######################### AGENTE SIN MATERIAS ########################");
+		System.out.println("######################################################################");
 
 		agent.setName("Nombre prueba");
 		agent.setPassword("Password prueba");
@@ -37,6 +53,7 @@ public class AgentServiceUnitTest {
 		AgentService service = HolderApplicationContext.getContext().getBean(AgentService.class);
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<< GUARDADO DE AGENTE SIN MATERIAS >>>>>>>>>>>>>>>>>>>");
 			service.save(agent);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -47,6 +64,7 @@ public class AgentServiceUnitTest {
 		agent.setPassword("Otro password de prueba");
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<< ACTUALIZADO DEL AGENTE SIN MATERIAS >>>>>>>>>>>>>>>>>");
 			service.update(agent);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -54,16 +72,24 @@ public class AgentServiceUnitTest {
 
 		// Lo borramos.
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<< BORRADO DEL AGENTE SIN MATERIAS >>>>>>>>>>>>>>>>>>>");
 			service.delete(agent);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Guardado de un agente con materias.
+	 */
 	@Test
-	public void pruebasDeGuardadoDeMaterias() {
+	public void pruebasDeGuardadoAgenteConMaterias() {
 		// Creamos un agente.
 		Agent agent = new Agent();
+
+		System.out.println("######################################################################");
+		System.out.println("######################### AGENTE CON MATERIAS ########################");
+		System.out.println("######################################################################");
 
 		agent.setName("Nombre prueba con materias");
 		agent.setPassword("Password prueba con materias");
@@ -100,6 +126,7 @@ public class AgentServiceUnitTest {
 
 		// Guardamos el agente.
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<< GUARDADO DE AGENTE CON MATERIAS >>>>>>>>>>>>>>>>>>>");
 			service.save(agent);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -110,6 +137,7 @@ public class AgentServiceUnitTest {
 		agent.getSubjects().remove(deleteSubject);
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<< ACTUALIZADO DEL AGENTE CON MATERIAS >>>>>>>>>>>>>>>>>");
 			service.update(agent);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -117,6 +145,7 @@ public class AgentServiceUnitTest {
 
 		// Lo borramos.
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<< BORRADO DEL AGENTE CON MATERIAS >>>>>>>>>>>>>>>>>>>");
 			service.delete(agent);
 		} catch (CheckedException e) {
 			e.printStackTrace();

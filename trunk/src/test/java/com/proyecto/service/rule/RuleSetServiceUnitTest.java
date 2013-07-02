@@ -1,5 +1,6 @@
 package com.proyecto.service.rule;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -27,6 +28,14 @@ public class RuleSetServiceUnitTest {
 	}
 
 	/**
+	 * Al finalizar dejamos un espacio en blanco en la consola.
+	 */
+	@AfterClass
+	public static void afterClass() {
+		System.out.println();
+	}
+
+	/**
 	 * Pruebas de creación.
 	 */
 	@Test
@@ -34,12 +43,18 @@ public class RuleSetServiceUnitTest {
 		// Creamos un nuevo conjunto de reglas.
 		RuleSet ruleSet = new RuleSet();
 
+		System.out.println("######################################################################");
+		System.out.println("###################### CONJUNTO DE REGLAS VACIO ######################");
+		System.out.println("######################################################################");
+
 		ruleSet.setDescription("descripcion de prueba");
 		ruleSet.setActive(true);
 
 		RuleSetService service = HolderApplicationContext.getContext().getBean(RuleSetService.class);
 
+		// Guardamos el conjunto vacío.
 		try {
+			System.out.println("<<<<<<<<<<<<<<<< GUARDADO DEL CONJUNTO DE REGLAS VACIO >>>>>>>>>>>>>>>>");
 			service.save(ruleSet);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -50,6 +65,7 @@ public class RuleSetServiceUnitTest {
 		ruleSet.setActive(false);
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<< ACTUALIZADO DEL CONJUNTO DE REGLA VACIO >>>>>>>>>>>>>>>");
 			service.update(ruleSet);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -57,6 +73,7 @@ public class RuleSetServiceUnitTest {
 
 		// La borramos.
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<< BORRADO DEL CONJUNTO DE REGLA VACIO >>>>>>>>>>>>>>>>>");
 			service.delete(ruleSet);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -67,6 +84,10 @@ public class RuleSetServiceUnitTest {
 	public void pruebasDeGuardadoDeReglas() {
 		// Creamos un nuevo conjunto de reglas.
 		RuleSet ruleSet = new RuleSet();
+
+		System.out.println("######################################################################");
+		System.out.println("######################### CONJUNTO DE REGLAS #########################");
+		System.out.println("######################################################################");
 
 		ruleSet.setDescription("descripcion de prueba con reglas");
 		ruleSet.setActive(true);
@@ -106,6 +127,7 @@ public class RuleSetServiceUnitTest {
 		}
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<< GUARDADO DEL CONJUNTO DE REGLAS >>>>>>>>>>>>>>>>>>>");
 			ruleSetService.save(ruleSet);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -117,6 +139,7 @@ public class RuleSetServiceUnitTest {
 		ruleSet.setActive(false);
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<< ACTUALIZADO DEL CONJUNTO DE REGLAS >>>>>>>>>>>>>>>>>");
 			ruleSetService.update(ruleSet);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -124,6 +147,7 @@ public class RuleSetServiceUnitTest {
 
 		// La borramos.
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<<< BORRADO DEL CONJUNTO DE REGLA >>>>>>>>>>>>>>>>>>>>");
 			ruleSetService.delete(ruleSet);
 		} catch (CheckedException e) {
 			e.printStackTrace();

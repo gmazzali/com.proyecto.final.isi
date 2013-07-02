@@ -1,5 +1,6 @@
 package com.proyecto.service.rule;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,10 +26,25 @@ public class RuleServiceUnitTest {
 		HolderApplicationContext.initApplicationContext(files);
 	}
 
+	/**
+	 * Al finalizar dejamos un espacio en blanco en la consola.
+	 */
+	@AfterClass
+	public static void afterClass() {
+		System.out.println();
+	}
+
+	/**
+	 * La prueba de creación de reglas.
+	 */
 	@Test
 	public void pruebaDeCreacionDeRegla() {
 		// Creamos una nueva regla.
 		Rule rule = new Rule();
+
+		System.out.println("######################################################################");
+		System.out.println("############################### REGLAS ###############################");
+		System.out.println("######################################################################");
 
 		rule.setDescription("descripcion de prueba");
 		rule.setRule("regla de prueba");
@@ -36,6 +52,7 @@ public class RuleServiceUnitTest {
 		RuleService service = HolderApplicationContext.getContext().getBean(RuleService.class);
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<< GUARDADO DE REGLA >>>>>>>>>>>>>>>>>>>>>>>>>>");
 			service.save(rule);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -45,6 +62,7 @@ public class RuleServiceUnitTest {
 		rule.setDescription("otra descripcion");
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<<<< ACTUALIZADO DE REGLAS >>>>>>>>>>>>>>>>>>>>>>>>");
 			service.update(rule);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -52,6 +70,7 @@ public class RuleServiceUnitTest {
 
 		// La borramos.
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<< BORRADO DE REGLAS >>>>>>>>>>>>>>>>>>>>>>>>>>");
 			service.delete(rule);
 		} catch (CheckedException e) {
 			e.printStackTrace();

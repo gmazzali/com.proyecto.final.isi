@@ -3,6 +3,7 @@ package com.proyecto.service.instrument;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ import com.proyecto.model.instrument.CorrespondenceInstrument;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class CorrespondenceInstrumentTest {
+public class CorrespondenceInstrumentServiceTest {
 
 	/**
 	 * Antes de que arranque la ejecución de la clase, cargamos el dao.
@@ -30,6 +31,14 @@ public class CorrespondenceInstrumentTest {
 	}
 
 	/**
+	 * Al finalizar dejamos un espacio en blanco en la consola.
+	 */
+	@AfterClass
+	public static void afterClass() {
+		System.out.println();
+	}
+
+	/**
 	 * La prueba de creación del instrumento.
 	 */
 	@Test
@@ -38,6 +47,10 @@ public class CorrespondenceInstrumentTest {
 		RelationAnswer relation = null;
 		List<RelationAnswer> relations = null;
 		CorrespondenceInstrument correspondence = new CorrespondenceInstrument();
+
+		System.out.println("######################################################################");
+		System.out.println("################### INSTRUMENTO DE CORRESPONDENCIA ###################");
+		System.out.println("######################################################################");
 
 		correspondence.setDescription("Descripcion de correspondencia");
 
@@ -85,6 +98,7 @@ public class CorrespondenceInstrumentTest {
 		correspondence.getRelations().addAll(relations);
 
 		try {
+			System.out.println("<<<<<<<<<<<<< GUARDADO DEL INSTRUMENTO DE CORRESPONDENCIA >>>>>>>>>>>>>");
 			service.save(correspondence);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -95,6 +109,7 @@ public class CorrespondenceInstrumentTest {
 		correspondence.getRelations().remove(relation);
 
 		try {
+			System.out.println("<<<<<<<<<<<< ACTUALIZADO DE INSTRUMENTO DE CORRESPONDENCIA >>>>>>>>>>>>");
 			service.update(correspondence);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -144,6 +159,7 @@ public class CorrespondenceInstrumentTest {
 		correspondence.getRelations().addAll(relations);
 
 		try {
+			System.out.println("<<<<<<<<<<<< ACTUALIZADO DE INSTRUMENTO DE CORRESPONDENCIA >>>>>>>>>>>>");
 			service.update(correspondence);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -151,6 +167,7 @@ public class CorrespondenceInstrumentTest {
 
 		// La borramos.
 		try {
+			System.out.println("<<<<<<<<<<<<<< BORRADO DE INSTRUMENTO DE CORRESPONDENCIA >>>>>>>>>>>>>>");
 			service.delete(correspondence);
 		} catch (CheckedException e) {
 			e.printStackTrace();
