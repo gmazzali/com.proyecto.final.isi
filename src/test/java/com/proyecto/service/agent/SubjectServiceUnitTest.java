@@ -1,5 +1,6 @@
 package com.proyecto.service.agent;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,18 +27,31 @@ public class SubjectServiceUnitTest {
 	}
 
 	/**
-	 * Pruebas de creación.
+	 * Al finalizar dejamos un espacio en blanco en la consola.
+	 */
+	@AfterClass
+	public static void afterClass() {
+		System.out.println();
+	}
+
+	/**
+	 * Pruebas de creación de una materia.
 	 */
 	@Test
 	public void pruebaDeCreacionDeMaterias() {
 		// Creamos una nueva materia.
 		Subject subject = new Subject();
 
+		System.out.println("######################################################################");
+		System.out.println("############################## MATERIAS ##############################");
+		System.out.println("######################################################################");
+
 		subject.setName("Materia de prueba");
 
 		SubjectService service = HolderApplicationContext.getContext().getBean(SubjectService.class);
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<< GUARDADO DE MATERIA >>>>>>>>>>>>>>>>>>>>>>>>>");
 			service.save(subject);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -47,6 +61,7 @@ public class SubjectServiceUnitTest {
 		subject.setName("Otra materia de prueba");
 
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<< ACTUALIZADO DE LA MATERIA >>>>>>>>>>>>>>>>>>>>>>");
 			service.update(subject);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -54,6 +69,7 @@ public class SubjectServiceUnitTest {
 
 		// La borramos.
 		try {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<<<< BORRADO DE LA MATERIA >>>>>>>>>>>>>>>>>>>>>>>>");
 			service.delete(subject);
 		} catch (CheckedException e) {
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package com.proyecto.service.instrument;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ import com.proyecto.model.option.TrueOption;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ChoiceInstrumentTest {
+public class ChoiceInstrumentServiceTest {
 
 	/**
 	 * Antes de que arranque la ejecución de la clase, cargamos el dao.
@@ -33,6 +34,14 @@ public class ChoiceInstrumentTest {
 	}
 
 	/**
+	 * Al finalizar dejamos un espacio en blanco en la consola.
+	 */
+	@AfterClass
+	public static void afterClass() {
+		System.out.println();
+	}
+
+	/**
 	 * La prueba de creación del instrumento.
 	 */
 	@Test
@@ -41,6 +50,10 @@ public class ChoiceInstrumentTest {
 		Option option = null;
 		List<Option> options = null;
 		SingleChoiceInstrument choice = new SingleChoiceInstrument();
+
+		System.out.println("######################################################################");
+		System.out.println("################## INSTRUMENTOS DE SELECCIÓN SIMPLE ##################");
+		System.out.println("######################################################################");
 
 		choice.setDescription("Descripcion de simple seleccion");
 
@@ -70,6 +83,7 @@ public class ChoiceInstrumentTest {
 		choice.getOptions().addAll(options);
 
 		try {
+			System.out.println("<<<<<<<<<<<<< GUARDADO DE INSTRUMENTO DE SELECCIÓN SIMPLE >>>>>>>>>>>>>");
 			service.save(choice);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -80,6 +94,7 @@ public class ChoiceInstrumentTest {
 		choice.getOptions().remove(option);
 
 		try {
+			System.out.println("<<<<<<<<<<< ACTUALIZADO DE INSTRUMENTOS DE SELECCIÓN SIMPLE >>>>>>>>>>>");
 			service.update(choice);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -111,6 +126,7 @@ public class ChoiceInstrumentTest {
 		choice.getOptions().addAll(options);
 
 		try {
+			System.out.println("<<<<<<<<<<< ACTUALIZADO DE INSTRUMENTOS DE SELECCIÓN SIMPLE >>>>>>>>>>>");
 			service.update(choice);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -118,6 +134,7 @@ public class ChoiceInstrumentTest {
 
 		// La borramos.
 		try {
+			System.out.println("<<<<<<<<<<<<< BORRADO DE INSTRUMENTOS DE SELECCIÓN SIMPLE >>>>>>>>>>>>>");
 			service.delete(choice);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -133,6 +150,10 @@ public class ChoiceInstrumentTest {
 		Option option = null;
 		List<Option> options = null;
 		MultipleChoiceInstrument choice = new MultipleChoiceInstrument();
+
+		System.out.println("######################################################################");
+		System.out.println("################# INSTRUMENTOS DE SELECCIÓN MULTIPLE #################");
+		System.out.println("######################################################################");
 
 		choice.setDescription("Descripcion de multiple seleccion");
 
@@ -162,6 +183,7 @@ public class ChoiceInstrumentTest {
 		choice.getOptions().addAll(options);
 
 		try {
+			System.out.println("<<<<<<<<<<< GUARDADO DEL INSTRUMENTOS DE SELECCIÓN MULTIPLE >>>>>>>>>>>");
 			service.save(choice);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -172,6 +194,7 @@ public class ChoiceInstrumentTest {
 		choice.getOptions().remove(option);
 
 		try {
+			System.out.println("<<<<<<<<<< ACTUALIZADO DE INSTRUMENTOS DE SELECCIÓN MULTIPLE >>>>>>>>>>");
 			service.update(choice);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -203,6 +226,7 @@ public class ChoiceInstrumentTest {
 		choice.getOptions().addAll(options);
 
 		try {
+			System.out.println("<<<<<<<<<< ACTUALIZADO DE INSTRUMENTOS DE SELECCIÓN MULTIPLE >>>>>>>>>>");
 			service.update(choice);
 		} catch (CheckedException e) {
 			e.printStackTrace();
@@ -210,6 +234,7 @@ public class ChoiceInstrumentTest {
 
 		// La borramos.
 		try {
+			System.out.println("<<<<<<<<<<<< BORRADO DE INSTRUMENTOS DE SELECCIÓN MULTIPLE >>>>>>>>>>>>");
 			service.delete(choice);
 		} catch (CheckedException e) {
 			e.printStackTrace();
