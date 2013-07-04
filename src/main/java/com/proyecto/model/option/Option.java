@@ -12,10 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 import com.proyecto.model.answer.TrueFalseAnswer;
+import com.proyecto.model.answer.type.TrueFalseAnswerTypeEnum;
 import com.proyecto.model.instrument.ChoiceInstrument;
 
 /**
@@ -110,6 +112,14 @@ public abstract class Option extends Entity<Integer> {
 	public TrueFalseAnswer getTrueFalseAnswer() {
 		return this.trueFalseAnswer;
 	}
+
+	/**
+	 * La función que retorna el tipo de respuesta que va a tener la opción de acuerdo al tipo.
+	 * 
+	 * @return El tipo de respuesta que va a tener la opción de acuerdo al tipo.
+	 */
+	@Transient
+	public abstract TrueFalseAnswerTypeEnum getAnswerType();
 
 	/**
 	 * La función encargada de cargar la descripción de la opción.
