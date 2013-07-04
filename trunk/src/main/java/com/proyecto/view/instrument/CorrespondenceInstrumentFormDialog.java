@@ -42,7 +42,7 @@ import com.proyecto.view.Resources;
  * @version 1.0
  */
 @View
-public class CorrespondenceFormDialog extends JDialog {
+public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 	private static final long serialVersionUID = 2889344971937517392L;
 
@@ -60,7 +60,7 @@ public class CorrespondenceFormDialog extends JDialog {
 	/*
 	 * El campo de la descripción del instrumento.
 	 */
-	private JTextArea descripcionTextField;
+	private JTextArea descriptionTextArea;
 	/**
 	 * Los campos de textos para agregar las frases a derecha y a izquierda.
 	 */
@@ -92,7 +92,7 @@ public class CorrespondenceFormDialog extends JDialog {
 	/**
 	 * Constructor de un dialogo de edición de correspondencia.
 	 */
-	public CorrespondenceFormDialog() {
+	public CorrespondenceInstrumentFormDialog() {
 		super();
 		this.init();
 	}
@@ -110,15 +110,15 @@ public class CorrespondenceFormDialog extends JDialog {
 		descripcionLabel.setBounds(10, 11, 82, 14);
 		this.getContentPane().add(descripcionLabel);
 
-		this.descripcionTextField = new JTextArea();
-		this.descripcionTextField.setBounds(10, 28, 810, 65);
-		this.descripcionTextField.addFocusListener(new FocusAdapter() {
+		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setBounds(10, 28, 810, 65);
+		this.descriptionTextArea.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				CorrespondenceFormDialog.this.descripcionTextField.selectAll();
+				CorrespondenceInstrumentFormDialog.this.descriptionTextArea.selectAll();
 			}
 		});
-		this.getContentPane().add(this.descripcionTextField);
+		this.getContentPane().add(this.descriptionTextArea);
 
 		JLabel leftSideLabel = new JLabel("Lado izquierdo");
 		leftSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
@@ -135,10 +135,10 @@ public class CorrespondenceFormDialog extends JDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					CorrespondenceFormDialog.this.modifyPhrase(CorrespondenceFormDialog.this.leftSideList,
-							CorrespondenceFormDialog.this.leftSideTextField);
+					CorrespondenceInstrumentFormDialog.this.modifyPhrase(CorrespondenceInstrumentFormDialog.this.leftSideList,
+							CorrespondenceInstrumentFormDialog.this.leftSideTextField);
 				} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-					CorrespondenceFormDialog.this.deletePhrase(CorrespondenceFormDialog.this.leftSideList);
+					CorrespondenceInstrumentFormDialog.this.deletePhrase(CorrespondenceInstrumentFormDialog.this.leftSideList);
 				}
 			}
 		});
@@ -146,8 +146,8 @@ public class CorrespondenceFormDialog extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					CorrespondenceFormDialog.this.modifyPhrase(CorrespondenceFormDialog.this.leftSideList,
-							CorrespondenceFormDialog.this.leftSideTextField);
+					CorrespondenceInstrumentFormDialog.this.modifyPhrase(CorrespondenceInstrumentFormDialog.this.leftSideList,
+							CorrespondenceInstrumentFormDialog.this.leftSideTextField);
 				}
 			}
 		});
@@ -158,17 +158,17 @@ public class CorrespondenceFormDialog extends JDialog {
 		this.leftSideTextField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				CorrespondenceFormDialog.this.leftSideTextField.selectAll();
+				CorrespondenceInstrumentFormDialog.this.leftSideTextField.selectAll();
 			}
 		});
 		this.leftSideTextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					CorrespondenceFormDialog.this.addPhrase(CorrespondenceFormDialog.this.leftSideList,
-							CorrespondenceFormDialog.this.leftSideTextField);
+					CorrespondenceInstrumentFormDialog.this.addPhrase(CorrespondenceInstrumentFormDialog.this.leftSideList,
+							CorrespondenceInstrumentFormDialog.this.leftSideTextField);
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					CorrespondenceFormDialog.this.leftSideTextField.setText("");
+					CorrespondenceInstrumentFormDialog.this.leftSideTextField.setText("");
 				}
 			}
 		});
@@ -180,7 +180,7 @@ public class CorrespondenceFormDialog extends JDialog {
 		this.removeLeftSideButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CorrespondenceFormDialog.this.deletePhrase(CorrespondenceFormDialog.this.leftSideList);
+				CorrespondenceInstrumentFormDialog.this.deletePhrase(CorrespondenceInstrumentFormDialog.this.leftSideList);
 			}
 		});
 		this.getContentPane().add(this.removeLeftSideButton);
@@ -200,10 +200,10 @@ public class CorrespondenceFormDialog extends JDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					CorrespondenceFormDialog.this.modifyPhrase(CorrespondenceFormDialog.this.rightSideList,
-							CorrespondenceFormDialog.this.rigthSideTextField);
+					CorrespondenceInstrumentFormDialog.this.modifyPhrase(CorrespondenceInstrumentFormDialog.this.rightSideList,
+							CorrespondenceInstrumentFormDialog.this.rigthSideTextField);
 				} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-					CorrespondenceFormDialog.this.deletePhrase(CorrespondenceFormDialog.this.rightSideList);
+					CorrespondenceInstrumentFormDialog.this.deletePhrase(CorrespondenceInstrumentFormDialog.this.rightSideList);
 				}
 			}
 		});
@@ -211,8 +211,8 @@ public class CorrespondenceFormDialog extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					CorrespondenceFormDialog.this.modifyPhrase(CorrespondenceFormDialog.this.rightSideList,
-							CorrespondenceFormDialog.this.rigthSideTextField);
+					CorrespondenceInstrumentFormDialog.this.modifyPhrase(CorrespondenceInstrumentFormDialog.this.rightSideList,
+							CorrespondenceInstrumentFormDialog.this.rigthSideTextField);
 				}
 			}
 		});
@@ -224,17 +224,17 @@ public class CorrespondenceFormDialog extends JDialog {
 		this.rigthSideTextField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				CorrespondenceFormDialog.this.rigthSideTextField.selectAll();
+				CorrespondenceInstrumentFormDialog.this.rigthSideTextField.selectAll();
 			}
 		});
 		this.rigthSideTextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					CorrespondenceFormDialog.this.addPhrase(CorrespondenceFormDialog.this.rightSideList,
-							CorrespondenceFormDialog.this.rigthSideTextField);
+					CorrespondenceInstrumentFormDialog.this.addPhrase(CorrespondenceInstrumentFormDialog.this.rightSideList,
+							CorrespondenceInstrumentFormDialog.this.rigthSideTextField);
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					CorrespondenceFormDialog.this.rigthSideTextField.setText("");
+					CorrespondenceInstrumentFormDialog.this.rigthSideTextField.setText("");
 				}
 			}
 		});
@@ -246,7 +246,7 @@ public class CorrespondenceFormDialog extends JDialog {
 		this.removeRightSideButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CorrespondenceFormDialog.this.deletePhrase(CorrespondenceFormDialog.this.rightSideList);
+				CorrespondenceInstrumentFormDialog.this.deletePhrase(CorrespondenceInstrumentFormDialog.this.rightSideList);
 			}
 		});
 		this.getContentPane().add(this.removeRightSideButton);
@@ -270,7 +270,7 @@ public class CorrespondenceFormDialog extends JDialog {
 		this.createRelationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CorrespondenceFormDialog.this.createRelation();
+				CorrespondenceInstrumentFormDialog.this.createRelation();
 			}
 		});
 		this.getContentPane().add(this.createRelationButton);
@@ -279,7 +279,7 @@ public class CorrespondenceFormDialog extends JDialog {
 		this.removeRelationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CorrespondenceFormDialog.this.deleteRelation();
+				CorrespondenceInstrumentFormDialog.this.deleteRelation();
 			}
 		});
 		this.removeRelationButton.setFont(new Font("Arial", Font.BOLD, 12));
@@ -296,7 +296,7 @@ public class CorrespondenceFormDialog extends JDialog {
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CorrespondenceFormDialog.this.saveInstrument();
+				CorrespondenceInstrumentFormDialog.this.saveInstrument();
 			}
 		});
 		this.getContentPane().add(this.commitButton);
@@ -307,7 +307,7 @@ public class CorrespondenceFormDialog extends JDialog {
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CorrespondenceFormDialog.this.dispose();
+				CorrespondenceInstrumentFormDialog.this.dispose();
 			}
 		});
 		this.getContentPane().add(this.rejectButton);
@@ -315,7 +315,7 @@ public class CorrespondenceFormDialog extends JDialog {
 
 	@Override
 	public void setEnabled(boolean b) {
-		this.descripcionTextField.setEnabled(b);
+		this.descriptionTextArea.setEnabled(b);
 
 		this.leftSideList.setEnabled(b);
 		this.leftSideTextField.setEnabled(b);
@@ -336,8 +336,10 @@ public class CorrespondenceFormDialog extends JDialog {
 
 	/**
 	 * La función encargada de agregar una frase a la lista del lado correspondiente.
+	 * 
+	 * @return TRUE en caso de que haya agregado la frase, en caso contrario retorna FALSE.
 	 */
-	private void addPhrase(JList<String> list, JTextField field) {
+	private boolean addPhrase(JList<String> list, JTextField field) {
 		// Agregamos solo si tenemos algo en el campo de texto.
 		String phrase = field.getText().trim();
 
@@ -345,43 +347,58 @@ public class CorrespondenceFormDialog extends JDialog {
 			DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
 			model.addElement(phrase);
 			field.setText("");
+			return true;
 		}
+		return false;
 	}
 
 	/**
 	 * La función encargada de remover la frase y cargarla dentro del campo para editarla.
+	 * 
+	 * @return TRUE en caso de que haya agregado la frase para modificar, en caso contrario retorna FALSE.
 	 */
-	private void modifyPhrase(JList<String> list, JTextField field) {
+	private boolean modifyPhrase(JList<String> list, JTextField field) {
 		// Vemos si hay algo seleccionado en la lista.
 		Integer index = list.getSelectedIndex();
 
 		if (index >= 0) {
+			// Agregamos la frase que tenemos en el campo de edición.
+			this.addPhrase(list, field);
+
+			// Modificamos la que seleccionamos.
 			DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
 			String editPhrase = model.get(index);
 			model.remove(index);
 
-			String oldEditPhrase = field.getText().trim();
-
-			if (oldEditPhrase.length() > 0) {
-				model.addElement(oldEditPhrase);
-			}
+			// String oldEditPhrase = field.getText().trim();
+			//
+			// if (oldEditPhrase.length() > 0) {
+			// model.addElement(oldEditPhrase);
+			// }
 
 			field.setText(editPhrase);
 			field.requestFocus();
+
+			return true;
 		}
+		return false;
 	}
 
 	/**
 	 * La función encargada de quitar una frase del lado seleccionado.
+	 * 
+	 * @return TRUE en caso de que haya quitado la frase, en caso contrario retorna FALSE.
 	 */
-	private void deletePhrase(JList<String> list) {
+	private boolean deletePhrase(JList<String> list) {
 		// Vemos si hay algo seleccionado en la lista.
 		Integer index = list.getSelectedIndex();
 
 		if (index >= 0) {
 			DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
 			model.remove(index);
+			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -436,10 +453,10 @@ public class CorrespondenceFormDialog extends JDialog {
 	 */
 	private void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
-		if (this.descripcionTextField.getText().trim().isEmpty()) {
+		if (this.descriptionTextArea.getText().trim().isEmpty()) {
 			throw new CheckedException("instrument.correspondence.description");
 		} else {
-			this.correspondenceInstrument.setDescription(this.descripcionTextField.getText());
+			this.correspondenceInstrument.setDescription(this.descriptionTextArea.getText());
 		}
 
 		// Los modelos.
@@ -457,7 +474,7 @@ public class CorrespondenceFormDialog extends JDialog {
 		}
 
 		if (relations.isEmpty()) {
-			throw new CheckedException("isntrument.correspondence.relations");
+			throw new CheckedException("instrument.correspondence.relations");
 		}
 
 		// Creamos las relaciones de izquierda y derecha.
@@ -484,7 +501,7 @@ public class CorrespondenceFormDialog extends JDialog {
 	 * La función encargada de cargar el instrumento dentro del dialogo para su edición.
 	 */
 	private void fromInstrumentToDialog() {
-		this.descripcionTextField.setText(this.correspondenceInstrument.getDescription());
+		this.descriptionTextArea.setText(this.correspondenceInstrument.getDescription());
 
 		// Los modelos.
 		DefaultListModel<RelationAnswer> relationModel = (DefaultListModel<RelationAnswer>) this.relationList.getModel();
@@ -510,15 +527,15 @@ public class CorrespondenceFormDialog extends JDialog {
 			@Override
 			public void run() {
 				try {
-					CorrespondenceFormDialog.this.beforeSave();
-					CorrespondenceFormDialog.this.fromDialogToInstrument();
-					CorrespondenceFormDialog.this.correspondenceInstrumentService
-							.saveOrUpdate(CorrespondenceFormDialog.this.correspondenceInstrument);
-					CorrespondenceFormDialog.this.dispose();
+					CorrespondenceInstrumentFormDialog.this.beforeSave();
+					CorrespondenceInstrumentFormDialog.this.fromDialogToInstrument();
+					CorrespondenceInstrumentFormDialog.this.correspondenceInstrumentService
+							.saveOrUpdate(CorrespondenceInstrumentFormDialog.this.correspondenceInstrument);
+					CorrespondenceInstrumentFormDialog.this.dispose();
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(CorrespondenceFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(CorrespondenceInstrumentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} finally {
-					CorrespondenceFormDialog.this.afterSave();
+					CorrespondenceInstrumentFormDialog.this.afterSave();
 				}
 			}
 		}.start();
@@ -545,6 +562,10 @@ public class CorrespondenceFormDialog extends JDialog {
 	 * La función encargada de vaciar los campos de la ventana de edición del instrumento.
 	 */
 	private void emptyFields() {
+		this.descriptionTextArea.setText("");
+		this.leftSideTextField.setText("");
+		this.rigthSideTextField.setText("");
+
 		DefaultListModel<RelationAnswer> relationModel = (DefaultListModel<RelationAnswer>) this.relationList.getModel();
 		DefaultListModel<String> leftModel = (DefaultListModel<String>) this.leftSideList.getModel();
 		DefaultListModel<String> rightModel = (DefaultListModel<String>) this.rightSideList.getModel();
@@ -558,7 +579,7 @@ public class CorrespondenceFormDialog extends JDialog {
 	 * 
 	 * @return La ventana para crear un nuevo instrumento de correspondencia.
 	 */
-	public CorrespondenceFormDialog createNewDialog() {
+	public CorrespondenceInstrumentFormDialog createNewDialog() {
 		this.setTitle("Instrumento de correspondencia");
 		this.correspondenceInstrument = new CorrespondenceInstrument();
 		this.emptyFields();
@@ -568,9 +589,11 @@ public class CorrespondenceFormDialog extends JDialog {
 	/**
 	 * La función encargada de crear una ventana para editar un instrumento de correspondencia.
 	 * 
+	 * @param correspondenceInstrument
+	 *            El instrumento de correspondencia que vamos a editar.
 	 * @return La ventana para editar un instrumento de correspondencia.
 	 */
-	public CorrespondenceFormDialog createEditDialog(CorrespondenceInstrument correspondenceInstrument) {
+	public CorrespondenceInstrumentFormDialog createEditDialog(CorrespondenceInstrument correspondenceInstrument) {
 		this.setTitle("Instrumento de correspondencia");
 		this.correspondenceInstrument = correspondenceInstrument;
 		this.fromInstrumentToDialog();
@@ -589,7 +612,7 @@ public class CorrespondenceFormDialog extends JDialog {
 			HolderApplicationContext.initApplicationContext(files);
 
 			CorrespondenceInstrument instrument = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(12);
-			CorrespondenceFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceFormDialog.class)
+			CorrespondenceInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentFormDialog.class)
 					.createEditDialog(instrument);
 			// CorrespondenceFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceFormDialog.class).createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

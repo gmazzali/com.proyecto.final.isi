@@ -1,10 +1,11 @@
 package com.proyecto.model.option;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
-import com.proyecto.model.answer.TrueFalseAnswer;
+import com.proyecto.model.answer.type.TrueFalseAnswerTypeEnum;
 
 /**
  * La clase que representa una opción verdadera.
@@ -29,7 +30,13 @@ public class Distractor extends Option {
 	 * El constructor por omisión.
 	 */
 	public Distractor() {
-		super(new TrueFalseAnswer(false));
+		super(TrueFalseAnswerTypeEnum.FALSE.getAnswer());
 		this.setTrueFalseAnswer(this.getTrueFalseAnswer());
+	}
+
+	@Override
+	@Transient
+	public TrueFalseAnswerTypeEnum getAnswerType() {
+		return TrueFalseAnswerTypeEnum.FALSE;
 	}
 }
