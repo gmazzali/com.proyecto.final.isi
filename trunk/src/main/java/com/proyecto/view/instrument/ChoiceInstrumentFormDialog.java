@@ -91,15 +91,20 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		descriptionLabel.setBounds(10, 10, 65, 14);
 		this.getContentPane().add(descriptionLabel);
 
+		JScrollPane descriptionScrollPane = new JScrollPane();
+		descriptionScrollPane.setBounds(6, 36, 888, 63);
+		this.getContentPane().add(descriptionScrollPane);
+
 		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setLineWrap(true);
+		this.descriptionTextArea.setWrapStyleWord(true);
 		this.descriptionTextArea.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				ChoiceInstrumentFormDialog.this.descriptionTextArea.selectAll();
 			}
 		});
-		this.descriptionTextArea.setBounds(10, 36, 884, 63);
-		this.getContentPane().add(this.descriptionTextArea);
+		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
 		JLabel choiceLabel = new JLabel("Opciones");
 		choiceLabel.setFont(new Font("Arial", Font.BOLD, 11));
