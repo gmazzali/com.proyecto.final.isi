@@ -8,6 +8,7 @@ import com.proyecto.model.reactive.Reactive;
 /**
  * La clase que implementa la interfaz del DAO para los reactivos que tenemos dentro del sistema.
  * 
+ * @author Marcelo Romitti
  * @version 1.0
  */
 @Dao

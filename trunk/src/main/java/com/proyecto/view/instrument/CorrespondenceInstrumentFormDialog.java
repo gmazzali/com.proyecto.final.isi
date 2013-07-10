@@ -81,11 +81,6 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 * El label de progreso.
 	 */
 	private JLabel progressLabel;
-	/**
-	 * Los botones de control de frases.
-	 */
-	private JButton removeLeftSideButton;
-	private JButton removeRightSideButton;
 	private JButton createRelationButton;
 	private JButton removeRelationButton;
 
@@ -110,15 +105,20 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		descripcionLabel.setBounds(10, 11, 82, 14);
 		this.getContentPane().add(descripcionLabel);
 
+		JScrollPane descriptionScrollPane = new JScrollPane();
+		descriptionScrollPane.setBounds(10, 28, 810, 65);
+		this.getContentPane().add(descriptionScrollPane);
+
 		this.descriptionTextArea = new JTextArea();
-		this.descriptionTextArea.setBounds(10, 28, 810, 65);
+		this.descriptionTextArea.setLineWrap(true);
+		this.descriptionTextArea.setWrapStyleWord(true);
 		this.descriptionTextArea.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				CorrespondenceInstrumentFormDialog.this.descriptionTextArea.selectAll();
 			}
 		});
-		this.getContentPane().add(this.descriptionTextArea);
+		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
 		JLabel leftSideLabel = new JLabel("Lado izquierdo");
 		leftSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
@@ -154,7 +154,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		leftSideScrollPane.setViewportView(this.leftSideList);
 
 		this.leftSideTextField = new JTextField();
-		this.leftSideTextField.setBounds(10, 276, 353, 31);
+		this.leftSideTextField.setBounds(10, 276, 400, 31);
 		this.leftSideTextField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -173,17 +173,6 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			}
 		});
 		this.getContentPane().add(this.leftSideTextField);
-
-		this.removeLeftSideButton = new JButton(Resources.DELETE_ICON);
-		this.removeLeftSideButton.setFont(new Font("Arial", Font.BOLD, 12));
-		this.removeLeftSideButton.setBounds(373, 276, 37, 31);
-		this.removeLeftSideButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				CorrespondenceInstrumentFormDialog.this.deletePhrase(CorrespondenceInstrumentFormDialog.this.leftSideList);
-			}
-		});
-		this.getContentPane().add(this.removeLeftSideButton);
 
 		JLabel rightSideLabel = new JLabel("Lado derecho");
 		rightSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
@@ -220,7 +209,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 		this.rigthSideTextField = new JTextField();
 		this.rigthSideTextField.setColumns(10);
-		this.rigthSideTextField.setBounds(420, 276, 353, 31);
+		this.rigthSideTextField.setBounds(420, 276, 400, 31);
 		this.rigthSideTextField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -239,17 +228,6 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			}
 		});
 		this.getContentPane().add(this.rigthSideTextField);
-
-		this.removeRightSideButton = new JButton(Resources.DELETE_ICON);
-		this.removeRightSideButton.setFont(new Font("Arial", Font.BOLD, 12));
-		this.removeRightSideButton.setBounds(783, 276, 37, 31);
-		this.removeRightSideButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				CorrespondenceInstrumentFormDialog.this.deletePhrase(CorrespondenceInstrumentFormDialog.this.rightSideList);
-			}
-		});
-		this.getContentPane().add(this.removeRightSideButton);
 
 		JLabel relationsLabel = new JLabel("Relaciones");
 		relationsLabel.setFont(new Font("Arial", Font.BOLD, 11));
@@ -325,8 +303,6 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 		this.relationList.setEnabled(b);
 
-		this.removeLeftSideButton.setEnabled(b);
-		this.removeRightSideButton.setEnabled(b);
 		this.removeRelationButton.setEnabled(b);
 		this.createRelationButton.setEnabled(b);
 
@@ -611,10 +587,12 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			CorrespondenceInstrument instrument = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(12);
+			// CorrespondenceInstrument instrument =
+			// HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(12);
+			// CorrespondenceInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentFormDialog.class)
+			// .createEditDialog(instrument);
 			CorrespondenceInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentFormDialog.class)
-					.createEditDialog(instrument);
-			// CorrespondenceFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceFormDialog.class).createNewDialog();
+					.createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

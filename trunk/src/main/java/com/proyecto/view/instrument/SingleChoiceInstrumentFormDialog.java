@@ -47,11 +47,11 @@ public class SingleChoiceInstrumentFormDialog extends ChoiceInstrumentFormDialog
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			SingleChoiceInstrument instrument = HolderApplicationContext.getContext().getBean(SingleChoiceInstrumentService.class).findById(38);
-			SingleChoiceInstrumentFormDialog dialog = (SingleChoiceInstrumentFormDialog) HolderApplicationContext.getContext()
-					.getBean(SingleChoiceInstrumentFormDialog.class).createEditDialog(instrument);
+			// SingleChoiceInstrument instrument = HolderApplicationContext.getContext().getBean(SingleChoiceInstrumentService.class).findById(38);
 			// SingleChoiceInstrumentFormDialog dialog = (SingleChoiceInstrumentFormDialog) HolderApplicationContext.getContext()
-			// .getBean(SingleChoiceInstrumentFormDialog.class).createNewDialog();
+			// .getBean(SingleChoiceInstrumentFormDialog.class).createEditDialog(instrument);
+			SingleChoiceInstrumentFormDialog dialog = (SingleChoiceInstrumentFormDialog) HolderApplicationContext.getContext()
+					.getBean(SingleChoiceInstrumentFormDialog.class).createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
