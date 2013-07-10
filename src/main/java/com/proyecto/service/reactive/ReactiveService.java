@@ -7,6 +7,7 @@ import com.proyecto.service.ProyectoService;
 /**
  * La interfaz que define los servicios para los reactivos que tenemos dentro del sistema.
  * 
+ * @author Marcelo Romitti
  * @version 1.0
  */
 public interface ReactiveService extends ProyectoService<Reactive, Integer> {

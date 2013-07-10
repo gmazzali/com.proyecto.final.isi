@@ -12,6 +12,7 @@ import com.proyecto.service.reactive.ReactiveService;
 /**
  * La clase que nos permite implementar la interfaz de los servicios de los reactivos que tenemos dentro del sistema.
  * 
+ * @author Marcelo Romitti
  * @version 1.0
  */
 @Service
@@ -25,8 +26,6 @@ public class ReactiveServiceImpl extends ProyectoServiceImpl<Reactive, Integer> 
 
 	@Override
 	public void validate(Reactive arg0) throws CheckedException {
-		// TODO Auto-generated method stub
-		
+		// TODO mromitti Hacer lo de la validación de un reactivo.
 	}
-
 }
