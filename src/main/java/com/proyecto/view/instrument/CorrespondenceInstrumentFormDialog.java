@@ -31,6 +31,7 @@ import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.model.answer.RelationAnswer;
+import com.proyecto.model.answer.RelationAnswer.Side;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
 import com.proyecto.service.instrument.CorrespondenceInstrumentService;
 import com.proyecto.view.Resources;
@@ -57,6 +58,12 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 */
 	private CorrespondenceInstrument correspondenceInstrument;
 
+	/**
+	 * Las frases de izquierda y derecha que estamos editando.
+	 */
+	private RelationAnswer leftEditionPhrase;
+	private RelationAnswer rightEditionPhrase;
+
 	/*
 	 * El campo de la descripción del instrumento.
 	 */
@@ -69,8 +76,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	/**
 	 * Las listas que tenemos en la ventana.
 	 */
-	private JList<String> leftSideList;
-	private JList<String> rightSideList;
+	private JList<RelationAnswer> leftSideList;
+	private JList<RelationAnswer> rightSideList;
 	private JList<RelationAnswer> relationList;
 	/*
 	 * Los botones de aceptar y cancelar.
@@ -130,13 +137,14 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(leftSideScrollPane);
 
 		this.leftSideList = new JList<>();
-		this.leftSideList.setModel(new DefaultListModel<String>());
+		this.leftSideList.setModel(new DefaultListModel<RelationAnswer>());
 		this.leftSideList.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					CorrespondenceInstrumentFormDialog.this.modifyPhrase(CorrespondenceInstrumentFormDialog.this.leftSideList,
-							CorrespondenceInstrumentFormDialog.this.leftSideTextField);
+							CorrespondenceInstrumentFormDialog.this.leftSideTextField, Side.LEFT,
+							CorrespondenceInstrumentFormDialog.this.leftEditionPhrase);
 				} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
 					CorrespondenceInstrumentFormDialog.this.deletePhrase(CorrespondenceInstrumentFormDialog.this.leftSideList);
 				}
@@ -147,7 +155,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					CorrespondenceInstrumentFormDialog.this.modifyPhrase(CorrespondenceInstrumentFormDialog.this.leftSideList,
-							CorrespondenceInstrumentFormDialog.this.leftSideTextField);
+							CorrespondenceInstrumentFormDialog.this.leftSideTextField, Side.LEFT,
+							CorrespondenceInstrumentFormDialog.this.leftEditionPhrase);
 				}
 			}
 		});
@@ -166,7 +175,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					CorrespondenceInstrumentFormDialog.this.addPhrase(CorrespondenceInstrumentFormDialog.this.leftSideList,
-							CorrespondenceInstrumentFormDialog.this.leftSideTextField);
+							CorrespondenceInstrumentFormDialog.this.leftSideTextField, Side.LEFT,
+							CorrespondenceInstrumentFormDialog.this.leftEditionPhrase);
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					CorrespondenceInstrumentFormDialog.this.leftSideTextField.setText("");
 				}
@@ -184,13 +194,14 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(rightSideScrollPane);
 
 		this.rightSideList = new JList<>();
-		this.rightSideList.setModel(new DefaultListModel<String>());
+		this.rightSideList.setModel(new DefaultListModel<RelationAnswer>());
 		this.rightSideList.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					CorrespondenceInstrumentFormDialog.this.modifyPhrase(CorrespondenceInstrumentFormDialog.this.rightSideList,
-							CorrespondenceInstrumentFormDialog.this.rigthSideTextField);
+							CorrespondenceInstrumentFormDialog.this.rigthSideTextField, Side.RIGTH,
+							CorrespondenceInstrumentFormDialog.this.rightEditionPhrase);
 				} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
 					CorrespondenceInstrumentFormDialog.this.deletePhrase(CorrespondenceInstrumentFormDialog.this.rightSideList);
 				}
@@ -201,7 +212,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					CorrespondenceInstrumentFormDialog.this.modifyPhrase(CorrespondenceInstrumentFormDialog.this.rightSideList,
-							CorrespondenceInstrumentFormDialog.this.rigthSideTextField);
+							CorrespondenceInstrumentFormDialog.this.rigthSideTextField, Side.RIGTH,
+							CorrespondenceInstrumentFormDialog.this.rightEditionPhrase);
 				}
 			}
 		});
@@ -221,7 +233,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					CorrespondenceInstrumentFormDialog.this.addPhrase(CorrespondenceInstrumentFormDialog.this.rightSideList,
-							CorrespondenceInstrumentFormDialog.this.rigthSideTextField);
+							CorrespondenceInstrumentFormDialog.this.rigthSideTextField, Side.RIGTH,
+							CorrespondenceInstrumentFormDialog.this.rightEditionPhrase);
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					CorrespondenceInstrumentFormDialog.this.rigthSideTextField.setText("");
 				}
@@ -240,6 +253,14 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 		this.relationList = new JList<>();
 		this.relationList.setModel(new DefaultListModel<RelationAnswer>());
+		this.relationList.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					CorrespondenceInstrumentFormDialog.this.deleteRelation();
+				}
+			}
+		});
 		relationsScrollPane.setViewportView(this.relationList);
 
 		this.createRelationButton = new JButton(Resources.ADD_ICON);
@@ -254,14 +275,14 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(this.createRelationButton);
 
 		this.removeRelationButton = new JButton(Resources.DELETE_ICON);
+		this.removeRelationButton.setFont(new Font("Arial", Font.BOLD, 12));
+		this.removeRelationButton.setBounds(783, 387, 37, 31);
 		this.removeRelationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CorrespondenceInstrumentFormDialog.this.deleteRelation();
 			}
 		});
-		this.removeRelationButton.setFont(new Font("Arial", Font.BOLD, 12));
-		this.removeRelationButton.setBounds(783, 387, 37, 31);
 		this.getContentPane().add(this.removeRelationButton);
 
 		this.progressLabel = new JLabel();
@@ -313,68 +334,83 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	/**
 	 * La función encargada de agregar una frase a la lista del lado correspondiente.
 	 * 
-	 * @return TRUE en caso de que haya agregado la frase, en caso contrario retorna FALSE.
+	 * @param list
+	 *            El listado de las relaciones.
+	 * @param field
+	 *            El campo que vamos a usar para crear las relaciones.
+	 * @param side
+	 *            El lado de la relación que estamos agregando.
+	 * @param editingRelationPhrase
+	 *            La frase que anteriormente estuvimos editando.
 	 */
-	private boolean addPhrase(JList<String> list, JTextField field) {
-		// Agregamos solo si tenemos algo en el campo de texto.
+	private void addPhrase(JList<RelationAnswer> list, JTextField field, Side side, RelationAnswer editingRelationPhrase) {
 		String phrase = field.getText().trim();
 
+		// Agregamos solo si tenemos algo en el campo de texto y tenemos un lado seleccionado.
 		if (phrase.length() > 0) {
-			DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
-			model.addElement(phrase);
+			DefaultListModel<RelationAnswer> model = (DefaultListModel<RelationAnswer>) list.getModel();
+
+			RelationAnswer answer = editingRelationPhrase != null ? editingRelationPhrase : new RelationAnswer();
+
+			answer.setPhrase(phrase, side);
+			model.addElement(answer);
 			field.setText("");
-			return true;
 		}
-		return false;
+
+		this.leftEditionPhrase = null;
+		this.rightEditionPhrase = null;
 	}
 
 	/**
 	 * La función encargada de remover la frase y cargarla dentro del campo para editarla.
 	 * 
-	 * @return TRUE en caso de que haya agregado la frase para modificar, en caso contrario retorna FALSE.
+	 * @param list
+	 *            El listado de las relaciones.
+	 * @param field
+	 *            El campo que vamos a usar para editar las relaciones.
+	 * @param side
+	 *            El lado de la relación que estamos editando.
+	 * @param editingRelationPhrase
+	 *            La frase que anteriormente estuvimos editando.
 	 */
-	private boolean modifyPhrase(JList<String> list, JTextField field) {
-		// Vemos si hay algo seleccionado en la lista.
+	private void modifyPhrase(JList<RelationAnswer> list, JTextField field, Side side, RelationAnswer editingRelationPhrase) {
 		Integer index = list.getSelectedIndex();
 
 		if (index >= 0) {
-			// Agregamos la frase que tenemos en el campo de edición.
-			this.addPhrase(list, field);
-
-			// Modificamos la que seleccionamos.
-			DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
-			String editPhrase = model.get(index);
+			DefaultListModel<RelationAnswer> model = (DefaultListModel<RelationAnswer>) list.getModel();
+			RelationAnswer relation = model.get(index);
 			model.remove(index);
 
-			// String oldEditPhrase = field.getText().trim();
-			//
-			// if (oldEditPhrase.length() > 0) {
-			// model.addElement(oldEditPhrase);
-			// }
+			this.addPhrase(list, field, side, editingRelationPhrase);
 
-			field.setText(editPhrase);
+			switch (side) {
+				case LEFT:
+					this.leftEditionPhrase = relation;
+					break;
+
+				case RIGTH:
+					this.rightEditionPhrase = relation;
+					break;
+			}
+
+			field.setText(relation.getPhrase(side));
 			field.requestFocus();
-
-			return true;
 		}
-		return false;
 	}
 
 	/**
 	 * La función encargada de quitar una frase del lado seleccionado.
 	 * 
-	 * @return TRUE en caso de que haya quitado la frase, en caso contrario retorna FALSE.
+	 * @param list
+	 *            El listado de las relaciones.
 	 */
-	private boolean deletePhrase(JList<String> list) {
-		// Vemos si hay algo seleccionado en la lista.
+	private void deletePhrase(JList<RelationAnswer> list) {
 		Integer index = list.getSelectedIndex();
 
 		if (index >= 0) {
-			DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
+			DefaultListModel<RelationAnswer> model = (DefaultListModel<RelationAnswer>) list.getModel();
 			model.remove(index);
-			return true;
 		}
-		return false;
 	}
 
 	/**
@@ -387,17 +423,16 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 		if (leftIndex >= 0 && rightIndex >= 0) {
 			DefaultListModel<RelationAnswer> relationModel = (DefaultListModel<RelationAnswer>) this.relationList.getModel();
-			DefaultListModel<String> leftModel = (DefaultListModel<String>) this.leftSideList.getModel();
-			DefaultListModel<String> rightModel = (DefaultListModel<String>) this.rightSideList.getModel();
+			DefaultListModel<RelationAnswer> leftModel = (DefaultListModel<RelationAnswer>) this.leftSideList.getModel();
+			DefaultListModel<RelationAnswer> rightModel = (DefaultListModel<RelationAnswer>) this.rightSideList.getModel();
 
 			// Creamos la relación y la cargamos en la lista.
 			RelationAnswer answer = new RelationAnswer();
-			answer.setLeftSide(leftModel.get(leftIndex));
-			answer.setRightSide(rightModel.get(rightIndex));
+			answer.setPhrase(leftModel.get(leftIndex).getPhrase(Side.LEFT), Side.LEFT);
+			answer.setPhrase(rightModel.get(rightIndex).getPhrase(Side.RIGTH), Side.RIGTH);
 
 			relationModel.addElement(answer);
 
-			// Quitamos las frases de las listas.
 			leftModel.remove(leftIndex);
 			rightModel.remove(rightIndex);
 		}
@@ -411,16 +446,23 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		Integer relationIndex = this.relationList.getSelectedIndex();
 
 		if (relationIndex >= 0) {
-			// Obtenemos la relación.
+			// Obtenemos los modelos.
 			DefaultListModel<RelationAnswer> relationModel = (DefaultListModel<RelationAnswer>) this.relationList.getModel();
+			DefaultListModel<RelationAnswer> leftModel = (DefaultListModel<RelationAnswer>) this.leftSideList.getModel();
+			DefaultListModel<RelationAnswer> rightModel = (DefaultListModel<RelationAnswer>) this.rightSideList.getModel();
+
 			RelationAnswer answer = relationModel.get(relationIndex);
 			relationModel.remove(relationIndex);
 
 			// Volvemos a cargar las listas de frases.
-			DefaultListModel<String> leftModel = (DefaultListModel<String>) this.leftSideList.getModel();
-			DefaultListModel<String> rightModel = (DefaultListModel<String>) this.rightSideList.getModel();
-			leftModel.addElement(answer.getLeftSide());
-			rightModel.addElement(answer.getRightSide());
+			RelationAnswer leftAnswer = new RelationAnswer();
+			RelationAnswer rightAnswer = new RelationAnswer();
+
+			leftAnswer.setPhrase(answer.getPhrase(Side.LEFT), Side.LEFT);
+			rightAnswer.setPhrase(answer.getPhrase(Side.RIGTH), Side.RIGTH);
+
+			leftModel.addElement(leftAnswer);
+			rightModel.addElement(rightAnswer);
 		}
 	}
 
@@ -437,8 +479,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 		// Los modelos.
 		DefaultListModel<RelationAnswer> relationModel = (DefaultListModel<RelationAnswer>) this.relationList.getModel();
-		DefaultListModel<String> leftModel = (DefaultListModel<String>) this.leftSideList.getModel();
-		DefaultListModel<String> rightModel = (DefaultListModel<String>) this.rightSideList.getModel();
+		DefaultListModel<RelationAnswer> leftModel = (DefaultListModel<RelationAnswer>) this.leftSideList.getModel();
+		DefaultListModel<RelationAnswer> rightModel = (DefaultListModel<RelationAnswer>) this.rightSideList.getModel();
 
 		List<RelationAnswer> relations = new ArrayList<>();
 
@@ -455,22 +497,18 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 		// Creamos las relaciones de izquierda y derecha.
 		for (Integer index = 0; index < leftModel.getSize(); index++) {
-			RelationAnswer answer = new RelationAnswer();
-			answer.setLeftSide(leftModel.get(index));
-			answer.setCorrespondenceInstrument(this.correspondenceInstrument);
+			RelationAnswer answer = leftModel.get(index);
 			relations.add(answer);
 		}
 
 		for (Integer index = 0; index < rightModel.getSize(); index++) {
-			RelationAnswer answer = new RelationAnswer();
-			answer.setRightSide(rightModel.get(index));
-			answer.setCorrespondenceInstrument(this.correspondenceInstrument);
+			RelationAnswer answer = rightModel.get(index);
 			relations.add(answer);
 		}
 
 		// Agregamos las relaciones al listado del instrumento.
-		this.correspondenceInstrument.getRelations().clear();
-		this.correspondenceInstrument.getRelations().addAll(relations);
+		this.correspondenceInstrument.clearRelations();
+		this.correspondenceInstrument.addAllRelations(relations);
 	}
 
 	/**
@@ -481,14 +519,14 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 		// Los modelos.
 		DefaultListModel<RelationAnswer> relationModel = (DefaultListModel<RelationAnswer>) this.relationList.getModel();
-		DefaultListModel<String> leftModel = (DefaultListModel<String>) this.leftSideList.getModel();
-		DefaultListModel<String> rightModel = (DefaultListModel<String>) this.rightSideList.getModel();
+		DefaultListModel<RelationAnswer> leftModel = (DefaultListModel<RelationAnswer>) this.leftSideList.getModel();
+		DefaultListModel<RelationAnswer> rightModel = (DefaultListModel<RelationAnswer>) this.rightSideList.getModel();
 
 		for (RelationAnswer relation : this.correspondenceInstrument.getRelations()) {
 			if (relation.getLeftSide() == null && relation.getRightSide() != null) {
-				rightModel.addElement(relation.getRightSide());
+				rightModel.addElement(relation);
 			} else if (relation.getLeftSide() != null && relation.getRightSide() == null) {
-				leftModel.addElement(relation.getLeftSide());
+				leftModel.addElement(relation);
 			} else if (relation.getLeftSide() != null && relation.getRightSide() != null) {
 				relationModel.addElement(relation);
 			}
@@ -543,11 +581,15 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.rigthSideTextField.setText("");
 
 		DefaultListModel<RelationAnswer> relationModel = (DefaultListModel<RelationAnswer>) this.relationList.getModel();
-		DefaultListModel<String> leftModel = (DefaultListModel<String>) this.leftSideList.getModel();
-		DefaultListModel<String> rightModel = (DefaultListModel<String>) this.rightSideList.getModel();
+		DefaultListModel<RelationAnswer> leftModel = (DefaultListModel<RelationAnswer>) this.leftSideList.getModel();
+		DefaultListModel<RelationAnswer> rightModel = (DefaultListModel<RelationAnswer>) this.rightSideList.getModel();
+
 		relationModel.clear();
 		leftModel.clear();
 		rightModel.clear();
+
+		this.leftEditionPhrase = null;
+		this.rightEditionPhrase = null;
 	}
 
 	/**
@@ -556,7 +598,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 * @return La ventana para crear un nuevo instrumento de correspondencia.
 	 */
 	public CorrespondenceInstrumentFormDialog createNewDialog() {
-		this.setTitle("Instrumento de correspondencia");
+		this.setTitle("Edición de instrumento de correspondencia");
 		this.correspondenceInstrument = new CorrespondenceInstrument();
 		this.emptyFields();
 		return this;
@@ -570,7 +612,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 * @return La ventana para editar un instrumento de correspondencia.
 	 */
 	public CorrespondenceInstrumentFormDialog createEditDialog(CorrespondenceInstrument correspondenceInstrument) {
-		this.setTitle("Instrumento de correspondencia");
+		this.setTitle("Nuevo instrumento de correspondencia");
 		this.correspondenceInstrument = correspondenceInstrument;
 		this.fromInstrumentToDialog();
 		return this;
@@ -587,12 +629,11 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			// CorrespondenceInstrument instrument =
-			// HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(12);
-			// CorrespondenceInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentFormDialog.class)
-			// .createEditDialog(instrument);
+			CorrespondenceInstrument instrument = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(4);
 			CorrespondenceInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentFormDialog.class)
-					.createNewDialog();
+					.createEditDialog(instrument);
+			// CorrespondenceInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentFormDialog.class)
+			// .createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
