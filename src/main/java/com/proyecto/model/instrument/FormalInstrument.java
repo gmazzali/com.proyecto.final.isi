@@ -23,4 +23,11 @@ public abstract class FormalInstrument extends Instrument {
 	 */
 	public interface Attributes extends Instrument.Attributes {
 	}
+
+	/**
+	 * El constructor por omisión.
+	 */
+	public FormalInstrument() {
+		super();
+	}
 }

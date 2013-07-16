@@ -48,13 +48,14 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 	private ChoiceInstrument choiceInstrument;
 
 	/**
+	 * El listado de las opciones y la opción que estamos editando en la ventana.
+	 */
+	private JList<Option> optionsList;
+
+	/**
 	 * El campo de descripción del instrumento.
 	 */
 	private JTextArea descriptionTextArea;
-	/**
-	 * El listado de las opciones.
-	 */
-	private JList<Option> optionsList;
 	/**
 	 * El combo del tipo de opción y el campo para la opción que estamos editando.
 	 */
@@ -227,17 +228,14 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 
 	/**
 	 * La función utilizada para agregar una nueva opción al listado ya cargado.
-	 * 
-	 * @return TRUE en caso de que haya agregado la opción, en caso contrario retorna FALSE.
 	 */
-	private boolean addOption() {
-		// Obtenemos su descripción.
+	private void addOption() {
+		// Obtenemos su descripción y el tipo de opción.
 		String optionDescription = this.optionTextField.getText().trim();
-		// Obtenemos el tipo de respuesta.
 		TrueFalseAnswerTypeEnum answerType = (TrueFalseAnswerTypeEnum) this.optionAnswerComboBox.getSelectedItem();
 
 		// Corroboramos que haya algo en la descripción de la opción.
-		if (/* !optionDescription.isEmpty() && */answerType != null) {
+		if (answerType != null) {
 
 			Option option = null;
 			switch (answerType) {
@@ -261,19 +259,14 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 				this.optionAnswerComboBox.setSelectedIndex(-1);
 				this.optionTextField.setText("");
 				this.optionTextField.requestFocus();
-
-				return true;
 			}
 		}
-		return false;
 	}
 
 	/**
 	 * La función utilizada para modificar una opción dentro del listado y que ya estaba cargada.
-	 * 
-	 * @return TRUE en caso de que haya agregado la opción para modificar, en caso contrario retorna FALSE.
 	 */
-	private boolean modifyOption() {
+	private void modifyOption() {
 		// Obtenemos la opción para editar.
 		Integer optionIndex = this.optionsList.getSelectedIndex();
 
@@ -290,10 +283,7 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 			this.optionAnswerComboBox.setSelectedItem(option.getAnswerType());
 			this.optionTextField.setText(option.getDescription());
 			this.optionTextField.requestFocus();
-
-			return true;
 		}
-		return false;
 	}
 
 	/**
@@ -337,7 +327,7 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 				throw new CheckedException("instrument.selection.empty.option");
 			}
 
-			option.setChoiceInstrument(this.choiceInstrument);
+			option.setInstrument(this.choiceInstrument);
 			options.add(option);
 		}
 

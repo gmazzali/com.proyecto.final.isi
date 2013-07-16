@@ -23,4 +23,11 @@ public class SingleChoiceInstrument extends ChoiceInstrument {
 	 */
 	public interface Attributes extends ChoiceInstrument.Attributes {
 	}
+
+	/**
+	 * El constructor por omisión.
+	 */
+	public SingleChoiceInstrument() {
+		super();
+	}
 }

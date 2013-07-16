@@ -40,7 +40,7 @@ public abstract class Option extends Entity<Integer> {
 	public interface Attributes extends Entity.Attributes {
 		static final String DESCRIPTION = "description";
 		static final String TRUE_FALSE_ANSWER = "trueFalseAnswer";
-		static final String CHOICE_INSTRUMENT = "choiceInstrument";
+		static final String CHOICE_INSTRUMENT = "instrument";
 	}
 
 	/**
@@ -54,7 +54,7 @@ public abstract class Option extends Entity<Integer> {
 	/**
 	 * El instrumento al que pertenece esta opción.
 	 */
-	private ChoiceInstrument choiceInstrument;
+	private ChoiceInstrument instrument;
 
 	/**
 	 * El constructor que recibe el tipo de respuesta que vamos a crear con este constructor.
@@ -65,7 +65,7 @@ public abstract class Option extends Entity<Integer> {
 	public Option(TrueFalseAnswer trueFalseAnswer) {
 		this.description = "";
 		this.trueFalseAnswer = trueFalseAnswer;
-		this.choiceInstrument = null;
+		this.instrument = null;
 	}
 
 	@Override
@@ -99,8 +99,8 @@ public abstract class Option extends Entity<Integer> {
 	@ManyToOne(cascade =
 		{ CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER, targetEntity = ChoiceInstrument.class, optional = false)
 	@JoinColumn(name = "ID_INSTRUMENT", referencedColumnName = "ID_INSTRUMENT", insertable = true, updatable = true, nullable = false)
-	public ChoiceInstrument getChoiceInstrument() {
-		return this.choiceInstrument;
+	public ChoiceInstrument getInstrument() {
+		return this.instrument;
 	}
 
 	/**
@@ -134,11 +134,11 @@ public abstract class Option extends Entity<Integer> {
 	/**
 	 * La función encargada de cargar el instrumento al que pertenece esta opción.
 	 * 
-	 * @param choiceInstrument
+	 * @param instrument
 	 *            El instrumento al que pertenece esta opción.
 	 */
-	public void setChoiceInstrument(ChoiceInstrument choiceInstrument) {
-		this.choiceInstrument = choiceInstrument;
+	public void setInstrument(ChoiceInstrument instrument) {
+		this.instrument = instrument;
 	}
 
 	/**

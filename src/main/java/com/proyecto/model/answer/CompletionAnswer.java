@@ -4,7 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.common.util.annotations.Model;
@@ -28,40 +28,57 @@ public class CompletionAnswer extends Answer {
 	 * @see Entity.Attributes
 	 */
 	public interface Attributes extends Answer.Attributes {
-		static final String WORD = "word";
+		static final String PHRASE = "phrase";
+		static final String INDEX = "index";
+		static final String INSTRUMENT = "instrument";
 	}
 
 	/**
 	 * La palabra que vamos a utilizar para completar.
 	 */
-	private String word;
+	private String phrase;
+	/**
+	 * El índice que corresponde a esta frase con el instrumento.
+	 */
+	private Integer index;
 	/**
 	 * El instrumento al que corresponde esta respuesta.
 	 */
-	private CompletionInstrument completionInstrument;
+	private CompletionInstrument instrument;
 
 	/**
 	 * El constructor por omisión.
 	 */
 	public CompletionAnswer() {
 		super();
-		this.word = null;
-		this.completionInstrument = null;
+		this.phrase = null;
+		this.index = 0;
+		this.instrument = null;
 	}
 
 	@Override
 	public String toString() {
-		return this.word;
+		return this.index + " - " + this.phrase;
 	}
 
 	/**
-	 * La función encargada de retornar la palabra que vamos a ocupar para completar la frase incompleta.
+	 * La función encargada de retornar la frase que vamos a ocupar para completar la frase incompleta.
 	 * 
-	 * @return La palabra que vamos a ocupar para completar la frase incompleta.
+	 * @return La frase que vamos a ocupar para completar la frase incompleta.
 	 */
-	@Column(name = "WORD", columnDefinition = "varchar(255)", nullable = true)
-	public String getWord() {
-		return this.word;
+	@Column(name = "PHRASE", columnDefinition = "varchar(255)", nullable = false)
+	public String getPhrase() {
+		return this.phrase;
+	}
+
+	/**
+	 * La función encargada de retornar el índice que corresponde con la frase de la respuesta dentro del instrumento.
+	 * 
+	 * @return El índice que corresponde con la frase de la respuesta dentro del instrumento.
+	 */
+	@Column(name = "PHRASE_INDEX", columnDefinition = "integer", nullable = false)
+	public Integer getIndex() {
+		return this.index;
 	}
 
 	/**
@@ -69,30 +86,40 @@ public class CompletionAnswer extends Answer {
 	 * 
 	 * @return El instrumento que corresponde con esta respuesta.
 	 */
-	@OneToOne(cascade =
+	@ManyToOne(cascade =
 		{ CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER, targetEntity = CompletionInstrument.class, optional = false)
 	@JoinColumn(name = "ID_INSTRUMENT", referencedColumnName = "ID_INSTRUMENT", insertable = true, updatable = true, nullable = false)
-	public CompletionInstrument getCompletionInstrument() {
-		return this.completionInstrument;
+	public CompletionInstrument getInstrument() {
+		return this.instrument;
 	}
 
 	/**
-	 * La función encargada de cargar la palabra que vamos a ocupar para completar la frase incompleta.
+	 * La función encargada de cargar la frase que vamos a ocupar para completar la frase incompleta.
 	 * 
-	 * @param word
-	 *            La palabra que vamos a ocupar para completar la frase incompleta.
+	 * @param phrase
+	 *            La frase que vamos a ocupar para completar la frase incompleta.
 	 */
-	public void setWord(String word) {
-		this.word = word;
+	public void setPhrase(String phrase) {
+		this.phrase = phrase;
+	}
+
+	/**
+	 * La función encargada de cargar el índice que corresponde con la frase de la respuesta dentro del instrumento.
+	 * 
+	 * @param index
+	 *            El índice que corresponde con la frase de la respuesta dentro del instrumento.
+	 */
+	public void setIndex(Integer index) {
+		this.index = index;
 	}
 
 	/**
 	 * La función encargada de cargar el instrumento que corresponde con esta respuesta.
 	 * 
-	 * @param completionInstrument
+	 * @param instrument
 	 *            El instrumento que corresponde con esta respuesta.
 	 */
-	public void setCompletionInstrument(CompletionInstrument completionInstrument) {
-		this.completionInstrument = completionInstrument;
+	public void setInstrument(CompletionInstrument instrument) {
+		this.instrument = instrument;
 	}
 }

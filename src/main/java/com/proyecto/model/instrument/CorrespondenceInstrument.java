@@ -29,7 +29,7 @@ public class CorrespondenceInstrument extends ObjectiveActivityInstrument {
 	 * @see Entity.Attributes
 	 */
 	public interface Attributes extends ObjectiveActivityInstrument.Attributes {
-		static final String CORRESPONDENCES = "relations";
+		static final String RELATIONS = "relations";
 	}
 
 	/**
@@ -41,7 +41,61 @@ public class CorrespondenceInstrument extends ObjectiveActivityInstrument {
 	 * El constructor por omisión de este instrumento.
 	 */
 	public CorrespondenceInstrument() {
+		super();
 		this.relations = new ArrayList<>();
+	}
+
+	/**
+	 * La función encargada de agregar una nueva relación dentro de este instrumento.
+	 * 
+	 * @param relationAnswer
+	 *            La relación que vamos a agregar dentro de este instrumento.
+	 */
+	public void addRelation(RelationAnswer relationAnswer) {
+		relationAnswer.setInstrument(this);
+		this.relations.add(relationAnswer);
+	}
+
+	/**
+	 * La función encargada de agregar un listado de relaciones dentro de las que ya tenemos dentro del instrumento.
+	 * 
+	 * @param relationAnswers
+	 *            El listado de relaciones que vamos a agregar dentro del que ya tenemos.
+	 */
+	public void addAllRelations(List<RelationAnswer> relationAnswers) {
+		for (RelationAnswer relationAnswer : relationAnswers) {
+			this.addRelation(relationAnswer);
+		}
+	}
+
+	/**
+	 * La función encargada de quitar una relación de el listado de relaciones que tiene este instrumento.
+	 * 
+	 * @param relationAnswer
+	 *            La relación que quiere quitarse de este instrumento.
+	 */
+	public void removeRelation(RelationAnswer relationAnswer) {
+		this.relations.remove(relationAnswer);
+	}
+
+	/**
+	 * La función encargada de borrar todas las relaciones que se encuentra dentro de este instrumento y que están en el listado de relaciones a
+	 * borrar.
+	 * 
+	 * @param relationAnswers
+	 *            El listado de las relaciones a borrar.
+	 */
+	public void removeAllRelations(List<RelationAnswer> relationAnswers) {
+		for (RelationAnswer relationAnswer : relationAnswers) {
+			this.removeRelation(relationAnswer);
+		}
+	}
+
+	/**
+	 * la función encargada de vaciar el listado de las relaciones que tenemos dentro de este instrumento.
+	 */
+	public void clearRelations() {
+		this.relations.clear();
 	}
 
 	/**
@@ -49,7 +103,7 @@ public class CorrespondenceInstrument extends ObjectiveActivityInstrument {
 	 * 
 	 * @return El listado de las relaciones que tenemos dentro de este instrumento.
 	 */
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "correspondenceInstrument", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "instrument", orphanRemoval = true)
 	public List<RelationAnswer> getRelations() {
 		return this.relations;
 	}

@@ -41,7 +41,60 @@ public abstract class ChoiceInstrument extends ObjectiveActivityInstrument {
 	 * El constructor por omisión.
 	 */
 	public ChoiceInstrument() {
+		super();
 		this.options = new ArrayList<>();
+	}
+
+	/**
+	 * La función encargada de agregar una nueva opción dentro de este instrumento.
+	 * 
+	 * @param option
+	 *            La opción que vamos a agregar dentro de este instrumento.
+	 */
+	public void addOption(Option option) {
+		option.setInstrument(this);
+		this.options.add(option);
+	}
+
+	/**
+	 * La función encargada de agregar un listado de opciones dentro de las que ya tenemos dentro del instrumento.
+	 * 
+	 * @param options
+	 *            El listado de opciones que vamos a agregar dentro del que ya tenemos.
+	 */
+	public void addAllOptions(List<Option> options) {
+		for (Option option : options) {
+			this.addOption(option);
+		}
+	}
+
+	/**
+	 * La función encargada de quitar una opción de el listado de opciones que tiene este instrumento.
+	 * 
+	 * @param option
+	 *            La opción que quiere quitarse de este instrumento.
+	 */
+	public void removeOption(Option option) {
+		this.options.remove(option);
+	}
+
+	/**
+	 * La función encargada de borrar todas las opciones que se encuentra dentro de este instrumento y que están en el listado de opciones a borrar.
+	 * 
+	 * @param options
+	 *            El listado de las opciones a borrar.
+	 */
+	public void removeAllOptions(List<Option> options) {
+		for (Option option : options) {
+			this.removeOption(option);
+		}
+	}
+
+	/**
+	 * la función encargada de vaciar el listado de las opciones que tenemos dentro de este instrumento.
+	 */
+	public void clearOptions() {
+		this.options.clear();
 	}
 
 	/**
@@ -49,7 +102,7 @@ public abstract class ChoiceInstrument extends ObjectiveActivityInstrument {
 	 * 
 	 * @return El listado de opciones que tenemos dentro de este elemento.
 	 */
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "choiceInstrument", targetEntity = Option.class, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "instrument", targetEntity = Option.class, orphanRemoval = true)
 	public List<Option> getOptions() {
 		return this.options;
 	}
