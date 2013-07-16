@@ -23,4 +23,11 @@ public abstract class ObjectiveActivityInstrument extends FormalInstrument {
 	 */
 	public interface Attributes extends FormalInstrument.Attributes {
 	}
+
+	/**
+	 * El constructor por omisión.
+	 */
+	public ObjectiveActivityInstrument() {
+		super();
+	}
 }

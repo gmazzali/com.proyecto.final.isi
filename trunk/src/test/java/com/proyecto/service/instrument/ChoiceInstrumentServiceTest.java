@@ -62,22 +62,22 @@ public class ChoiceInstrumentServiceTest {
 		options = new ArrayList<>();
 		option = new TrueOption();
 		option.setDescription("Opcion 1 - V");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new TrueOption();
 		option.setDescription("Opcion 2 - V");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 3 - F");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 4 - F");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		choice.getOptions().addAll(options);
@@ -103,22 +103,22 @@ public class ChoiceInstrumentServiceTest {
 		options = new ArrayList<>();
 		option = new TrueOption();
 		option.setDescription("Opcion 11 - V");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new TrueOption();
 		option.setDescription("Opcion 12 - V");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 13 - F");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 14 - F");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		choice.setDescription("Otra descripcion de simple seleccion 2");
@@ -162,22 +162,22 @@ public class ChoiceInstrumentServiceTest {
 		options = new ArrayList<>();
 		option = new TrueOption();
 		option.setDescription("Opcion 1 - V");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new TrueOption();
 		option.setDescription("Opcion 2 - V");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 3 - F");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 4 - F");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		choice.getOptions().addAll(options);
@@ -203,22 +203,22 @@ public class ChoiceInstrumentServiceTest {
 		options = new ArrayList<>();
 		option = new TrueOption();
 		option.setDescription("Opcion 11 - V");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new TrueOption();
 		option.setDescription("Opcion 12 - V");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 13 - F");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 14 - F");
-		option.setChoiceInstrument(choice);
+		option.setInstrument(choice);
 		options.add(option);
 
 		choice.setDescription("Otra descripcion de multiple seleccion 2");

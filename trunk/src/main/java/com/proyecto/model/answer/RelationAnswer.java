@@ -25,11 +25,22 @@ public class RelationAnswer extends Answer {
 	private static final long serialVersionUID = -6324391499398899382L;
 
 	/**
+	 * La enumeración que nos dice de que lado vamos a cargar la relación.
+	 * 
+	 * @author Guillermo Mazzali
+	 * @version 1.0
+	 */
+	public enum Side {
+		LEFT, RIGTH;
+	}
+
+	/**
 	 * @see Entity.Attributes
 	 */
 	public interface Attributes extends Answer.Attributes {
 		static final String LEFT_SIDE = "leftSide";
 		static final String RIGHT_SIDE = "rightSide";
+		static final String INSTRUMENT = "instrument";
 	}
 
 	/**
@@ -44,7 +55,7 @@ public class RelationAnswer extends Answer {
 	/**
 	 * El instrumento de correspondencia a la que pertenece esta relación.
 	 */
-	private CorrespondenceInstrument correspondenceInstrument;
+	private CorrespondenceInstrument instrument;
 
 	/**
 	 * El constructor de una relación.
@@ -53,12 +64,58 @@ public class RelationAnswer extends Answer {
 		super();
 		this.leftSide = null;
 		this.rightSide = null;
-		this.correspondenceInstrument = null;
+		this.instrument = null;
 	}
 
 	@Override
 	public String toString() {
-		return this.leftSide + " - " + this.rightSide;
+		if (this.leftSide != null && this.rightSide != null) {
+			return this.leftSide + " - " + this.rightSide;
+		} else if (this.leftSide != null) {
+			return this.leftSide;
+		} else if (this.rightSide != null) {
+			return this.rightSide;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Agregamos una frase de acuerdo al lado de la relación que recibimos.
+	 * 
+	 * @param phrase
+	 *            La frase que vamos a guardar en la relación.
+	 * @param side
+	 *            El lado de la relación que vamos a cargar.
+	 */
+	public void setPhrase(String phrase, Side side) {
+		switch (side) {
+			case LEFT:
+				this.leftSide = phrase;
+				break;
+
+			case RIGTH:
+				this.rightSide = phrase;
+				break;
+		}
+	}
+
+	/**
+	 * La función encargada de retornar la frase que corresponde con el lado que se recibe.
+	 * 
+	 * @param side
+	 *            El lado que se quiere recuperar.
+	 * @return La frase que corresponde con el lado que se recibió.
+	 */
+	public String getPhrase(Side side) {
+		switch (side) {
+			case LEFT:
+				return this.leftSide;
+
+			case RIGTH:
+				return this.rightSide;
+		}
+		return null;
 	}
 
 	/**
@@ -89,8 +146,8 @@ public class RelationAnswer extends Answer {
 	@ManyToOne(cascade =
 		{ CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER, targetEntity = CorrespondenceInstrument.class, optional = false)
 	@JoinColumn(name = "ID_INSTRUMENT", referencedColumnName = "ID_INSTRUMENT", insertable = true, updatable = true, nullable = false)
-	public CorrespondenceInstrument getCorrespondenceInstrument() {
-		return this.correspondenceInstrument;
+	public CorrespondenceInstrument getInstrument() {
+		return this.instrument;
 	}
 
 	/**
@@ -116,10 +173,10 @@ public class RelationAnswer extends Answer {
 	/**
 	 * La función encargada de cargar la correspondencia a la que pertenece esta relación.
 	 * 
-	 * @param correspondenceInstrument
+	 * @param instrument
 	 *            La correspondencia a la que pertenece esta relación.
 	 */
-	public void setCorrespondenceInstrument(CorrespondenceInstrument correspondenceInstrument) {
-		this.correspondenceInstrument = correspondenceInstrument;
+	public void setInstrument(CorrespondenceInstrument instrument) {
+		this.instrument = instrument;
 	}
 }

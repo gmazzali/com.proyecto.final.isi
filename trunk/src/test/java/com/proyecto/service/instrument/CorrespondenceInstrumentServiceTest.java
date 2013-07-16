@@ -58,40 +58,40 @@ public class CorrespondenceInstrumentServiceTest {
 
 		relation = new RelationAnswer();
 		relations = new ArrayList<>();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 1");
 		relation.setRightSide("derecha 1");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 2");
 		relation.setRightSide("derecha 2");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 3");
 		relation.setRightSide("derecha 3");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 4");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 5");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setRightSide("derecha 6");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setRightSide("derecha 7");
 		relations.add(relation);
 
@@ -117,40 +117,40 @@ public class CorrespondenceInstrumentServiceTest {
 
 		relations = new ArrayList<>();
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 11");
 		relation.setRightSide("derecha 11");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 12");
 		relation.setRightSide("derecha 12");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 13");
 		relation.setRightSide("derecha 13");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 14");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 15");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setRightSide("derecha 16");
 		relations.add(relation);
 
 		relation = new RelationAnswer();
-		relation.setCorrespondenceInstrument(correspondence);
+		relation.setInstrument(correspondence);
 		relation.setRightSide("derecha 17");
 		relations.add(relation);
 
