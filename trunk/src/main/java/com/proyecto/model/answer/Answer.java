@@ -40,9 +40,9 @@ public abstract class Answer extends Entity<Integer> {
 	}
 
 	@Id
+	@Override
 	@Column(name = "ID_ANSWER")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Override
 	public Integer getId() {
 		return super.getId();
 	}

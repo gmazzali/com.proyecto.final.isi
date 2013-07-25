@@ -1,6 +1,7 @@
 package com.proyecto.model.instrument.type.impl;
 
 import com.proyecto.model.instrument.CompositeInstrument;
+import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.SimpleInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
 
@@ -32,7 +33,7 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
-	private Class<?> instrumentClass;
+	private Class<? extends Instrument> instrumentClass;
 	/**
 	 * Las enumeraciones que contiene los sub-instrumentos.
 	 */
@@ -48,7 +49,7 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private SemiFormalInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private SemiFormalInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.code = code;
 		this.name = name;
 		this.instrumentClass = instrumentClass;
@@ -76,7 +77,7 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	}
 
 	@Override
-	public Class<?> getInstrumentClass() {
+	public Class<? extends Instrument> getInstrumentClass() {
 		return this.instrumentClass;
 	}
 }

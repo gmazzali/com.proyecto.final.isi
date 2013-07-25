@@ -1,5 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
+import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.PortfolioInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
 
@@ -27,7 +28,7 @@ public enum CompositeInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
-	private Class<?> instrumentClass;
+	private Class<? extends Instrument> instrumentClass;
 	/**
 	 * Las enumeraciones que contiene los sub-instrumentos.
 	 */
@@ -43,7 +44,7 @@ public enum CompositeInstrumentType implements InstrumentTypeInterface {
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private CompositeInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private CompositeInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.code = code;
 		this.name = name;
 		this.instrumentClass = instrumentClass;
@@ -71,7 +72,7 @@ public enum CompositeInstrumentType implements InstrumentTypeInterface {
 	}
 
 	@Override
-	public Class<?> getInstrumentClass() {
+	public Class<? extends Instrument> getInstrumentClass() {
 		return this.instrumentClass;
 	}
 }

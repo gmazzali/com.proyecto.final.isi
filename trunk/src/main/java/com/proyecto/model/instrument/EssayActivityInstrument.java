@@ -1,17 +1,13 @@
 package com.proyecto.model.instrument;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
-import com.proyecto.model.answer.CompletionAnswer;
 import com.proyecto.model.answer.EssayActivityAnswer;
-import com.proyecto.model.option.Option;
 
 /**
  * La clase que permite definir el instrumento formal de actividad para un ensayo que vamos a ocupar.
@@ -19,9 +15,8 @@ import com.proyecto.model.option.Option;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-
 @Model
-@Table(name = "ESSAYACTIVITY_INSTRUMENTS")
+@Table(name = "ESSAY_INSTRUMENTS")
 @javax.persistence.Entity(name = "EssayActivityInstrument")
 public abstract class EssayActivityInstrument extends FormalInstrument {
 
@@ -33,9 +28,12 @@ public abstract class EssayActivityInstrument extends FormalInstrument {
 	public interface Attributes extends FormalInstrument.Attributes {
 		static final String ANSWER = "answer";
 	}
-	
-	protected String essayActivityAnswer;
-	
+
+	/**
+	 * La respuesta del ensayo.
+	 */
+	protected EssayActivityAnswer answer;
+
 	/**
 	 * El constructor por omisión.
 	 */
@@ -43,13 +41,26 @@ public abstract class EssayActivityInstrument extends FormalInstrument {
 		super();
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "instrument", targetEntity = EssayActivityAnswer.class, orphanRemoval = true)
-	public String getEssayActivityAnswer() {
-		return essayActivityAnswer;
+	/**
+	 * La función que retorna la respuesta asociada a este instrumento.
+	 * 
+	 * @return La respuesta asociada a este instrumento.
+	 */
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "instrument", targetEntity = EssayActivityAnswer.class, orphanRemoval = true)
+	public EssayActivityAnswer getAnswer() {
+		return this.answer;
 	}
 
-	public void setEssayActivityAnswer(String essayActivityAnswer) {
-		this.essayActivityAnswer = essayActivityAnswer;
+	/**
+	 * La función encargada de cargar la respuesta asociada a este instrumento.
+	 * 
+	 * @param answer
+	 *            La respuesta asociada a este instrumento.
+	 */
+	public void setAnswer(EssayActivityAnswer answer) {
+		this.answer = answer;
+		if (this.answer != null) {
+			this.answer.setInstrument(this);
+		}
 	}
-	
 }

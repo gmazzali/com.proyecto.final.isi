@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -83,20 +84,22 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 	 * La función encargada de inicializar la ventana de edición de un instrumento de correspondencia.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 906, 379);
+		this.setBounds(100, 100, 906, 376);
 		this.setResizable(false);
 		this.getContentPane().setLayout(null);
+		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 
 		JLabel descriptionLabel = new JLabel("Descripci\u00F3n");
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 10, 65, 14);
+		descriptionLabel.setBounds(10, 16, 65, 14);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(6, 36, 888, 63);
+		descriptionScrollPane.setBounds(10, 33, 884, 63);
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setFont(this.getContentPane().getFont());
 		this.descriptionTextArea.setLineWrap(true);
 		this.descriptionTextArea.setWrapStyleWord(true);
 		this.descriptionTextArea.addFocusListener(new FocusAdapter() {
@@ -109,14 +112,15 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 
 		JLabel choiceLabel = new JLabel("Opciones");
 		choiceLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		choiceLabel.setBounds(10, 111, 52, 14);
+		choiceLabel.setBounds(10, 108, 52, 14);
 		this.getContentPane().add(choiceLabel);
 
 		JScrollPane choiceScrollPane = new JScrollPane();
-		choiceScrollPane.setBounds(10, 137, 884, 122);
+		choiceScrollPane.setBounds(10, 124, 884, 122);
 		this.getContentPane().add(choiceScrollPane);
 
 		this.optionsList = new JList<>();
+		this.optionsList.setFont(this.getContentPane().getFont());
 		this.optionsList.setModel(new DefaultListModel<Option>());
 		choiceScrollPane.setViewportView(this.optionsList);
 		this.optionsList.addKeyListener(new KeyAdapter() {
@@ -139,7 +143,8 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		});
 
 		this.optionAnswerComboBox = new JComboBox<>();
-		this.optionAnswerComboBox.setBounds(10, 272, 137, 26);
+		this.optionAnswerComboBox.setFont(this.getContentPane().getFont());
+		this.optionAnswerComboBox.setBounds(10, 253, 137, 30);
 		for (TrueFalseAnswerTypeEnum item : TrueFalseAnswerTypeEnum.values()) {
 			this.optionAnswerComboBox.addItem(item);
 		}
@@ -155,7 +160,8 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(this.optionAnswerComboBox);
 
 		this.optionTextField = new JTextField();
-		this.optionTextField.setBounds(159, 271, 735, 28);
+		this.optionTextField.setFont(this.getContentPane().getFont());
+		this.optionTextField.setBounds(159, 253, 735, 30);
 		this.optionTextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -197,10 +203,16 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 			}
 		});
 		this.getContentPane().add(this.rejectButton);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 295, 878, 2);
+		this.getContentPane().add(separator);
 	}
 
 	@Override
 	public void setEnabled(boolean b) {
+		super.setEnabled(b);
+
 		this.descriptionTextArea.setEnabled(b);
 
 		this.optionsList.setEnabled(b);
@@ -310,7 +322,7 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 	private void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
-			throw new CheckedException("instrument.selection.description");
+			throw new CheckedException("instrument.formal.objective.selection.description");
 		} else {
 			this.choiceInstrument.setDescription(this.descriptionTextArea.getText());
 		}
@@ -324,7 +336,7 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 			Option option = optionModel.get(index);
 
 			if (option.getDescription().isEmpty()) {
-				throw new CheckedException("instrument.selection.empty.option");
+				throw new CheckedException("instrument.formal.objective.selection.empty.option");
 			}
 
 			option.setInstrument(this.choiceInstrument);
@@ -332,7 +344,7 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		}
 
 		if (options.isEmpty()) {
-			throw new CheckedException("instrument.selection.options");
+			throw new CheckedException("instrument.formal.objective.selection.options");
 		}
 
 		// Agregamos las opciones al listado del instrumento.

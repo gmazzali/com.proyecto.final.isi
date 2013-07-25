@@ -3,6 +3,7 @@ package com.proyecto.model.instrument.type.impl;
 import com.proyecto.model.instrument.ChoiceInstrument;
 import com.proyecto.model.instrument.CompletionInstrument;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
+import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
 
 /**
@@ -37,7 +38,7 @@ public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
-	private Class<?> instrumentClass;
+	private Class<? extends Instrument> instrumentClass;
 	/**
 	 * Las enumeraciones que contiene los sub-instrumentos.
 	 */
@@ -53,7 +54,8 @@ public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private ObjectiveActivityInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private ObjectiveActivityInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass,
+			InstrumentTypeInterface[] subInstruments) {
 		this.code = code;
 		this.name = name;
 		this.instrumentClass = instrumentClass;
@@ -81,7 +83,7 @@ public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 	}
 
 	@Override
-	public Class<?> getInstrumentClass() {
+	public Class<? extends Instrument> getInstrumentClass() {
 		return this.instrumentClass;
 	}
 }

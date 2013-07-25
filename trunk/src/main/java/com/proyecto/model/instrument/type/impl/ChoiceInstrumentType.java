@@ -1,5 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
+import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.MultipleChoiceInstrument;
 import com.proyecto.model.instrument.SingleChoiceInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
@@ -32,7 +33,7 @@ public enum ChoiceInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
-	private Class<?> instrumentClass;
+	private Class<? extends Instrument> instrumentClass;
 	/**
 	 * Las enumeraciones que contiene los sub-instrumentos.
 	 */
@@ -48,7 +49,7 @@ public enum ChoiceInstrumentType implements InstrumentTypeInterface {
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private ChoiceInstrumentType(Integer code, String name, Class<?> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private ChoiceInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.code = code;
 		this.name = name;
 		this.instrumentClass = instrumentClass;
@@ -76,7 +77,7 @@ public enum ChoiceInstrumentType implements InstrumentTypeInterface {
 	}
 
 	@Override
-	public Class<?> getInstrumentClass() {
+	public Class<? extends Instrument> getInstrumentClass() {
 		return this.instrumentClass;
 	}
 }
