@@ -19,8 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -61,8 +63,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	/**
 	 * Las frases de izquierda y derecha que estamos editando.
 	 */
-	private RelationAnswer leftEditionPhrase;
-	private RelationAnswer rightEditionPhrase;
+	private RelationAnswer editingLeftPhrase;
+	private RelationAnswer editingRightPhrase;
 
 	/*
 	 * El campo de la descripción del instrumento.
@@ -79,6 +81,11 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	private JList<RelationAnswer> leftSideList;
 	private JList<RelationAnswer> rightSideList;
 	private JList<RelationAnswer> relationList;
+	/**
+	 * Los botones de creación y eliminación de relaciones.
+	 */
+	private JButton createRelationButton;
+	private JButton removeRelationButton;
 	/*
 	 * Los botones de aceptar y cancelar.
 	 */
@@ -88,14 +95,13 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 * El label de progreso.
 	 */
 	private JLabel progressLabel;
-	private JButton createRelationButton;
-	private JButton removeRelationButton;
 
 	/**
 	 * Constructor de un dialogo de edición de correspondencia.
 	 */
 	public CorrespondenceInstrumentFormDialog() {
 		super();
+		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.init();
 	}
 
@@ -103,7 +109,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 * La función encargada de inicializar la ventana de edición de un instrumento de correspondencia.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 832, 544);
+		this.setBounds(100, 100, 832, 574);
 		this.setResizable(false);
 		this.getContentPane().setLayout(null);
 
@@ -117,6 +123,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setFont(this.getContentPane().getFont());
 		this.descriptionTextArea.setLineWrap(true);
 		this.descriptionTextArea.setWrapStyleWord(true);
 		this.descriptionTextArea.addFocusListener(new FocusAdapter() {
@@ -137,6 +144,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(leftSideScrollPane);
 
 		this.leftSideList = new JList<>();
+		this.leftSideList.setFont(this.getContentPane().getFont());
 		this.leftSideList.setModel(new DefaultListModel<RelationAnswer>());
 		this.leftSideList.addKeyListener(new KeyAdapter() {
 			@Override
@@ -161,6 +169,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		leftSideScrollPane.setViewportView(this.leftSideList);
 
 		this.leftSideTextField = new JTextField();
+		this.leftSideTextField.setFont(this.getContentPane().getFont());
 		this.leftSideTextField.setBounds(10, 276, 400, 31);
 		this.leftSideTextField.addFocusListener(new FocusAdapter() {
 			@Override
@@ -191,6 +200,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(rightSideScrollPane);
 
 		this.rightSideList = new JList<>();
+		this.rightSideList.setFont(this.getContentPane().getFont());
 		this.rightSideList.setModel(new DefaultListModel<RelationAnswer>());
 		this.rightSideList.addKeyListener(new KeyAdapter() {
 			@Override
@@ -215,7 +225,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		rightSideScrollPane.setViewportView(this.rightSideList);
 
 		this.rigthSideTextField = new JTextField();
-		this.rigthSideTextField.setColumns(10);
+		this.rigthSideTextField.setFont(this.getContentPane().getFont());
 		this.rigthSideTextField.setBounds(420, 276, 400, 31);
 		this.rigthSideTextField.addFocusListener(new FocusAdapter() {
 			@Override
@@ -242,10 +252,11 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(relationsLabel);
 
 		JScrollPane relationsScrollPane = new JScrollPane();
-		relationsScrollPane.setBounds(10, 345, 763, 123);
+		relationsScrollPane.setBounds(10, 345, 763, 139);
 		this.getContentPane().add(relationsScrollPane);
 
 		this.relationList = new JList<>();
+		this.relationList.setFont(this.getContentPane().getFont());
 		this.relationList.setModel(new DefaultListModel<RelationAnswer>());
 		this.relationList.addKeyListener(new KeyAdapter() {
 			@Override
@@ -280,12 +291,13 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(this.removeRelationButton);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(561, 480, 37, 29);
+		this.progressLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.progressLabel.setBounds(561, 511, 37, 29);
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton("Aceptar");
 		this.commitButton.setFont(new Font("Arial", Font.BOLD, 12));
-		this.commitButton.setBounds(610, 479, 100, 30);
+		this.commitButton.setBounds(610, 510, 100, 30);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -296,7 +308,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 
 		this.rejectButton = new JButton("Cancelar");
 		this.rejectButton.setFont(new Font("Arial", Font.BOLD, 12));
-		this.rejectButton.setBounds(720, 479, 100, 30);
+		this.rejectButton.setBounds(720, 510, 100, 30);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -304,10 +316,16 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			}
 		});
 		this.getContentPane().add(this.rejectButton);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 496, 810, 2);
+		this.getContentPane().add(separator);
 	}
 
 	@Override
 	public void setEnabled(boolean b) {
+		super.setEnabled(b);
+
 		this.descriptionTextArea.setEnabled(b);
 
 		this.leftSideList.setEnabled(b);
@@ -343,16 +361,16 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			RelationAnswer answer = null;
 			switch (side) {
 				case LEFT:
-					if (this.leftEditionPhrase != null) {
-						answer = this.leftEditionPhrase;
-						this.leftEditionPhrase = null;
+					if (this.editingLeftPhrase != null) {
+						answer = this.editingLeftPhrase;
+						this.editingLeftPhrase = null;
 					}
 					break;
 
 				case RIGTH:
-					if (this.rightEditionPhrase != null) {
-						answer = this.rightEditionPhrase;
-						this.rightEditionPhrase = null;
+					if (this.editingRightPhrase != null) {
+						answer = this.editingRightPhrase;
+						this.editingRightPhrase = null;
 					}
 					break;
 			}
@@ -392,11 +410,11 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			// Tomamos la nueva frase a editar.
 			switch (side) {
 				case LEFT:
-					this.leftEditionPhrase = relation;
+					this.editingLeftPhrase = relation;
 					break;
 
 				case RIGTH:
-					this.rightEditionPhrase = relation;
+					this.editingRightPhrase = relation;
 					break;
 			}
 
@@ -481,9 +499,9 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	private void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
-			throw new CheckedException("instrument.correspondence.description");
+			throw new CheckedException("instrument.formal.objective.correspondence.description");
 		} else {
-			this.correspondenceInstrument.setDescription(this.descriptionTextArea.getText());
+			this.correspondenceInstrument.setDescription(this.descriptionTextArea.getText().trim());
 		}
 
 		// Los modelos.
@@ -500,7 +518,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		}
 
 		if (relations.isEmpty()) {
-			throw new CheckedException("instrument.correspondence.relations");
+			throw new CheckedException("instrument.formal.objective.correspondence.relations");
 		}
 
 		// Creamos las relaciones de izquierda y derecha.
@@ -596,8 +614,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		leftModel.clear();
 		rightModel.clear();
 
-		this.leftEditionPhrase = null;
-		this.rightEditionPhrase = null;
+		this.editingLeftPhrase = null;
+		this.editingRightPhrase = null;
 	}
 
 	/**
@@ -606,7 +624,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 * @return La ventana para crear un nuevo instrumento de correspondencia.
 	 */
 	public CorrespondenceInstrumentFormDialog createNewDialog() {
-		this.setTitle("Edición de instrumento de correspondencia");
+		this.setTitle("Nuevo instrumento de correspondencia");
 		this.correspondenceInstrument = new CorrespondenceInstrument();
 		this.emptyFields();
 		return this;
@@ -620,7 +638,7 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 * @return La ventana para editar un instrumento de correspondencia.
 	 */
 	public CorrespondenceInstrumentFormDialog createEditDialog(CorrespondenceInstrument correspondenceInstrument) {
-		this.setTitle("Nuevo instrumento de correspondencia");
+		this.setTitle("Edición de instrumento de correspondencia");
 		this.correspondenceInstrument = correspondenceInstrument;
 		this.fromInstrumentToDialog();
 		return this;

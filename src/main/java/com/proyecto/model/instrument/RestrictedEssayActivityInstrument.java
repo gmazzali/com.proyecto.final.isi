@@ -1,5 +1,8 @@
 package com.proyecto.model.instrument;
 
+import javax.persistence.Table;
+
+import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 
 /**
@@ -8,6 +11,9 @@ import com.common.util.model.Entity;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@Model
+@Table(name = "RESTRICTED_ESSAY_INSTRUMENTS")
+@javax.persistence.Entity(name = "RestrictedEssayActivityInstrument")
 public class RestrictedEssayActivityInstrument extends EssayActivityInstrument {
 
 	private static final long serialVersionUID = -8910201315198314251L;
@@ -16,5 +22,12 @@ public class RestrictedEssayActivityInstrument extends EssayActivityInstrument {
 	 * @see Entity.Attributes
 	 */
 	public interface Attributes extends EssayActivityInstrument.Attributes {
+	}
+
+	/**
+	 * Constructor por omisión.
+	 */
+	public RestrictedEssayActivityInstrument() {
+		super();
 	}
 }

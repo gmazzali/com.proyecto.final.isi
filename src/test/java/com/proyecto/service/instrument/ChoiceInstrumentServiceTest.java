@@ -49,53 +49,53 @@ public class ChoiceInstrumentServiceTest {
 		// Creamos un nuevo instrumento.
 		Option option = null;
 		List<Option> options = null;
-		SingleChoiceInstrument choice = new SingleChoiceInstrument();
+		SingleChoiceInstrument instrument = new SingleChoiceInstrument();
 
 		System.out.println("######################################################################");
 		System.out.println("################## INSTRUMENTOS DE SELECCIÓN SIMPLE ##################");
 		System.out.println("######################################################################");
 
-		choice.setDescription("Descripcion de simple seleccion");
+		instrument.setDescription("Descripcion de simple seleccion");
 
 		SingleChoiceInstrumentService service = HolderApplicationContext.getContext().getBean(SingleChoiceInstrumentService.class);
 
 		options = new ArrayList<>();
 		option = new TrueOption();
 		option.setDescription("Opcion 1 - V");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new TrueOption();
 		option.setDescription("Opcion 2 - V");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 3 - F");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 4 - F");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
-		choice.getOptions().addAll(options);
+		instrument.addAllOptions(options);
 
 		try {
 			System.out.println("<<<<<<<<<<<<< GUARDADO DE INSTRUMENTO DE SELECCIÓN SIMPLE >>>>>>>>>>>>>");
-			service.save(choice);
+			service.save(instrument);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
 
 		// Modificamos la regla.
-		choice.setDescription("Otra descripcion de simple seleccion 1");
-		choice.getOptions().remove(option);
+		instrument.setDescription("Otra descripcion de simple seleccion 1");
+		instrument.removeOption(option);
 
 		try {
 			System.out.println("<<<<<<<<<<< ACTUALIZADO DE INSTRUMENTOS DE SELECCIÓN SIMPLE >>>>>>>>>>>");
-			service.update(choice);
+			service.update(instrument);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
@@ -103,31 +103,31 @@ public class ChoiceInstrumentServiceTest {
 		options = new ArrayList<>();
 		option = new TrueOption();
 		option.setDescription("Opcion 11 - V");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new TrueOption();
 		option.setDescription("Opcion 12 - V");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 13 - F");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 14 - F");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
-		choice.setDescription("Otra descripcion de simple seleccion 2");
-		choice.getOptions().clear();
-		choice.getOptions().addAll(options);
+		instrument.setDescription("Otra descripcion de simple seleccion 2");
+		instrument.clearOptions();
+		instrument.addAllOptions(options);
 
 		try {
 			System.out.println("<<<<<<<<<<< ACTUALIZADO DE INSTRUMENTOS DE SELECCIÓN SIMPLE >>>>>>>>>>>");
-			service.update(choice);
+			service.update(instrument);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
@@ -135,7 +135,7 @@ public class ChoiceInstrumentServiceTest {
 		// La borramos.
 		try {
 			System.out.println("<<<<<<<<<<<<< BORRADO DE INSTRUMENTOS DE SELECCIÓN SIMPLE >>>>>>>>>>>>>");
-			service.delete(choice);
+			service.delete(instrument);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
@@ -149,53 +149,53 @@ public class ChoiceInstrumentServiceTest {
 		// Creamos un nuevo instrumento.
 		Option option = null;
 		List<Option> options = null;
-		MultipleChoiceInstrument choice = new MultipleChoiceInstrument();
+		MultipleChoiceInstrument instrument = new MultipleChoiceInstrument();
 
 		System.out.println("######################################################################");
 		System.out.println("################# INSTRUMENTOS DE SELECCIÓN MULTIPLE #################");
 		System.out.println("######################################################################");
 
-		choice.setDescription("Descripcion de multiple seleccion");
+		instrument.setDescription("Descripcion de multiple seleccion");
 
 		MultipleChoiceInstrumentService service = HolderApplicationContext.getContext().getBean(MultipleChoiceInstrumentService.class);
 
 		options = new ArrayList<>();
 		option = new TrueOption();
 		option.setDescription("Opcion 1 - V");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new TrueOption();
 		option.setDescription("Opcion 2 - V");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 3 - F");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 4 - F");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
-		choice.getOptions().addAll(options);
+		instrument.addAllOptions(options);
 
 		try {
 			System.out.println("<<<<<<<<<<< GUARDADO DEL INSTRUMENTOS DE SELECCIÓN MULTIPLE >>>>>>>>>>>");
-			service.save(choice);
+			service.save(instrument);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
 
 		// Modificamos la regla.
-		choice.setDescription("Otra descripcion de multiple seleccion 1");
-		choice.getOptions().remove(option);
+		instrument.setDescription("Otra descripcion de multiple seleccion 1");
+		instrument.removeOption(option);
 
 		try {
 			System.out.println("<<<<<<<<<< ACTUALIZADO DE INSTRUMENTOS DE SELECCIÓN MULTIPLE >>>>>>>>>>");
-			service.update(choice);
+			service.update(instrument);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
@@ -203,31 +203,31 @@ public class ChoiceInstrumentServiceTest {
 		options = new ArrayList<>();
 		option = new TrueOption();
 		option.setDescription("Opcion 11 - V");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new TrueOption();
 		option.setDescription("Opcion 12 - V");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 13 - F");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
 		option = new Distractor();
 		option.setDescription("Opcion 14 - F");
-		option.setInstrument(choice);
+		option.setInstrument(instrument);
 		options.add(option);
 
-		choice.setDescription("Otra descripcion de multiple seleccion 2");
-		choice.getOptions().clear();
-		choice.getOptions().addAll(options);
+		instrument.setDescription("Otra descripcion de multiple seleccion 2");
+		instrument.clearOptions();
+		instrument.addAllOptions(options);
 
 		try {
 			System.out.println("<<<<<<<<<< ACTUALIZADO DE INSTRUMENTOS DE SELECCIÓN MULTIPLE >>>>>>>>>>");
-			service.update(choice);
+			service.update(instrument);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}
@@ -235,7 +235,7 @@ public class ChoiceInstrumentServiceTest {
 		// La borramos.
 		try {
 			System.out.println("<<<<<<<<<<<< BORRADO DE INSTRUMENTOS DE SELECCIÓN MULTIPLE >>>>>>>>>>>>");
-			service.delete(choice);
+			service.delete(instrument);
 		} catch (CheckedException e) {
 			e.printStackTrace();
 		}

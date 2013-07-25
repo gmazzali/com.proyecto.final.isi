@@ -1,5 +1,7 @@
 package com.proyecto.model.instrument.type;
 
+import com.proyecto.model.instrument.Instrument;
+
 /**
  * La interfaz que define los instrumentos que tenemos dentro del sistema.
  * 
@@ -34,5 +36,5 @@ public interface InstrumentTypeInterface {
 	 * 
 	 * @return La clase que corresponde a este tipo de entidad.
 	 */
-	public Class<?> getInstrumentClass();
+	public Class<? extends Instrument> getInstrumentClass();
 }

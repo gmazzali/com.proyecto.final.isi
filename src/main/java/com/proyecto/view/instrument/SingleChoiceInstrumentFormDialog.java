@@ -26,6 +26,13 @@ public class SingleChoiceInstrumentFormDialog extends ChoiceInstrumentFormDialog
 	@Autowired
 	private SingleChoiceInstrumentService singleChoiceInstrumentService;
 
+	/**
+	 * El constructor por omisión.
+	 */
+	public SingleChoiceInstrumentFormDialog() {
+		super();
+	}
+
 	@Override
 	protected ChoiceInstrument newChoiceInstrument() {
 		return new SingleChoiceInstrument();

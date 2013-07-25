@@ -27,6 +27,13 @@ public class MultipleChoiceInstrumentFormDialog extends ChoiceInstrumentFormDial
 	@Autowired
 	private MultipleChoiceInstrumentService multipleChoiceInstrumentService;
 
+	/**
+	 * El constructor por omisión.
+	 */
+	public MultipleChoiceInstrumentFormDialog() {
+		super();
+	}
+
 	@Override
 	protected ChoiceInstrument newChoiceInstrument() {
 		return new MultipleChoiceInstrument();

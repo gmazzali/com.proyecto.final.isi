@@ -12,17 +12,26 @@ import com.proyecto.model.instrument.EssayActivityInstrument;
 import com.proyecto.model.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.service.instrument.RestrictedEssayActivityInstrumentService;
 
-
+/**
+ * La clase que permite desplegar una ventana de edición de instrumentos de ensayos formales restringidos.
+ * 
+ * @author Marcelo Romitti
+ * @version 1.0
+ */
 @View
-public class RestrictedEssayActivityInstrumentFormDialog extends EssayActivityInstrumentForm {
+public class RestrictedEssayActivityInstrumentFormDialog extends EssayActivityInstrumentFormDialog {
 
 	private static final long serialVersionUID = 1592287212965844417L;
-	
-	public RestrictedEssayActivityInstrumentFormDialog() {
-	}
-	
+
 	@Autowired
 	private RestrictedEssayActivityInstrumentService restrictedEssayActivityInstrumentService;
+
+	/**
+	 * El constructor por omisión.
+	 */
+	public RestrictedEssayActivityInstrumentFormDialog() {
+		super();
+	}
 
 	@Override
 	protected EssayActivityInstrument newEssayActivityInstrument() {
@@ -45,13 +54,12 @@ public class RestrictedEssayActivityInstrumentFormDialog extends EssayActivityIn
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			RestrictedEssayActivityInstrumentFormDialog dialog = (RestrictedEssayActivityInstrumentFormDialog) HolderApplicationContext.getContext()
-					.getBean(RestrictedEssayActivityInstrumentFormDialog.class);
+			EssayActivityInstrumentFormDialog dialog = HolderApplicationContext.getContext()
+					.getBean(RestrictedEssayActivityInstrumentFormDialog.class).createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }
