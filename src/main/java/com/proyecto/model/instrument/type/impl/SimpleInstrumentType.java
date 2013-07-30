@@ -1,5 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.ConceptualMapInstrument;
 import com.proyecto.model.instrument.EssayInstrument;
 import com.proyecto.model.instrument.ExerciseInstrument;
@@ -17,20 +18,16 @@ public enum SimpleInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos semiformales simples de mapas conceptuales.
 	 */
-	CONCEPTUAL_MAP(1, "Conceptual Map", ConceptualMapInstrument.class, null),
+	CONCEPTUAL_MAP("instrument.type.semiformal.simple.comceptual", ConceptualMapInstrument.class, null),
 	/**
 	 * El elemento de los instrumentos semiformales simples de ensayos.
 	 */
-	ESSAY(2, "Essay", EssayInstrument.class, null),
+	ESSAY("instrument.type.semiformal.simple.essay", EssayInstrument.class, null),
 	/**
 	 * El elemento de los instrumentos semiformales simples de ejercicios.
 	 */
-	EXERCISE(3, "Exercise", ExerciseInstrument.class, null);
+	EXERCISE("instrument.type.semiformal.simple.exercise", ExerciseInstrument.class, null);
 
-	/**
-	 * El código del tipo de instrumento.
-	 */
-	private final Integer code;
 	/**
 	 * El nombre del instrumento.
 	 */
@@ -47,16 +44,13 @@ public enum SimpleInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param code
-	 *            El código del instrumento.
 	 * @param name
 	 *            El nombre del instrumento.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private SimpleInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.code = code;
-		this.name = name;
+	private SimpleInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+		this.name = HolderMessage.getMessage(name);
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
@@ -64,11 +58,6 @@ public enum SimpleInstrumentType implements InstrumentTypeInterface {
 	@Override
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public Integer getCode() {
-		return this.code;
 	}
 
 	@Override

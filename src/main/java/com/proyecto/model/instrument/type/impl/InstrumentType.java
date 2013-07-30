@@ -2,6 +2,7 @@ package com.proyecto.model.instrument.type.impl;
 
 import java.lang.reflect.Modifier;
 
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.FormalInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.SemiFormalInstrument;
@@ -18,16 +19,12 @@ public enum InstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos formales.
 	 */
-	FORMAL(1, "Formal", FormalInstrument.class, FormalInstrumentType.values()),
+	FORMAL("instrument.type.formal", FormalInstrument.class, FormalInstrumentType.values()),
 	/**
 	 * El elemento de los instrumentos semiformales.
 	 */
-	SEMIFORMAL(2, "SemiFormal", SemiFormalInstrument.class, SemiFormalInstrumentType.values());
+	SEMIFORMAL("instrument.type.semiformal", SemiFormalInstrument.class, SemiFormalInstrumentType.values());
 
-	/**
-	 * El código del tipo de instrumento.
-	 */
-	private final Integer code;
 	/**
 	 * El nombre del instrumento.
 	 */
@@ -44,16 +41,13 @@ public enum InstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param code
-	 *            El código del instrumento.
 	 * @param name
 	 *            El nombre del instrumento.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private InstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.code = code;
-		this.name = name;
+	private InstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+		this.name = HolderMessage.getMessage(name);
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
@@ -61,11 +55,6 @@ public enum InstrumentType implements InstrumentTypeInterface {
 	@Override
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public Integer getCode() {
-		return this.code;
 	}
 
 	@Override

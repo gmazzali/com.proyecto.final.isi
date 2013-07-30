@@ -5,9 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -15,8 +13,7 @@ import javax.swing.JTextArea;
 import com.common.util.exception.CheckedException;
 import com.proyecto.model.answer.EssayActivityAnswer;
 import com.proyecto.model.instrument.EssayActivityInstrument;
-import com.proyecto.service.instrument.EssayActivityInstrumentService;
-import com.proyecto.view.Resources;
+import com.proyecto.model.instrument.Instrument;
 
 /**
  * La clase que permite desplegar una ventana de edición de instrumentos de ensayos formales.
@@ -24,14 +21,15 @@ import com.proyecto.view.Resources;
  * @author Marcelo Romitti
  * @version 1.0
  */
-public abstract class EssayActivityInstrumentFormDialog extends JDialog {
+@SuppressWarnings("unchecked")
+public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDialog {
 
 	private static final long serialVersionUID = -5335279786295006491L;
 
 	/**
 	 * El instrumento que vamos a manipular.
 	 */
-	private EssayActivityInstrument essayActivityInstrument;
+	protected EssayActivityInstrument essayActivityInstrument;
 
 	/**
 	 * El campo de descripción del instrumento y la respuesta
@@ -54,9 +52,6 @@ public abstract class EssayActivityInstrumentFormDialog extends JDialog {
 	 */
 	public EssayActivityInstrumentFormDialog() {
 		super();
-		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
-		this.setModal(true);
-		this.setResizable(false);
 		this.init();
 	}
 
@@ -64,6 +59,9 @@ public abstract class EssayActivityInstrumentFormDialog extends JDialog {
 	 * La función de inicialización de componentes.
 	 */
 	private void init() {
+		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
+		this.setModal(true);
+		this.setResizable(false);
 		this.setBounds(100, 100, 887, 348);
 		this.getContentPane().setLayout(null);
 
@@ -112,7 +110,7 @@ public abstract class EssayActivityInstrumentFormDialog extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EssayActivityInstrumentFormDialog.this.SaveInstrument();
+				EssayActivityInstrumentFormDialog.this.saveInstrument();
 			}
 		});
 		this.getContentPane().add(this.commitButton);
@@ -130,81 +128,13 @@ public abstract class EssayActivityInstrumentFormDialog extends JDialog {
 	}
 
 	@Override
-	public void setEnabled(boolean b) {
-		super.setEnabled(b);
-
-		this.descriptionTextArea.setEnabled(b);
-		this.answerTextArea.setEnabled(b);
-
-		this.commitButton.setEnabled(b);
-		this.rejectButton.setEnabled(b);
-	}
-
-	/**
-	 * La función encargada de crear un nuevo instrumento de ensayo formal para manipularlo dentro de esta ventana.
-	 * 
-	 * @return El nuevo instrumento de ensayo formal.
-	 */
-	protected abstract EssayActivityInstrument newEssayActivityInstrument();
-
-	/**
-	 * La función encargada de retornar el servicio para los instrumentos de ensayo formal.
-	 * 
-	 * @return El servicio para los instrumentos de ensayo formal.
-	 */
-	protected abstract <E extends EssayActivityInstrument> EssayActivityInstrumentService<E> getEssayActivityInstrumentService();
-
-	/*
-	 * La función encargada de guardar el instrumento dentro de la base de datos.
-	 */
-	private void SaveInstrument() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					EssayActivityInstrumentFormDialog.this.beforeSave();
-					EssayActivityInstrumentFormDialog.this.fromDialogToInstrument();
-					EssayActivityInstrumentFormDialog.this.getEssayActivityInstrumentService().saveOrUpdate(
-							EssayActivityInstrumentFormDialog.this.essayActivityInstrument);
-					EssayActivityInstrumentFormDialog.this.dispose();
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(EssayActivityInstrumentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} finally {
-					EssayActivityInstrumentFormDialog.this.afterSave();
-				}
-			}
-		}.start();
-	}
-
-	/**
-	 * La función antes de guardar.
-	 */
-	private void beforeSave() {
-		this.setEnabled(false);
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
-	}
-
-	/*
-	 * La función después de guardar.
-	 */
-	private void afterSave() {
-		this.setEnabled(true);
-		this.progressLabel.setIcon(null);
-	}
-
-	/*
-	 * La función encargada de vaciar los campos de la ventana de edición del instrumento.
-	 */
-	private void emptyFields() {
+	protected void emptyFields() {
 		this.descriptionTextArea.setText("");
 		this.answerTextArea.setText("");
 	}
 
-	/**
-	 * La función encargada de cargar dentro de la ventana, el instrumento que estamos editando.
-	 */
-	private void fromDialogToInstrument() throws CheckedException {
+	@Override
+	protected void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
 			throw new CheckedException("instrument.formal.essay.description");
@@ -226,10 +156,8 @@ public abstract class EssayActivityInstrumentFormDialog extends JDialog {
 		}
 	}
 
-	/**
-	 * La función encargada de cargar el instrumento dentro del dialogo para su edición.
-	 */
-	private void fromInstrumentToDialog() {
+	@Override
+	protected void fromInstrumentToDialog() {
 		// Seteamos la descripción.
 		this.descriptionTextArea.setText(this.essayActivityInstrument.getDescription());
 
@@ -241,31 +169,29 @@ public abstract class EssayActivityInstrumentFormDialog extends JDialog {
 		}
 	}
 
-	/**
-	 * La función encargada de crear una ventana para crear un nuevo instrumento de ensayo formal.
-	 * 
-	 * @return La ventana para crear un nuevo instrumento de ensayo formal.
-	 */
-	public EssayActivityInstrumentFormDialog createNewDialog() {
-		this.setTitle("Nuevo instrumento de ensayo formal");
-		this.essayActivityInstrument = this.newEssayActivityInstrument();
-		this.emptyFields();
-		this.descriptionTextArea.requestFocus();
-		return this;
+	@Override
+	public void setEnabled(boolean b) {
+		super.setEnabled(b);
+
+		this.descriptionTextArea.setEnabled(b);
+		this.answerTextArea.setEnabled(b);
+
+		this.commitButton.setEnabled(b);
+		this.rejectButton.setEnabled(b);
 	}
 
-	/**
-	 * La función encargada de crear una ventana para editar un instrumento de ensayo formal.
-	 * 
-	 * @param essayActivityInstrument
-	 *            El instrumento de ensayo formal que vamos a editar.
-	 * @return La ventana para editar un instrumento de ensayo formal.
-	 */
-	public EssayActivityInstrumentFormDialog createEditDialog(EssayActivityInstrument essayActivityInstrument) {
-		this.setTitle("Edición de instrumento de ensayo formal");
-		this.essayActivityInstrument = essayActivityInstrument;
-		this.fromInstrumentToDialog();
-		this.descriptionTextArea.requestFocus();
-		return this;
+	@Override
+	protected <E extends Instrument> void setEditInstrument(E instrument) {
+		this.essayActivityInstrument = (EssayActivityInstrument) instrument;
+	}
+
+	@Override
+	protected EssayActivityInstrument getInstrument() {
+		return this.essayActivityInstrument;
+	}
+
+	@Override
+	protected JLabel getProgressLabel() {
+		return this.progressLabel;
 	}
 }

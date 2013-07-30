@@ -14,10 +14,8 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -32,9 +30,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.answer.RelationAnswer;
 import com.proyecto.model.answer.RelationAnswer.Side;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
+import com.proyecto.model.instrument.Instrument;
 import com.proyecto.service.instrument.CorrespondenceInstrumentService;
 import com.proyecto.view.Resources;
 
@@ -45,7 +45,8 @@ import com.proyecto.view.Resources;
  * @version 1.0
  */
 @View
-public class CorrespondenceInstrumentFormDialog extends JDialog {
+@SuppressWarnings("unchecked")
+public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 
 	private static final long serialVersionUID = 2889344971937517392L;
 
@@ -101,7 +102,6 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 */
 	public CorrespondenceInstrumentFormDialog() {
 		super();
-		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.init();
 	}
 
@@ -110,7 +110,9 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 */
 	private void init() {
 		this.setBounds(100, 100, 832, 574);
+		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.setResizable(false);
+		this.setModal(true);
 		this.getContentPane().setLayout(null);
 
 		JLabel descripcionLabel = new JLabel("Descripci\u00F3n");
@@ -290,6 +292,10 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		});
 		this.getContentPane().add(this.removeRelationButton);
 
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 496, 810, 2);
+		this.getContentPane().add(separator);
+
 		this.progressLabel = new JLabel();
 		this.progressLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.progressLabel.setBounds(561, 511, 37, 29);
@@ -316,31 +322,6 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 			}
 		});
 		this.getContentPane().add(this.rejectButton);
-
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 496, 810, 2);
-		this.getContentPane().add(separator);
-	}
-
-	@Override
-	public void setEnabled(boolean b) {
-		super.setEnabled(b);
-
-		this.descriptionTextArea.setEnabled(b);
-
-		this.leftSideList.setEnabled(b);
-		this.leftSideTextField.setEnabled(b);
-
-		this.rightSideList.setEnabled(b);
-		this.rigthSideTextField.setEnabled(b);
-
-		this.relationList.setEnabled(b);
-
-		this.removeRelationButton.setEnabled(b);
-		this.createRelationButton.setEnabled(b);
-
-		this.commitButton.setEnabled(b);
-		this.rejectButton.setEnabled(b);
 	}
 
 	/**
@@ -493,10 +474,29 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		}
 	}
 
-	/**
-	 * La función encargada de cargar dentro de la ventana, el instrumento que estamos editando.
-	 */
-	private void fromDialogToInstrument() throws CheckedException {
+	@Override
+	public void setEnabled(boolean b) {
+		super.setEnabled(b);
+
+		this.descriptionTextArea.setEnabled(b);
+
+		this.leftSideList.setEnabled(b);
+		this.leftSideTextField.setEnabled(b);
+
+		this.rightSideList.setEnabled(b);
+		this.rigthSideTextField.setEnabled(b);
+
+		this.relationList.setEnabled(b);
+
+		this.removeRelationButton.setEnabled(b);
+		this.createRelationButton.setEnabled(b);
+
+		this.commitButton.setEnabled(b);
+		this.rejectButton.setEnabled(b);
+	}
+
+	@Override
+	protected void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
 			throw new CheckedException("instrument.formal.objective.correspondence.description");
@@ -537,10 +537,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.correspondenceInstrument.addAllRelations(relations);
 	}
 
-	/**
-	 * La función encargada de cargar el instrumento dentro del dialogo para su edición.
-	 */
-	private void fromInstrumentToDialog() {
+	@Override
+	protected void fromInstrumentToDialog() {
 		this.descriptionTextArea.setText(this.correspondenceInstrument.getDescription());
 
 		// Los modelos.
@@ -559,49 +557,8 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		}
 	}
 
-	/*
-	 * La función encargada de guardar el instrumento dentro de la base de datos.
-	 */
-	private void saveInstrument() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					CorrespondenceInstrumentFormDialog.this.beforeSave();
-					CorrespondenceInstrumentFormDialog.this.fromDialogToInstrument();
-					CorrespondenceInstrumentFormDialog.this.correspondenceInstrumentService
-							.saveOrUpdate(CorrespondenceInstrumentFormDialog.this.correspondenceInstrument);
-					CorrespondenceInstrumentFormDialog.this.dispose();
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(CorrespondenceInstrumentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} finally {
-					CorrespondenceInstrumentFormDialog.this.afterSave();
-				}
-			}
-		}.start();
-	}
-
-	/**
-	 * La función antes de guardar.
-	 */
-	private void beforeSave() {
-		this.setEnabled(false);
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
-	}
-
-	/*
-	 * La función después de guardar.
-	 */
-	private void afterSave() {
-		this.setEnabled(true);
-		this.progressLabel.setIcon(null);
-	}
-
-	/*
-	 * La función encargada de vaciar los campos de la ventana de edición del instrumento.
-	 */
-	private void emptyFields() {
+	@Override
+	protected void emptyFields() {
 		this.descriptionTextArea.setText("");
 		this.leftSideTextField.setText("");
 		this.rigthSideTextField.setText("");
@@ -618,30 +575,39 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 		this.editingRightPhrase = null;
 	}
 
-	/**
-	 * La función encargada de crear una ventana para crear un nuevo instrumento de correspondencia.
-	 * 
-	 * @return La ventana para crear un nuevo instrumento de correspondencia.
-	 */
-	public CorrespondenceInstrumentFormDialog createNewDialog() {
-		this.setTitle("Nuevo instrumento de correspondencia");
+	@Override
+	protected void setNewInstrument() {
 		this.correspondenceInstrument = new CorrespondenceInstrument();
-		this.emptyFields();
-		return this;
 	}
 
-	/**
-	 * La función encargada de crear una ventana para editar un instrumento de correspondencia.
-	 * 
-	 * @param correspondenceInstrument
-	 *            El instrumento de correspondencia que vamos a editar.
-	 * @return La ventana para editar un instrumento de correspondencia.
-	 */
-	public CorrespondenceInstrumentFormDialog createEditDialog(CorrespondenceInstrument correspondenceInstrument) {
-		this.setTitle("Edición de instrumento de correspondencia");
-		this.correspondenceInstrument = correspondenceInstrument;
-		this.fromInstrumentToDialog();
-		return this;
+	@Override
+	protected <E extends Instrument> void setEditInstrument(E instrument) {
+		this.correspondenceInstrument = (CorrespondenceInstrument) instrument;
+	}
+
+	@Override
+	protected CorrespondenceInstrument getInstrument() {
+		return this.correspondenceInstrument;
+	}
+
+	@Override
+	protected CorrespondenceInstrumentService getInstrumentService() {
+		return this.correspondenceInstrumentService;
+	}
+
+	@Override
+	protected String getNewTitle() {
+		return HolderMessage.getMessage("instrument.formal.objective.correspondence.form.title.new");
+	}
+
+	@Override
+	protected String getEditTitle() {
+		return HolderMessage.getMessage("instrument.formal.objective.correspondence.form.title.edit");
+	}
+
+	@Override
+	protected JLabel getProgressLabel() {
+		return this.progressLabel;
 	}
 
 	/**
@@ -649,17 +615,16 @@ public class CorrespondenceInstrumentFormDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
 			String[] files =
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			CorrespondenceInstrument instrument = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(4);
-			CorrespondenceInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentFormDialog.class)
-					.createEditDialog(instrument);
-			// CorrespondenceInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentFormDialog.class)
-			// .createNewDialog();
+			// CorrespondenceInstrument instrument = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(4);
+			// CorrespondenceInstrumentFormDialog dialog = (CorrespondenceInstrumentFormDialog) HolderApplicationContext.getContext()
+			// .getBean(CorrespondenceInstrumentFormDialog.class).createEditDialog(instrument);
+			CorrespondenceInstrumentFormDialog dialog = (CorrespondenceInstrumentFormDialog) HolderApplicationContext.getContext()
+					.getBean(CorrespondenceInstrumentFormDialog.class).createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

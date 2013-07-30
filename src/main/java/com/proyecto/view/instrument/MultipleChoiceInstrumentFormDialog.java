@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
 import com.common.util.holder.HolderApplicationContext;
-import com.proyecto.model.instrument.ChoiceInstrument;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.MultipleChoiceInstrument;
-import com.proyecto.service.instrument.ChoiceInstrumentService;
 import com.proyecto.service.instrument.MultipleChoiceInstrumentService;
 
 /**
@@ -20,6 +19,7 @@ import com.proyecto.service.instrument.MultipleChoiceInstrumentService;
  * @version 1.0
  */
 @View
+@SuppressWarnings("unchecked")
 public class MultipleChoiceInstrumentFormDialog extends ChoiceInstrumentFormDialog {
 
 	private static final long serialVersionUID = -5572643162022447980L;
@@ -35,14 +35,23 @@ public class MultipleChoiceInstrumentFormDialog extends ChoiceInstrumentFormDial
 	}
 
 	@Override
-	protected ChoiceInstrument newChoiceInstrument() {
-		return new MultipleChoiceInstrument();
+	protected MultipleChoiceInstrumentService getInstrumentService() {
+		return this.multipleChoiceInstrumentService;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	protected <E extends ChoiceInstrument> ChoiceInstrumentService<E> getChoiceInstrumentService() {
-		return (ChoiceInstrumentService<E>) this.multipleChoiceInstrumentService;
+	protected void setNewInstrument() {
+		this.choiceInstrument = new MultipleChoiceInstrument();
+	}
+
+	@Override
+	protected String getNewTitle() {
+		return HolderMessage.getMessage("instrument.formal.objective.choice.multiple.form.title.new");
+	}
+
+	@Override
+	protected String getEditTitle() {
+		return HolderMessage.getMessage("instrument.formal.objective.choice.multiple.form.title.edit");
 	}
 
 	/**
@@ -56,11 +65,12 @@ public class MultipleChoiceInstrumentFormDialog extends ChoiceInstrumentFormDial
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			MultipleChoiceInstrument instrument = HolderApplicationContext.getContext().getBean(MultipleChoiceInstrumentService.class).findById(37);
-			MultipleChoiceInstrumentFormDialog dialog = (MultipleChoiceInstrumentFormDialog) HolderApplicationContext.getContext()
-					.getBean(MultipleChoiceInstrumentFormDialog.class).createEditDialog(instrument);
+			// MultipleChoiceInstrument instrument =
+			// HolderApplicationContext.getContext().getBean(MultipleChoiceInstrumentService.class).findById(37);
 			// MultipleChoiceInstrumentFormDialog dialog = (MultipleChoiceInstrumentFormDialog) HolderApplicationContext.getContext()
-			// .getBean(MultipleChoiceInstrumentFormDialog.class).createNewDialog();
+			// .getBean(MultipleChoiceInstrumentFormDialog.class).createEditDialog(instrument);
+			MultipleChoiceInstrumentFormDialog dialog = (MultipleChoiceInstrumentFormDialog) HolderApplicationContext.getContext()
+					.getBean(MultipleChoiceInstrumentFormDialog.class).createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

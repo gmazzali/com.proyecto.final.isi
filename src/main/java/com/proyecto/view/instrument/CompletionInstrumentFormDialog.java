@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -32,8 +31,8 @@ import com.common.util.holder.HolderApplicationContext;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.answer.CompletionAnswer;
 import com.proyecto.model.instrument.CompletionInstrument;
+import com.proyecto.model.instrument.Instrument;
 import com.proyecto.service.instrument.CompletionInstrumentService;
-import com.proyecto.view.Resources;
 
 /**
  * La ventana que nos permite crear un nuevo instrumento para completar o editar uno que ya tenemos dentro del sistema.
@@ -42,7 +41,8 @@ import com.proyecto.view.Resources;
  * @version 1.0
  */
 @View
-public class CompletionInstrumentFormDialog extends JDialog {
+@SuppressWarnings("unchecked")
+public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 
 	private static final long serialVersionUID = -2524357450091491717L;
 
@@ -213,19 +213,6 @@ public class CompletionInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(this.rejectButton);
 	}
 
-	@Override
-	public void setEnabled(boolean b) {
-		super.setEnabled(b);
-		this.descriptionTextArea.setEnabled(b);
-
-		this.completeList.setEnabled(b);
-		this.indexTextField.setEnabled(b);
-		this.phraseTextField.setEnabled(b);
-
-		this.commitButton.setEnabled(b);
-		this.rejectButton.setEnabled(b);
-	}
-
 	/**
 	 * La función encargada de agregar una frase a la lista de frases para completar.
 	 */
@@ -302,10 +289,21 @@ public class CompletionInstrumentFormDialog extends JDialog {
 		}
 	}
 
-	/**
-	 * La función encargada de cargar dentro de la ventana, el instrumento que estamos editando.
-	 */
-	private void fromDialogToInstrument() throws CheckedException {
+	@Override
+	public void setEnabled(boolean b) {
+		super.setEnabled(b);
+		this.descriptionTextArea.setEnabled(b);
+
+		this.completeList.setEnabled(b);
+		this.indexTextField.setEnabled(b);
+		this.phraseTextField.setEnabled(b);
+
+		this.commitButton.setEnabled(b);
+		this.rejectButton.setEnabled(b);
+	}
+
+	@Override
+	protected void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
 			throw new CheckedException("instrument.formal.objective.completion.description");
@@ -333,10 +331,8 @@ public class CompletionInstrumentFormDialog extends JDialog {
 		this.completionInstrument.addAllCompletes(completions);
 	}
 
-	/**
-	 * La función encargada de cargar el instrumento dentro del dialogo para su edición.
-	 */
-	private void fromInstrumentToDialog() {
+	@Override
+	protected void fromInstrumentToDialog() {
 		this.descriptionTextArea.setText(this.completionInstrument.getDescription());
 
 		// Los modelos.
@@ -347,49 +343,8 @@ public class CompletionInstrumentFormDialog extends JDialog {
 		}
 	}
 
-	/*
-	 * La función encargada de guardar el instrumento dentro de la base de datos.
-	 */
-	private void saveInstrument() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					CompletionInstrumentFormDialog.this.beforeSave();
-					CompletionInstrumentFormDialog.this.fromDialogToInstrument();
-					CompletionInstrumentFormDialog.this.completionInstrumentService
-							.saveOrUpdate(CompletionInstrumentFormDialog.this.completionInstrument);
-					// CompletionInstrumentFormDialog.this.dispose();
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(CompletionInstrumentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} finally {
-					CompletionInstrumentFormDialog.this.afterSave();
-				}
-			}
-		}.start();
-	}
-
-	/**
-	 * La función antes de guardar.
-	 */
-	private void beforeSave() {
-		this.setEnabled(false);
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
-	}
-
-	/*
-	 * La función después de guardar.
-	 */
-	private void afterSave() {
-		this.setEnabled(true);
-		this.progressLabel.setIcon(null);
-	}
-
-	/*
-	 * La función encargada de vaciar los campos de la ventana de edición del instrumento.
-	 */
-	private void emptyFields() {
+	@Override
+	protected void emptyFields() {
 		DefaultListModel<CompletionAnswer> completeModel = (DefaultListModel<CompletionAnswer>) this.completeList.getModel();
 		completeModel.clear();
 
@@ -398,30 +353,39 @@ public class CompletionInstrumentFormDialog extends JDialog {
 		this.phraseTextField.setText("");
 	}
 
-	/**
-	 * La función encargada de crear una ventana para crear un nuevo instrumento de completar.
-	 * 
-	 * @return La ventana para crear un nuevo instrumento para completar.
-	 */
-	public CompletionInstrumentFormDialog createNewDialog() {
-		this.setTitle("Edición de instrumento de completar");
-		this.completionInstrument = new CompletionInstrument();
-		this.emptyFields();
-		return this;
+	@Override
+	protected CompletionInstrumentService getInstrumentService() {
+		return this.completionInstrumentService;
 	}
 
-	/**
-	 * La función encargada de crear una ventana para editar un instrumento de completar.
-	 * 
-	 * @param correspondenceInstrument
-	 *            El instrumento para completar que vamos a editar.
-	 * @return La ventana para editar un instrumento de completar.
-	 */
-	public CompletionInstrumentFormDialog createEditDialog(CompletionInstrument completionInstrument) {
-		this.setTitle("Nuevo instrumento de completar");
-		this.completionInstrument = completionInstrument;
-		this.fromInstrumentToDialog();
-		return this;
+	@Override
+	protected CompletionInstrument getInstrument() {
+		return this.completionInstrument;
+	}
+
+	@Override
+	protected void setNewInstrument() {
+		this.completionInstrument = new CompletionInstrument();
+	}
+
+	@Override
+	protected <E extends Instrument> void setEditInstrument(E instrument) {
+		this.completionInstrument = (CompletionInstrument) instrument;
+	}
+
+	@Override
+	protected JLabel getProgressLabel() {
+		return this.progressLabel;
+	}
+
+	@Override
+	protected String getNewTitle() {
+		return HolderMessage.getMessage("instrument.formal.objective.completion.form.title.new");
+	}
+
+	@Override
+	protected String getEditTitle() {
+		return HolderMessage.getMessage("instrument.formal.objective.completion.form.title.edit");
 	}
 
 	/**
@@ -436,9 +400,10 @@ public class CompletionInstrumentFormDialog extends JDialog {
 			HolderApplicationContext.initApplicationContext(files);
 
 			CompletionInstrument instrument = HolderApplicationContext.getContext().getBean(CompletionInstrumentService.class).findById(7);
-			CompletionInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CompletionInstrumentFormDialog.class)
-					.createEditDialog(instrument);
-			// CompletionInstrumentFormDialog dialog = HolderApplicationContext.getContext().getBean(CompletionInstrumentFormDialog.class)
+			CompletionInstrumentFormDialog dialog = (CompletionInstrumentFormDialog) HolderApplicationContext.getContext()
+					.getBean(CompletionInstrumentFormDialog.class).createEditDialog(instrument);
+			// CompletionInstrumentFormDialog dialog = (CompletionInstrumentFormDialog)
+			// HolderApplicationContext.getContext().getBean(CompletionInstrumentFormDialog.class)
 			// .createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
