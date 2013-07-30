@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
 import com.common.util.holder.HolderApplicationContext;
-import com.proyecto.model.instrument.ChoiceInstrument;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.SingleChoiceInstrument;
 import com.proyecto.service.instrument.SingleChoiceInstrumentService;
 
@@ -19,6 +19,7 @@ import com.proyecto.service.instrument.SingleChoiceInstrumentService;
  * @version 1.0
  */
 @View
+@SuppressWarnings("unchecked")
 public class SingleChoiceInstrumentFormDialog extends ChoiceInstrumentFormDialog {
 
 	private static final long serialVersionUID = -5572643162022447980L;
@@ -34,14 +35,23 @@ public class SingleChoiceInstrumentFormDialog extends ChoiceInstrumentFormDialog
 	}
 
 	@Override
-	protected ChoiceInstrument newChoiceInstrument() {
-		return new SingleChoiceInstrument();
+	protected SingleChoiceInstrumentService getInstrumentService() {
+		return this.singleChoiceInstrumentService;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	protected SingleChoiceInstrumentService getChoiceInstrumentService() {
-		return this.singleChoiceInstrumentService;
+	protected void setNewInstrument() {
+		this.choiceInstrument = new SingleChoiceInstrument();
+	}
+
+	@Override
+	protected String getNewTitle() {
+		return HolderMessage.getMessage("instrument.formal.objective.choice.single.form.title.new");
+	}
+
+	@Override
+	protected String getEditTitle() {
+		return HolderMessage.getMessage("instrument.formal.objective.choice.single.form.title.edit");
 	}
 
 	/**

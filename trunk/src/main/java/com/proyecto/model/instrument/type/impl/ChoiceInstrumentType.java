@@ -1,5 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.MultipleChoiceInstrument;
 import com.proyecto.model.instrument.SingleChoiceInstrument;
@@ -16,16 +17,12 @@ public enum ChoiceInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento que define un instrumento formal objetivo de selección simple.
 	 */
-	SINGLE_CHOICE(1, "Single choice", SingleChoiceInstrument.class, null),
+	SINGLE_CHOICE("instrument.type.formal.objective.choice.single", SingleChoiceInstrument.class, null),
 	/**
 	 * El elemento que define un instrumento formal objetivo de selección multiple.
 	 */
-	MULTIPLE_CHOICE(2, "Multiple choice", MultipleChoiceInstrument.class, null);
+	MULTIPLE_CHOICE("instrument.type.formal.objective.choice.multiple", MultipleChoiceInstrument.class, null);
 
-	/**
-	 * El código del tipo de instrumento.
-	 */
-	private final Integer code;
 	/**
 	 * El nombre del instrumento.
 	 */
@@ -42,16 +39,13 @@ public enum ChoiceInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param code
-	 *            El código del instrumento.
 	 * @param name
 	 *            El nombre del instrumento.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private ChoiceInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.code = code;
-		this.name = name;
+	private ChoiceInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+		this.name = HolderMessage.getMessage(name);
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
@@ -59,11 +53,6 @@ public enum ChoiceInstrumentType implements InstrumentTypeInterface {
 	@Override
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public Integer getCode() {
-		return this.code;
 	}
 
 	@Override

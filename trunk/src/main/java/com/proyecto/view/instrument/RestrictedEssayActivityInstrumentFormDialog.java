@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
 import com.common.util.holder.HolderApplicationContext;
-import com.proyecto.model.instrument.EssayActivityInstrument;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.service.instrument.RestrictedEssayActivityInstrumentService;
 
@@ -19,6 +19,7 @@ import com.proyecto.service.instrument.RestrictedEssayActivityInstrumentService;
  * @version 1.0
  */
 @View
+@SuppressWarnings("unchecked")
 public class RestrictedEssayActivityInstrumentFormDialog extends EssayActivityInstrumentFormDialog {
 
 	private static final long serialVersionUID = 1592287212965844417L;
@@ -34,14 +35,23 @@ public class RestrictedEssayActivityInstrumentFormDialog extends EssayActivityIn
 	}
 
 	@Override
-	protected EssayActivityInstrument newEssayActivityInstrument() {
-		return new RestrictedEssayActivityInstrument();
+	protected RestrictedEssayActivityInstrumentService getInstrumentService() {
+		return this.restrictedEssayActivityInstrumentService;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	protected RestrictedEssayActivityInstrumentService getEssayActivityInstrumentService() {
-		return this.restrictedEssayActivityInstrumentService;
+	protected void setNewInstrument() {
+		this.essayActivityInstrument = new RestrictedEssayActivityInstrument();
+	}
+
+	@Override
+	protected String getNewTitle() {
+		return HolderMessage.getMessage("instrument.formal.essay.restricted.form.title.new");
+	}
+
+	@Override
+	protected String getEditTitle() {
+		return HolderMessage.getMessage("instrument.formal.essay.restricted.form.title.edit");
 	}
 
 	/**
@@ -54,7 +64,7 @@ public class RestrictedEssayActivityInstrumentFormDialog extends EssayActivityIn
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			EssayActivityInstrumentFormDialog dialog = HolderApplicationContext.getContext()
+			EssayActivityInstrumentFormDialog dialog = (EssayActivityInstrumentFormDialog) HolderApplicationContext.getContext()
 					.getBean(RestrictedEssayActivityInstrumentFormDialog.class).createNewDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);

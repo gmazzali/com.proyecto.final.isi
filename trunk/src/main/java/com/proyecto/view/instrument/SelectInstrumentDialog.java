@@ -12,7 +12,6 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.UIManager;
-import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import com.proyecto.model.instrument.SingleChoiceInstrument;
 import com.proyecto.model.instrument.UnrestrictedEssayActivityInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
 import com.proyecto.model.instrument.type.impl.InstrumentType;
+import com.proyecto.service.instrument.SingleChoiceInstrumentService;
 
 /**
  * La ventana que va a desplegar un conjunto de combos para poder seleccionar el tipo de instrumento que vamos a crear en el sistema.
@@ -339,13 +339,13 @@ public class SelectInstrumentDialog extends JDialog {
 
 			// CorrespondenceInstrument instrument = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(4);
 
-			// SingleChoiceInstrument instrument = HolderApplicationContext.getContext().getBean(SingleChoiceInstrumentService.class).findById(8);
+			SingleChoiceInstrument instrument = HolderApplicationContext.getContext().getBean(SingleChoiceInstrumentService.class).findById(8);
 
-			// HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createEditDialog(instrument);
+			HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createEditDialog(instrument);
 
-			SelectInstrumentDialog dialog = HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createNewDialog();
-			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
+			// SelectInstrumentDialog dialog = HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createNewDialog();
+			// dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			// dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

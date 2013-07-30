@@ -1,5 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.PortfolioInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
@@ -15,12 +16,8 @@ public enum CompositeInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos semiformales compuesto de portfolio.
 	 */
-	PORTFOLIO(1, "Portfolio", PortfolioInstrument.class, null);
+	PORTFOLIO("instrument.type.semiformal.composite.portfolio", PortfolioInstrument.class, null);
 
-	/**
-	 * El código del tipo de instrumento.
-	 */
-	private final Integer code;
 	/**
 	 * El nombre del instrumento.
 	 */
@@ -37,16 +34,13 @@ public enum CompositeInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param code
-	 *            El código del instrumento.
 	 * @param name
 	 *            El nombre del instrumento.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private CompositeInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.code = code;
-		this.name = name;
+	private CompositeInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+		this.name = HolderMessage.getMessage(name);
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
@@ -54,11 +48,6 @@ public enum CompositeInstrumentType implements InstrumentTypeInterface {
 	@Override
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public Integer getCode() {
-		return this.code;
 	}
 
 	@Override

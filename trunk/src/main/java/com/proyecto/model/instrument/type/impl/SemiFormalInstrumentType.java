@@ -1,5 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.CompositeInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.SimpleInstrument;
@@ -16,16 +17,12 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos semiformales simples.
 	 */
-	SIMPLE_INSTRUMENT(1, "Simple Instrument", SimpleInstrument.class, SimpleInstrumentType.values()),
+	SIMPLE_INSTRUMENT("instrument.type.semiformal.simple", SimpleInstrument.class, SimpleInstrumentType.values()),
 	/**
 	 * El elemento de los instrumentos semiformales compuestos.
 	 */
-	COMPOSITE_INSTRUMENT(2, "Composite Instrument", CompositeInstrument.class, CompositeInstrumentType.values());
+	COMPOSITE_INSTRUMENT("instrument.type.semiformal.composite", CompositeInstrument.class, CompositeInstrumentType.values());
 
-	/**
-	 * El código del tipo de instrumento.
-	 */
-	private final Integer code;
 	/**
 	 * El nombre del instrumento.
 	 */
@@ -42,16 +39,13 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param code
-	 *            El código del instrumento.
 	 * @param name
 	 *            El nombre del instrumento.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private SemiFormalInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.code = code;
-		this.name = name;
+	private SemiFormalInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+		this.name = HolderMessage.getMessage(name);
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
@@ -59,11 +53,6 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	@Override
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public Integer getCode() {
-		return this.code;
 	}
 
 	@Override

@@ -15,10 +15,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -27,11 +25,10 @@ import javax.swing.JTextField;
 import com.common.util.exception.CheckedException;
 import com.proyecto.model.answer.type.TrueFalseAnswerTypeEnum;
 import com.proyecto.model.instrument.ChoiceInstrument;
+import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.option.Distractor;
 import com.proyecto.model.option.Option;
 import com.proyecto.model.option.TrueOption;
-import com.proyecto.service.instrument.ChoiceInstrumentService;
-import com.proyecto.view.Resources;
 
 /**
  * La clase que nos permite editar un instrumento de selección.
@@ -39,19 +36,20 @@ import com.proyecto.view.Resources;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public abstract class ChoiceInstrumentFormDialog extends JDialog {
+@SuppressWarnings("unchecked")
+public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 	private static final long serialVersionUID = 3339143561900518060L;
 
 	/*
 	 * El instrumento que vamos a manipular.
 	 */
-	private ChoiceInstrument choiceInstrument;
+	protected ChoiceInstrument choiceInstrument;
 
 	/**
 	 * El listado de las opciones y la opción que estamos editando en la ventana.
 	 */
-	private JList<Option> optionsList;
+	protected JList<Option> optionsList;
 
 	/**
 	 * El campo de descripción del instrumento.
@@ -209,35 +207,6 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		this.getContentPane().add(separator);
 	}
 
-	@Override
-	public void setEnabled(boolean b) {
-		super.setEnabled(b);
-
-		this.descriptionTextArea.setEnabled(b);
-
-		this.optionsList.setEnabled(b);
-
-		this.optionAnswerComboBox.setEnabled(b);
-		this.optionTextField.setEnabled(b);
-
-		this.commitButton.setEnabled(b);
-		this.rejectButton.setEnabled(b);
-	}
-
-	/**
-	 * La función encargada de crear un nuevo instrumento de selección para manipularlo dentro de esta ventana.
-	 * 
-	 * @return El nuevo instrumento de selección.
-	 */
-	protected abstract ChoiceInstrument newChoiceInstrument();
-
-	/**
-	 * La función encargada de retornar el servicio para los instrumentos de selección.
-	 * 
-	 * @return El servicio para los instrumentos de selección.
-	 */
-	protected abstract <E extends ChoiceInstrument> ChoiceInstrumentService<E> getChoiceInstrumentService();
-
 	/**
 	 * La función utilizada para agregar una nueva opción al listado ya cargado.
 	 */
@@ -316,10 +285,23 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		return false;
 	}
 
-	/**
-	 * La función encargada de cargar dentro de la ventana, el instrumento que estamos editando.
-	 */
-	private void fromDialogToInstrument() throws CheckedException {
+	@Override
+	public void setEnabled(boolean b) {
+		super.setEnabled(b);
+
+		this.descriptionTextArea.setEnabled(b);
+
+		this.optionsList.setEnabled(b);
+
+		this.optionAnswerComboBox.setEnabled(b);
+		this.optionTextField.setEnabled(b);
+
+		this.commitButton.setEnabled(b);
+		this.rejectButton.setEnabled(b);
+	}
+
+	@Override
+	protected void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
 			throw new CheckedException("instrument.formal.objective.selection.description");
@@ -352,10 +334,8 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		this.choiceInstrument.getOptions().addAll(options);
 	}
 
-	/**
-	 * La función encargada de cargar el instrumento dentro del dialogo para su edición.
-	 */
-	private void fromInstrumentToDialog() {
+	@Override
+	protected void fromInstrumentToDialog() {
 		// Seteamos la descripción.
 		this.descriptionTextArea.setText(this.choiceInstrument.getDescription());
 
@@ -366,48 +346,8 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		}
 	}
 
-	/*
-	 * La función encargada de guardar el instrumento dentro de la base de datos.
-	 */
-	private void saveInstrument() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					ChoiceInstrumentFormDialog.this.beforeSave();
-					ChoiceInstrumentFormDialog.this.fromDialogToInstrument();
-					ChoiceInstrumentFormDialog.this.getChoiceInstrumentService().saveOrUpdate(ChoiceInstrumentFormDialog.this.choiceInstrument);
-					ChoiceInstrumentFormDialog.this.dispose();
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ChoiceInstrumentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} finally {
-					ChoiceInstrumentFormDialog.this.afterSave();
-				}
-			}
-		}.start();
-	}
-
-	/**
-	 * La función antes de guardar.
-	 */
-	private void beforeSave() {
-		this.setEnabled(false);
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
-	}
-
-	/*
-	 * La función después de guardar.
-	 */
-	private void afterSave() {
-		this.setEnabled(true);
-		this.progressLabel.setIcon(null);
-	}
-
-	/*
-	 * La función encargada de vaciar los campos de la ventana de edición del instrumento.
-	 */
-	private void emptyFields() {
+	@Override
+	protected void emptyFields() {
 		this.descriptionTextArea.setText("");
 
 		DefaultListModel<Option> optionModel = (DefaultListModel<Option>) this.optionsList.getModel();
@@ -416,31 +356,18 @@ public abstract class ChoiceInstrumentFormDialog extends JDialog {
 		this.optionTextField.setText("");
 	}
 
-	/**
-	 * La función encargada de crear una ventana para crear un nuevo instrumento de selección.
-	 * 
-	 * @return La ventana para crear un nuevo instrumento de selección.
-	 */
-	public ChoiceInstrumentFormDialog createNewDialog() {
-		this.setTitle("Instrumento de selección");
-		this.choiceInstrument = this.newChoiceInstrument();
-		this.emptyFields();
-		this.descriptionTextArea.requestFocus();
-		return this;
+	@Override
+	protected <E extends Instrument> void setEditInstrument(E instrument) {
+		this.choiceInstrument = (ChoiceInstrument) instrument;
 	}
 
-	/**
-	 * La función encargada de crear una ventana para editar un instrumento de selección.
-	 * 
-	 * @param choiceInstrument
-	 *            El instrumento de selección que vamos a editar.
-	 * @return La ventana para editar un instrumento de selección.
-	 */
-	public ChoiceInstrumentFormDialog createEditDialog(ChoiceInstrument choiceInstrument) {
-		this.setTitle("Instrumento de selección");
-		this.choiceInstrument = choiceInstrument;
-		this.fromInstrumentToDialog();
-		this.descriptionTextArea.requestFocus();
-		return this;
+	@Override
+	protected ChoiceInstrument getInstrument() {
+		return this.choiceInstrument;
+	}
+
+	@Override
+	protected JLabel getProgressLabel() {
+		return this.progressLabel;
 	}
 }

@@ -1,5 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.ChoiceInstrument;
 import com.proyecto.model.instrument.CompletionInstrument;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
@@ -17,20 +18,16 @@ public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento que define un instrumento formal objetivo de selección.
 	 */
-	CHOICE(1, "Choice", ChoiceInstrument.class, ChoiceInstrumentType.values()),
+	CHOICE("instrument.type.formal.objective.choice", ChoiceInstrument.class, ChoiceInstrumentType.values()),
 	/**
 	 * El elemento que define un instrumento formal objetivo de correspondencia.
 	 */
-	CORRESPONDENCE(2, "Correspondence", CorrespondenceInstrument.class, null),
+	CORRESPONDENCE("instrument.type.formal.objective.correspondence", CorrespondenceInstrument.class, null),
 	/**
 	 * El elemento que define un instrumento formal objetivo para completar.
 	 */
-	COMPLETION(3, "Completion", CompletionInstrument.class, null);
+	COMPLETION("instrument.type.formal.objective.completion", CompletionInstrument.class, null);
 
-	/**
-	 * El código del tipo de instrumento.
-	 */
-	private final Integer code;
 	/**
 	 * El nombre del instrumento.
 	 */
@@ -47,17 +44,13 @@ public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param code
-	 *            El código del instrumento.
 	 * @param name
 	 *            El nombre del instrumento.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private ObjectiveActivityInstrumentType(Integer code, String name, Class<? extends Instrument> instrumentClass,
-			InstrumentTypeInterface[] subInstruments) {
-		this.code = code;
-		this.name = name;
+	private ObjectiveActivityInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+		this.name = HolderMessage.getMessage(name);
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
@@ -65,11 +58,6 @@ public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 	@Override
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public Integer getCode() {
-		return this.code;
 	}
 
 	@Override

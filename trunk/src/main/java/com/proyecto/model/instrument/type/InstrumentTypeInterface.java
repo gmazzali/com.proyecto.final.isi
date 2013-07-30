@@ -25,13 +25,6 @@ public interface InstrumentTypeInterface {
 	public String getName();
 
 	/**
-	 * La función encargada de retornar el código del tipo de instrumento que tenemos en este elemento.
-	 * 
-	 * @return El código del tipo de instrumento que tenemos en este elemento.
-	 */
-	public Integer getCode();
-
-	/**
 	 * La función que retorna la clase que representa el instrumento que definimos en esta tipo de entidad.
 	 * 
 	 * @return La clase que corresponde a este tipo de entidad.
