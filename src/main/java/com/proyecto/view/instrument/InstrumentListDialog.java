@@ -21,11 +21,6 @@ import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.common.util.annotations.View;
-import com.common.util.exception.CheckedException;
-import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.model.instrument.CompletionInstrument;
 import com.proyecto.model.instrument.ConceptualMapInstrument;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
@@ -53,8 +48,8 @@ import com.proyecto.service.instrument.UnrestrictedEssayActivityInstrumentServic
 import com.proyecto.view.Resources;
 
 /**
- * La ventana que permite desplegar un listado de instrumento que tenemos dentro del sistema para administrarlos o seleccionar uno para su inclusión a
- * un reactivo.
+ * La ventana que permite desplegar un listado de instrumento que tenemos dentro del sistema para administrarlos o
+ * seleccionar uno para su inclusión a un reactivo.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -66,60 +61,48 @@ public class InstrumentListDialog extends JDialog {
 	private static final long serialVersionUID = -3837565156703793373L;
 
 	/**
-	 * El servicio para recuperar los instrumentos de ensayo formal restringidos.
+	 * Los servicios para los instrumentos concretos.
 	 */
 	@Autowired
 	private RestrictedEssayActivityInstrumentService restrictedEssayActivityInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de ensayo formal no restringidos.
-	 */
+
 	@Autowired
 	private UnrestrictedEssayActivityInstrumentService unrestrictedEssayActivityInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de selección simple.
-	 */
+
 	@Autowired
 	private SingleChoiceInstrumentService singleChoiceInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de selección multiple.
-	 */
+
 	@Autowired
 	private MultipleChoiceInstrumentService multipleChoiceInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de completar.
-	 */
+
 	@Autowired
 	private CompletionInstrumentService completionInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de correlación.
-	 */
+
 	@Autowired
 	private CorrespondenceInstrumentService correspondenceInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de mapas conceptuales.
-	 */
+
 	@Autowired
 	private ConceptualMapInstrumentService conceptualMapInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de ensayo semiformales.
-	 */
+
 	@Autowired
 	private EssayInstrumentService essayInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de ejercicios.
-	 */
+
 	@Autowired
 	private ExerciseInstrumentService exerciseInstrumentService;
-	/**
-	 * El servicio para recuperar los instrumentos de portfolios.
-	 */
+
 	@Autowired
 	private PortfolioInstrumentService portfolioInstrumentService;
+	
+	/**
+	 * La ventana de selección de un instrumento para su creación o edición.
+	 */
+	@Autowired
+	private SelectInstrumentDialog selectInstrumentDialog;
 
 	/**
 	 * El listado de instrumentos que tenemos dentro de la tabla y la clase que corresponde a este.
 	 */
-	private final List<Instrument> instruments;
+	private List<Instrument> instruments;
 	private Class<? extends Instrument> instrumentClass;
 
 	/**
@@ -156,7 +139,7 @@ public class InstrumentListDialog extends JDialog {
 		super();
 
 		this.init();
-		this.instruments = new ArrayList<>();
+		this.instruments = new ArrayList<Instrument>();
 	}
 
 	/**
@@ -169,7 +152,7 @@ public class InstrumentListDialog extends JDialog {
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
-		this.levelOneComboBox = new JComboBox<>();
+		this.levelOneComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelOneComboBox.setEnabled(false);
 		this.levelOneComboBox.setBounds(10, 15, 200, 30);
 		this.levelOneComboBox.addItemListener(new ItemListener() {
@@ -181,7 +164,7 @@ public class InstrumentListDialog extends JDialog {
 		});
 		this.getContentPane().add(this.levelOneComboBox);
 
-		this.levelTwoComboBox = new JComboBox<>();
+		this.levelTwoComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelTwoComboBox.setEnabled(false);
 		this.levelTwoComboBox.setBounds(222, 15, 200, 30);
 		this.levelTwoComboBox.addItemListener(new ItemListener() {
@@ -193,7 +176,7 @@ public class InstrumentListDialog extends JDialog {
 		});
 		this.getContentPane().add(this.levelTwoComboBox);
 
-		this.levelThreeComboBox = new JComboBox<>();
+		this.levelThreeComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelThreeComboBox.setEnabled(false);
 		this.levelThreeComboBox.setBounds(434, 15, 200, 30);
 		this.getContentPane().add(this.levelThreeComboBox);
@@ -224,18 +207,42 @@ public class InstrumentListDialog extends JDialog {
 
 		this.newButton = new JButton(Resources.ADD_ICON);
 		this.newButton.setBounds(646, 71, 35, 35);
+		newButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				newInstrument();
+			}
+		});
 		this.getContentPane().add(this.newButton);
 
 		this.modifyButton = new JButton(Resources.MODIFY_ICON);
 		this.modifyButton.setBounds(646, 119, 35, 35);
+		modifyButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				modifyInstrument();
+			}
+		});
 		this.getContentPane().add(this.modifyButton);
 
 		this.deleteButton = new JButton(Resources.DELETE_ICON);
 		this.deleteButton.setBounds(646, 167, 35, 35);
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				removeInstrument();
+			}
+		});
 		this.getContentPane().add(this.deleteButton);
 
 		this.selectButton = new JButton();
 		this.selectButton.setBounds(646, 215, 35, 35);
+		selectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selectInstrument();
+			}
+		});
 		this.getContentPane().add(this.selectButton);
 
 		this.progressLabel = new JLabel();
@@ -244,6 +251,12 @@ public class InstrumentListDialog extends JDialog {
 
 		this.closeButton = new JButton(Resources.RETURN_ICON);
 		this.closeButton.setBounds(646, 359, 35, 35);
+		closeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		this.getContentPane().add(this.closeButton);
 	}
 
@@ -296,6 +309,53 @@ public class InstrumentListDialog extends JDialog {
 		}
 		this.levelOneComboBox.setSelectedIndex(-1);
 		this.levelOneComboBox.setEnabled(true);
+	}
+
+	/**
+	 * La función encargada de cargar el tipo de instrumento que queremos listar dentro de esta ventana de selección.
+	 * 
+	 * @param instrumentClass
+	 *            El tipo de instrumento que queremos buscar para listar dentro de esta ventana.
+	 */
+	private void loadInstrumentTypesInComboBox(Class<? extends Instrument> instrumentClass) {
+		// Cargamos el combo inicial.
+		this.loadLevelOneComboBox();
+
+		// Buscamos el tipo de instrumento para el nivel 1.
+		for (InstrumentTypeInterface levelOne : InstrumentType.values()) {
+
+			// Si es un hijo de ese tipo de instrumento.
+			if (instrumentClass.isAssignableFrom(levelOne.getInstrumentClass())) {
+				this.levelOneComboBox.setSelectedItem(levelOne);
+				this.levelOneComboBox.setEnabled(false);
+
+				// Buscamos el segundo nivel.
+				for (InstrumentTypeInterface levelTwo : levelOne.getSubInstruments()) {
+
+					// Si es un hijo de ese tipo de instrumento.
+					if (instrumentClass.isAssignableFrom(levelTwo.getInstrumentClass())) {
+						this.levelTwoComboBox.setSelectedItem(levelTwo);
+						this.levelTwoComboBox.setEnabled(false);
+
+						// Buscamos el tercer nivel.
+						for (InstrumentTypeInterface levelThree : levelTwo.getSubInstruments()) {
+
+							// Si es un hijo de ese tipo de instrumento.
+							if (instrumentClass.isAssignableFrom(levelThree.getInstrumentClass())) {
+								this.levelThreeComboBox.setSelectedItem(levelThree);
+								this.levelThreeComboBox.setEnabled(false);
+								break;
+							}
+						}
+						break;
+					}
+				}
+				break;
+			}
+		}
+
+		// Ahora actualizamos el listado de instrumentos.
+		this.update();
 	}
 
 	/**
@@ -402,23 +462,24 @@ public class InstrumentListDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de actualizar el listado de instrumentos que tenemos de acuerdo a la clase de instrumento que tenemos seleccionado.
+	 * La función encargada de actualizar el listado de instrumentos que tenemos de acuerdo a la clase de instrumento
+	 * que tenemos seleccionado.
 	 * 
 	 * @throws CheckedException
 	 *             En caso de alguna falla durante la recuperación de los instrumentos.
 	 */
 	private void updateInstrumentsList() throws CheckedException {
 		// Creamos los listados que vamos a ocupar.
-		Class<? extends Instrument>[] instrumentsClass = new Class[]
-			{ RestrictedEssayActivityInstrument.class, UnrestrictedEssayActivityInstrument.class, SingleChoiceInstrument.class,
-					MultipleChoiceInstrument.class, CompletionInstrument.class, CorrespondenceInstrument.class, ConceptualMapInstrument.class,
-					EssayInstrument.class, ExerciseInstrument.class, PortfolioInstrument.class };
+		Class<? extends Instrument>[] instrumentsClass = new Class[] { RestrictedEssayActivityInstrument.class,
+				UnrestrictedEssayActivityInstrument.class, SingleChoiceInstrument.class, MultipleChoiceInstrument.class, CompletionInstrument.class,
+				CorrespondenceInstrument.class, ConceptualMapInstrument.class, EssayInstrument.class, ExerciseInstrument.class,
+				PortfolioInstrument.class };
 
 		// Creamos el listado de los servicios que manejan cada unos de esos instrumentos.
-		InstrumentService<? extends Instrument>[] instrumentsService = new InstrumentService[]
-			{ this.restrictedEssayActivityInstrumentService, this.unrestrictedEssayActivityInstrumentService, this.singleChoiceInstrumentService,
-					this.multipleChoiceInstrumentService, this.completionInstrumentService, this.correspondenceInstrumentService,
-					this.conceptualMapInstrumentService, this.essayInstrumentService, this.exerciseInstrumentService, this.portfolioInstrumentService };
+		InstrumentService<? extends Instrument>[] instrumentsService = new InstrumentService[] { this.restrictedEssayActivityInstrumentService,
+				this.unrestrictedEssayActivityInstrumentService, this.singleChoiceInstrumentService, this.multipleChoiceInstrumentService,
+				this.completionInstrumentService, this.correspondenceInstrumentService, this.conceptualMapInstrumentService,
+				this.essayInstrumentService, this.exerciseInstrumentService, this.portfolioInstrumentService };
 
 		// Vaciamos el listado.
 		this.instruments.clear();
@@ -435,7 +496,7 @@ public class InstrumentListDialog extends JDialog {
 	/**
 	 * La función encargada de cargar dentro de la tabla el listado de los instrumentos.
 	 */
-	protected void updateInstrumentTable() {
+	private void updateInstrumentTable() {
 		// Recuperamos el modelo de la tabla.
 		DefaultTableModel tableModel = (DefaultTableModel) this.table.getModel();
 
@@ -452,6 +513,34 @@ public class InstrumentListDialog extends JDialog {
 			tableModel.addRow(row);
 		}
 	}
+	
+	/**
+	 * La función encargada de crear una nueva instancia de un instrumento dentro del sistema.
+	 */
+	private void newInstrument() {
+		// TODO gmazzali Terminar con la función de creación de instrumento.		
+	}
+
+	/**
+	 * La función encargada de modificar un instrumento selecciónado dentro del listado de los mismos.
+	 */
+	private void modifyInstrument() {
+		// TODO gmazzali Terminar con la función de modificación de instrumento.		
+	}
+
+	/**
+	 * La función encargada de eliminar un instrumento selecciónado dentro del listado de los mismos.
+	 */
+	private void removeInstrument() {
+		// TODO gmazzali Terminar con la función de eliminación de instrumento.		
+	}
+
+	/**
+	 * La función encargada de tomar el instrumento seleccionado y cargarlo dentro del instrumento de retorno mientras se cierra la ventana.
+	 */
+	private void selectInstrument() {
+		// TODO gmazzali Terminar con la función de selección de instrumento.
+	}
 
 	/**
 	 * La función encargada de inicializar la ventana de administración de instrumentos.
@@ -459,21 +548,33 @@ public class InstrumentListDialog extends JDialog {
 	 * @return La ventana de administración de instrumento.
 	 */
 	public InstrumentListDialog createCrudDialog() {
-		this.loadLevelOneComboBox();
-		this.setTitle("Administración de instrumentos");
+		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.crud"));
 		this.setModal(true);
+		
+		this.loadLevelOneComboBox();
+
+		// Deshabilitamos el boton de seleccion.
+		this.selectButton.setEnabled(false);
+
 		return this;
 	}
 
 	/**
 	 * La función encargada de inicializar la ventana de selección de instrumentos.
 	 * 
+	 * @param instrumentClass
+	 *            La clase mínima de los instrumentos que vamos a listar dentro de esta ventana.
 	 * @return La ventana de selección de instrumento.
 	 */
-	public InstrumentListDialog createSelectDialog() {
-		this.loadLevelOneComboBox();
-		this.setTitle("Selección de instrumentos");
+	public InstrumentListDialog createSelectDialog(Class<? extends Instrument> instrumentClass) {
+		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.select"));
 		this.setModal(true);
+		
+		this.loadInstrumentTypesInComboBox(instrumentClass);
+
+		// Habilitamos el boton de seleccion.
+		this.selectButton.setEnabled(true);
+
 		return this;
 	}
 
@@ -483,8 +584,7 @@ public class InstrumentListDialog extends JDialog {
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
-			String[] files =
-				{ "/com/proyecto/spring/general-application-context.xml" };
+			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
 			InstrumentListDialog dialog = HolderApplicationContext.getContext().getBean(InstrumentListDialog.class).createCrudDialog();
