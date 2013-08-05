@@ -14,10 +14,6 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.common.util.annotations.View;
-import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.model.instrument.CompletionInstrument;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
 import com.proyecto.model.instrument.Instrument;
@@ -30,7 +26,8 @@ import com.proyecto.model.instrument.type.impl.InstrumentType;
 import com.proyecto.service.instrument.SingleChoiceInstrumentService;
 
 /**
- * La ventana que va a desplegar un conjunto de combos para poder seleccionar el tipo de instrumento que vamos a crear en el sistema.
+ * La ventana que va a desplegar un conjunto de combos para poder seleccionar el tipo de instrumento que vamos a crear
+ * en el sistema.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -92,7 +89,7 @@ public class SelectInstrumentDialog extends JDialog {
 		this.setBounds(100, 100, 318, 258);
 		this.getContentPane().setLayout(null);
 
-		this.levelOneComboBox = new JComboBox<>();
+		this.levelOneComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelOneComboBox.setEnabled(false);
 		this.levelOneComboBox.setBounds(10, 11, 292, 30);
 		this.levelOneComboBox.addItemListener(new ItemListener() {
@@ -105,7 +102,7 @@ public class SelectInstrumentDialog extends JDialog {
 		});
 		this.getContentPane().add(this.levelOneComboBox);
 
-		this.levelTwoComboBox = new JComboBox<>();
+		this.levelTwoComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelTwoComboBox.setEnabled(false);
 		this.levelTwoComboBox.setBounds(10, 52, 292, 30);
 		this.levelTwoComboBox.addItemListener(new ItemListener() {
@@ -118,7 +115,7 @@ public class SelectInstrumentDialog extends JDialog {
 		});
 		this.getContentPane().add(this.levelTwoComboBox);
 
-		this.levelThreeComboBox = new JComboBox<>();
+		this.levelThreeComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelThreeComboBox.setEnabled(false);
 		this.levelThreeComboBox.setBounds(10, 93, 292, 30);
 		this.levelThreeComboBox.addItemListener(new ItemListener() {
@@ -131,7 +128,7 @@ public class SelectInstrumentDialog extends JDialog {
 		});
 		this.getContentPane().add(this.levelThreeComboBox);
 
-		this.levelFourComboBox = new JComboBox<>();
+		this.levelFourComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelFourComboBox.setEnabled(false);
 		this.levelFourComboBox.setBounds(10, 134, 292, 30);
 		this.getContentPane().add(this.levelFourComboBox);
@@ -176,6 +173,61 @@ public class SelectInstrumentDialog extends JDialog {
 		}
 		this.levelOneComboBox.setSelectedIndex(-1);
 		this.levelOneComboBox.setEnabled(true);
+	}
+
+	/**
+	 * La función encargada de cargar el tipo de instrumento que queremos listar dentro de esta ventana de selección.
+	 * 
+	 * @param instrumentClass
+	 *            El tipo de instrumento que queremos buscar para listar dentro de esta ventana.
+	 */
+	private void loadInstrumentTypesInComboBox(Class<? extends Instrument> instrumentClass) {
+		// Cargamos el combo inicial.
+		this.loadLevelOneComboBox();
+
+		// Buscamos el tipo de instrumento para el nivel 1.
+		for (InstrumentTypeInterface levelOne : InstrumentType.values()) {
+
+			// Si es un hijo de ese tipo de instrumento.
+			if (instrumentClass.isAssignableFrom(levelOne.getInstrumentClass())) {
+				this.levelOneComboBox.setSelectedItem(levelOne);
+				this.levelOneComboBox.setEnabled(false);
+
+				// Buscamos el segundo nivel.
+				for (InstrumentTypeInterface levelTwo : levelOne.getSubInstruments()) {
+
+					// Si es un hijo de ese tipo de instrumento.
+					if (instrumentClass.isAssignableFrom(levelTwo.getInstrumentClass())) {
+						this.levelTwoComboBox.setSelectedItem(levelTwo);
+						this.levelTwoComboBox.setEnabled(false);
+
+						// Buscamos el tercer nivel.
+						for (InstrumentTypeInterface levelThree : levelTwo.getSubInstruments()) {
+
+							// Si es un hijo de ese tipo de instrumento.
+							if (instrumentClass.isAssignableFrom(levelThree.getInstrumentClass())) {
+								this.levelThreeComboBox.setSelectedItem(levelThree);
+								this.levelThreeComboBox.setEnabled(false);
+
+								// Buscamos el cuarto nivel.
+								for (InstrumentTypeInterface levelFour : levelThree.getSubInstruments()) {
+
+									// Si es un hijo de ese tipo de instrumento.
+									if (instrumentClass.isAssignableFrom(levelFour.getInstrumentClass())) {
+										this.levelFourComboBox.setSelectedItem(levelFour);
+										this.levelFourComboBox.setEnabled(false);
+										break;
+									}
+								}
+								break;
+							}
+						}
+						break;
+					}
+				}
+				break;
+			}
+		}
 	}
 
 	/**
@@ -303,11 +355,17 @@ public class SelectInstrumentDialog extends JDialog {
 	/**
 	 * La función encargada de inicializar la ventana de selección de instrumentos.
 	 * 
+	 * @param instrumenClass
+	 *            La clase de instrumentos que vamos a poder seleccionar a partir de dicho nivel.
 	 * @return La ventana de selección de instrumento.
 	 */
-	public SelectInstrumentDialog createNewDialog() {
-		this.loadLevelOneComboBox();
+	public SelectInstrumentDialog createNewDialog(Class<? extends Instrument> instrumenClass) {
 		this.setTitle("Selección de instrumento");
+		
+		// Seteamos el tipo de instrumento mínimo de selección para crear.
+		this.loadLevelOneComboBox();
+		this.loadInstrumentTypesInComboBox(instrumenClass);
+		
 		this.setModal(true);
 		return this;
 	}
@@ -333,17 +391,18 @@ public class SelectInstrumentDialog extends JDialog {
 		try {
 
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
-			String[] files =
-				{ "/com/proyecto/spring/general-application-context.xml" };
+			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			// CorrespondenceInstrument instrument = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(4);
+			// CorrespondenceInstrument instrument =
+			// HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(4);
 
 			SingleChoiceInstrument instrument = HolderApplicationContext.getContext().getBean(SingleChoiceInstrumentService.class).findById(8);
 
 			HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createEditDialog(instrument);
 
-			// SelectInstrumentDialog dialog = HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createNewDialog();
+			// SelectInstrumentDialog dialog =
+			// HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createNewDialog();
 			// dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			// dialog.setVisible(true);
 		} catch (Exception e) {
