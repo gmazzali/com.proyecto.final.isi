@@ -111,8 +111,6 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 	private void init() {
 		this.setBounds(100, 100, 832, 574);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
-		this.setResizable(false);
-		this.setModal(true);
 		this.getContentPane().setLayout(null);
 
 		JLabel descripcionLabel = new JLabel("Descripci\u00F3n");

@@ -60,8 +60,6 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 	 */
 	private void init() {
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
-		this.setModal(true);
-		this.setResizable(false);
 		this.setBounds(100, 100, 887, 348);
 		this.getContentPane().setLayout(null);
 

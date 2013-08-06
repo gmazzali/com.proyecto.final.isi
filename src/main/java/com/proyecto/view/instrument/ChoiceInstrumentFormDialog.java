@@ -83,7 +83,6 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	 */
 	private void init() {
 		this.setBounds(100, 100, 906, 376);
-		this.setResizable(false);
 		this.getContentPane().setLayout(null);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 

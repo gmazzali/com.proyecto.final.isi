@@ -24,6 +24,8 @@ public abstract class InstrumentFormDialog extends JDialog {
 	 */
 	public InstrumentFormDialog() {
 		super();
+		this.setModal(true);
+		this.setResizable(false);
 	}
 
 	/**

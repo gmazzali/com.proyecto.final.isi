@@ -94,7 +94,6 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	 * La función que inicializa la ventana.
 	 */
 	private void init() {
-		this.setResizable(false);
 		this.setBounds(100, 100, 850, 300);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
