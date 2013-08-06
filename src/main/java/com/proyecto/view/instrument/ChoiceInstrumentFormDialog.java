@@ -116,7 +116,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		choiceScrollPane.setBounds(10, 124, 884, 122);
 		this.getContentPane().add(choiceScrollPane);
 
-		this.optionsList = new JList<>();
+		this.optionsList = new JList<Option>();
 		this.optionsList.setFont(this.getContentPane().getFont());
 		this.optionsList.setModel(new DefaultListModel<Option>());
 		choiceScrollPane.setViewportView(this.optionsList);
@@ -139,7 +139,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 			}
 		});
 
-		this.optionAnswerComboBox = new JComboBox<>();
+		this.optionAnswerComboBox = new JComboBox<TrueFalseAnswerTypeEnum>();
 		this.optionAnswerComboBox.setFont(this.getContentPane().getFont());
 		this.optionAnswerComboBox.setBounds(10, 253, 137, 30);
 		for (TrueFalseAnswerTypeEnum item : TrueFalseAnswerTypeEnum.values()) {
@@ -310,7 +310,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 		// Cargamos las opciones.
 		DefaultListModel<Option> optionModel = (DefaultListModel<Option>) this.optionsList.getModel();
-		List<Option> options = new ArrayList<>();
+		List<Option> options = new ArrayList<Option>();
 
 		// Obtenemos el listado de las opciones.
 		for (Integer index = 0; index < optionModel.getSize(); index++) {

@@ -106,10 +106,11 @@ public class InstrumentListDialog extends JDialog {
 	private SelectInstrumentDialog selectInstrumentDialog;
 
 	/**
-	 * El listado de instrumentos que tenemos dentro de la tabla y la clase que corresponde a este.
+	 * El listado de instrumentos que tenemos dentro de la tabla y la clase que corresponde a este y el instrumento que seleccionamos en caso de la ventana de selección.
 	 */
 	private final List<Instrument> instruments;
 	private Class<? extends Instrument> instrumentClass;
+	private Instrument selectedInstrument;
 
 	/**
 	 * Los combos de filtrado de búsqueda.
@@ -187,7 +188,7 @@ public class InstrumentListDialog extends JDialog {
 		this.levelThreeComboBox.setBounds(434, 15, 200, 30);
 		this.getContentPane().add(this.levelThreeComboBox);
 
-		this.updateButton = new JButton();
+		this.updateButton = new JButton(Resources.REFRESH_ELEMENT_ICON);
 		this.updateButton.setBounds(646, 13, 35, 35);
 		this.updateButton.addActionListener(new ActionListener() {
 			@Override
@@ -211,7 +212,7 @@ public class InstrumentListDialog extends JDialog {
 		scrollPane.setViewportView(this.table);
 		this.initTableModel();
 
-		this.newButton = new JButton(Resources.ADD_ICON);
+		this.newButton = new JButton(Resources.ADD_ELEMENT_ICON);
 		this.newButton.setBounds(646, 71, 35, 35);
 		this.newButton.addActionListener(new ActionListener() {
 			@Override
@@ -221,7 +222,7 @@ public class InstrumentListDialog extends JDialog {
 		});
 		this.getContentPane().add(this.newButton);
 
-		this.modifyButton = new JButton(Resources.MODIFY_ICON);
+		this.modifyButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
 		this.modifyButton.setBounds(646, 119, 35, 35);
 		this.modifyButton.addActionListener(new ActionListener() {
 			@Override
@@ -231,7 +232,7 @@ public class InstrumentListDialog extends JDialog {
 		});
 		this.getContentPane().add(this.modifyButton);
 
-		this.deleteButton = new JButton(Resources.DELETE_ICON);
+		this.deleteButton = new JButton(Resources.DELETE_ELEMENT_ICON);
 		this.deleteButton.setBounds(646, 167, 35, 35);
 		this.deleteButton.addActionListener(new ActionListener() {
 			@Override
@@ -241,7 +242,7 @@ public class InstrumentListDialog extends JDialog {
 		});
 		this.getContentPane().add(this.deleteButton);
 
-		this.selectButton = new JButton();
+		this.selectButton = new JButton(Resources.SELECT_ELEMENT_ICON);
 		this.selectButton.setBounds(646, 215, 35, 35);
 		this.selectButton.addActionListener(new ActionListener() {
 			@Override
@@ -255,7 +256,7 @@ public class InstrumentListDialog extends JDialog {
 		this.progressLabel.setBounds(646, 312, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
-		this.closeButton = new JButton(Resources.RETURN_ICON);
+		this.closeButton = new JButton(Resources.CLOSE_ICON);
 		this.closeButton.setBounds(646, 359, 35, 35);
 		this.closeButton.addActionListener(new ActionListener() {
 			@Override
@@ -367,7 +368,6 @@ public class InstrumentListDialog extends JDialog {
 				}
 			}
 		}
-
 		// Ahora actualizamos el listado de instrumentos.
 		this.update();
 	}
@@ -573,13 +573,21 @@ public class InstrumentListDialog extends JDialog {
 	 * La función encargada de modificar un instrumento seleccionado dentro del listado de los mismos.
 	 */
 	private void modifyInstrument() {
-		// TODO gmazzali Terminar con la función de modificación de instrumento.
+		// Tomamos el indice de la tabla que tenemos seleccionado.
+		Integer instrumentIndex = this.table.getSelectedRow();
+
+		// Si tenemos algo seleccionado.
+		if (instrumentIndex >= 0) {
+			// Creamos la ventana para modificar instrumento.
+			this.selectInstrumentDialog.createEditDialog(this.instruments.get(this.table.convertRowIndexToModel(instrumentIndex)));
+		}
 	}
 
 	/**
 	 * La función encargada de eliminar un instrumento seleccionado dentro del listado de los mismos.
 	 */
 	private void removeInstrument() {
+		// Tomamos el indice de la tabla que tenemos seleccionado.
 		Integer instrumentIndex = this.table.getSelectedRow();
 
 		// Si tenemos algo seleccionado.
@@ -601,10 +609,27 @@ public class InstrumentListDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de tomar el instrumento seleccionado y cargarlo dentro del instrumento de retorno mientras se cierra la ventana.
+	 * La función encargada de tomar el instrumento seleccionado y mantenerlo para retornarlo mas adelante en el sistema.
 	 */
 	private void selectInstrument() {
-		// TODO gmazzali Terminar con la función de selección de instrumento.
+		// Tomamos el indice de la tabla que tenemos seleccionado.
+		Integer instrumentIndex = this.table.getSelectedRow();
+
+		// Si tenemos algo seleccionado.
+		if (instrumentIndex >= 0) {
+			// Tomamos el instrumento seleccionado.
+			this.selectedInstrument = this.instruments.get(this.table.convertRowIndexToModel(instrumentIndex));
+			this.dispose();
+		}
+	}
+	
+	/**
+	 * La función encargada de retornar el instrumento que seleccionamos dentro de la ventana.
+	 * 
+	 * @return El instrumento que seleccionamos dentro de la ventana.
+	 */
+	public Instrument getSelectedInstrument() {
+		return selectedInstrument;
 	}
 
 	/**
@@ -635,6 +660,7 @@ public class InstrumentListDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.select"));
 		this.setModal(true);
 
+		this.selectedInstrument = null;		
 		this.loadInstrumentTypesInComboBox(instrumentClass);
 
 		// Habilitamos el botón de selección.
