@@ -46,12 +46,12 @@ public class UnrestrictedEssayActivityInstrumentFormDialog extends EssayActivity
 
 	@Override
 	protected String getNewTitle() {
-		return HolderMessage.getMessage("instrument.formal.essay.urrestricted.form.title.new");
+		return HolderMessage.getMessage("instrument.formal.essay.unrestricted.form.title.new");
 	}
 
 	@Override
 	protected String getEditTitle() {
-		return HolderMessage.getMessage("instrument.formal.essay.urrestricted.form.title.edit");
+		return HolderMessage.getMessage("instrument.formal.essay.unrestricted.form.title.edit");
 	}
 
 	/**

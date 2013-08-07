@@ -21,7 +21,7 @@ public enum EssayActivityInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos formales de ensayos no restringidos.
 	 */
-	UNRESTRICTED_INSTRUMENT("instrument.type.formal.essay.urrestricted", UnrestrictedEssayActivityInstrument.class, null);
+	UNRESTRICTED_INSTRUMENT("instrument.type.formal.essay.unrestricted", UnrestrictedEssayActivityInstrument.class, null);
 
 	/**
 	 * El nombre del instrumento.

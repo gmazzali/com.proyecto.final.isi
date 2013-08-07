@@ -33,7 +33,7 @@ public abstract class InstrumentFormDialog extends JDialog {
 	 * 
 	 * @return La ventana configurada para dar de alta un nuevo instrumento dentro de la base de datos.
 	 */
-	protected InstrumentFormDialog createNewDialog() {
+	public InstrumentFormDialog createNewDialog() {
 		this.setTitle(this.getNewTitle());
 		this.setNewInstrument();
 		this.emptyFields();
@@ -47,7 +47,7 @@ public abstract class InstrumentFormDialog extends JDialog {
 	 *            El instrumento que vamos a editar dentro de esta ventana.
 	 * @return La ventana configurada para la edición del instrumento.
 	 */
-	protected InstrumentFormDialog createEditDialog(Instrument instrument) {
+	public InstrumentFormDialog createEditDialog(Instrument instrument) {
 		this.setTitle(this.getEditTitle());
 		this.setEditInstrument(instrument);
 		this.fromInstrumentToDialog();
@@ -62,23 +62,23 @@ public abstract class InstrumentFormDialog extends JDialog {
 			@Override
 			public void run() {
 				try {
-					InstrumentFormDialog.this.beforeSave();
+					InstrumentFormDialog.this.beforeProccessInstrument();
 					InstrumentFormDialog.this.fromDialogToInstrument();
 					InstrumentFormDialog.this.getInstrumentService().saveOrUpdate(InstrumentFormDialog.this.getInstrument());
 					InstrumentFormDialog.this.dispose();
 				} catch (CheckedException e) {
 					JOptionPane.showMessageDialog(InstrumentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} finally {
-					InstrumentFormDialog.this.afterSave();
+					InstrumentFormDialog.this.afterProccessInstrument();
 				}
 			}
 		}.start();
 	}
 
 	/**
-	 * La función antes de guardar el instrumento.
+	 * La función antes de procesar el instrumento.
 	 */
-	protected void beforeSave() {
+	private void beforeProccessInstrument() {
 		this.setEnabled(false);
 
 		if (this.getProgressLabel() != null) {
@@ -88,9 +88,9 @@ public abstract class InstrumentFormDialog extends JDialog {
 	}
 
 	/*
-	 * La función después de guardar el instrumento.
+	 * La función después de procesar el instrumento.
 	 */
-	protected void afterSave() {
+	private void afterProccessInstrument() {
 		this.setEnabled(true);
 
 		if (this.getProgressLabel() != null) {
