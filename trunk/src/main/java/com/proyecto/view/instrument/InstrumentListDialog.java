@@ -1,5 +1,6 @@
 package com.proyecto.view.instrument;
 
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.common.util.holder.HolderMessage;
+import com.proyecto.model.instrument.ChoiceInstrument;
 import com.proyecto.model.instrument.CompletionInstrument;
 import com.proyecto.model.instrument.ConceptualMapInstrument;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
@@ -106,10 +108,16 @@ public class InstrumentListDialog extends JDialog {
 	private SelectInstrumentDialog selectInstrumentDialog;
 
 	/**
-	 * El listado de instrumentos que tenemos dentro de la tabla y la clase que corresponde a este y el instrumento que seleccionamos en caso de la ventana de selección.
+	 * El listado de instrumentos que tenemos dentro de la tabla y la clase que corresponde a este y el instrumento que seleccionamos en caso de la
+	 * ventana de selección.
 	 */
 	private final List<Instrument> instruments;
 	private Class<? extends Instrument> instrumentClass;
+
+	/**
+	 * El valor booleano que nos determina si la ventana es de selección o de administración y el instrumento seleccionado.
+	 */
+	private Boolean isSelectDialog;
 	private Instrument selectedInstrument;
 
 	/**
@@ -155,7 +163,7 @@ public class InstrumentListDialog extends JDialog {
 	private void init() {
 		this.setResizable(false);
 		this.setModal(true);
-		this.setBounds(100, 100, 699, 430);
+		this.setBounds(100, 100, 693, 431);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
@@ -189,6 +197,7 @@ public class InstrumentListDialog extends JDialog {
 		this.getContentPane().add(this.levelThreeComboBox);
 
 		this.updateButton = new JButton(Resources.REFRESH_ELEMENT_ICON);
+		this.updateButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		this.updateButton.setBounds(646, 13, 35, 35);
 		this.updateButton.addActionListener(new ActionListener() {
 			@Override
@@ -213,6 +222,7 @@ public class InstrumentListDialog extends JDialog {
 		this.initTableModel();
 
 		this.newButton = new JButton(Resources.ADD_ELEMENT_ICON);
+		this.newButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		this.newButton.setBounds(646, 71, 35, 35);
 		this.newButton.addActionListener(new ActionListener() {
 			@Override
@@ -223,7 +233,8 @@ public class InstrumentListDialog extends JDialog {
 		this.getContentPane().add(this.newButton);
 
 		this.modifyButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
-		this.modifyButton.setBounds(646, 119, 35, 35);
+		this.modifyButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		this.modifyButton.setBounds(646, 118, 35, 35);
 		this.modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -233,7 +244,8 @@ public class InstrumentListDialog extends JDialog {
 		this.getContentPane().add(this.modifyButton);
 
 		this.deleteButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.deleteButton.setBounds(646, 167, 35, 35);
+		this.deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		this.deleteButton.setBounds(646, 165, 35, 35);
 		this.deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -243,7 +255,8 @@ public class InstrumentListDialog extends JDialog {
 		this.getContentPane().add(this.deleteButton);
 
 		this.selectButton = new JButton(Resources.SELECT_ELEMENT_ICON);
-		this.selectButton.setBounds(646, 215, 35, 35);
+		this.selectButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		this.selectButton.setBounds(646, 212, 35, 35);
 		this.selectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -257,6 +270,7 @@ public class InstrumentListDialog extends JDialog {
 		this.getContentPane().add(this.progressLabel);
 
 		this.closeButton = new JButton(Resources.CLOSE_ICON);
+		this.closeButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		this.closeButton.setBounds(646, 359, 35, 35);
 		this.closeButton.addActionListener(new ActionListener() {
 			@Override
@@ -277,7 +291,7 @@ public class InstrumentListDialog extends JDialog {
 		this.newButton.setEnabled(enabled);
 		this.modifyButton.setEnabled(enabled);
 		this.deleteButton.setEnabled(enabled);
-		this.selectButton.setEnabled(enabled);
+		this.selectButton.setEnabled(enabled && this.isSelectDialog);
 		this.closeButton.setEnabled(enabled);
 	}
 
@@ -409,7 +423,7 @@ public class InstrumentListDialog extends JDialog {
 			@Override
 			public void run() {
 				try {
-					InstrumentListDialog.this.beforeLoadList();
+					InstrumentListDialog.this.beforeExecuteProccess();
 
 					// Actualizamos la clase de los instrumentos que vamos a cargar.
 					InstrumentListDialog.this.updateInstrumentClass();
@@ -422,7 +436,7 @@ public class InstrumentListDialog extends JDialog {
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} finally {
-					InstrumentListDialog.this.afterLoadList();
+					InstrumentListDialog.this.afterExecuteProccess();
 				}
 			}
 		}.start();
@@ -431,7 +445,7 @@ public class InstrumentListDialog extends JDialog {
 	/**
 	 * La función antes de recuperar los instrumentos.
 	 */
-	private void beforeLoadList() {
+	private void beforeExecuteProccess() {
 		this.setEnabled(false);
 
 		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
@@ -441,7 +455,7 @@ public class InstrumentListDialog extends JDialog {
 	/*
 	 * La función después de recuperar los instrumentos.
 	 */
-	private void afterLoadList() {
+	private void afterExecuteProccess() {
 		this.setEnabled(true);
 		this.progressLabel.setIcon(null);
 	}
@@ -573,13 +587,14 @@ public class InstrumentListDialog extends JDialog {
 	 * La función encargada de modificar un instrumento seleccionado dentro del listado de los mismos.
 	 */
 	private void modifyInstrument() {
-		// Tomamos el indice de la tabla que tenemos seleccionado.
+		// Tomamos el índice de la tabla que tenemos seleccionado.
 		Integer instrumentIndex = this.table.getSelectedRow();
 
 		// Si tenemos algo seleccionado.
 		if (instrumentIndex >= 0) {
 			// Creamos la ventana para modificar instrumento.
 			this.selectInstrumentDialog.createEditDialog(this.instruments.get(this.table.convertRowIndexToModel(instrumentIndex)));
+			this.update();
 		}
 	}
 
@@ -587,23 +602,33 @@ public class InstrumentListDialog extends JDialog {
 	 * La función encargada de eliminar un instrumento seleccionado dentro del listado de los mismos.
 	 */
 	private void removeInstrument() {
-		// Tomamos el indice de la tabla que tenemos seleccionado.
+		// Tomamos el índice de la tabla que tenemos seleccionado.
 		Integer instrumentIndex = this.table.getSelectedRow();
 
 		// Si tenemos algo seleccionado.
 		if (instrumentIndex >= 0) {
-			Instrument deleteInstrument = this.instruments.get(this.table.convertRowIndexToModel(instrumentIndex));
-			InstrumentService<Instrument> instrumentService = this.getInstrumentService(deleteInstrument.getClass());
+			final Instrument deleteInstrument = this.instruments.get(this.table.convertRowIndexToModel(instrumentIndex));
+			final InstrumentService<Instrument> instrumentService = this.getInstrumentService(deleteInstrument.getClass());
 
 			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("instrument.manager.dialog.delete.confirm"), "Confirmación",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				try {
-					instrumentService.delete(deleteInstrument);
-					this.update();
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.manager.dialog.delete.failed"), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
+
+				new Thread() {
+					@Override
+					public void run() {
+						try {
+							InstrumentListDialog.this.beforeExecuteProccess();
+							instrumentService.delete(deleteInstrument);
+							InstrumentListDialog.this.update();
+						} catch (CheckedException e) {
+							JOptionPane.showMessageDialog(InstrumentListDialog.this,
+									HolderMessage.getMessage("instrument.manager.dialog.delete.failed"), "Error", JOptionPane.ERROR_MESSAGE);
+						} finally {
+							InstrumentListDialog.this.afterExecuteProccess();
+
+						}
+					}
+				}.start();
 			}
 		}
 	}
@@ -612,7 +637,7 @@ public class InstrumentListDialog extends JDialog {
 	 * La función encargada de tomar el instrumento seleccionado y mantenerlo para retornarlo mas adelante en el sistema.
 	 */
 	private void selectInstrument() {
-		// Tomamos el indice de la tabla que tenemos seleccionado.
+		// Tomamos el índice de la tabla que tenemos seleccionado.
 		Integer instrumentIndex = this.table.getSelectedRow();
 
 		// Si tenemos algo seleccionado.
@@ -622,14 +647,14 @@ public class InstrumentListDialog extends JDialog {
 			this.dispose();
 		}
 	}
-	
+
 	/**
 	 * La función encargada de retornar el instrumento que seleccionamos dentro de la ventana.
 	 * 
 	 * @return El instrumento que seleccionamos dentro de la ventana.
 	 */
 	public Instrument getSelectedInstrument() {
-		return selectedInstrument;
+		return this.selectedInstrument;
 	}
 
 	/**
@@ -641,10 +666,10 @@ public class InstrumentListDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.crud"));
 		this.setModal(true);
 
-		this.loadLevelOneComboBox();
+		this.selectedInstrument = null;
+		this.isSelectDialog = false;
 
-		// Deshabilitamos el botón de selección.
-		this.selectButton.setEnabled(false);
+		this.loadLevelOneComboBox();
 
 		return this;
 	}
@@ -660,11 +685,10 @@ public class InstrumentListDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.select"));
 		this.setModal(true);
 
-		this.selectedInstrument = null;		
-		this.loadInstrumentTypesInComboBox(instrumentClass);
+		this.selectedInstrument = null;
+		this.isSelectDialog = true;
 
-		// Habilitamos el botón de selección.
-		this.selectButton.setEnabled(true);
+		this.loadInstrumentTypesInComboBox(instrumentClass);
 
 		return this;
 	}
@@ -679,9 +703,9 @@ public class InstrumentListDialog extends JDialog {
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			InstrumentListDialog dialog = HolderApplicationContext.getContext().getBean(InstrumentListDialog.class).createCrudDialog();
-			// InstrumentListDialog dialog = HolderApplicationContext.getContext().getBean(InstrumentListDialog.class)
-			// .createSelectDialog(ChoiceInstrument.class);
+			// InstrumentListDialog dialog = HolderApplicationContext.getContext().getBean(InstrumentListDialog.class).createCrudDialog();
+			InstrumentListDialog dialog = HolderApplicationContext.getContext().getBean(InstrumentListDialog.class)
+					.createSelectDialog(ChoiceInstrument.class);
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

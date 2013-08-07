@@ -109,7 +109,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 	 * La función encargada de inicializar la ventana de edición de un instrumento de correspondencia.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 832, 574);
+		this.setBounds(100, 100, 837, 576);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
@@ -268,9 +268,9 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		});
 		relationsScrollPane.setViewportView(this.relationList);
 
-		this.createRelationButton = new JButton(Resources.ADD_ICON);
+		this.createRelationButton = new JButton(Resources.ADD_ELEMENT_ICON);
 		this.createRelationButton.setFont(new Font("Arial", Font.BOLD, 12));
-		this.createRelationButton.setBounds(783, 345, 37, 31);
+		this.createRelationButton.setBounds(785, 345, 37, 35);
 		this.createRelationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -279,9 +279,9 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		});
 		this.getContentPane().add(this.createRelationButton);
 
-		this.removeRelationButton = new JButton(Resources.DELETE_ICON);
+		this.removeRelationButton = new JButton(Resources.DELETE_ELEMENT_ICON);
 		this.removeRelationButton.setFont(new Font("Arial", Font.BOLD, 12));
-		this.removeRelationButton.setBounds(783, 387, 37, 31);
+		this.removeRelationButton.setBounds(785, 392, 35, 35);
 		this.removeRelationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
