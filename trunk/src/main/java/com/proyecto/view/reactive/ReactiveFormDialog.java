@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -18,14 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.common.util.annotations.View;
-import com.common.util.exception.CheckedException;
-import com.common.util.holder.HolderApplicationContext;
-import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.ChoiceInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
@@ -59,9 +53,11 @@ public class ReactiveFormDialog extends JDialog {
 	private ReactiveService reactiveService;
 
 	/**
-	 * El reactivo que estamos editando.
+	 * El reactivo que estamos editando, su instrumento asociado y la clase del instrumento.
 	 */
 	private Reactive reactive;
+	private Instrument instrument;
+	private Class<? extends Instrument> instrumentClassAllowed;
 
 	/**
 	 * El combo con los tipos de instrumentos que vamos a usar dentro de las evaluaciones.
@@ -78,6 +74,10 @@ public class ReactiveFormDialog extends JDialog {
 	private JButton commitButton;
 	private JButton rejectButton;
 	private JButton addInstrumentbutton;
+	/**
+	 * El label de progreso.
+	 */
+	private JLabel progressLabel;
 
 	/**
 	 * Constructor de una ventana de edición de reactivos.
@@ -85,6 +85,9 @@ public class ReactiveFormDialog extends JDialog {
 	public ReactiveFormDialog() {
 		super();
 		this.init();
+
+		// Cargamos el combo de tipos.
+		this.loadInstrumentsTypeComboBox();
 	}
 
 	/**
@@ -182,7 +185,7 @@ public class ReactiveFormDialog extends JDialog {
 	/**
 	 * La función de carga del combo box de tipo de evaluación.
 	 */
-	private void loadInstrumentLevelOneComboBox() {
+	private void loadInstrumentsTypeComboBox() {
 		this.assessementTypeComboBox.removeAllItems();
 
 		// Volvemos a cargar el combo.
@@ -194,13 +197,11 @@ public class ReactiveFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de cargar el combo de tipos de instrumentos a cargar dentro de este reactivo para poder clasificarlo como formal,
-	 * semiformal o no formal.
+	 * La función encargada de administrar el combo de tipos de instrumentos de acuerdo al tipo de instrumento recibido.
 	 * 
-	 * @param instrumentClass
-	 *            La clase de los instrumentos que podemos cargar.
+	 * @param instrumentClass La clase de instrumento que tenemos permitido cargar dentro de este reactivo.
 	 */
-	private void loadInstrumentClassInCombo(Class<? extends Instrument> instrumentClass) {
+	private void loadInstrumentClassInComboBox(Class<? extends Instrument> instrumentClass) {
 		if (instrumentClass != null) {
 			for (InstrumentTypeInterface item : InstrumentType.values()) {
 				if (item.getInstrumentClass().isAssignableFrom(instrumentClass)) {
@@ -210,6 +211,7 @@ public class ReactiveFormDialog extends JDialog {
 				}
 			}
 		} else {
+			this.assessementTypeComboBox.setSelectedIndex(-1);
 			this.assessementTypeComboBox.setEnabled(true);
 		}
 	}
@@ -218,7 +220,74 @@ public class ReactiveFormDialog extends JDialog {
 	 * La función encargada de seleccionar el instrumento que vamos a asociar a este reactivo.
 	 */
 	private void selectInstrument() {
-		// TODO gmazzali hacer lo de la carga del instrumento dentro del reactivo.
+		// Recuperamos la clase de instrumento que queremos cargar dentro de este reactivo.
+		InstrumentTypeInterface instrumentType = this.assessementTypeComboBox.getSelectedItem();
+		Class<? extends Instrument> instrumentClass = instrumentType != null? instrumentType.getInstrumentClass():null;
+		
+		// Abrimos la ventana de selección de instrumento con la clase que queremos.
+		InstrumentListDialog dialog = this.instrumentListDialog.createSelectDialog(instrumentClass);
+		dialog.setLocationRelativeTo(this);
+		dialog.setVisible(true);
+		
+		// Si seleccionamos un instrumento, lo cargamos dentro de esta ventana.
+		if(dialog.getSelectedInstrument() != null) {
+			this.instrument = dialog.getSelectedInstrument();
+
+			// Cargamos el instrumento dentro de la ventana.
+			this.instrumentTextArea.setText(this.instrument.getDescription());
+			this.loadInstrumentClassInComboBox(this.instrument.getClass());		
+		}
+	}
+	
+	/**
+	 * LA función que permite desasignar un instrumento de el reactivo que estamos editando.
+	 */
+	private void removeInstrument() {
+		// Quitamos el instrumento.
+		this.instrument = null;
+		
+		this.instrumentTextArea.setText("");
+		this.loadInstrumentClassInComboBox(this.instrumentClassAllowed);
+	}
+
+	/**
+	 * La función encargada de guardar el instrumento dentro de la base de datos.
+	 */
+	private void saveReactive() {
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					beforeProccessReactive();
+					fromDialogToReactive();
+					reactiveService.saveOrUpdate(reactive);
+					dispose();
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(ReactiveFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} finally {
+					afterProccessReactive();
+				}
+			}
+		}.start();
+	}
+
+	/**
+	 * La función antes de procesar el reactivo.
+	 */
+	private void beforeProccessReactive() {
+		this.setEnabled(false);
+
+		Resources.PROGRESS_LIST_ICON.setImageObserver(progressLabel);
+		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+	}
+
+	/*
+	 * La función después de procesar el reactivo.
+	 */
+	private void afterProccessReactive() {
+		this.setEnabled(true);
+
+		this.progressLabel.setIcon(null);
 	}
 
 	/**
@@ -228,38 +297,63 @@ public class ReactiveFormDialog extends JDialog {
 	 *             En caso de que ocurra un fallo a la hora de cargar el reactivo desde la ventana.
 	 */
 	private void fromDialogToReactive() throws CheckedException {
-		// TODO gmazzali hacer lo de la carga del reactivo desde la ventana.
+// Verificamos la descripción.
+		if(this.descriptionTextArea.getText().trim().isEmpty()) {
+			throw new CheckedException("reactive.description");
+		} else {
+			this.reactive.setDescription(this.descriptionTextArea.getText().trim());
+		}
+		
+		// Cargamos el instrumento.
+		if(this.instrument == null) {
+			throw new CheckedException("reactive.instrument");
+		} else {
+			this.reactive.setInstrument(this.instrument);
+		}
 	}
 
 	/**
 	 * La función encargada de cargar la ventana de edición con los datos que tenemos dentro del reactivo.
 	 */
 	private void fromReactiveToDialog() {
-		// TODO gmazzali hacer lo de la carga de la ventana desde el reactivo.
+		// Cargamos la descripcion.
+		this.descriptionTextArea.setText(this.reactive.getDescription());
+		
+		// Si tenemos instrumento, lo cargamos y seteamos el tipo de evaluación.
+		if(this.reactive.getInstrument() != null) {
+			this.instrument = this.reactive.getInstrument();
+			
+			// Cargamos el instrumento dentro de la ventana.
+			this.instrumentTextArea.setText(this.instrument.getDescription());
+			this.loadInstrumentClassInComboBox(this.instrument.getClass());
+		}		
 	}
 
 	/**
 	 * La función encargada de vaciar el contenido de la ventana.
 	 */
-	private void emptyFields() {
-		// TODO gmazzali hacer lo del vaciado de los campos de la ventana.
+	private void emptyFields() {		
+		this.descriptionTextArea.setText("");
+		this.instrumentTextArea.setText("");
+		
+		this.instrument = null;
 	}
 
 	/**
 	 * La función encargada de configurar la ventana para dar de alta un nuevo reactivo.
 	 * 
-	 * @param instrumenClass
+	 * @param instrumentClassAllowed
 	 *            La clase de los instrumentos que vamos a poder asignarle al reactivo.
 	 * @return La ventana con el formulario configurado para dar de alta un reactivo.
 	 */
-	public ReactiveFormDialog createNewDialog(Class<? extends Instrument> instrumentClass) {
+	public ReactiveFormDialog createNewDialog(Class<? extends Instrument> instrumentClassAllowed) {
 		this.setTitle(HolderMessage.getMessage("reactive.form.dialog.title.new"));
-
-		this.loadInstrumentLevelOneComboBox();
-		this.loadInstrumentClassInCombo(instrumentClass);
 
 		this.reactive = new Reactive();
 		this.emptyFields();
+		
+		this.instrumentClassAllowed = instrumentClassAllowed;
+		this.loadInstrumentClassInComboBox(instrumentClassAllowed);
 
 		return this;
 	}
@@ -269,14 +363,16 @@ public class ReactiveFormDialog extends JDialog {
 	 * 
 	 * @param reactive
 	 *            El reactivo que vamos a editar.
+	 * @param instrumentClassAllowed
+	 *            La clase de los instrumentos que vamos a poder asignarle al reactivo.
 	 * @return La ventana del formulario ya configurado para la edición del reactivo.
 	 */
-	public ReactiveFormDialog createEditDialog(Reactive reactive) {
+	public ReactiveFormDialog createEditDialog(Reactive reactive, Class<? extends Instrument> instrumentClassAllowed) {
 		this.setTitle(HolderMessage.getMessage("reactive.form.dialog.title.edit"));
 
-		this.loadInstrumentLevelOneComboBox();
-
 		this.reactive = reactive;
+		this.instrumentClassAllowed = instrumentClassAllowed;
+		
 		this.fromReactiveToDialog();
 
 		return this;

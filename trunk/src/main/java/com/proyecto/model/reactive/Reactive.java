@@ -8,15 +8,18 @@ import javax.persistence.Table;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
+import com.proyecto.model.answer.EssayActivityAnswer;
 import com.proyecto.model.instrument.Instrument;
+import com.proyecto.model.instrument.OneToOne;
 
 /**
  * La clase que define el reactivo dentro del sistema.
  * 
+ * @author Guillermo Mazzali
  * @version 1.0
  */
 @Model
-@Table(name = "REACTIVE")
+@Table(name = "REACTIVES")
 @javax.persistence.Entity(name = "Reactive")
 public class Reactive extends Entity<Integer> {
 
@@ -27,9 +30,7 @@ public class Reactive extends Entity<Integer> {
 	 */
 	public interface Attributes extends Entity.Attributes {
 		static final String DESCRIPTION = "description";
-		static final String TYPE = "type";
-		static  Instrument INSTRUMENT = null;
-	
+		static final String INSTRUMENT = "instrument";
 	}
 
 	/**
@@ -37,11 +38,16 @@ public class Reactive extends Entity<Integer> {
 	 */
 	private String description;
 	/**
+	 * El instrumento asociado a este reactivo.
+	 */
+	private Instrument instrument;
 
+	/**
 	 * Constructor por default de un reactivo
 	 */
 	public Reactive() {
 		this.description = null;
+		this.instrument = null;
 	}
 
 	@Override
@@ -68,7 +74,18 @@ public class Reactive extends Entity<Integer> {
 	}
 
 	/**
-	 * La función que setea la descripción de del reactivo.
+	 * La función que permite recuperar el instrumento que tenemos dentro de
+	 * este reactivo.
+	 * 
+	 * @return El instrumento que tenemos dentro de este reactivo.
+	 */
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "reactive", targetEntity = Instrument.class)
+	public Instrument getInstrument() {
+		return instrument;
+	}
+
+	/**
+	 * La función que setea la descripción del reactivo.
 	 * 
 	 * @param description
 	 *            La descripción del reactivo.
@@ -77,5 +94,13 @@ public class Reactive extends Entity<Integer> {
 		this.description = description;
 	}
 
-
+	/**
+	 * La función encargada de cargar dentro un instrumento dentro del reactivo.
+	 * 
+	 * @param instrument
+	 *            El instrumento que vamos a cargar dentro de este reactivo.
+	 */
+	public void setInstrument(Instrument instrument) {
+		this.instrument = instrument;
+	}
 }
