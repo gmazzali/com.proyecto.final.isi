@@ -320,6 +320,25 @@ ALTER TABLE RELATION_ANSWERS ADD CONSTRAINT FK_RELATION_ANSWERS_CORRESPONDENCE_I
 	
 	
 ############################################################
+################### La tabla de reactivo ###################
+############################################################
+	
+DROP TABLE IF EXISTS REACTIVES;
+
+CREATE TABLE REACTIVES (
+	ID_REACTIVE INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	DESCRIPTION TEXT NOT NULL,
+	ID_INSTRUMENT INTEGER UNSIGNED NOT NULL,
+	PRIMARY KEY (ID_REACTIVE),
+	KEY (ID_INSTRUMENT)
+);
+
+ALTER TABLE REACTIVES ADD CONSTRAINT FK_REACTIVES_INSTRUMENTS 
+	FOREIGN KEY (ID_INSTRUMENT) REFERENCES INSTRUMENTS (ID_INSTRUMENT)
+	ON DELETE CASCADE ON UPDATE CASCADE;
+	
+	
+############################################################
 ############ El script de borrado de las tablas ############
 ############################################################
 

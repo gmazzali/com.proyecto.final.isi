@@ -1,6 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.common.util.holder.HolderMessage;
+import com.proyecto.converter.InstrumentClassToNameConverter;
 import com.proyecto.model.instrument.CompositeInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.SimpleInstrument;
@@ -17,16 +17,12 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos semiformales simples.
 	 */
-	SIMPLE_INSTRUMENT("instrument.type.semiformal.simple", SimpleInstrument.class, SimpleInstrumentType.values()),
+	SIMPLE_INSTRUMENT(SimpleInstrument.class, SimpleInstrumentType.values()),
 	/**
 	 * El elemento de los instrumentos semiformales compuestos.
 	 */
-	COMPOSITE_INSTRUMENT("instrument.type.semiformal.composite", CompositeInstrument.class, CompositeInstrumentType.values());
+	COMPOSITE_INSTRUMENT(CompositeInstrument.class, CompositeInstrumentType.values());
 
-	/**
-	 * El nombre del instrumento.
-	 */
-	private final String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -39,25 +35,24 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param name
-	 *            El nombre del instrumento.
+	 * @param instrumentClass
+	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private SemiFormalInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.name = HolderMessage.getMessage(name);
+	private SemiFormalInstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.getName();
 	}
 
 	@Override
 	public String getName() {
-		return this.name;
+		return InstrumentClassToNameConverter.converter(this.instrumentClass);
 	}
 
 	@Override

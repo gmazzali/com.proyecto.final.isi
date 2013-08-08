@@ -1,6 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.common.util.holder.HolderMessage;
+import com.proyecto.converter.InstrumentClassToNameConverter;
 import com.proyecto.model.instrument.ChoiceInstrument;
 import com.proyecto.model.instrument.CompletionInstrument;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
@@ -18,20 +18,16 @@ public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento que define un instrumento formal objetivo de selección.
 	 */
-	CHOICE("instrument.type.formal.objective.choice", ChoiceInstrument.class, ChoiceInstrumentType.values()),
+	CHOICE(ChoiceInstrument.class, ChoiceInstrumentType.values()),
 	/**
 	 * El elemento que define un instrumento formal objetivo de correspondencia.
 	 */
-	CORRESPONDENCE("instrument.type.formal.objective.correspondence", CorrespondenceInstrument.class, null),
+	CORRESPONDENCE(CorrespondenceInstrument.class, null),
 	/**
 	 * El elemento que define un instrumento formal objetivo para completar.
 	 */
-	COMPLETION("instrument.type.formal.objective.completion", CompletionInstrument.class, null);
+	COMPLETION(CompletionInstrument.class, null);
 
-	/**
-	 * El nombre del instrumento.
-	 */
-	private final String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -44,25 +40,24 @@ public enum ObjectiveActivityInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param name
-	 *            El nombre del instrumento.
+	 * @param instrumentClass
+	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private ObjectiveActivityInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.name = HolderMessage.getMessage(name);
+	private ObjectiveActivityInstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.getName();
 	}
 
 	@Override
 	public String getName() {
-		return this.name;
+		return InstrumentClassToNameConverter.converter(this.instrumentClass);
 	}
 
 	@Override

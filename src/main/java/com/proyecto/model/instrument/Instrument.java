@@ -42,7 +42,7 @@ public abstract class Instrument extends Entity<Integer> {
 	 */
 	public Instrument() {
 		super();
-		this.description = "";
+		this.description = null;
 	}
 
 	@Override
