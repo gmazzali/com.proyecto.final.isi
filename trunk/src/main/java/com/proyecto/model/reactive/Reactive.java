@@ -1,16 +1,18 @@
 package com.proyecto.model.reactive;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
-import com.proyecto.model.answer.EssayActivityAnswer;
 import com.proyecto.model.instrument.Instrument;
-import com.proyecto.model.instrument.OneToOne;
 
 /**
  * La clase que define el reactivo dentro del sistema.
@@ -74,18 +76,19 @@ public class Reactive extends Entity<Integer> {
 	}
 
 	/**
-	 * La función que permite recuperar el instrumento que tenemos dentro de
-	 * este reactivo.
+	 * La función que permite recuperar el instrumento que tenemos dentro de este reactivo.
 	 * 
 	 * @return El instrumento que tenemos dentro de este reactivo.
 	 */
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "reactive", targetEntity = Instrument.class)
+	@OneToOne(cascade =
+		{ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY, targetEntity = Instrument.class)
+	@JoinColumn(name = "ID_INSTRUMENT", referencedColumnName = "ID_INSTRUMENT", insertable = true, updatable = true, nullable = false)
 	public Instrument getInstrument() {
-		return instrument;
+		return this.instrument;
 	}
 
 	/**
-	 * La función que setea la descripción del reactivo.
+	 * La función que carga la descripción del reactivo.
 	 * 
 	 * @param description
 	 *            La descripción del reactivo.

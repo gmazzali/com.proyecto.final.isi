@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
 import com.common.util.holder.HolderApplicationContext;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.CompletionInstrument;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
 import com.proyecto.model.instrument.Instrument;
@@ -89,12 +90,12 @@ public class SelectInstrumentDialog extends JDialog {
 	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
-		this.setBounds(100, 100, 318, 258);
+		this.setBounds(100, 100, 570, 258);
 		this.getContentPane().setLayout(null);
 
 		this.levelOneComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelOneComboBox.setEnabled(false);
-		this.levelOneComboBox.setBounds(10, 11, 292, 30);
+		this.levelOneComboBox.setBounds(10, 11, 548, 30);
 		this.levelOneComboBox.addItemListener(new ItemListener() {
 
 			@Override
@@ -107,7 +108,7 @@ public class SelectInstrumentDialog extends JDialog {
 
 		this.levelTwoComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelTwoComboBox.setEnabled(false);
-		this.levelTwoComboBox.setBounds(10, 52, 292, 30);
+		this.levelTwoComboBox.setBounds(10, 52, 548, 30);
 		this.levelTwoComboBox.addItemListener(new ItemListener() {
 
 			@Override
@@ -120,7 +121,7 @@ public class SelectInstrumentDialog extends JDialog {
 
 		this.levelThreeComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelThreeComboBox.setEnabled(false);
-		this.levelThreeComboBox.setBounds(10, 93, 292, 30);
+		this.levelThreeComboBox.setBounds(10, 93, 548, 30);
 		this.levelThreeComboBox.addItemListener(new ItemListener() {
 
 			@Override
@@ -133,16 +134,16 @@ public class SelectInstrumentDialog extends JDialog {
 
 		this.levelFourComboBox = new JComboBox<InstrumentTypeInterface>();
 		this.levelFourComboBox.setEnabled(false);
-		this.levelFourComboBox.setBounds(10, 134, 292, 30);
+		this.levelFourComboBox.setBounds(10, 134, 548, 30);
 		this.getContentPane().add(this.levelFourComboBox);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 175, 292, 2);
+		separator.setBounds(10, 175, 548, 2);
 		this.getContentPane().add(separator);
 
 		JButton commitButton = new JButton("Aceptar");
 		commitButton.setFont(new Font("Arial", Font.BOLD, 12));
-		commitButton.setBounds(10, 188, 100, 30);
+		commitButton.setBounds(346, 188, 100, 35);
 		commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -154,7 +155,7 @@ public class SelectInstrumentDialog extends JDialog {
 
 		JButton rejectButton = new JButton("Cancelar");
 		rejectButton.setFont(new Font("Arial", Font.BOLD, 12));
-		rejectButton.setBounds(202, 188, 100, 30);
+		rejectButton.setBounds(458, 188, 100, 35);
 		rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -354,7 +355,8 @@ public class SelectInstrumentDialog extends JDialog {
 				dialog.setLocationRelativeTo(this);
 				dialog.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(this, "Funcionalidad no implementada", "Información", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.select.dialog.not.implement"), "Información",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
@@ -367,7 +369,7 @@ public class SelectInstrumentDialog extends JDialog {
 	 * @return La ventana de selección de instrumento.
 	 */
 	public SelectInstrumentDialog createNewDialog(Class<? extends Instrument> instrumenClass) {
-		this.setTitle("Selección de instrumento");
+		this.setTitle(HolderMessage.getMessage("instrument.select.dialog.title"));
 
 		// Seteamos el tipo de instrumento mínimo de selección para crear.
 		this.loadLevelOneComboBox();
@@ -404,11 +406,11 @@ public class SelectInstrumentDialog extends JDialog {
 
 			// CorrespondenceInstrument instrument =
 			// HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class).findById(4);
-
+			//
 			// SingleChoiceInstrument instrument = HolderApplicationContext.getContext().getBean(SingleChoiceInstrumentService.class).findById(8);
 			//
 			// HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createEditDialog(instrument);
-
+			//
 			SelectInstrumentDialog dialog = HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createNewDialog(null);
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);

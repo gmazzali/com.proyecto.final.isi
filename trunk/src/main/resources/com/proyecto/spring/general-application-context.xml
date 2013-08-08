@@ -17,6 +17,7 @@
 	<!-- Cargamos las propiedades que tienen los mensaje del sistema -->
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="cacheSeconds" value="30"/>
 		<property name="basenames">
 			<list>
 				<value>file:///${proyecto.configuration.dir}/messages/messages</value>

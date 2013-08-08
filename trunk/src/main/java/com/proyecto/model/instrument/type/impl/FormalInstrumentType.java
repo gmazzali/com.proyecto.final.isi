@@ -1,6 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.common.util.holder.HolderMessage;
+import com.proyecto.converter.InstrumentClassToNameConverter;
 import com.proyecto.model.instrument.EssayActivityInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.ObjectiveActivityInstrument;
@@ -17,16 +17,12 @@ public enum FormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos formales objetivos.
 	 */
-	OBJETIVE_ACTIVITY("instrument.type.formal.objective", ObjectiveActivityInstrument.class, ObjectiveActivityInstrumentType.values()),
+	OBJETIVE_ACTIVITY(ObjectiveActivityInstrument.class, ObjectiveActivityInstrumentType.values()),
 	/**
 	 * El elemento de los instrumentos formales de ensayos.
 	 */
-	ESSAY_ACTIVITY("instrument.type.formal.essay", EssayActivityInstrument.class, EssayActivityInstrumentType.values());
+	ESSAY_ACTIVITY(EssayActivityInstrument.class, EssayActivityInstrumentType.values());
 
-	/**
-	 * El nombre del instrumento.
-	 */
-	private final String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -39,25 +35,24 @@ public enum FormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param name
-	 *            El nombre del instrumento.
+	 * @param instrumentClass
+	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private FormalInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.name = HolderMessage.getMessage(name);
+	private FormalInstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.getName();
 	}
 
 	@Override
 	public String getName() {
-		return this.name;
+		return InstrumentClassToNameConverter.converter(this.instrumentClass);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.common.util.holder.HolderMessage;
+import com.proyecto.converter.InstrumentClassToNameConverter;
 import com.proyecto.model.instrument.ConceptualMapInstrument;
 import com.proyecto.model.instrument.EssayInstrument;
 import com.proyecto.model.instrument.ExerciseInstrument;
@@ -18,20 +18,16 @@ public enum SimpleInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos semiformales simples de mapas conceptuales.
 	 */
-	CONCEPTUAL_MAP("instrument.type.semiformal.simple.comceptual", ConceptualMapInstrument.class, null),
+	CONCEPTUAL_MAP(ConceptualMapInstrument.class, null),
 	/**
 	 * El elemento de los instrumentos semiformales simples de ensayos.
 	 */
-	ESSAY("instrument.type.semiformal.simple.essay", EssayInstrument.class, null),
+	ESSAY(EssayInstrument.class, null),
 	/**
 	 * El elemento de los instrumentos semiformales simples de ejercicios.
 	 */
-	EXERCISE("instrument.type.semiformal.simple.exercise", ExerciseInstrument.class, null);
+	EXERCISE(ExerciseInstrument.class, null);
 
-	/**
-	 * El nombre del instrumento.
-	 */
-	private final String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -44,25 +40,24 @@ public enum SimpleInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param name
-	 *            El nombre del instrumento.
+	 * @param instrumentClass
+	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private SimpleInstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.name = HolderMessage.getMessage(name);
+	private SimpleInstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.getName();
 	}
 
 	@Override
 	public String getName() {
-		return this.name;
+		return InstrumentClassToNameConverter.converter(this.instrumentClass);
 	}
 
 	@Override

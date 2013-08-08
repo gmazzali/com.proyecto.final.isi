@@ -2,7 +2,7 @@ package com.proyecto.model.instrument.type.impl;
 
 import java.lang.reflect.Modifier;
 
-import com.common.util.holder.HolderMessage;
+import com.proyecto.converter.InstrumentClassToNameConverter;
 import com.proyecto.model.instrument.FormalInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.SemiFormalInstrument;
@@ -19,16 +19,12 @@ public enum InstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El elemento de los instrumentos formales.
 	 */
-	FORMAL("instrument.type.formal", FormalInstrument.class, FormalInstrumentType.values()),
+	FORMAL(FormalInstrument.class, FormalInstrumentType.values()),
 	/**
 	 * El elemento de los instrumentos semiformales.
 	 */
-	SEMIFORMAL("instrument.type.semiformal", SemiFormalInstrument.class, SemiFormalInstrumentType.values());
+	SEMIFORMAL(SemiFormalInstrument.class, SemiFormalInstrumentType.values());
 
-	/**
-	 * El nombre del instrumento.
-	 */
-	private final String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -41,25 +37,24 @@ public enum InstrumentType implements InstrumentTypeInterface {
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
-	 * @param name
-	 *            El nombre del instrumento.
+	 * @param instrumentClass
+	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private InstrumentType(String name, Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
-		this.name = HolderMessage.getMessage(name);
+	private InstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.getName();
 	}
 
 	@Override
 	public String getName() {
-		return this.name;
+		return InstrumentClassToNameConverter.converter(this.instrumentClass);
 	}
 
 	@Override
