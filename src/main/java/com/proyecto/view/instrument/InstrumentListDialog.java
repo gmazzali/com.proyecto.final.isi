@@ -161,8 +161,10 @@ public class InstrumentListDialog extends JDialog {
 	 * La función de inicialización de los componentes.
 	 */
 	private void init() {
-		this.setResizable(false);
 		this.setModal(true);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		
 		this.setBounds(100, 100, 693, 431);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
@@ -422,28 +424,35 @@ public class InstrumentListDialog extends JDialog {
 		new Thread() {
 			@Override
 			public void run() {
-				try {
-					InstrumentListDialog.this.beforeExecuteProccess();
+				// Ejecutamos las acciones antes de procesar.
+				InstrumentListDialog.this.beforeExecuteProccess();
 
-					// Actualizamos la clase de los instrumentos que vamos a cargar.
-					InstrumentListDialog.this.updateInstrumentClass();
+				// Vaciamos la lista de instrumentos.
+				DefaultTableModel tableModel = (DefaultTableModel) InstrumentListDialog.this.table.getModel();
+				tableModel.getDataVector().clear();
+		
+				new Thread() {
+					@Override
+					public void run() {
+						try {
+							// Actualizamos la clase de los instrumentos que vamos a cargar.
+							InstrumentListDialog.this.updateInstrumentClass();
 
-					// Actualizamos el listado de los instrumentos.
-					InstrumentListDialog.this.updateInstrumentsList();
-
-					// Actualizamos la tabla de los instrumentos.
-					InstrumentListDialog.this.updateInstrumentTable();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} finally {
-					InstrumentListDialog.this.afterExecuteProccess();
-				}
+							// Volvemos a cargar el listado de instrumentos y la tabla de los mismos.
+							InstrumentListDialog.this.updateInstrumentsList();
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						} finally {
+							InstrumentListDialog.this.afterExecuteProccess();
+						}
+					}
+				}.start();
 			}
 		}.start();
 	}
 
 	/**
-	 * La función antes de recuperar los instrumentos.
+	 * La función antes de procesar los instrumentos.
 	 */
 	private void beforeExecuteProccess() {
 		this.setEnabled(false);
@@ -453,7 +462,7 @@ public class InstrumentListDialog extends JDialog {
 	}
 
 	/*
-	 * La función después de recuperar los instrumentos.
+	 * La función después de procesar los instrumentos.
 	 */
 	private void afterExecuteProccess() {
 		this.setEnabled(true);
@@ -490,31 +499,7 @@ public class InstrumentListDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de cargar el mapa de los servicios para cada uno de los instrumentos que tenemos dentro del sistema.
-	 */
-	private void initServices() {
-		// Si es la primera vez que usamos el mapa, lo cargamos.
-		if (this.services == null) {
-			this.services = new HashMap<>();
-
-			this.services.put(RestrictedEssayActivityInstrument.class, this.restrictedEssayActivityInstrumentService);
-			this.services.put(UnrestrictedEssayActivityInstrument.class, this.unrestrictedEssayActivityInstrumentService);
-
-			this.services.put(SingleChoiceInstrument.class, this.singleChoiceInstrumentService);
-			this.services.put(MultipleChoiceInstrument.class, this.multipleChoiceInstrumentService);
-			this.services.put(CompletionInstrument.class, this.completionInstrumentService);
-			this.services.put(CorrespondenceInstrument.class, this.correspondenceInstrumentService);
-
-			this.services.put(ConceptualMapInstrument.class, this.conceptualMapInstrumentService);
-			this.services.put(EssayInstrument.class, this.essayInstrumentService);
-			this.services.put(ExerciseInstrument.class, this.exerciseInstrumentService);
-
-			this.services.put(PortfolioInstrument.class, this.portfolioInstrumentService);
-		}
-	}
-
-	/**
-	 * La función encargada de actualizar el listado de instrumentos que tenemos de acuerdo a la clase de instrumento que tenemos seleccionado.
+	 * La función encargada de actualizar el listado de instrumentos que tenemos de acuerdo a la clase de instrumento que tenemos seleccionado y cargamos dicho listado dentro de la tabla.
 	 * 
 	 * @throws CheckedException
 	 *             En caso de alguna falla durante la recuperación de los instrumentos.
@@ -530,6 +515,27 @@ public class InstrumentListDialog extends JDialog {
 			if (this.instrumentClass.isAssignableFrom(clazz)) {
 				this.instruments.addAll(this.services.get(clazz).findAll());
 			}
+		}
+		
+		// Cargamos el listado dentro de la tabla.
+		this.loadInstrumentTable();
+	}
+
+	/**
+	 * La función encargada de cargar dentro de la tabla el listado de los instrumentos.
+	 */
+	private void loadInstrumentTable() {
+		// Recuperamos el modelo de la tabla.
+		DefaultTableModel tableModel = (DefaultTableModel) this.table.getModel();
+
+		// Volvemos a cargar el modelo.
+		for (Instrument instrument : this.instruments) {
+			String[] row = new String[2];
+
+			row[0] = instrument.getDescription();
+			row[1] = InstrumentClassToNameConverter.converter(instrument.getClass());
+
+			tableModel.addRow(row);
 		}
 	}
 
@@ -555,23 +561,26 @@ public class InstrumentListDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de cargar dentro de la tabla el listado de los instrumentos.
+	 * La función encargada de cargar el mapa de los servicios para cada uno de los instrumentos que tenemos dentro del sistema.
 	 */
-	private void updateInstrumentTable() {
-		// Recuperamos el modelo de la tabla.
-		DefaultTableModel tableModel = (DefaultTableModel) this.table.getModel();
+	private void initServices() {
+		// Si es la primera vez que usamos el mapa, lo cargamos.
+		if (this.services == null) {
+			this.services = new HashMap<>();
 
-		// Vaciamos el modelo.
-		tableModel.getDataVector().clear();
+			this.services.put(RestrictedEssayActivityInstrument.class, this.restrictedEssayActivityInstrumentService);
+			this.services.put(UnrestrictedEssayActivityInstrument.class, this.unrestrictedEssayActivityInstrumentService);
 
-		// Volvemos a cargar el modelo.
-		for (Instrument instrument : this.instruments) {
-			String[] row = new String[2];
+			this.services.put(SingleChoiceInstrument.class, this.singleChoiceInstrumentService);
+			this.services.put(MultipleChoiceInstrument.class, this.multipleChoiceInstrumentService);
+			this.services.put(CompletionInstrument.class, this.completionInstrumentService);
+			this.services.put(CorrespondenceInstrument.class, this.correspondenceInstrumentService);
 
-			row[0] = instrument.getDescription();
-			row[1] = InstrumentClassToNameConverter.converter(instrument.getClass());
+			this.services.put(ConceptualMapInstrument.class, this.conceptualMapInstrumentService);
+			this.services.put(EssayInstrument.class, this.essayInstrumentService);
+			this.services.put(ExerciseInstrument.class, this.exerciseInstrumentService);
 
-			tableModel.addRow(row);
+			this.services.put(PortfolioInstrument.class, this.portfolioInstrumentService);
 		}
 	}
 
@@ -669,7 +678,6 @@ public class InstrumentListDialog extends JDialog {
 	 */
 	public InstrumentListDialog createCrudDialog() {
 		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.crud"));
-		this.setModal(true);
 
 		this.selectedInstrument = null;
 		this.isSelectDialog = false;
@@ -688,7 +696,6 @@ public class InstrumentListDialog extends JDialog {
 	 */
 	public InstrumentListDialog createSelectDialog(Class<? extends Instrument> instrumentClass) {
 		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.select"));
-		this.setModal(true);
 
 		this.selectedInstrument = null;
 		this.isSelectDialog = true;

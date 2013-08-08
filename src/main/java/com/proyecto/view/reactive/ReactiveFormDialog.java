@@ -91,8 +91,6 @@ public class ReactiveFormDialog extends JDialog {
 	public ReactiveFormDialog() {
 		super();
 		this.init();
-
-		// Cargamos el combo de tipos.
 		this.loadInstrumentsTypeComboBox();
 	}
 
