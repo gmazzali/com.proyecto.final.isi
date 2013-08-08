@@ -82,6 +82,7 @@ public class SelectInstrumentDialog extends JDialog {
 	public SelectInstrumentDialog() {
 		super();
 		this.init();
+		this.loadLevelOneComboBox();
 	}
 
 	/**
@@ -186,9 +187,6 @@ public class SelectInstrumentDialog extends JDialog {
 	 *            El tipo de instrumento que queremos buscar para listar dentro de esta ventana.
 	 */
 	private void loadInstrumentTypesInComboBox(Class<? extends Instrument> instrumentClass) {
-		// Cargamos el combo inicial.
-		this.loadLevelOneComboBox();
-
 		// Solo si recibimos una clase, la filtramos.
 		if (instrumentClass != null) {
 
@@ -372,7 +370,6 @@ public class SelectInstrumentDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("instrument.select.dialog.title"));
 
 		// Seteamos el tipo de instrumento mínimo de selección para crear.
-		this.loadLevelOneComboBox();
 		this.loadInstrumentTypesInComboBox(instrumenClass);
 
 		this.setModal(true);
