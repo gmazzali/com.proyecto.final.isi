@@ -31,6 +31,7 @@ import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.converter.InstrumentClassToNameConverter;
+import com.proyecto.model.assessment.type.AssessmentType;
 import com.proyecto.model.instrument.CompletionInstrument;
 import com.proyecto.model.instrument.ConceptualMapInstrument;
 import com.proyecto.model.instrument.CorrespondenceInstrument;
@@ -323,6 +324,7 @@ public class InstrumentListDialog extends JDialog {
 	/**
 	 * La función que nos permite manejar el combo box número 1.
 	 */
+	@Deprecated
 	private void loadLevelOneComboBox() {
 		this.levelOneComboBox.removeAllItems();
 
@@ -333,6 +335,32 @@ public class InstrumentListDialog extends JDialog {
 		this.levelOneComboBox.setSelectedIndex(-1);
 		this.levelOneComboBox.setEnabled(true);
 	}
+	
+	/**
+	 * La función encargada de actualizar el listado de los instrumentos del combo numero 1 de acuerdo al tipo de evaluación que recibimos como parámetro.
+	 * @param assessmentType El tipo de clase que recibimos como parametro para recargar el combo de tipo de instrumentos de nivel 1.
+	 */
+	private void updateLevelOneComboBox(AssessmentType assessmentType) {
+		this.levelOneComboBox.removeAllItems();
+
+		// Si el tipo de evaluación no es nulo, cargamos los tipos permitidos.
+		if(assessmentType != null) {
+			for (InstrumentTypeInterface item : assessmentType.getInstrumentsTypeAllowed()) {
+				this.levelOneComboBox.addItem(item);
+			}
+		} 
+		// Sino, cargamos el combo con todos los tipos posibles.
+		else {
+			// Volvemos a cargar el combo.
+			for (InstrumentTypeInterface item : InstrumentType.values()) {
+				this.levelOneComboBox.addItem(item);
+			}
+		}
+		// No seleccionamos nada en el combo y lo habilitamos.
+		this.levelOneComboBox.setSelectedIndex(-1);
+		this.levelOneComboBox.setEnabled(true);
+		
+	}
 
 	/**
 	 * La función encargada de cargar el tipo de instrumento que queremos listar dentro de esta ventana de selección.
@@ -340,6 +368,7 @@ public class InstrumentListDialog extends JDialog {
 	 * @param instrumentClass
 	 *            El tipo de instrumento que queremos buscar para listar dentro de esta ventana.
 	 */
+	@Deprecated
 	private void loadInstrumentTypesInComboBox(Class<? extends Instrument> instrumentClass) {
 		// Cargamos el combo inicial.
 		this.loadLevelOneComboBox();
