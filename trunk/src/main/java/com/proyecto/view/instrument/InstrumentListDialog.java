@@ -46,6 +46,8 @@ import com.proyecto.model.instrument.SingleChoiceInstrument;
 import com.proyecto.model.instrument.UnrestrictedEssayActivityInstrument;
 import com.proyecto.model.instrument.type.InstrumentTypeInterface;
 import com.proyecto.model.instrument.type.impl.InstrumentType;
+import com.proyecto.model.reactive.type.ReactiveType;
+import com.proyecto.model.reactive.type.ReactiveTypeInterface;
 import com.proyecto.service.instrument.CompletionInstrumentService;
 import com.proyecto.service.instrument.ConceptualMapInstrumentService;
 import com.proyecto.service.instrument.CorrespondenceInstrumentService;
@@ -337,15 +339,15 @@ public class InstrumentListDialog extends JDialog {
 	}
 	
 	/**
-	 * La función encargada de actualizar el listado de los instrumentos del combo numero 1 de acuerdo al tipo de evaluación que recibimos como parámetro.
-	 * @param assessmentType El tipo de clase que recibimos como parametro para recargar el combo de tipo de instrumentos de nivel 1.
+	 * La función encargada de actualizar el listado de los instrumentos del combo numero 1 de acuerdo al tipo de reactivo que recibimos como parámetro.
+	 * @param reactiveType El tipo de reactivo que recibimos como parametro para recargar el combo de tipo de instrumentos de nivel 1.
 	 */
-	private void updateLevelOneComboBox(AssessmentType assessmentType) {
+	private void updateLevelOneComboBox(ReactiveType reactiveType) {
 		this.levelOneComboBox.removeAllItems();
 
 		// Si el tipo de evaluación no es nulo, cargamos los tipos permitidos.
-		if(assessmentType != null) {
-			for (InstrumentTypeInterface item : assessmentType.getInstrumentsTypeAllowed()) {
+		if(reactiveType != null) {
+			for (InstrumentTypeInterface item : reactiveType.getInstrumentsTypeAllowed()) {
 				this.levelOneComboBox.addItem(item);
 			}
 		} 
