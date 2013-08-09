@@ -7,6 +7,8 @@ import com.proyecto.model.instrument.type.impl.InstrumentType;
  * La enumeración que nos permite definir los posibles tipos de evaluaciones que tenemos dentro del sistema.
  * @author Guilermo Mazzali
  * @version 1.0
+ * 
+ * TODO gmazzali Falta hacer bien esta enumeración de tipos de evaluaciones.
  */
 public enum AssessmentType {
 
