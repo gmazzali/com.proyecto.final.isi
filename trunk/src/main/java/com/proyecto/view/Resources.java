@@ -45,6 +45,10 @@ public class Resources {
 			Resources.height);
 
 	/**
+	 * El icono para confirmar una ventana.
+	 */
+	public static final ImageIcon COMMIT_ICON = Resources.createStaticImage("com/proyecto/image/commit_32.png", Resources.width, Resources.height);
+	/**
 	 * El icono para cerrar una ventana.
 	 */
 	public static final ImageIcon CLOSE_ICON = Resources.createStaticImage("com/proyecto/image/close_32.png", Resources.width, Resources.height);

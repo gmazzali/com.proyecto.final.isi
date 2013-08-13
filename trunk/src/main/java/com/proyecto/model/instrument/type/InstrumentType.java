@@ -8,14 +8,14 @@ import com.proyecto.model.instrument.Instrument;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public interface InstrumentTypeInterface {
+public interface InstrumentType {
 
 	/**
 	 * La función encargada de retornar el listado de los instrumentos que se definen como hijos de este tipo.
 	 * 
 	 * @return El listado de los tipos de instrumentos que tenemos como hijos de este elemento.
 	 */
-	public InstrumentTypeInterface[] getSubInstruments();
+	public InstrumentType[] getSubInstruments();
 
 	/**
 	 * La función encargada de retornar el nombre del tipo de instrumento que tenemos en este elemento.

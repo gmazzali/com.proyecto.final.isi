@@ -1,12 +1,14 @@
 package com.proyecto.model.reactive.type.impl;
 
-import com.proyecto.model.instrument.Instrument;
-import com.proyecto.model.instrument.type.InstrumentTypeInterface;
-import com.proyecto.model.instrument.type.impl.InstrumentType;
+import com.common.util.holder.HolderMessage;
+import com.proyecto.model.instrument.type.InstrumentType;
+import com.proyecto.model.instrument.type.impl.InstrumentTypeImpl;
 import com.proyecto.model.reactive.type.ReactiveType;
 
 /**
- * La enumeración que nos permite definir los tipos de reactivos que vamos a poder definir dentro de un sistema de acuerdo a los tipos de instrumentos que podemos asignarles a los mismos.
+ * La enumeración que nos permite definir los tipos de reactivos que vamos a poder definir dentro de un sistema de acuerdo a los tipos de instrumentos
+ * que podemos asignarles a los mismos.
+ * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -15,36 +17,41 @@ public enum ReactiveTypeImpl implements ReactiveType {
 	/**
 	 * El tipo de reactivo que solo permite instrumentos formales.
 	 */
-	FORMAL(new InstrumentType[]{ InstrumentType.FORMAL }), 
+	FORMAL("reactive.type.formal", new InstrumentType[] { InstrumentTypeImpl.FORMAL }),
 	/**
 	 * El tipo de reactivo que solo permite instrumentos semiformales.
 	 */
-	SEMIFORMAL(new InstrumentType[]{ InstrumentType.SEMIFORMAL });
-	
+	SEMIFORMAL("reactive.type.semiformal", new InstrumentType[] { InstrumentTypeImpl.SEMIFORMAL });
+
+	/**
+	 * El nombre del tipo de reactivo.
+	 */
+	private String name;
 	/**
 	 * Los tipos de instrumentos que se permite cargar dentro de este tipo de reactivo.
 	 */
-	private InstrumentTypeInterface[] instrumentsTypeAllowed;
-	
+	private InstrumentType[] instrumentsTypeAllowed;
+
 	/**
 	 * El constructor de un tipo de reactivo.
-	 * @param instrumentsTypeAllowed Los tipos de instrumentos permitidos dentro de este reactivo.
+	 * 
+	 * @param name
+	 *            El nombre del tipo de reactivo.
+	 * @param instrumentsTypeAllowed
+	 *            Los tipos de instrumentos permitidos dentro de este reactivo.
 	 */
-	private ReactiveTypeImpl(InstrumentTypeInterface[] instrumentsTypeAllowed) {
+	private ReactiveTypeImpl(String name, InstrumentType[] instrumentsTypeAllowed) {
+		this.name = name;
 		this.instrumentsTypeAllowed = instrumentsTypeAllowed;
 	}
-	
+
 	@Override
-	public InstrumentTypeInterface[] getInstrumentsTypeAllowed() {
-		return instrumentsTypeAllowed;
+	public InstrumentType[] getInstrumentsTypeAllowed() {
+		return this.instrumentsTypeAllowed;
 	}
-	
-	public Boolean isInstrumentClassAllowed(Class<? extends Instrument> instrumentClass) {
-		for (InstrumentTypeInterface instrumentType : instrumentsTypeAllowed) {
-			if(instrumentType.getInstrumentClass().isAssignableFrom(instrumentClass)) {
-				return true;
-			}
-		}
-		return false;
+
+	@Override
+	public String getName() {
+		return HolderMessage.getMessage(this.name);
 	}
 }

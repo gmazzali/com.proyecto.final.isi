@@ -1,10 +1,10 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.proyecto.converter.InstrumentClassToNameConverter;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.EssayActivityInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.ObjectiveActivityInstrument;
-import com.proyecto.model.instrument.type.InstrumentTypeInterface;
+import com.proyecto.model.instrument.type.InstrumentType;
 
 /**
  * La clase que define los instrumentos formales del sistema.
@@ -12,17 +12,21 @@ import com.proyecto.model.instrument.type.InstrumentTypeInterface;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum FormalInstrumentType implements InstrumentTypeInterface {
+public enum FormalInstrumentTypeImpl implements InstrumentType {
 
 	/**
 	 * El elemento de los instrumentos formales objetivos.
 	 */
-	OBJETIVE_ACTIVITY(ObjectiveActivityInstrument.class, ObjectiveActivityInstrumentType.values()),
+	OBJETIVE_ACTIVITY("instrument.type.formal.objective", ObjectiveActivityInstrument.class, ObjectiveActivityInstrumentTypeImpl.values()),
 	/**
 	 * El elemento de los instrumentos formales de ensayos.
 	 */
-	ESSAY_ACTIVITY(EssayActivityInstrument.class, EssayActivityInstrumentType.values());
+	ESSAY_ACTIVITY("instrument.type.formal.essay", EssayActivityInstrument.class, EssayActivityInstrumentTypeImpl.values());
 
+	/**
+	 * El nombre del tipo de instrumento.
+	 */
+	private String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -30,33 +34,36 @@ public enum FormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * Las enumeraciones que contiene los sub-instrumentos.
 	 */
-	private final InstrumentTypeInterface[] subInstruments;
+	private final InstrumentType[] subInstruments;
 
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
+	 * @param name
+	 *            El nombre del instrumento que estamos usando.
 	 * @param instrumentClass
 	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private FormalInstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private FormalInstrumentTypeImpl(String name, Class<? extends Instrument> instrumentClass, InstrumentType[] subInstruments) {
+		this.name = name;
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.getName();
+		return HolderMessage.getMessage(this.name);
 	}
 
 	@Override
 	public String getName() {
-		return InstrumentClassToNameConverter.converter(this.instrumentClass);
+		return this.name;
 	}
 
 	@Override
-	public InstrumentTypeInterface[] getSubInstruments() {
+	public InstrumentType[] getSubInstruments() {
 		return this.subInstruments;
 	}
 

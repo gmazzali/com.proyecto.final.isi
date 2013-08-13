@@ -2,11 +2,11 @@ package com.proyecto.model.instrument.type.impl;
 
 import java.lang.reflect.Modifier;
 
-import com.proyecto.converter.InstrumentClassToNameConverter;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.FormalInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.SemiFormalInstrument;
-import com.proyecto.model.instrument.type.InstrumentTypeInterface;
+import com.proyecto.model.instrument.type.InstrumentType;
 
 /**
  * La enumeración que ocupamos para definir los distintos tipos de instrumentos que tenemos.
@@ -14,17 +14,21 @@ import com.proyecto.model.instrument.type.InstrumentTypeInterface;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum InstrumentType implements InstrumentTypeInterface {
+public enum InstrumentTypeImpl implements InstrumentType {
 
 	/**
 	 * El elemento de los instrumentos formales.
 	 */
-	FORMAL(FormalInstrument.class, FormalInstrumentType.values()),
+	FORMAL("instrument.type.formal", FormalInstrument.class, FormalInstrumentTypeImpl.values()),
 	/**
 	 * El elemento de los instrumentos semiformales.
 	 */
-	SEMIFORMAL(SemiFormalInstrument.class, SemiFormalInstrumentType.values());
+	SEMIFORMAL("instrument.type.semiformal", SemiFormalInstrument.class, SemiFormalInstrumentTypeImpl.values());
 
+	/**
+	 * El nombre del tipo de instrumento.
+	 */
+	private String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -32,33 +36,36 @@ public enum InstrumentType implements InstrumentTypeInterface {
 	/**
 	 * Las enumeraciones que contiene los sub-instrumentos.
 	 */
-	private final InstrumentTypeInterface[] subInstruments;
+	private final InstrumentType[] subInstruments;
 
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
+	 * @param name
+	 *            El nombre del instrumento que estamos usando.
 	 * @param instrumentClass
 	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private InstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private InstrumentTypeImpl(String name, Class<? extends Instrument> instrumentClass, InstrumentType[] subInstruments) {
+		this.name = name;
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.getName();
+		return HolderMessage.getMessage(this.name);
 	}
 
 	@Override
 	public String getName() {
-		return InstrumentClassToNameConverter.converter(this.instrumentClass);
+		return this.name;
 	}
 
 	@Override
-	public InstrumentTypeInterface[] getSubInstruments() {
+	public InstrumentType[] getSubInstruments() {
 		return this.subInstruments;
 	}
 
@@ -67,7 +74,7 @@ public enum InstrumentType implements InstrumentTypeInterface {
 		return this.instrumentClass;
 	}
 
-	private static void recursivePrint(InstrumentTypeInterface instrument, Integer level) {
+	private static void recursivePrint(InstrumentType instrument, Integer level) {
 		if (instrument == null) {
 			return;
 		}
@@ -90,14 +97,14 @@ public enum InstrumentType implements InstrumentTypeInterface {
 		}
 
 		if (instrument.getSubInstruments() != null) {
-			for (InstrumentTypeInterface i : instrument.getSubInstruments()) {
-				InstrumentType.recursivePrint(i, level + 4);
+			for (InstrumentType i : instrument.getSubInstruments()) {
+				InstrumentTypeImpl.recursivePrint(i, level + 4);
 			}
 		}
 	}
 
 	public static void main(String[] args) {
-		InstrumentType.recursivePrint(InstrumentType.FORMAL, 0);
-		InstrumentType.recursivePrint(InstrumentType.SEMIFORMAL, 0);
+		InstrumentTypeImpl.recursivePrint(InstrumentTypeImpl.FORMAL, 0);
+		InstrumentTypeImpl.recursivePrint(InstrumentTypeImpl.SEMIFORMAL, 0);
 	}
 }

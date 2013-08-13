@@ -81,7 +81,7 @@ public class Reactive extends Entity<Integer> {
 	 * @return El instrumento que tenemos dentro de este reactivo.
 	 */
 	@OneToOne(cascade =
-		{ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY, targetEntity = Instrument.class)
+		{ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.EAGER, targetEntity = Instrument.class)
 	@JoinColumn(name = "ID_INSTRUMENT", referencedColumnName = "ID_INSTRUMENT", insertable = true, updatable = true, nullable = false)
 	public Instrument getInstrument() {
 		return this.instrument;

@@ -27,8 +27,8 @@ import com.proyecto.model.instrument.MultipleChoiceInstrument;
 import com.proyecto.model.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.model.instrument.SingleChoiceInstrument;
 import com.proyecto.model.instrument.UnrestrictedEssayActivityInstrument;
-import com.proyecto.model.instrument.type.InstrumentTypeInterface;
-import com.proyecto.model.instrument.type.impl.InstrumentType;
+import com.proyecto.model.instrument.type.InstrumentType;
+import com.proyecto.model.instrument.type.impl.InstrumentTypeImpl;
 
 /**
  * La ventana que va a desplegar un conjunto de combos para poder seleccionar el tipo de instrumento que vamos a crear en el sistema.
@@ -65,10 +65,15 @@ public class SelectInstrumentDialog extends JDialog {
 	/**
 	 * Los combos para cada uno de los niveles de los instrumentos.
 	 */
-	private JComboBox<InstrumentTypeInterface> levelOneComboBox;
-	private JComboBox<InstrumentTypeInterface> levelTwoComboBox;
-	private JComboBox<InstrumentTypeInterface> levelThreeComboBox;
-	private JComboBox<InstrumentTypeInterface> levelFourComboBox;
+	private JComboBox<InstrumentType> levelOneComboBox;
+	private JComboBox<InstrumentType> levelTwoComboBox;
+	private JComboBox<InstrumentType> levelThreeComboBox;
+	private JComboBox<InstrumentType> levelFourComboBox;
+
+	/**
+	 * El listado de los tipos de instrumentos que vamos a poder administrar y seleccionar dentro de esta ventana.
+	 */
+	private InstrumentType[] instrumentsType;
 
 	/**
 	 * El instrumento que vamos a dar de alta o a modificar y la clase que lo crea.
@@ -82,7 +87,6 @@ public class SelectInstrumentDialog extends JDialog {
 	public SelectInstrumentDialog() {
 		super();
 		this.init();
-		this.loadLevelOneComboBox();
 	}
 
 	/**
@@ -94,7 +98,7 @@ public class SelectInstrumentDialog extends JDialog {
 		this.setBounds(100, 100, 570, 258);
 		this.getContentPane().setLayout(null);
 
-		this.levelOneComboBox = new JComboBox<InstrumentTypeInterface>();
+		this.levelOneComboBox = new JComboBox<InstrumentType>();
 		this.levelOneComboBox.setEnabled(false);
 		this.levelOneComboBox.setBounds(10, 11, 548, 30);
 		this.levelOneComboBox.addItemListener(new ItemListener() {
@@ -107,7 +111,7 @@ public class SelectInstrumentDialog extends JDialog {
 		});
 		this.getContentPane().add(this.levelOneComboBox);
 
-		this.levelTwoComboBox = new JComboBox<InstrumentTypeInterface>();
+		this.levelTwoComboBox = new JComboBox<InstrumentType>();
 		this.levelTwoComboBox.setEnabled(false);
 		this.levelTwoComboBox.setBounds(10, 52, 548, 30);
 		this.levelTwoComboBox.addItemListener(new ItemListener() {
@@ -120,7 +124,7 @@ public class SelectInstrumentDialog extends JDialog {
 		});
 		this.getContentPane().add(this.levelTwoComboBox);
 
-		this.levelThreeComboBox = new JComboBox<InstrumentTypeInterface>();
+		this.levelThreeComboBox = new JComboBox<InstrumentType>();
 		this.levelThreeComboBox.setEnabled(false);
 		this.levelThreeComboBox.setBounds(10, 93, 548, 30);
 		this.levelThreeComboBox.addItemListener(new ItemListener() {
@@ -133,7 +137,7 @@ public class SelectInstrumentDialog extends JDialog {
 		});
 		this.getContentPane().add(this.levelThreeComboBox);
 
-		this.levelFourComboBox = new JComboBox<InstrumentTypeInterface>();
+		this.levelFourComboBox = new JComboBox<InstrumentType>();
 		this.levelFourComboBox.setEnabled(false);
 		this.levelFourComboBox.setBounds(10, 134, 548, 30);
 		this.getContentPane().add(this.levelFourComboBox);
@@ -167,79 +171,28 @@ public class SelectInstrumentDialog extends JDialog {
 	}
 
 	/**
-	 * La función que nos permite manejar el combo box número 1.
+	 * La función encargada de actualizar el listado de los instrumentos del combo numero 1 de acuerdo a los instrumentos habilitados para esta
+	 * ventana.
 	 */
-	private void loadLevelOneComboBox() {
+	private void updateLevelOneComboBox() {
 		this.levelOneComboBox.removeAllItems();
 
-		// Volvemos a cargar el combo.
-		for (InstrumentTypeInterface item : InstrumentType.values()) {
-			this.levelOneComboBox.addItem(item);
-		}
-		this.levelOneComboBox.setSelectedIndex(-1);
-		this.levelOneComboBox.setEnabled(true);
-	}
-
-	/**
-	 * La función encargada de cargar el tipo de instrumento que queremos listar dentro de esta ventana de selección.
-	 * 
-	 * @param instrumentClass
-	 *            El tipo de instrumento que queremos buscar para listar dentro de esta ventana.
-	 */
-	private void loadInstrumentTypesInComboBox(Class<? extends Instrument> instrumentClass) {
-		// Solo si recibimos una clase, la filtramos.
-		if (instrumentClass != null) {
-
-			// Buscamos el tipo de instrumento para el nivel 1.
-			for (InstrumentTypeInterface levelOne : InstrumentType.values()) {
-
-				// Si es un hijo de ese tipo de instrumento.
-				if (levelOne.getInstrumentClass().isAssignableFrom(instrumentClass)) {
-					this.levelOneComboBox.setSelectedItem(levelOne);
-					this.levelOneComboBox.setEnabled(false);
-
-					if (levelOne.getSubInstruments() != null) {
-						// Buscamos el segundo nivel.
-						for (InstrumentTypeInterface levelTwo : levelOne.getSubInstruments()) {
-
-							// Si es un hijo de ese tipo de instrumento.
-							if (levelTwo.getInstrumentClass().isAssignableFrom(instrumentClass)) {
-								this.levelTwoComboBox.setSelectedItem(levelTwo);
-								this.levelTwoComboBox.setEnabled(false);
-
-								if (levelTwo.getSubInstruments() != null) {
-									// Buscamos el tercer nivel.
-									for (InstrumentTypeInterface levelThree : levelTwo.getSubInstruments()) {
-
-										// Si es un hijo de ese tipo de instrumento.
-										if (levelThree.getInstrumentClass().isAssignableFrom(instrumentClass)) {
-											this.levelThreeComboBox.setSelectedItem(levelThree);
-											this.levelThreeComboBox.setEnabled(false);
-
-											if (levelThree.getSubInstruments() != null) {
-												// Buscamos el cuarto nivel.
-												for (InstrumentTypeInterface levelFour : levelThree.getSubInstruments()) {
-
-													// Si es un hijo de ese tipo de instrumento.
-													if (levelFour.getInstrumentClass().isAssignableFrom(instrumentClass)) {
-														this.levelFourComboBox.setSelectedItem(levelFour);
-														this.levelFourComboBox.setEnabled(false);
-														break;
-													}
-												}
-												break;
-											}
-										}
-									}
-									break;
-								}
-							}
-						}
-						break;
-					}
-				}
+		// Si el tipo de evaluación no es nulo, cargamos los tipos permitidos.
+		if (this.instrumentsType != null) {
+			for (InstrumentType item : this.instrumentsType) {
+				this.levelOneComboBox.addItem(item);
 			}
 		}
+		// Sino, cargamos el combo con todos los tipos posibles.
+		else {
+			// Volvemos a cargar el combo.
+			for (InstrumentType item : InstrumentTypeImpl.values()) {
+				this.levelOneComboBox.addItem(item);
+			}
+		}
+		// No seleccionamos nada en el combo y lo habilitamos.
+		this.levelOneComboBox.setSelectedIndex(-1);
+		this.levelOneComboBox.setEnabled(true);
 	}
 
 	/**
@@ -250,19 +203,19 @@ public class SelectInstrumentDialog extends JDialog {
 	 * @param postComboBox
 	 *            El combo donde se van a cargar los sub instrumentos del instrumento seleccionado en el otro combo.
 	 */
-	private void reloadComboBox(JComboBox<InstrumentTypeInterface> preComboBox, JComboBox<InstrumentTypeInterface> postComboBox) {
+	private void reloadComboBox(JComboBox<InstrumentType> preComboBox, JComboBox<InstrumentType> postComboBox) {
 		// Vaciamos el combo que vamos a cargar y lo deshabilitamos.
 		postComboBox.removeAllItems();
 		postComboBox.setEnabled(false);
 
 		// Volvemos a cargar el combo.
-		InstrumentTypeInterface type = (InstrumentTypeInterface) preComboBox.getSelectedItem();
+		InstrumentType type = (InstrumentType) preComboBox.getSelectedItem();
 		if (type != null) {
 
 			// Si se tiene más sub instrumentos los cargamos.
 			if (type.getSubInstruments() != null) {
 
-				for (InstrumentTypeInterface item : type.getSubInstruments()) {
+				for (InstrumentType item : type.getSubInstruments()) {
 					postComboBox.addItem(item);
 				}
 				postComboBox.setSelectedIndex(-1);
@@ -276,9 +229,9 @@ public class SelectInstrumentDialog extends JDialog {
 	 */
 	private void createNewInstrument() {
 		if (this.levelFourComboBox.getSelectedItem() != null) {
-			this.instrumentClass = ((InstrumentTypeInterface) this.levelFourComboBox.getSelectedItem()).getInstrumentClass();
+			this.instrumentClass = ((InstrumentType) this.levelFourComboBox.getSelectedItem()).getInstrumentClass();
 		} else if (this.levelThreeComboBox.getSelectedItem() != null) {
-			this.instrumentClass = ((InstrumentTypeInterface) this.levelThreeComboBox.getSelectedItem()).getInstrumentClass();
+			this.instrumentClass = ((InstrumentType) this.levelThreeComboBox.getSelectedItem()).getInstrumentClass();
 		}
 
 		// Llamamos a la función para abrir la ventana correspondiente al instrumento seleccionado.
@@ -362,15 +315,16 @@ public class SelectInstrumentDialog extends JDialog {
 	/**
 	 * La función encargada de inicializar la ventana de selección de instrumentos.
 	 * 
-	 * @param instrumenClass
-	 *            La clase de instrumentos que vamos a poder seleccionar a partir de dicho nivel.
+	 * @param instrumentsType
+	 *            El listado de los tipos de instrumentos que vamos a poder seleccionar dentro de esta ventana.
 	 * @return La ventana de selección de instrumento.
 	 */
-	public SelectInstrumentDialog createNewDialog(Class<? extends Instrument> instrumenClass) {
+	public SelectInstrumentDialog createNewDialog(InstrumentType[] instrumentsType) {
 		this.setTitle(HolderMessage.getMessage("instrument.select.dialog.title"));
 
-		// Seteamos el tipo de instrumento mínimo de selección para crear.
-		this.loadInstrumentTypesInComboBox(instrumenClass);
+		// Seteamos el tipo de instrumento que podemos crear dentro de esta ventana.
+		this.instrumentsType = instrumentsType;
+		this.updateLevelOneComboBox();
 
 		this.setModal(true);
 		return this;
@@ -381,8 +335,10 @@ public class SelectInstrumentDialog extends JDialog {
 	 * 
 	 * @param instrument
 	 *            El instrumento que queremos editar.
+	 * @param instrumentsType
+	 *            El listado de los tipos de instrumentos que vamos a poder seleccionar dentro de esta ventana.
 	 */
-	public void createEditDialog(Instrument instrument) {
+	public void createEditDialog(Instrument instrument, InstrumentType[] instrumentsType) {
 		if (instrument != null) {
 			this.instrument = instrument;
 			this.instrumentClass = instrument.getClass();
@@ -397,8 +353,7 @@ public class SelectInstrumentDialog extends JDialog {
 		try {
 
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
-			String[] files =
-				{ "/com/proyecto/spring/general-application-context.xml" };
+			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
 			// CorrespondenceInstrument instrument =
