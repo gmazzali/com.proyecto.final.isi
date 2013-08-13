@@ -1,10 +1,10 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.proyecto.converter.InstrumentClassToNameConverter;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.model.instrument.UnrestrictedEssayActivityInstrument;
-import com.proyecto.model.instrument.type.InstrumentTypeInterface;
+import com.proyecto.model.instrument.type.InstrumentType;
 
 /**
  * La clase que define los instrumentos formales de ensayos del sistema.
@@ -12,17 +12,21 @@ import com.proyecto.model.instrument.type.InstrumentTypeInterface;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum EssayActivityInstrumentType implements InstrumentTypeInterface {
+public enum EssayActivityInstrumentTypeImpl implements InstrumentType {
 
 	/**
 	 * El elemento de los instrumentos formales de ensayos restringidos.
 	 */
-	RESTRICTED_INSTRUMENT(RestrictedEssayActivityInstrument.class, null),
+	RESTRICTED_INSTRUMENT("instrument.type.formal.essay.restricted", RestrictedEssayActivityInstrument.class, null),
 	/**
 	 * El elemento de los instrumentos formales de ensayos no restringidos.
 	 */
-	UNRESTRICTED_INSTRUMENT(UnrestrictedEssayActivityInstrument.class, null);
+	UNRESTRICTED_INSTRUMENT("instrument.type.formal.essay.unrestricted", UnrestrictedEssayActivityInstrument.class, null);
 
+	/**
+	 * El nombre del tipo de instrumento.
+	 */
+	private String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -30,33 +34,36 @@ public enum EssayActivityInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * Las enumeraciones que contiene los sub-instrumentos.
 	 */
-	private final InstrumentTypeInterface[] subInstruments;
+	private final InstrumentType[] subInstruments;
 
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
+	 * @param name
+	 *            El nombre del instrumento que estamos usando.
 	 * @param instrumentClass
 	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private EssayActivityInstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private EssayActivityInstrumentTypeImpl(String name, Class<? extends Instrument> instrumentClass, InstrumentType[] subInstruments) {
+		this.name = name;
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.getName();
+		return HolderMessage.getMessage(this.name);
 	}
 
 	@Override
 	public String getName() {
-		return InstrumentClassToNameConverter.converter(this.instrumentClass);
+		return this.name;
 	}
 
 	@Override
-	public InstrumentTypeInterface[] getSubInstruments() {
+	public InstrumentType[] getSubInstruments() {
 		return this.subInstruments;
 	}
 

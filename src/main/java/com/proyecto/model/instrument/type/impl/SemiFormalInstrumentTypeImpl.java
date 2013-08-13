@@ -1,10 +1,10 @@
 package com.proyecto.model.instrument.type.impl;
 
-import com.proyecto.converter.InstrumentClassToNameConverter;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.instrument.CompositeInstrument;
 import com.proyecto.model.instrument.Instrument;
 import com.proyecto.model.instrument.SimpleInstrument;
-import com.proyecto.model.instrument.type.InstrumentTypeInterface;
+import com.proyecto.model.instrument.type.InstrumentType;
 
 /**
  * La enumeración que contiene los instrumentos semiformales que tenemos en el sistema.
@@ -12,17 +12,21 @@ import com.proyecto.model.instrument.type.InstrumentTypeInterface;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
+public enum SemiFormalInstrumentTypeImpl implements InstrumentType {
 
 	/**
 	 * El elemento de los instrumentos semiformales simples.
 	 */
-	SIMPLE_INSTRUMENT(SimpleInstrument.class, SimpleInstrumentType.values()),
+	SIMPLE_INSTRUMENT("instrument.type.semiformal.simple", SimpleInstrument.class, SimpleInstrumentTypeImpl.values()),
 	/**
 	 * El elemento de los instrumentos semiformales compuestos.
 	 */
-	COMPOSITE_INSTRUMENT(CompositeInstrument.class, CompositeInstrumentType.values());
+	COMPOSITE_INSTRUMENT("instrument.type.semiformal.composite", CompositeInstrument.class, CompositeInstrumentTypeImpl.values());
 
+	/**
+	 * El nombre del tipo de instrumento.
+	 */
+	private String name;
 	/**
 	 * La clase que corresponde al instrumento.
 	 */
@@ -30,33 +34,36 @@ public enum SemiFormalInstrumentType implements InstrumentTypeInterface {
 	/**
 	 * Las enumeraciones que contiene los sub-instrumentos.
 	 */
-	private final InstrumentTypeInterface[] subInstruments;
+	private final InstrumentType[] subInstruments;
 
 	/**
 	 * El constructor que recibe los parámetros.
 	 * 
+	 * @param name
+	 *            El nombre del instrumento que estamos usando.
 	 * @param instrumentClass
 	 *            La clase de los instrumentos.
 	 * @param subInstruments
 	 *            Los sub-instrumentos de este instrumento.
 	 */
-	private SemiFormalInstrumentType(Class<? extends Instrument> instrumentClass, InstrumentTypeInterface[] subInstruments) {
+	private SemiFormalInstrumentTypeImpl(String name, Class<? extends Instrument> instrumentClass, InstrumentType[] subInstruments) {
+		this.name = name;
 		this.instrumentClass = instrumentClass;
 		this.subInstruments = subInstruments;
 	}
 
 	@Override
 	public String toString() {
-		return this.getName();
+		return HolderMessage.getMessage(this.name);
 	}
 
 	@Override
 	public String getName() {
-		return InstrumentClassToNameConverter.converter(this.instrumentClass);
+		return this.name;
 	}
 
 	@Override
-	public InstrumentTypeInterface[] getSubInstruments() {
+	public InstrumentType[] getSubInstruments() {
 		return this.subInstruments;
 	}
 
