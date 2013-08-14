@@ -10,7 +10,8 @@ import org.junit.Test;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.model.answer.RelationAnswer;
-import com.proyecto.model.instrument.CorrespondenceInstrument;
+import com.proyecto.model.material.instrument.CorrespondenceInstrument;
+import com.proyecto.service.material.instrument.CorrespondenceInstrumentService;
 
 /**
  * La clase que usamos para probar los instrumentos de correspondencia.

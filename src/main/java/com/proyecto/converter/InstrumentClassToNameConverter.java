@@ -4,24 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.common.util.holder.HolderMessage;
-import com.proyecto.model.instrument.ChoiceInstrument;
-import com.proyecto.model.instrument.CompletionInstrument;
-import com.proyecto.model.instrument.CompositeInstrument;
-import com.proyecto.model.instrument.ConceptualMapInstrument;
-import com.proyecto.model.instrument.CorrespondenceInstrument;
-import com.proyecto.model.instrument.EssayActivityInstrument;
-import com.proyecto.model.instrument.EssayInstrument;
-import com.proyecto.model.instrument.ExerciseInstrument;
-import com.proyecto.model.instrument.FormalInstrument;
-import com.proyecto.model.instrument.Instrument;
-import com.proyecto.model.instrument.MultipleChoiceInstrument;
-import com.proyecto.model.instrument.ObjectiveActivityInstrument;
-import com.proyecto.model.instrument.PortfolioInstrument;
-import com.proyecto.model.instrument.RestrictedEssayActivityInstrument;
-import com.proyecto.model.instrument.SemiFormalInstrument;
-import com.proyecto.model.instrument.SimpleInstrument;
-import com.proyecto.model.instrument.SingleChoiceInstrument;
-import com.proyecto.model.instrument.UnrestrictedEssayActivityInstrument;
+import com.proyecto.model.material.instrument.ChoiceInstrument;
+import com.proyecto.model.material.instrument.CompletionInstrument;
+import com.proyecto.model.material.instrument.CompositeInstrument;
+import com.proyecto.model.material.instrument.ConceptualMapInstrument;
+import com.proyecto.model.material.instrument.CorrespondenceInstrument;
+import com.proyecto.model.material.instrument.EssayActivityInstrument;
+import com.proyecto.model.material.instrument.EssayInstrument;
+import com.proyecto.model.material.instrument.ExerciseInstrument;
+import com.proyecto.model.material.instrument.FormalInstrument;
+import com.proyecto.model.material.instrument.Instrument;
+import com.proyecto.model.material.instrument.MultipleChoiceInstrument;
+import com.proyecto.model.material.instrument.ObjectiveActivityInstrument;
+import com.proyecto.model.material.instrument.PortfolioInstrument;
+import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
+import com.proyecto.model.material.instrument.SemiFormalInstrument;
+import com.proyecto.model.material.instrument.SimpleInstrument;
+import com.proyecto.model.material.instrument.SingleChoiceInstrument;
+import com.proyecto.model.material.instrument.UnrestrictedEssayActivityInstrument;
 
 /**
  * La clase de conversión entre el nombre de la clase de un instrumento al nombre que vamos a desplegar.

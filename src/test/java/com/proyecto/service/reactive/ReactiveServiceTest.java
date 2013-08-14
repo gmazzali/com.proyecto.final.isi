@@ -7,9 +7,10 @@ import org.junit.Test;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.model.answer.EssayActivityAnswer;
-import com.proyecto.model.instrument.RestrictedEssayActivityInstrument;
-import com.proyecto.model.reactive.Reactive;
-import com.proyecto.service.instrument.RestrictedEssayActivityInstrumentService;
+import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
+import com.proyecto.model.material.reactive.Reactive;
+import com.proyecto.service.material.instrument.RestrictedEssayActivityInstrumentService;
+import com.proyecto.service.material.reactive.ReactiveService;
 
 /**
  * La clase que usamos para probar los reactivos.

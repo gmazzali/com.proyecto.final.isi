@@ -3,8 +3,8 @@ package com.proyecto.converter;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.proyecto.model.instrument.type.InstrumentType;
-import com.proyecto.model.reactive.type.ReactiveType;
+import com.proyecto.model.material.instrument.type.InstrumentType;
+import com.proyecto.model.material.reactive.type.ReactiveType;
 
 /**
  * La clase que nos permite convertir un listado de reactivos habilitados en un listado de los instrumentos habilitados.

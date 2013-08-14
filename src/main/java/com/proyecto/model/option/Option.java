@@ -18,7 +18,7 @@ import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 import com.proyecto.model.answer.TrueFalseAnswer;
 import com.proyecto.model.answer.type.TrueFalseAnswerTypeEnum;
-import com.proyecto.model.instrument.ChoiceInstrument;
+import com.proyecto.model.material.instrument.ChoiceInstrument;
 
 /**
  * La clase que representa una opción en el instrumento de selección.
