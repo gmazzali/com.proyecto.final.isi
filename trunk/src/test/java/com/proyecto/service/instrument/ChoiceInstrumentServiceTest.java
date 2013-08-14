@@ -9,11 +9,13 @@ import org.junit.Test;
 
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
-import com.proyecto.model.instrument.MultipleChoiceInstrument;
-import com.proyecto.model.instrument.SingleChoiceInstrument;
+import com.proyecto.model.material.instrument.MultipleChoiceInstrument;
+import com.proyecto.model.material.instrument.SingleChoiceInstrument;
 import com.proyecto.model.option.Distractor;
 import com.proyecto.model.option.Option;
 import com.proyecto.model.option.TrueOption;
+import com.proyecto.service.material.instrument.MultipleChoiceInstrumentService;
+import com.proyecto.service.material.instrument.SingleChoiceInstrumentService;
 
 /**
  * La clase que usamos para probar los instrumentos de selección.

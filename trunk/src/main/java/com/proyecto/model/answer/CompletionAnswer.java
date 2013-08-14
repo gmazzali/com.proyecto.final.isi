@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
-import com.proyecto.model.instrument.CompletionInstrument;
+import com.proyecto.model.material.instrument.CompletionInstrument;
 
 /**
  * La clase que nos permite definir una respuesta para completar.

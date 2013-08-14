@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
-import com.proyecto.model.instrument.CorrespondenceInstrument;
+import com.proyecto.model.material.instrument.CorrespondenceInstrument;
 
 /**
  * La clase que nos permite definir una relación entre 2 frases para un ejercicio de correspondencia.

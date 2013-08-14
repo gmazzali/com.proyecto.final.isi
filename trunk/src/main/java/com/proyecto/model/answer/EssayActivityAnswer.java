@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
-import com.proyecto.model.instrument.EssayActivityInstrument;
+import com.proyecto.model.material.instrument.EssayActivityInstrument;
 
 /**
  * La clase que nos representa una respuesta asociada a un instrumento de ensayo formal dentro del sistema.

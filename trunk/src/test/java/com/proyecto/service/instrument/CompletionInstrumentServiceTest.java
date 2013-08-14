@@ -7,7 +7,8 @@ import org.junit.Test;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.model.answer.CompletionAnswer;
-import com.proyecto.model.instrument.CompletionInstrument;
+import com.proyecto.model.material.instrument.CompletionInstrument;
+import com.proyecto.service.material.instrument.CompletionInstrumentService;
 
 /**
  * La clase que usamos para probar los instrumentos de completar.

@@ -7,8 +7,10 @@ import org.junit.Test;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.model.answer.EssayActivityAnswer;
-import com.proyecto.model.instrument.RestrictedEssayActivityInstrument;
-import com.proyecto.model.instrument.UnrestrictedEssayActivityInstrument;
+import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
+import com.proyecto.model.material.instrument.UnrestrictedEssayActivityInstrument;
+import com.proyecto.service.material.instrument.RestrictedEssayActivityInstrumentService;
+import com.proyecto.service.material.instrument.UnrestrictedEssayActivityInstrumentService;
 
 /**
  * La clase que usamos para probar los instrumentos de ensayos formales.
