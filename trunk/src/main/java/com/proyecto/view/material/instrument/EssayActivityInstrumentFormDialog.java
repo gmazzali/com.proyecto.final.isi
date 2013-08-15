@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 import com.common.util.exception.CheckedException;
 import com.proyecto.model.answer.EssayActivityAnswer;
@@ -64,9 +65,10 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 		this.setBounds(100, 100, 887, 348);
 		this.getContentPane().setLayout(null);
 
-		JLabel descriptionLabel = new JLabel("Descripci\u00F3n");
+		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.essay.form.label.description"));
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 11, 162, 14);
+		descriptionLabel.setBounds(10, 11, 861, 14);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
@@ -79,9 +81,10 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 		this.descriptionTextArea.setLineWrap(true);
 		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
-		JLabel answerLabel = new JLabel("Respuesta");
+		JLabel answerLabel = new JLabel(HolderMessage.getMessage("instrument.formal.essay.form.label.answer"));
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		answerLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		answerLabel.setBounds(10, 140, 162, 14);
+		answerLabel.setBounds(10, 140, 861, 14);
 		this.getContentPane().add(answerLabel);
 
 		JScrollPane answerScrollPane = new JScrollPane();
@@ -103,6 +106,7 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
+		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.setBounds(789, 279, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 
@@ -114,6 +118,7 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 		this.getContentPane().add(this.commitButton);
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
+		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.setBounds(836, 279, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
@@ -134,14 +139,14 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 	protected void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
-			throw new CheckedException("instrument.formal.essay.description");
+			throw new CheckedException("instrument.formal.essay.form.error.description");
 		} else {
 			this.essayActivityInstrument.setDescription(this.descriptionTextArea.getText().trim());
 		}
 
 		// Agregamos la respuesta.
 		if (this.answerTextArea.getText().trim().isEmpty()) {
-			throw new CheckedException("instrument.formal.essay.answer");
+			throw new CheckedException("instrument.formal.essay.form.error.answer");
 		} else {
 			if (this.essayActivityInstrument.getAnswer() != null) {
 				this.essayActivityInstrument.getAnswer().setAnswer(this.answerTextArea.getText().trim());
