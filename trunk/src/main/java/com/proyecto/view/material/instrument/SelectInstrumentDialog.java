@@ -155,7 +155,6 @@ public class SelectInstrumentDialog extends JDialog {
 			}
 		});
 		this.getContentPane().add(commitButton);
-		this.getRootPane().setDefaultButton(commitButton);
 
 		JButton rejectButton = new JButton(Resources.CLOSE_ICON);
 		rejectButton.setBounds(523, 189, 35, 35);
