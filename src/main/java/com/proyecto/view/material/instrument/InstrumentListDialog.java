@@ -607,8 +607,7 @@ public class InstrumentListDialog extends JDialog {
 							instrumentService.delete(deleteInstrument);
 							InstrumentListDialog.this.updateInstruments();
 						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(InstrumentListDialog.this,
-									HolderMessage.getMessage("instrument.manager.dialog.delete.failed"), "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 						} finally {
 							InstrumentListDialog.this.afterExecuteProccess();
 
