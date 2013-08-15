@@ -1,57 +1,26 @@
 package com.proyecto.model.material.assessment.type;
 
-import com.proyecto.model.material.instrument.Instrument;
-import com.proyecto.model.material.instrument.type.impl.InstrumentTypeImpl;
+import com.proyecto.model.material.activity.type.ActivityType;
 
 /**
- * La enumeración que nos permite definir los posibles tipos de evaluaciones que tenemos dentro del sistema.
+ * La interfaz que define los tipos de evaluaciones que podemos crear dentro del sistema de acuerdo al tipo de contenido que vamos a poder asignarle a las mismas.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
- * 
- *          TODO gmazzali Falta hacer bien esta enumeración de tipos de evaluaciones.
  */
-public enum AssessmentType {
+public interface AssessmentType {
 
 	/**
-	 * El tipo de evaluación formal.
-	 */
-	FORMAL(new InstrumentTypeImpl[] { InstrumentTypeImpl.FORMAL }),
-	/**
-	 * El tipo de evaluación semiformal.
-	 */
-	SEMIFORMAL(new InstrumentTypeImpl[] { InstrumentTypeImpl.SEMIFORMAL });
-
-	/**
-	 * Los tipos de instrumentos que tenemos permitidos dentro de cada tipo de evaluación.
-	 */
-	private InstrumentTypeImpl[] instrumentsTypeAllowed;
-
-	/**
-	 * El constructor de un tipo de evaluación dentro del sistema.
+	 * La función encargada de retornar el nombre del tipo de evaluación.
 	 * 
-	 * @param instrumentsTypeAllowed
-	 *            El tipo de instrumento que permitimos dentro de esta evaluaciones.
+	 * @return El nombre del tipo de evaluación.
 	 */
-	private AssessmentType(InstrumentTypeImpl[] instrumentsTypeAllowed) {
-		this.instrumentsTypeAllowed = instrumentsTypeAllowed;
-	}
+	public String getName();
 
 	/**
-	 * La función que retorna el listado de los tipos de instrumentos que tenemos permitidos dentro de este tipo de evaluación.
+	 * La función que retorna el listado de los tipos de actividades que tenemos permitidos dentro de este tipo de evaluación.
 	 * 
-	 * @return El listado de los tipos de instrumentos permitidos dentro de este tipo de evaluación.
+	 * @return El listado de los tipos de actividades permitidos dentro de este tipo de evaluación.
 	 */
-	public InstrumentTypeImpl[] getInstrumentsTypeAllowed() {
-		return this.instrumentsTypeAllowed;
-	}
-
-	public Boolean isInstrumentClassAllowed(Class<? extends Instrument> instrumentClass) {
-		for (InstrumentTypeImpl instrumentTypeImpl : this.instrumentsTypeAllowed) {
-			if (instrumentTypeImpl.getInstrumentClass().isAssignableFrom(instrumentClass)) {
-				return true;
-			}
-		}
-		return false;
-	}
+	public ActivityType[] getActivityTypesAllowed();
 }

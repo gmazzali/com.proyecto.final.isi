@@ -37,21 +37,26 @@ public enum ReactiveTypeImpl implements ReactiveType {
 	 * 
 	 * @param name
 	 *            El nombre del tipo de reactivo.
-	 * @param instrumentsTypeAllowed
+	 * @param instrumentsTypesAllowed
 	 *            Los tipos de instrumentos permitidos dentro de este reactivo.
 	 */
-	private ReactiveTypeImpl(String name, InstrumentType[] instrumentsTypeAllowed) {
+	private ReactiveTypeImpl(String name, InstrumentType[] instrumentsTypesAllowed) {
 		this.name = name;
-		this.instrumentsTypeAllowed = instrumentsTypeAllowed;
+		this.instrumentsTypeAllowed = instrumentsTypesAllowed;
 	}
 
 	@Override
-	public InstrumentType[] getInstrumentsTypeAllowed() {
-		return this.instrumentsTypeAllowed;
+	public String toString() {
+		return HolderMessage.getMessage(this.name);
 	}
 
 	@Override
 	public String getName() {
-		return HolderMessage.getMessage(this.name);
+		return this.name;
+	}
+
+	@Override
+	public InstrumentType[] getInstrumentsTypesAllowed() {
+		return this.instrumentsTypeAllowed;
 	}
 }

@@ -23,6 +23,5 @@ public interface ActivityType {
 	 * 
 	 * @return El listado de los tipos de reactivos permitidos dentro de este tipo de actividad.
 	 */
-	public ReactiveType[] getReactiveTypeAllowed();
-
+	public ReactiveType[] getReactiveTypesAllowed();
 }

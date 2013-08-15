@@ -27,29 +27,29 @@ public class ReactiveTypeToInstrumentTypeConverter {
 	public static InstrumentType[] converter(ReactiveType[] reactiveTypes) {
 
 		// El set de los instrumentos.
-		Set<InstrumentType> instrumentType = new HashSet<InstrumentType>();
+		Set<InstrumentType> instrumentTypes = new HashSet<InstrumentType>();
 
 		// Si el listado recibido no es nulo, lo recorremos.
 		if (reactiveTypes != null) {
 			// Recorremos el listado de los tipos de reactivos.
-			for (ReactiveType type : reactiveTypes) {
-				for (InstrumentType instrument : type.getInstrumentsTypeAllowed()) {
-					instrumentType.add(instrument);
+			for (ReactiveType reactiveType : reactiveTypes) {
+				for (InstrumentType instrumentType : reactiveType.getInstrumentsTypesAllowed()) {
+					instrumentTypes.add(instrumentType);
 				}
 			}
 		} else {
-			for (ReactiveType type : ReactiveTypeImpl.values()) {
-				for (InstrumentType instrument : type.getInstrumentsTypeAllowed()) {
-					instrumentType.add(instrument);
+			for (ReactiveType reactiveType : ReactiveTypeImpl.values()) {
+				for (InstrumentType instrumentType : reactiveType.getInstrumentsTypesAllowed()) {
+					instrumentTypes.add(instrumentType);
 				}
 			}
 		}
 
 		// Cargamos el arreglo de retorno.
-		InstrumentType[] returnArray = new InstrumentType[instrumentType.size()];
+		InstrumentType[] returnArray = new InstrumentType[instrumentTypes.size()];
 		Integer index = 0;
-		for (InstrumentType instrument : instrumentType) {
-			returnArray[index++] = instrument;
+		for (InstrumentType instrumentType : instrumentTypes) {
+			returnArray[index++] = instrumentType;
 		}
 
 		return returnArray;
