@@ -42,7 +42,7 @@ public class CompletionInstrument extends ObjectiveActivityInstrument {
 	 */
 	public CompletionInstrument() {
 		super();
-		this.completes = new ArrayList<>();
+		this.completes = new ArrayList<CompletionAnswer>();
 	}
 
 	/**

@@ -262,7 +262,7 @@ public class ReactiveFormDialog extends JDialog {
 
 				ReactiveType temp = this.assessementTypeComboBox.getItemAt(i);
 
-				for (InstrumentType instrumentType : temp.getInstrumentsTypeAllowed()) {
+				for (InstrumentType instrumentType : temp.getInstrumentsTypesAllowed()) {
 
 					// Verificamos el tipo de reactivo.
 					if (instrumentType.getInstrumentClass().isAssignableFrom(this.instrument.getClass())) {
@@ -293,7 +293,7 @@ public class ReactiveFormDialog extends JDialog {
 		// Cargamos un listado de instrumentos permitidos.
 		InstrumentType[] instrumentTypes = null;
 		if (reactiveType != null) {
-			instrumentTypes = reactiveType.getInstrumentsTypeAllowed();
+			instrumentTypes = reactiveType.getInstrumentsTypesAllowed();
 		} else {
 			instrumentTypes = ReactiveTypeToInstrumentTypeConverter.converter(this.reactiveTypes);
 		}
@@ -470,7 +470,7 @@ public class ReactiveFormDialog extends JDialog {
 			// ReactiveFormDialog dialog = HolderApplicationContext.getContext().getBean(ReactiveFormDialog.class)
 			// .createNewDialog(ActivityTypeImpl.FORMAL);
 			ReactiveFormDialog dialog = HolderApplicationContext.getContext().getBean(ReactiveFormDialog.class)
-					.createEditDialog(reactive, ActivityTypeImpl.FORMAL.getReactiveTypeAllowed());
+					.createEditDialog(reactive, ActivityTypeImpl.FORMAL.getReactiveTypesAllowed());
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

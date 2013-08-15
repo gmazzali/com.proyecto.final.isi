@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 
 import com.common.util.model.Entity;
 import com.proyecto.model.material.Material;
+import com.proyecto.model.material.reactive.GeneratedValue;
+import com.proyecto.model.material.reactive.Id;
 import com.proyecto.model.material.reactive.Reactive;
 
 /**
@@ -48,7 +50,75 @@ public class Activity extends Material<Integer> {
 	public Activity() {
 		super();
 		this.description = null;
-		this.reactives = new ArrayList<>();
+		this.reactives = new ArrayList<Reactive>();
+	}
+	
+	@Override
+	public String toString() {
+		return this.description;
+	};
+
+	@Id
+	@Column(name = "ID_ACTIVITY")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Override
+	public Integer getId() {
+		return super.getId();
+	}
+
+	/**
+	 * La función encargada de cargar un reactivo dentro de esta actividad.
+	 * 
+	 * @param reactive
+	 *            El reactivo que queremos almacenar dentro de esta actividad.
+	 */
+	public void addReactive(Reactive reactive) {
+		if (reactive != null) {
+			this.reactives.add(reactive);
+		}
+	}
+
+	/**
+	 * La función encargada de cargar un listado de reactivos dentro de esta actividad.
+	 * 
+	 * @param reactives
+	 *            El listado de reactivos que tenemos dentro de esta actividad.
+	 */
+	public void addAllReactives(List<Reactive> reactives) {
+		if (reactives != null) {
+			this.reactives.addAll(reactives);
+		}
+	}
+
+	/**
+	 * La función encargada de quitar un reactivo dentro de los que tenemos dentro de esta actividad.
+	 * 
+	 * @param reactive
+	 *            El reactivo que queremos quitar dentro de esta actividad.
+	 */
+	public void removeReactive(Reactive reactive) {
+		if (reactive != null) {
+			this.reactives.remove(reactive);
+		}
+	}
+
+	/**
+	 * La función encargada de quitar un listado de reactivos de los que tenemos dentro de esta actividad.
+	 * 
+	 * @param reactives
+	 *            El listado de reactivos que queremos quitar dentro de esta actividad.
+	 */
+	public void removeAllReactive(List<Reactive> reactives) {
+		if (reactives != null) {
+			this.reactives.removeAll(reactives);
+		}
+	}
+
+	/**
+	 * La función encargada de vaciar el contenido de los reactivos que tenemos dentro de esta actividad.
+	 */
+	public void clearReactive() {
+		this.reactives.clear();
 	}
 
 	/**

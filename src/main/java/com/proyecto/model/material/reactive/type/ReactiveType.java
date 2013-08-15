@@ -22,5 +22,5 @@ public interface ReactiveType {
 	 * 
 	 * @return El listado de los tipos de instrumentos permitidos dentro de este tipo de reactivo.
 	 */
-	public InstrumentType[] getInstrumentsTypeAllowed();
+	public InstrumentType[] getInstrumentsTypesAllowed();
 }

@@ -36,21 +36,26 @@ public enum ActivityTypeImpl implements ActivityType {
 	 * 
 	 * @param name
 	 *            El nombre del tipo de actividad.
-	 * @param reactivesTypeAllowed
+	 * @param reactivesTypesAllowed
 	 *            Los tipos de reactivos permitidos dentro de este actividad.
 	 */
-	private ActivityTypeImpl(String name, ReactiveType[] reactivesTypeAllowed) {
+	private ActivityTypeImpl(String name, ReactiveType[] reactivesTypesAllowed) {
 		this.name = name;
-		this.reactivesTypeAllowed = reactivesTypeAllowed;
+		this.reactivesTypeAllowed = reactivesTypesAllowed;
 	}
 
 	@Override
-	public ReactiveType[] getReactiveTypeAllowed() {
-		return this.reactivesTypeAllowed;
+	public String toString() {
+		return HolderMessage.getMessage(this.name);
 	}
 
 	@Override
 	public String getName() {
-		return HolderMessage.getMessage(this.name);
+		return this.name;
+	}
+
+	@Override
+	public ReactiveType[] getReactiveTypesAllowed() {
+		return this.reactivesTypeAllowed;
 	}
 }

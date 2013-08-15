@@ -42,7 +42,7 @@ public class CorrespondenceInstrument extends ObjectiveActivityInstrument {
 	 */
 	public CorrespondenceInstrument() {
 		super();
-		this.relations = new ArrayList<>();
+		this.relations = new ArrayList<RelationAnswer>();
 	}
 
 	/**
