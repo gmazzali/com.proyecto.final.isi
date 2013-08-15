@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -113,9 +114,10 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
-		JLabel descripcionLabel = new JLabel("Descripci\u00F3n");
+		JLabel descripcionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.description"));
+		descripcionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descripcionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descripcionLabel.setBounds(10, 11, 82, 14);
+		descripcionLabel.setBounds(10, 11, 810, 14);
 		this.getContentPane().add(descripcionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
@@ -134,16 +136,17 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		});
 		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
-		JLabel leftSideLabel = new JLabel("Lado izquierdo");
+		JLabel leftSideLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.side.left"));
+		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		leftSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		leftSideLabel.setBounds(169, 105, 82, 14);
+		leftSideLabel.setBounds(169, 105, 400, 14);
 		this.getContentPane().add(leftSideLabel);
 
 		JScrollPane leftSideScrollPane = new JScrollPane();
 		leftSideScrollPane.setBounds(10, 124, 400, 141);
 		this.getContentPane().add(leftSideScrollPane);
 
-		this.leftSideList = new JList<>();
+		this.leftSideList = new JList<RelationAnswer>();
 		this.leftSideList.setFont(this.getContentPane().getFont());
 		this.leftSideList.setModel(new DefaultListModel<RelationAnswer>());
 		this.leftSideList.addKeyListener(new KeyAdapter() {
@@ -190,16 +193,17 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		});
 		this.getContentPane().add(this.leftSideTextField);
 
-		JLabel rightSideLabel = new JLabel("Lado derecho");
+		JLabel rightSideLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.side.right"));
+		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		rightSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		rightSideLabel.setBounds(579, 105, 82, 14);
+		rightSideLabel.setBounds(579, 105, 400, 14);
 		this.getContentPane().add(rightSideLabel);
 
 		JScrollPane rightSideScrollPane = new JScrollPane();
 		rightSideScrollPane.setBounds(420, 124, 400, 141);
 		this.getContentPane().add(rightSideScrollPane);
 
-		this.rightSideList = new JList<>();
+		this.rightSideList = new JList<RelationAnswer>();
 		this.rightSideList.setFont(this.getContentPane().getFont());
 		this.rightSideList.setModel(new DefaultListModel<RelationAnswer>());
 		this.rightSideList.addKeyListener(new KeyAdapter() {
@@ -246,16 +250,17 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		});
 		this.getContentPane().add(this.rigthSideTextField);
 
-		JLabel relationsLabel = new JLabel("Relaciones");
+		JLabel relationsLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.relations"));
+		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		relationsLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		relationsLabel.setBounds(361, 325, 60, 14);
+		relationsLabel.setBounds(361, 325, 763, 14);
 		this.getContentPane().add(relationsLabel);
 
 		JScrollPane relationsScrollPane = new JScrollPane();
 		relationsScrollPane.setBounds(10, 345, 763, 139);
 		this.getContentPane().add(relationsScrollPane);
 
-		this.relationList = new JList<>();
+		this.relationList = new JList<RelationAnswer>();
 		this.relationList.setFont(this.getContentPane().getFont());
 		this.relationList.setModel(new DefaultListModel<RelationAnswer>());
 		this.relationList.addKeyListener(new KeyAdapter() {
@@ -269,7 +274,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		relationsScrollPane.setViewportView(this.relationList);
 
 		this.createRelationButton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.createRelationButton.setFont(new Font("Arial", Font.BOLD, 12));
+		this.createRelationButton.setToolTipText(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.button.relation.add"));
 		this.createRelationButton.setBounds(785, 345, 37, 35);
 		this.createRelationButton.addActionListener(new ActionListener() {
 			@Override
@@ -280,7 +285,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.createRelationButton);
 
 		this.removeRelationButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.removeRelationButton.setFont(new Font("Arial", Font.BOLD, 12));
+		this.removeRelationButton.setToolTipText(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.button.relation.remove"));
 		this.removeRelationButton.setBounds(785, 392, 35, 35);
 		this.removeRelationButton.addActionListener(new ActionListener() {
 			@Override
@@ -300,6 +305,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
+		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.setBounds(738, 510, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
@@ -310,6 +316,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.commitButton);
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
+		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.setBounds(785, 510, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
@@ -495,7 +502,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 	protected void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
-			throw new CheckedException("instrument.formal.objective.correspondence.description");
+			throw new CheckedException("instrument.formal.objective.correspondence.form.error.description");
 		} else {
 			this.correspondenceInstrument.setDescription(this.descriptionTextArea.getText().trim());
 		}
@@ -505,7 +512,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		DefaultListModel<RelationAnswer> leftModel = (DefaultListModel<RelationAnswer>) this.leftSideList.getModel();
 		DefaultListModel<RelationAnswer> rightModel = (DefaultListModel<RelationAnswer>) this.rightSideList.getModel();
 
-		List<RelationAnswer> relations = new ArrayList<>();
+		List<RelationAnswer> relations = new ArrayList<RelationAnswer>();
 
 		// Obtenemos el listado de las relaciones.
 		for (Integer index = 0; index < relationModel.getSize(); index++) {
@@ -514,7 +521,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		}
 
 		if (relations.isEmpty()) {
-			throw new CheckedException("instrument.formal.objective.correspondence.relations");
+			throw new CheckedException("instrument.formal.objective.correspondence.form.error.relations");
 		}
 
 		// Creamos las relaciones de izquierda y derecha.

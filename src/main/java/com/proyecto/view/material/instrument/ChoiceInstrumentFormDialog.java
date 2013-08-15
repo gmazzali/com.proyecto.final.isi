@@ -17,10 +17,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import com.common.util.exception.CheckedException;
 import com.proyecto.model.answer.type.TrueFalseAnswerTypeEnum;
@@ -57,10 +59,12 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	 */
 	private JTextArea descriptionTextArea;
 	/**
-	 * El combo del tipo de opción y el campo para la opción que estamos editando.
+	 * El combo del tipo de opción, el campo para la opción que estamos editando y los botones de todos los anteriores.
 	 */
 	private JComboBox<TrueFalseAnswerTypeEnum> optionAnswerComboBox;
 	private JTextField optionTextField;
+	private JRadioButton allChoiceRadioButton;
+	private JRadioButton noneChoiceRadioButton;
 	/**
 	 * Los botones de aceptar y cancelar.
 	 */
@@ -87,9 +91,10 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().setLayout(null);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 
-		JLabel descriptionLabel = new JLabel("Descripci\u00F3n");
+		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.description"));
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 16, 65, 14);
+		descriptionLabel.setBounds(10, 16, 884, 14);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
@@ -108,9 +113,10 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		});
 		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
-		JLabel choiceLabel = new JLabel("Opciones");
+		JLabel choiceLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.options"));
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		choiceLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		choiceLabel.setBounds(10, 108, 52, 14);
+		choiceLabel.setBounds(10, 108, 884, 14);
 		this.getContentPane().add(choiceLabel);
 
 		JScrollPane choiceScrollPane = new JScrollPane();
@@ -185,6 +191,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
+		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.setBounds(812, 311, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
@@ -195,6 +202,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.commitButton);
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
+		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.setBounds(859, 311, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
@@ -203,6 +211,22 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 			}
 		});
 		this.getContentPane().add(this.rejectButton);
+	}
+	
+	/**
+	 * La función que administra los cambios sobre los radioButtons para las respuestas "Todas las anteriores" o "ninguna de las anteriores".
+	 */
+	private void managerAnswerRadioButtons() {
+		// Si está el botón de "Todas las anteriores" habilitado.
+		if(this.allChoiceRadioButton.isSelected()) {
+			
+		}
+		
+		// Si está el botón de "Ninguna de las anteriores" habilitado.
+		if (this.noneChoiceRadioButton.isSelected()) {
+
+		}
+		// TODO gmazzali Hacer toda la administración de los radioButtons de la ventana.
 	}
 
 	/**
@@ -302,7 +326,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	protected void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
-			throw new CheckedException("instrument.formal.objective.selection.description");
+			throw new CheckedException("instrument.formal.objective.choice.form.error.description");
 		} else {
 			this.choiceInstrument.setDescription(this.descriptionTextArea.getText());
 		}
@@ -316,7 +340,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 			Option option = optionModel.get(index);
 
 			if (option.getDescription().isEmpty()) {
-				throw new CheckedException("instrument.formal.objective.selection.empty.option");
+				throw new CheckedException("instrument.formal.objective.choice.form.error.empty.option");
 			}
 
 			option.setInstrument(this.choiceInstrument);
@@ -324,7 +348,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		}
 
 		if (options.isEmpty()) {
-			throw new CheckedException("instrument.formal.objective.selection.options");
+			throw new CheckedException("instrument.formal.objective.choice.form.error.options");
 		}
 
 		// Agregamos las opciones al listado del instrumento.

@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -99,9 +100,10 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
-		JLabel descriptionLabel = new JLabel("Descripci\u00F3n");
+		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.completion.form.label.description"));
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 11, 81, 14);
+		descriptionLabel.setBounds(10, 11, 472, 14);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
@@ -120,16 +122,17 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		});
 		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
-		JLabel completeLabel = new JLabel("Frases para completar");
+		JLabel completeLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.completion.form.label.completes"));
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		completeLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		completeLabel.setBounds(486, 11, 127, 14);
+		completeLabel.setBounds(486, 11, 352, 14);
 		this.getContentPane().add(completeLabel);
 
 		JScrollPane completeScrollPane = new JScrollPane();
 		completeScrollPane.setBounds(486, 30, 352, 142);
 		this.getContentPane().add(completeScrollPane);
 
-		this.completeList = new JList<>();
+		this.completeList = new JList<CompletionAnswer>();
 		this.completeList.setFont(this.getContentPane().getFont());
 		this.completeList.setModel(new DefaultListModel<CompletionAnswer>());
 		this.completeList.addKeyListener(new KeyAdapter() {
@@ -191,6 +194,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
+		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.setBounds(756, 235, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
@@ -201,6 +205,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.commitButton);
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
+		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.setBounds(803, 235, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
@@ -233,7 +238,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 				this.emptyCompletePhrase();
 
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.formal.objective.completion.index.parser"), "Error",
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.formal.objective.completion.form.error.index.parser"), "Error",
 						JOptionPane.WARNING_MESSAGE);
 				this.indexTextField.requestFocus();
 			}
@@ -304,7 +309,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	protected void fromDialogToInstrument() throws CheckedException {
 		// Agregamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
-			throw new CheckedException("instrument.formal.objective.completion.description");
+			throw new CheckedException("instrument.formal.objective.completion.form.error.description");
 		} else {
 			this.completionInstrument.setDescription(this.descriptionTextArea.getText().trim());
 		}
@@ -312,7 +317,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		// Los modelos.
 		DefaultListModel<CompletionAnswer> completeModel = (DefaultListModel<CompletionAnswer>) this.completeList.getModel();
 
-		List<CompletionAnswer> completions = new ArrayList<>();
+		List<CompletionAnswer> completions = new ArrayList<CompletionAnswer>();
 
 		// Obtenemos el listado de las relaciones.
 		for (Integer index = 0; index < completeModel.getSize(); index++) {
@@ -321,7 +326,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		}
 
 		if (completions.isEmpty()) {
-			throw new CheckedException("instrument.formal.objective.completion.completes");
+			throw new CheckedException("instrument.formal.objective.completion.form.error.completes");
 		}
 
 		// Agregamos las relaciones al listado del instrumento.
