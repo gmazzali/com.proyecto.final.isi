@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.common.util.exception.CheckedException;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.answer.type.TrueFalseAnswerTypeEnum;
 import com.proyecto.model.material.instrument.ChoiceInstrument;
 import com.proyecto.model.material.instrument.Instrument;
@@ -212,16 +213,17 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		});
 		this.getContentPane().add(this.rejectButton);
 	}
-	
+
 	/**
 	 * La función que administra los cambios sobre los radioButtons para las respuestas "Todas las anteriores" o "ninguna de las anteriores".
 	 */
+	@SuppressWarnings("unused")
 	private void managerAnswerRadioButtons() {
 		// Si está el botón de "Todas las anteriores" habilitado.
-		if(this.allChoiceRadioButton.isSelected()) {
-			
+		if (this.allChoiceRadioButton.isSelected()) {
+
 		}
-		
+
 		// Si está el botón de "Ninguna de las anteriores" habilitado.
 		if (this.noneChoiceRadioButton.isSelected()) {
 

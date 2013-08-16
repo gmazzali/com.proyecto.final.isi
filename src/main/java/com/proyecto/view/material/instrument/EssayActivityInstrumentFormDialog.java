@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import com.common.util.exception.CheckedException;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.answer.EssayActivityAnswer;
 import com.proyecto.model.material.instrument.EssayActivityInstrument;
 import com.proyecto.model.material.instrument.Instrument;

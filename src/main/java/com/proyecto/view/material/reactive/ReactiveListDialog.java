@@ -25,7 +25,6 @@ import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.common.util.holder.HolderMessage;
-import com.proyecto.model.material.activity.type.impl.ActivityTypeImpl;
 import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.model.material.reactive.type.ReactiveType;
 import com.proyecto.model.material.reactive.type.impl.ReactiveTypeImpl;
@@ -381,8 +380,7 @@ public class ReactiveListDialog extends JDialog {
 			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			ReactiveListDialog dialog = HolderApplicationContext.getContext().getBean(ReactiveListDialog.class)
-					.createSelectDialog(ActivityTypeImpl.FORMAL.getReactiveTypeAllowed());
+			ReactiveListDialog dialog = HolderApplicationContext.getContext().getBean(ReactiveListDialog.class).createSelectDialog(null);
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
