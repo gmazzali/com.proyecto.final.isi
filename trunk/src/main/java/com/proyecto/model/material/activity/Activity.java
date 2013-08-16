@@ -6,14 +6,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.common.util.model.Entity;
 import com.proyecto.model.material.Material;
-import com.proyecto.model.material.reactive.GeneratedValue;
-import com.proyecto.model.material.reactive.Id;
 import com.proyecto.model.material.reactive.Reactive;
 
 /**
@@ -52,7 +53,7 @@ public class Activity extends Material<Integer> {
 		this.description = null;
 		this.reactives = new ArrayList<Reactive>();
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.description;

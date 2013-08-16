@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -274,7 +273,8 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		relationsScrollPane.setViewportView(this.relationList);
 
 		this.createRelationButton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.createRelationButton.setToolTipText(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.button.relation.add"));
+		this.createRelationButton.setToolTipText(HolderMessage
+				.getMessage("instrument.formal.objective.correspondence.form.label.button.relation.add"));
 		this.createRelationButton.setBounds(785, 345, 37, 35);
 		this.createRelationButton.addActionListener(new ActionListener() {
 			@Override
@@ -285,7 +285,8 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.createRelationButton);
 
 		this.removeRelationButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.removeRelationButton.setToolTipText(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.button.relation.remove"));
+		this.removeRelationButton.setToolTipText(HolderMessage
+				.getMessage("instrument.formal.objective.correspondence.form.label.button.relation.remove"));
 		this.removeRelationButton.setBounds(785, 392, 35, 35);
 		this.removeRelationButton.addActionListener(new ActionListener() {
 			@Override

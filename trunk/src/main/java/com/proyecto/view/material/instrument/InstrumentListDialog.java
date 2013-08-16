@@ -689,7 +689,7 @@ public class InstrumentListDialog extends JDialog {
 
 			// InstrumentListDialog dialog = HolderApplicationContext.getContext().getBean(InstrumentListDialog.class).createCrudDialog();
 			InstrumentListDialog dialog = HolderApplicationContext.getContext().getBean(InstrumentListDialog.class)
-					.createSelectDialog(ReactiveTypeImpl.FORMAL.getInstrumentsTypeAllowed());
+					.createSelectDialog(ReactiveTypeImpl.FORMAL.getInstrumentsTypesAllowed());
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

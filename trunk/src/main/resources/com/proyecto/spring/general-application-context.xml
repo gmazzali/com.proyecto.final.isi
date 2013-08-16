@@ -9,11 +9,6 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<!-- La lectura de las clases auto-escaneadas de los DAO y los servicios -->
-
-	<context:annotation-config />
-	<context:component-scan base-package="com.proyecto.*" />
-
 	<!-- Cargamos las propiedades que tienen los mensaje del sistema -->
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -25,7 +20,7 @@
 		</property>
 	</bean>
 
-	<bean id="holderMessage" class="com.common.util.holder.HolderMessage" lazy-init="false">
+	<bean id="holderMessage" class="com.common.util.holder.HolderMessage" >
 		<property name="resources" ref="messageSource" />
 	</bean>
 
@@ -50,6 +45,11 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- La lectura de las clases de los DAO, los servicios y las vistas -->
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.proyecto.*" />
 
 	<!-- Creamos la conexión, la sessionFactory y el controlador de transacciones a la base de datos -->
 
