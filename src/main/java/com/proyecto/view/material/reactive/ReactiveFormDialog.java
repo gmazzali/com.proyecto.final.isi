@@ -290,16 +290,9 @@ public class ReactiveFormDialog extends JDialog {
 		// Recuperamos la clase de instrumento que queremos cargar dentro de este reactivo.
 		ReactiveType reactiveType = (ReactiveType) this.assessementTypeComboBox.getSelectedItem();
 
-		// Cargamos un listado de instrumentos permitidos.
-		InstrumentType[] instrumentTypes = null;
-		if (reactiveType != null) {
-			instrumentTypes = reactiveType.getInstrumentsTypesAllowed();
-		} else {
-			instrumentTypes = ReactiveTypeToInstrumentTypeConverter.converter(this.reactiveTypes);
-		}
-
 		// Abrimos la ventana de selección de instrumento con la clase que queremos.
-		InstrumentListDialog dialog = this.instrumentListDialog.createSelectDialog(instrumentTypes);
+		InstrumentListDialog dialog = this.instrumentListDialog.createSelectDialog(ReactiveTypeToInstrumentTypeConverter
+				.converter(this.reactiveTypes));
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 
