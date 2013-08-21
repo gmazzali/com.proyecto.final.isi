@@ -26,6 +26,7 @@ import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
 import com.common.util.holder.HolderMessage;
+import com.proyecto.converter.ActivityTypeToReactiveTypeConverter;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.activity.type.ActivityType;
 import com.proyecto.model.material.reactive.Reactive;
@@ -41,7 +42,6 @@ import com.proyecto.view.material.reactive.ReactiveListDialog;
  * @version 1.0
  */
 @View
-@SuppressWarnings("unused")
 public class ActivityFormDialog extends JDialog {
 
 	private static final long serialVersionUID = -1516446490165543963L;
@@ -205,7 +205,20 @@ public class ActivityFormDialog extends JDialog {
 	 * La función encargada de cargar un nuevo reactivo dentro de la actividad.
 	 */
 	private void addReactives() {
-		// TODO gmazzali Hacer lo de agregar un reactivo a la actividad.
+
+		// Abrimos la ventana de selección de reactivos.
+		ReactiveListDialog dialog = this.reactiveListDialog.createSelectDialog(ActivityTypeToReactiveTypeConverter.converter(this.activityTypes));
+		dialog.setLocationRelativeTo(this);
+		dialog.setVisible(true);
+
+		if (dialog.getSelectedReactives() != null && !dialog.getSelectedReactives().isEmpty()) {
+
+			// Cargamos la lista de reactivos a los que ya tenemos.
+			DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
+			for (Reactive reactive : dialog.getSelectedReactives()) {
+				reactiveModel.addElement(reactive);
+			}
+		}
 	}
 
 	/**
@@ -361,7 +374,10 @@ public class ActivityFormDialog extends JDialog {
 
 			HolderApplicationContext.initApplicationContext(files);
 
-			ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class).createNewDialog(null);
+			Activity activity = HolderApplicationContext.getContext().getBean(ActivityService.class).findById(1);
+
+			// ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class).createNewDialog(null);
+			ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class).createEditDialog(activity, null);
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

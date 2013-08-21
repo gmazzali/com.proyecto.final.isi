@@ -12,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 import com.proyecto.model.material.Material;
 import com.proyecto.model.material.reactive.Reactive;
@@ -23,6 +25,9 @@ import com.proyecto.model.material.reactive.Reactive;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@Model
+@Table(name = "ACTIVITIES")
+@javax.persistence.Entity(name = "Activity")
 public class Activity extends Material<Integer> {
 
 	private static final long serialVersionUID = 7010944735827120774L;
