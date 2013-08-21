@@ -113,11 +113,11 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
-		JLabel descripcionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.description"));
-		descripcionLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		descripcionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descripcionLabel.setBounds(10, 11, 810, 14);
-		this.getContentPane().add(descripcionLabel);
+		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.description"));
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
+		descriptionLabel.setBounds(10, 11, 810, 14);
+		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
 		descriptionScrollPane.setBounds(10, 28, 810, 65);
@@ -138,7 +138,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel leftSideLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.side.left"));
 		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		leftSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		leftSideLabel.setBounds(169, 105, 400, 14);
+		leftSideLabel.setBounds(10, 105, 400, 14);
 		this.getContentPane().add(leftSideLabel);
 
 		JScrollPane leftSideScrollPane = new JScrollPane();
@@ -195,11 +195,11 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel rightSideLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.side.right"));
 		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		rightSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		rightSideLabel.setBounds(579, 105, 400, 14);
+		rightSideLabel.setBounds(422, 105, 400, 14);
 		this.getContentPane().add(rightSideLabel);
 
 		JScrollPane rightSideScrollPane = new JScrollPane();
-		rightSideScrollPane.setBounds(420, 124, 400, 141);
+		rightSideScrollPane.setBounds(422, 124, 400, 141);
 		this.getContentPane().add(rightSideScrollPane);
 
 		this.rightSideList = new JList<RelationAnswer>();
@@ -252,7 +252,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel relationsLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.relations"));
 		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		relationsLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		relationsLabel.setBounds(361, 325, 763, 14);
+		relationsLabel.setBounds(10, 325, 763, 14);
 		this.getContentPane().add(relationsLabel);
 
 		JScrollPane relationsScrollPane = new JScrollPane();
