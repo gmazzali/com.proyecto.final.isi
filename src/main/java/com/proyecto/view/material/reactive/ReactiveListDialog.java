@@ -65,7 +65,7 @@ public class ReactiveListDialog extends JDialog {
 	 * El valor booleano que nos determina si la ventana es de selección o de administración y el reactivo seleccionado.
 	 */
 	private Boolean isSelectDialog;
-	private Reactive selectedReactive;
+	private Reactive[] reactivesSelected;
 
 	/**
 	 * Los tipos validos de reactivos que vamos a poder editar dentro de esta ventana.
@@ -118,7 +118,7 @@ public class ReactiveListDialog extends JDialog {
 
 		this.reactiveList = new JList<>();
 		this.reactiveList.setModel(new DefaultListModel<Reactive>());
-		this.reactiveList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.reactiveList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		this.reactiveList.setFont(new Font("Arial", Font.PLAIN, 12));
 		reactiveScrollPane.setViewportView(this.reactiveList);
 
@@ -157,7 +157,7 @@ public class ReactiveListDialog extends JDialog {
 		this.selectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ReactiveListDialog.this.selectReactive();
+				ReactiveListDialog.this.selectReactives();
 			}
 		});
 		contentPanel.add(this.selectButton);
@@ -290,7 +290,7 @@ public class ReactiveListDialog extends JDialog {
 		if (this.reactiveList.getSelectedValue() != null) {
 
 			// Pedimos confirmación de borrado.
-			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("reactive.manager.dialog.delete.confirm"), "Confirmación",
+			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("reactive.manager.delete.confirm"), "Confirmación",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				new Thread() {
 					@Override
@@ -300,7 +300,7 @@ public class ReactiveListDialog extends JDialog {
 							ReactiveListDialog.this.reactiveService.delete(ReactiveListDialog.this.reactiveList.getSelectedValue());
 							ReactiveListDialog.this.updateReactives();
 						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(ReactiveListDialog.this, HolderMessage.getMessage("reactive.manager.dialog.delete.failed"),
+							JOptionPane.showMessageDialog(ReactiveListDialog.this, HolderMessage.getMessage("reactive.manager.delete.failed"),
 									"Error", JOptionPane.ERROR_MESSAGE);
 						} finally {
 							ReactiveListDialog.this.afterExecuteProccess();
@@ -314,23 +314,31 @@ public class ReactiveListDialog extends JDialog {
 	/**
 	 * La función encargada de tomar el instrumento seleccionado y mantenerlo para retornarlo mas adelante en el sistema.
 	 */
-	private void selectReactive() {
+	private void selectReactives() {
 		// Si tenemos algo seleccionado.
-		if (this.reactiveList.getSelectedValue() != null) {
+		if (this.reactiveList.getSelectedIndices().length > 0) {
 
-			// Tomamos el reactivo seleccionado.
-			this.selectedReactive = this.reactiveList.getSelectedValue();
+			this.reactivesSelected = (Reactive[]) this.reactiveList.getSelectedValuesList().toArray();
+
+			// int[] indexs = this.reactiveList.getSelectedIndices();
+			// this.reactivesSelected = new Reactive[indexs.length];
+			//
+			// // Cargamos el listado de reactivos.
+			// for (int i : indexs) {
+			// this.reactivesSelected[i] = this.reactiveList.getModel().getElementAt(i);
+			// }
+
 			this.dispose();
 		}
 	}
 
 	/**
-	 * La función encargada de retornar el reactivo que seleccionamos dentro de la ventana.
+	 * La función encargada de retornar el listado de reactivos que seleccionamos dentro de la ventana.
 	 * 
-	 * @return El reactivo que seleccionamos dentro de la ventana.
+	 * @return El listado de reactivos que seleccionamos dentro de la ventana.
 	 */
-	public Reactive getSelectedReactive() {
-		return this.selectedReactive;
+	public Reactive[] getSelectedReactives() {
+		return this.reactivesSelected;
 	}
 
 	/**
@@ -339,12 +347,12 @@ public class ReactiveListDialog extends JDialog {
 	 * @return La ventana de administración de reactivos.
 	 */
 	public ReactiveListDialog createCrudDialog() {
-		this.setTitle(HolderMessage.getMessage("reactive.manager.dialog.title.crud"));
+		this.setTitle(HolderMessage.getMessage("reactive.manager.title.crud"));
 
 		this.reactiveTypes = ReactiveTypeImpl.values();
 
 		this.isSelectDialog = false;
-		this.selectedReactive = null;
+		this.reactivesSelected = null;
 
 		this.updateReactives();
 
@@ -359,12 +367,12 @@ public class ReactiveListDialog extends JDialog {
 	 * @return La ventana de selección de reactivos.
 	 */
 	public ReactiveListDialog createSelectDialog(ReactiveType[] reactiveTypes) {
-		this.setTitle(HolderMessage.getMessage("reactive.manager.dialog.title.select"));
+		this.setTitle(HolderMessage.getMessage("reactive.manager.title.select"));
 
 		this.reactiveTypes = reactiveTypes;
 
 		this.isSelectDialog = true;
-		this.selectedReactive = null;
+		this.reactivesSelected = null;
 
 		this.updateReactives();
 

@@ -323,7 +323,7 @@ public class ReactiveFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de guardar el instrumento dentro de la base de datos.
+	 * La función encargada de guardar el reactivo dentro de la base de datos.
 	 */
 	private void saveReactive() {
 		new Thread() {
@@ -372,14 +372,14 @@ public class ReactiveFormDialog extends JDialog {
 
 		// Verificamos la descripción.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
-			throw new CheckedException("reactive.description");
+			throw new CheckedException("reactive.form.error.description");
 		} else {
 			this.reactive.setDescription(this.descriptionTextArea.getText().trim());
 		}
 
 		// Cargamos el instrumento.
 		if (this.instrument == null) {
-			throw new CheckedException("reactive.instrument");
+			throw new CheckedException("reactive.form.error.instrument");
 		} else {
 			this.reactive.setInstrument(this.instrument);
 		}
@@ -422,7 +422,7 @@ public class ReactiveFormDialog extends JDialog {
 	 * @return La ventana con el formulario configurado para dar de alta un reactivo.
 	 */
 	public ReactiveFormDialog createNewDialog(ReactiveType[] reactiveTypes) {
-		this.setTitle(HolderMessage.getMessage("reactive.form.dialog.title.new"));
+		this.setTitle(HolderMessage.getMessage("reactive.form.title.new"));
 
 		this.reactiveTypes = reactiveTypes;
 		this.reloadReactiveTypeInComboBox();
@@ -444,7 +444,7 @@ public class ReactiveFormDialog extends JDialog {
 	 * @return La ventana del formulario ya configurado para la edición del reactivo.
 	 */
 	public ReactiveFormDialog createEditDialog(Reactive reactive, ReactiveType[] reactiveTypes) {
-		this.setTitle(HolderMessage.getMessage("reactive.form.dialog.title.edit"));
+		this.setTitle(HolderMessage.getMessage("reactive.form.title.edit"));
 
 		this.reactiveTypes = reactiveTypes;
 		this.reloadReactiveTypeInComboBox();
