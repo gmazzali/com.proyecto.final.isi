@@ -81,7 +81,8 @@ public class ActivityFormDialog extends JDialog {
 	/**
 	 * La lista donde colocamos los reactivos de la actividad y su listado correspondiente.
 	 */
-	private JList<Reactive> reactivesList;
+//	private JList<Reactive> reactivesList;
+	private JList reactivesList;
 	/**
 	 * Los botones de acciones.
 	 */
@@ -205,7 +206,6 @@ public class ActivityFormDialog extends JDialog {
 	 * La función encargada de cargar un nuevo reactivo dentro de la actividad.
 	 */
 	private void addReactives() {
-
 		// Abrimos la ventana de selección de reactivos.
 		ReactiveListDialog dialog = this.reactiveListDialog.createSelectDialog(ActivityTypeToReactiveTypeConverter.converter(this.activityTypes));
 		dialog.setLocationRelativeTo(this);
@@ -225,7 +225,15 @@ public class ActivityFormDialog extends JDialog {
 	 * La función encargada de quitar un reactivo desde de la actividad.
 	 */
 	private void removeReactives() {
-		// TODO gmazzali Hacer lo de quitar un reactivo a la actividad.
+		// Vemos si tenemos algo seleccionado de la lista y lo quitamos.
+		if(!this.reactivesList.getSelectedValuesList().isEmpty()) {
+			List<Reactive> reactives = this.reactivesList.getSelectedValuesList();
+
+			DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
+			for (Reactive reactive : reactives) {
+				reactiveModel.removeElement(reactive);
+			}
+		}
 	}
 
 	/**

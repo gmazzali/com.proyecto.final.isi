@@ -321,14 +321,6 @@ public class ReactiveListDialog extends JDialog {
 
 			this.reactivesSelected = this.reactiveList.getSelectedValuesList();
 
-			// int[] indexs = this.reactiveList.getSelectedIndices();
-			// this.reactivesSelected = new Reactive[indexs.length];
-			//
-			// // Cargamos el listado de reactivos.
-			// for (int i : indexs) {
-			// this.reactivesSelected[i] = this.reactiveList.getModel().getElementAt(i);
-			// }
-
 			this.dispose();
 		}
 	}
