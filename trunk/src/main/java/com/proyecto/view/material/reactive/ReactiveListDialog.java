@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -65,7 +66,7 @@ public class ReactiveListDialog extends JDialog {
 	 * El valor booleano que nos determina si la ventana es de selección o de administración y el reactivo seleccionado.
 	 */
 	private Boolean isSelectDialog;
-	private Reactive[] reactivesSelected;
+	private List<Reactive> reactivesSelected;
 
 	/**
 	 * Los tipos validos de reactivos que vamos a poder editar dentro de esta ventana.
@@ -318,7 +319,7 @@ public class ReactiveListDialog extends JDialog {
 		// Si tenemos algo seleccionado.
 		if (this.reactiveList.getSelectedIndices().length > 0) {
 
-			this.reactivesSelected = (Reactive[]) this.reactiveList.getSelectedValuesList().toArray();
+			this.reactivesSelected = this.reactiveList.getSelectedValuesList();
 
 			// int[] indexs = this.reactiveList.getSelectedIndices();
 			// this.reactivesSelected = new Reactive[indexs.length];
@@ -337,7 +338,7 @@ public class ReactiveListDialog extends JDialog {
 	 * 
 	 * @return El listado de reactivos que seleccionamos dentro de la ventana.
 	 */
-	public Reactive[] getSelectedReactives() {
+	public List<Reactive> getSelectedReactives() {
 		return this.reactivesSelected;
 	}
 
