@@ -13,10 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 import com.proyecto.model.material.Material;
+import com.proyecto.model.material.activity.type.ActivityType;
+import com.proyecto.model.material.activity.type.impl.ActivityTypeImpl;
 import com.proyecto.model.material.reactive.Reactive;
 
 /**
@@ -146,6 +149,25 @@ public class Activity extends Material<Integer> {
 	@JoinTable(name = "REACTIVES_IN_ACTIVITIES", joinColumns = { @JoinColumn(name = "ID_ACTIVITY") }, inverseJoinColumns = { @JoinColumn(name = "ID_REACTIVE") })
 	public List<Reactive> getReactives() {
 		return this.reactives;
+	}
+
+	/**
+	 * La función que nos permite saber a que tipo de actividad pertenece este elemento.
+	 * 
+	 * @return El tipo de actividad a la que pertenece este elemento. En caso de que todavía no tenga un reactivo asociado, retornamos un valor nulo.
+	 */
+	@Transient
+	public ActivityType getActivityType() {
+		if (this.reactives != null && !this.reactives.isEmpty()) {
+			switch (this.reactives.get(0).getReactiveType()) {
+				case FORMAL:
+					return ActivityTypeImpl.FORMAL;
+
+				case SEMIFORMAL:
+					return ActivityTypeImpl.SEMIFORMAL;
+			}
+		}
+		return null;
 	}
 
 	/**

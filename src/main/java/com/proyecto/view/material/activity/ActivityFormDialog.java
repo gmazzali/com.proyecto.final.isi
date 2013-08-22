@@ -389,7 +389,7 @@ public class ActivityFormDialog extends JDialog {
 			// ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class).createEditDialog(activity, null);
 
 			ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class)
-					.createNewDialog(Arrays.asList(AssessmentTypeImpl.SEMIFORMAL.getActivityTypesAllowed()));
+					.createNewDialog(Arrays.asList(AssessmentTypeImpl.FORMAL.getActivityTypesAllowed()));
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
