@@ -64,7 +64,7 @@ public class ReactiveListDialog extends JDialog {
 	private ReactiveService reactiveService;
 
 	/**
-	 * El valor booleano que nos determina si la ventana es de selección o de administración y el reactivo seleccionado.
+	 * El valor booleano que nos determina si la ventana es de selección o de administración y los reactivos seleccionados.
 	 */
 	private Boolean isSelectDialog;
 	private List<Reactive> reactivesSelected;
@@ -279,7 +279,7 @@ public class ReactiveListDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de crear una nueva instancia de un reactivo dentro del sistema.
+	 * La función encargada de crear una ventana para dar de alta una nueva instancia de un reactivo dentro del sistema.
 	 */
 	private void newReactive() {
 		// Creamos la ventana para dar de alta un nuevo reactivo.
@@ -337,7 +337,7 @@ public class ReactiveListDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de tomar el instrumento seleccionado y mantenerlo para retornarlo mas adelante en el sistema.
+	 * La función encargada de tomar los reactivos seleccionados y mantenerlos para retornarlos mas adelante en el sistema.
 	 */
 	private void selectReactives() {
 		// Si tenemos algo seleccionado.
@@ -367,7 +367,7 @@ public class ReactiveListDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("reactive.manager.title.crud"));
 
 		this.reactiveTypes = null;
-
+		
 		this.isSelectDialog = false;
 		this.reactivesSelected = null;
 
@@ -386,11 +386,8 @@ public class ReactiveListDialog extends JDialog {
 	public ReactiveListDialog createSelectDialog(List<ReactiveType> reactiveTypes) {
 		this.setTitle(HolderMessage.getMessage("reactive.manager.title.select"));
 
-		if (reactiveTypes != null) {
-			this.reactiveTypes = reactiveTypes;
-		} else {
-			this.reactiveTypes = null;
-		}
+		this.reactiveTypes = reactiveTypes;
+
 		this.isSelectDialog = true;
 		this.reactivesSelected = null;
 
