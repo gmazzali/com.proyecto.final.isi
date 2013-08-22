@@ -18,21 +18,21 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
+import org.springframework.cglib.core.Predicate;
 
 import com.common.util.annotations.View;
+import com.common.util.exception.CheckedException;
+import com.common.util.holder.HolderApplicationContext;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.activity.type.ActivityType;
-import com.proyecto.model.material.reactive.Reactive;
-import com.proyecto.model.material.reactive.type.ReactiveType;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.activity.ActivityService;
-import com.proyecto.service.material.reactive.ReactiveService;
 import com.proyecto.view.Resources;
-import com.proyecto.view.material.reactive.Autowired;
-import com.proyecto.view.material.reactive.CheckedException;
-import com.proyecto.view.material.reactive.NimbusLookAndFeel;
-import com.proyecto.view.material.reactive.Predicate;
-import com.proyecto.view.material.reactive.ReactiveListDialog;
 
 /**
  * La clase que nos permite crear una ventana de listado de actividades para poder administrarlas o seleccionarlas para colocarlas dentro de una
@@ -45,7 +45,7 @@ import com.proyecto.view.material.reactive.ReactiveListDialog;
 public class ActivityListDialog extends JDialog {
 
 	private static final long serialVersionUID = 2298555004862377049L;
-	
+
 	/**
 	 * El acceso dentro del sistema.
 	 */
@@ -74,7 +74,7 @@ public class ActivityListDialog extends JDialog {
 	 * Los tipos validos de actividades que vamos a poder editar dentro de esta ventana.
 	 */
 	private List<ActivityType> activityTypes;
-	
+
 	/**
 	 * El listado de las actividades.
 	 */
@@ -91,7 +91,7 @@ public class ActivityListDialog extends JDialog {
 	 * El label de progreso.
 	 */
 	private JLabel progressLabel;
-	
+
 	/**
 	 * Constructor de la ventana de listado.
 	 */
@@ -99,7 +99,7 @@ public class ActivityListDialog extends JDialog {
 		super();
 		this.init();
 	}
-	
+
 	/**
 	 * La función de inicialización de los componentes de la ventana.
 	 */
@@ -179,7 +179,7 @@ public class ActivityListDialog extends JDialog {
 		});
 		contentPanel.add(this.closeButton);
 	}
-	
+
 	@Override
 	public void setEnabled(boolean enabled) {
 		this.activityList.setEnabled(enabled);
@@ -196,7 +196,7 @@ public class ActivityListDialog extends JDialog {
 	 */
 	private void updateActivities() {
 		// Vaciamos la lista.
-		DefaultListModel<Activity> model = (DefaultListModel<Activity>) ReactiveListDialog.this.activityList.getModel();
+		DefaultListModel<Activity> model = (DefaultListModel<Activity>) ActivityListDialog.this.activityList.getModel();
 		model.clear();
 
 		new Thread() {
@@ -230,19 +230,19 @@ public class ActivityListDialog extends JDialog {
 	 *             En caso de alguna falla cuando recuperamos los reactivos desde la base de datos.
 	 */
 	private void loadReactiveList() throws CheckedException {
-		DefaultListModel<Reactive> model = new DefaultListModel<Reactive>();
+		DefaultListModel<Activity> model = new DefaultListModel<Activity>();
 
 		// El listado de los reactivos.
-		List<Reactive> reactives = this.reactiveService.findBySubject(this.accessControl.getSubjectSelected());
+		List<Activity> activity = this.activityService.findBySubject(this.accessControl.getSubjectSelected());
 
 		// Filtramos la lista.
-		CollectionUtils.filter(reactives, new Predicate() {
+		CollectionUtils.filter(activity, new Predicate() {
 
 			@Override
 			public boolean evaluate(Object arg0) {
-				Reactive reactive = (Reactive) arg0;
-				if (ReactiveListDialog.this.reactiveTypes != null) {
-					if (ReactiveListDialog.this.reactiveTypes.contains(reactive.getReactiveType())) {
+				Activity activity = (Activity) arg0;
+				if (ActivityListDialog.this.activityTypes != null) {
+					if (ActivityListDialog.this.activityTypes.contains(activity.getActivityType())) {
 						return true;
 					} else {
 						return false;
@@ -254,10 +254,10 @@ public class ActivityListDialog extends JDialog {
 		});
 
 		// Cargamos el listado de los reactivos que filtramos.
-		for (Reactive r : reactives) {
+		for (Activity r : activity) {
 			model.addElement(r);
 		}
-		this.reactiveList.setModel(model);
+		this.activityList.setModel(model);
 	}
 
 	/**
@@ -288,7 +288,7 @@ public class ActivityListDialog extends JDialog {
 		dialog.setVisible(true);
 
 		// Recargamos la tabla de actividades.
-		this.updateReactives();
+		this.updateActivities();
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class ActivityListDialog extends JDialog {
 			dialog.setLocationRelativeTo(this);
 			dialog.setVisible(true);
 
-			this.updateReactives();
+			this.updateActivities();
 		}
 	}
 
@@ -323,7 +323,7 @@ public class ActivityListDialog extends JDialog {
 						try {
 							ActivityListDialog.this.beforeExecuteProccess();
 							ActivityListDialog.this.activityService.delete(ActivityListDialog.this.activityList.getSelectedValue());
-							ActivityListDialog.this.updateReactives();
+							ActivityListDialog.this.updateActivities();
 						} catch (CheckedException e) {
 							JOptionPane.showMessageDialog(ActivityListDialog.this, HolderMessage.getMessage("activity.manager.delete.failed"),
 									"Error", JOptionPane.ERROR_MESSAGE);
@@ -367,7 +367,7 @@ public class ActivityListDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("activity.manager.title.crud"));
 
 		this.activityTypes = null;
-		
+
 		this.isSelectDialog = false;
 		this.activitiesSelected = null;
 
@@ -405,7 +405,7 @@ public class ActivityListDialog extends JDialog {
 			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			ActivityListDialog dialog = HolderApplicationContext.getContext().getBean(ActivityListDialog.class).createSelectDialog(null);
+			ActivityListDialog dialog = HolderApplicationContext.getContext().getBean(ActivityListDialog.class).createCrudDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
