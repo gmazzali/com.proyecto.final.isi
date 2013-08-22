@@ -1,8 +1,10 @@
 package com.proyecto.model.material.instrument;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.common.util.annotations.Model;
+import com.proyecto.model.material.instrument.type.impl.InstrumentTypeImpl;
 
 /**
  * La clase que nos permite definir los instrumentos semiformales del sistema.
@@ -28,5 +30,11 @@ public abstract class SemiFormalInstrument extends Instrument {
 	 */
 	public SemiFormalInstrument() {
 		super();
+	}
+
+	@Override
+	@Transient
+	public InstrumentTypeImpl getInstrumentType() {
+		return InstrumentTypeImpl.SEMIFORMAL;
 	}
 }

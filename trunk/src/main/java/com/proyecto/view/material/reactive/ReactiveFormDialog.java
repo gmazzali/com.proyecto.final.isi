@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -77,7 +79,7 @@ public class ReactiveFormDialog extends JDialog {
 	/**
 	 * Los tipos validos de reactivos que vamos a poder editar dentro de esta ventana.
 	 */
-	private ReactiveType[] reactiveTypes;
+	private List<ReactiveType> reactiveTypes;
 
 	/**
 	 * El combo con los tipos de instrumentos que vamos a usar dentro de las evaluaciones.
@@ -290,9 +292,16 @@ public class ReactiveFormDialog extends JDialog {
 		// Recuperamos la clase de instrumento que queremos cargar dentro de este reactivo.
 		ReactiveType reactiveType = (ReactiveType) this.assessementTypeComboBox.getSelectedItem();
 
+		// Cargamos un listado de instrumentos permitidos si tenemos algo seleccionado o no en el combo de tipo.
+		List<InstrumentType> instrumentTypes = null;
+		if (reactiveType != null) {
+			instrumentTypes = reactiveType.getInstrumentsTypesAllowed();
+		} else {
+			instrumentTypes = ReactiveTypeToInstrumentTypeConverter.converter(this.reactiveTypes);
+		}
+
 		// Abrimos la ventana de selección de instrumento con la clase que queremos.
-		InstrumentListDialog dialog = this.instrumentListDialog.createSelectDialog(ReactiveTypeToInstrumentTypeConverter
-				.converter(this.reactiveTypes));
+		InstrumentListDialog dialog = this.instrumentListDialog.createSelectDialog(instrumentTypes);
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 
@@ -414,7 +423,7 @@ public class ReactiveFormDialog extends JDialog {
 	 *            El listado de los tipos de reactivos que podemos seleccionar dentro de la ventana de edición.
 	 * @return La ventana con el formulario configurado para dar de alta un reactivo.
 	 */
-	public ReactiveFormDialog createNewDialog(ReactiveType[] reactiveTypes) {
+	public ReactiveFormDialog createNewDialog(List<ReactiveType> reactiveTypes) {
 		this.setTitle(HolderMessage.getMessage("reactive.form.title.new"));
 
 		this.reactiveTypes = reactiveTypes;
@@ -436,7 +445,7 @@ public class ReactiveFormDialog extends JDialog {
 	 *            El listado de los tipos de reactivos que podemos seleccionar dentro de la ventana de edición.
 	 * @return La ventana del formulario ya configurado para la edición del reactivo.
 	 */
-	public ReactiveFormDialog createEditDialog(Reactive reactive, ReactiveType[] reactiveTypes) {
+	public ReactiveFormDialog createEditDialog(Reactive reactive, List<ReactiveType> reactiveTypes) {
 		this.setTitle(HolderMessage.getMessage("reactive.form.title.edit"));
 
 		this.reactiveTypes = reactiveTypes;
@@ -463,7 +472,7 @@ public class ReactiveFormDialog extends JDialog {
 			// ReactiveFormDialog dialog = HolderApplicationContext.getContext().getBean(ReactiveFormDialog.class)
 			// .createNewDialog(ActivityTypeImpl.FORMAL);
 			ReactiveFormDialog dialog = HolderApplicationContext.getContext().getBean(ReactiveFormDialog.class)
-					.createEditDialog(reactive, ActivityTypeImpl.FORMAL.getReactiveTypesAllowed());
+					.createEditDialog(reactive, Arrays.asList(ActivityTypeImpl.FORMAL.getReactiveTypesAllowed()));
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

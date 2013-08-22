@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -73,7 +74,7 @@ public class SelectInstrumentDialog extends JDialog {
 	/**
 	 * El listado de los tipos de instrumentos que vamos a poder administrar y seleccionar dentro de esta ventana.
 	 */
-	private InstrumentType[] instrumentsType;
+	private List<InstrumentType> instrumentTypes;
 
 	/**
 	 * El instrumento que vamos a dar de alta o a modificar y la clase que lo crea.
@@ -175,8 +176,8 @@ public class SelectInstrumentDialog extends JDialog {
 		this.levelOneComboBox.removeAllItems();
 
 		// Si el tipo de evaluación no es nulo, cargamos los tipos permitidos.
-		if (this.instrumentsType != null) {
-			for (InstrumentType item : this.instrumentsType) {
+		if (this.instrumentTypes != null) {
+			for (InstrumentType item : this.instrumentTypes) {
 				this.levelOneComboBox.addItem(item);
 			}
 		}
@@ -316,11 +317,11 @@ public class SelectInstrumentDialog extends JDialog {
 	 *            El listado de los tipos de instrumentos que vamos a poder seleccionar dentro de esta ventana.
 	 * @return La ventana de selección de instrumento.
 	 */
-	public SelectInstrumentDialog createNewDialog(InstrumentType[] instrumentsType) {
+	public SelectInstrumentDialog createNewDialog(List<InstrumentType> instrumentTypes) {
 		this.setTitle(HolderMessage.getMessage("instrument.select.dialog.title"));
 
 		// Seteamos el tipo de instrumento que podemos crear dentro de esta ventana.
-		this.instrumentsType = instrumentsType;
+		this.instrumentTypes = instrumentTypes;
 		this.updateLevelOneComboBox();
 
 		this.setModal(true);
@@ -335,9 +336,10 @@ public class SelectInstrumentDialog extends JDialog {
 	 * @param instrumentsType
 	 *            El listado de los tipos de instrumentos que vamos a poder seleccionar dentro de esta ventana.
 	 */
-	public void createEditDialog(Instrument instrument, InstrumentType[] instrumentsType) {
+	public void createEditDialog(Instrument instrument, List<InstrumentType> instrumentTypes) {
 		if (instrument != null) {
 			this.instrument = instrument;
+			this.instrumentTypes = instrumentTypes;
 			this.instrumentClass = instrument.getClass();
 			this.openEditInstrumentDialog();
 		}

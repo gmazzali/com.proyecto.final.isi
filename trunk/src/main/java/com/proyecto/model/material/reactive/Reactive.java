@@ -9,11 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 import com.proyecto.model.material.Material;
 import com.proyecto.model.material.instrument.Instrument;
+import com.proyecto.model.material.reactive.type.impl.ReactiveTypeImpl;
 
 /**
  * La clase que define el reactivo dentro del sistema.
@@ -86,6 +88,26 @@ public class Reactive extends Material<Integer> {
 	@JoinColumn(name = "ID_INSTRUMENT", referencedColumnName = "ID_INSTRUMENT", insertable = true, updatable = true, nullable = false)
 	public Instrument getInstrument() {
 		return this.instrument;
+	}
+
+	/**
+	 * La función encargada de retornar el tipo de reactivo de acuerdo al tipo de instrumento que tenemos almacenado dentro de este.
+	 * 
+	 * @return El tipo de reactivo de acuerdo al tipo de instrumento que tenemos dentro de este. En caso de que todavía no tenga un instrumento
+	 *         asociado, retornamos un valor nulo.
+	 */
+	@Transient
+	public ReactiveTypeImpl getReactiveType() {
+		if (this.instrument != null) {
+			switch (this.instrument.getInstrumentType()) {
+				case FORMAL:
+					return ReactiveTypeImpl.FORMAL;
+
+				case SEMIFORMAL:
+					return ReactiveTypeImpl.SEMIFORMAL;
+			}
+		}
+		return null;
 	}
 
 	/**

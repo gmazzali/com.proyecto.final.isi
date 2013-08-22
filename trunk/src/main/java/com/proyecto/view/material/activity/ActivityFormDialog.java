@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -29,6 +30,7 @@ import com.common.util.holder.HolderMessage;
 import com.proyecto.converter.ActivityTypeToReactiveTypeConverter;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.activity.type.ActivityType;
+import com.proyecto.model.material.assessment.type.impl.AssessmentTypeImpl;
 import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.activity.ActivityService;
@@ -67,7 +69,7 @@ public class ActivityFormDialog extends JDialog {
 	/**
 	 * Los tipos validos de actividades que vamos a poder editar dentro de esta ventana.
 	 */
-	private ActivityType[] activityTypes;
+	private List<ActivityType> activityTypes;
 
 	/**
 	 * La actividad que vamos a editar.
@@ -81,8 +83,7 @@ public class ActivityFormDialog extends JDialog {
 	/**
 	 * La lista donde colocamos los reactivos de la actividad y su listado correspondiente.
 	 */
-//	private JList<Reactive> reactivesList;
-	private JList reactivesList;
+	private JList<Reactive> reactivesList;
 	/**
 	 * Los botones de acciones.
 	 */
@@ -216,7 +217,9 @@ public class ActivityFormDialog extends JDialog {
 			// Cargamos la lista de reactivos a los que ya tenemos.
 			DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
 			for (Reactive reactive : dialog.getSelectedReactives()) {
-				reactiveModel.addElement(reactive);
+				if (!reactiveModel.contains(reactive)) {
+					reactiveModel.addElement(reactive);
+				}
 			}
 		}
 	}
@@ -226,7 +229,7 @@ public class ActivityFormDialog extends JDialog {
 	 */
 	private void removeReactives() {
 		// Vemos si tenemos algo seleccionado de la lista y lo quitamos.
-		if(!this.reactivesList.getSelectedValuesList().isEmpty()) {
+		if (!this.reactivesList.getSelectedValuesList().isEmpty()) {
 			List<Reactive> reactives = this.reactivesList.getSelectedValuesList();
 
 			DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
@@ -341,7 +344,7 @@ public class ActivityFormDialog extends JDialog {
 	 *            El listado de los tipos de actividades que podemos editar dentro de la ventana de edición.
 	 * @return La ventana con el formulario configurado para dar de alta una actividad.
 	 */
-	public ActivityFormDialog createNewDialog(ActivityType[] activityTypes) {
+	public ActivityFormDialog createNewDialog(List<ActivityType> activityTypes) {
 		this.setTitle(HolderMessage.getMessage("activity.form.title.new"));
 
 		this.activityTypes = activityTypes;
@@ -361,7 +364,7 @@ public class ActivityFormDialog extends JDialog {
 	 *            El listado de los tipos de actividades que podemos seleccionar dentro de la ventana de edición.
 	 * @return La ventana del formulario ya configurado para la edición del reactivo.
 	 */
-	public ActivityFormDialog createEditDialog(Activity activity, ActivityType[] activityTypes) {
+	public ActivityFormDialog createEditDialog(Activity activity, List<ActivityType> activityTypes) {
 		this.setTitle(HolderMessage.getMessage("activity.form.title.edit"));
 
 		this.activityTypes = activityTypes;
@@ -382,10 +385,11 @@ public class ActivityFormDialog extends JDialog {
 
 			HolderApplicationContext.initApplicationContext(files);
 
-			Activity activity = HolderApplicationContext.getContext().getBean(ActivityService.class).findById(1);
+			// Activity activity = HolderApplicationContext.getContext().getBean(ActivityService.class).findById(1);
+			// ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class).createEditDialog(activity, null);
 
-			// ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class).createNewDialog(null);
-			ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class).createEditDialog(activity, null);
+			ActivityFormDialog dialog = HolderApplicationContext.getContext().getBean(ActivityFormDialog.class)
+					.createNewDialog(Arrays.asList(AssessmentTypeImpl.SEMIFORMAL.getActivityTypesAllowed()));
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

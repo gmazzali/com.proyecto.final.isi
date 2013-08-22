@@ -1,5 +1,7 @@
 package com.proyecto.model.material.reactive.type;
 
+import java.util.List;
+
 import com.proyecto.model.material.instrument.type.InstrumentType;
 
 /**
@@ -22,5 +24,5 @@ public interface ReactiveType {
 	 * 
 	 * @return El listado de los tipos de instrumentos permitidos dentro de este tipo de reactivo.
 	 */
-	public InstrumentType[] getInstrumentsTypesAllowed();
+	public List<InstrumentType> getInstrumentsTypesAllowed();
 }

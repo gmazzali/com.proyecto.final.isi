@@ -1,6 +1,8 @@
 package com.proyecto.converter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.proyecto.model.material.instrument.type.InstrumentType;
@@ -21,10 +23,10 @@ public class ReactiveTypeToInstrumentTypeConverter {
 	 * 
 	 * @param reactiveTypes
 	 *            El conjunto de tipos de reactivos que vamos a analizar, puede ser nulo.
-	 * @return El listado de los tipos de instrumentos válidos para elo conjunto de tipos de reactivo recibido, en caso de recibir un conjunto de
-	 *         tipos de reactivos nulo, retornamos un listado de los tipos de instrumento válido para todo los tipos de reactivos.
+	 * @return El listado de los tipos de instrumentos válidos para el conjunto de tipos de reactivo recibido, en caso de recibir un conjunto de tipos
+	 *         de reactivos nulo, retornamos un listado de los tipos de instrumento válido para todo los tipos de reactivos.
 	 */
-	public static InstrumentType[] converter(ReactiveType[] reactiveTypes) {
+	public static List<InstrumentType> converter(List<ReactiveType> reactiveTypes) {
 
 		// El set de los instrumentos.
 		Set<InstrumentType> instrumentTypes = new HashSet<InstrumentType>();
@@ -46,10 +48,9 @@ public class ReactiveTypeToInstrumentTypeConverter {
 		}
 
 		// Cargamos el arreglo de retorno.
-		InstrumentType[] returnArray = new InstrumentType[instrumentTypes.size()];
-		Integer index = 0;
+		List<InstrumentType> returnArray = new ArrayList<InstrumentType>();
 		for (InstrumentType instrumentType : instrumentTypes) {
-			returnArray[index++] = instrumentType;
+			returnArray.add(instrumentType);
 		}
 
 		return returnArray;

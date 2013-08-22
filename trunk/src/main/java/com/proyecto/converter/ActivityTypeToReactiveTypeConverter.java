@@ -1,6 +1,8 @@
 package com.proyecto.converter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.proyecto.model.material.activity.type.ActivityType;
@@ -16,15 +18,15 @@ import com.proyecto.model.material.reactive.type.ReactiveType;
 public class ActivityTypeToReactiveTypeConverter {
 
 	/**
-	 * La función encargada de tomar un listado de los tipos de actividades y retornar un listado de los posibles tipos de reactivos para ese
-	 * conjunto de tipos de actividades.
+	 * La función encargada de tomar un listado de los tipos de actividades y retornar un listado de los posibles tipos de reactivos para ese conjunto
+	 * de tipos de actividades.
 	 * 
 	 * @param activityTypes
 	 *            El conjunto de tipos de actividades que vamos a analizar, puede ser nulo.
-	 * @return El listado de los tipos de reactivos válidos para el conjunto de tipos de actividades recibido, en caso de recibir un conjunto de
-	 *         tipos de actividades nulo, retornamos un listado de los tipos de reactivos válido para todo los tipos de actividades.
+	 * @return El listado de los tipos de reactivos válidos para el conjunto de tipos de actividades recibido, en caso de recibir un conjunto de tipos
+	 *         de actividades nulo, retornamos un listado de los tipos de reactivos válido para todo los tipos de actividades.
 	 */
-	public static ReactiveType[] converter(ActivityType[] activityTypes) {
+	public static List<ReactiveType> converter(List<ActivityType> activityTypes) {
 
 		// El set de los reactivos.
 		Set<ReactiveType> reactiveTypes = new HashSet<ReactiveType>();
@@ -46,10 +48,9 @@ public class ActivityTypeToReactiveTypeConverter {
 		}
 
 		// Cargamos el arreglo de retorno.
-		ReactiveType[] returnArray = new ReactiveType[reactiveTypes.size()];
-		Integer index = 0;
+		List<ReactiveType> returnArray = new ArrayList<ReactiveType>();
 		for (ReactiveType reactiveType : reactiveTypes) {
-			returnArray[index++] = reactiveType;
+			returnArray.add(reactiveType);
 		}
 
 		return returnArray;

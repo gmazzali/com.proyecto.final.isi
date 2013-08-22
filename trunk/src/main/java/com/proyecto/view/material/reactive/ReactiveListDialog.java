@@ -21,6 +21,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
+import org.springframework.cglib.core.Predicate;
 
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
@@ -28,7 +30,6 @@ import com.common.util.holder.HolderApplicationContext;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.model.material.reactive.type.ReactiveType;
-import com.proyecto.model.material.reactive.type.impl.ReactiveTypeImpl;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.reactive.ReactiveService;
 import com.proyecto.view.Resources;
@@ -71,7 +72,7 @@ public class ReactiveListDialog extends JDialog {
 	/**
 	 * Los tipos validos de reactivos que vamos a poder editar dentro de esta ventana.
 	 */
-	private ReactiveType[] reactiveTypes;
+	private List<ReactiveType> reactiveTypes;
 
 	/**
 	 * El listado de los reactivos.
@@ -106,7 +107,7 @@ public class ReactiveListDialog extends JDialog {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		this.setBounds(100, 100, 470, 405);
+		this.setBounds(100, 100, 700, 405);
 		this.getContentPane().setLayout(new BorderLayout());
 		JPanel contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,7 +115,7 @@ public class ReactiveListDialog extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		JScrollPane reactiveScrollPane = new JScrollPane();
-		reactiveScrollPane.setBounds(10, 11, 400, 355);
+		reactiveScrollPane.setBounds(10, 11, 627, 355);
 		contentPanel.add(reactiveScrollPane);
 
 		this.reactiveList = new JList<>();
@@ -124,7 +125,7 @@ public class ReactiveListDialog extends JDialog {
 		reactiveScrollPane.setViewportView(this.reactiveList);
 
 		this.newButton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.newButton.setBounds(420, 11, 35, 35);
+		this.newButton.setBounds(649, 11, 35, 35);
 		this.newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +135,7 @@ public class ReactiveListDialog extends JDialog {
 		contentPanel.add(this.newButton);
 
 		this.modifyButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
-		this.modifyButton.setBounds(420, 57, 35, 35);
+		this.modifyButton.setBounds(649, 57, 35, 35);
 		this.modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +145,7 @@ public class ReactiveListDialog extends JDialog {
 		contentPanel.add(this.modifyButton);
 
 		this.removeButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.removeButton.setBounds(420, 103, 35, 35);
+		this.removeButton.setBounds(649, 103, 35, 35);
 		this.removeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -154,7 +155,7 @@ public class ReactiveListDialog extends JDialog {
 		contentPanel.add(this.removeButton);
 
 		this.selectButton = new JButton(Resources.SELECT_ELEMENT_ICON);
-		this.selectButton.setBounds(420, 149, 35, 35);
+		this.selectButton.setBounds(649, 149, 35, 35);
 		this.selectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -164,11 +165,11 @@ public class ReactiveListDialog extends JDialog {
 		contentPanel.add(this.selectButton);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(420, 285, 35, 35);
+		this.progressLabel.setBounds(649, 284, 35, 35);
 		contentPanel.add(this.progressLabel);
 
 		this.closeButton = new JButton(Resources.CLOSE_ICON);
-		this.closeButton.setBounds(420, 331, 35, 35);
+		this.closeButton.setBounds(649, 331, 35, 35);
 		this.closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -230,7 +231,30 @@ public class ReactiveListDialog extends JDialog {
 	 */
 	private void loadReactiveList() throws CheckedException {
 		DefaultListModel<Reactive> model = new DefaultListModel<Reactive>();
-		for (Reactive r : this.reactiveService.findBySubject(this.accessControl.getSubjectSelected())) {
+
+		// El listado de los reactivos.
+		List<Reactive> reactives = this.reactiveService.findBySubject(this.accessControl.getSubjectSelected());
+
+		// Filtramos la lista.
+		CollectionUtils.filter(reactives, new Predicate() {
+
+			@Override
+			public boolean evaluate(Object arg0) {
+				Reactive reactive = (Reactive) arg0;
+				if (ReactiveListDialog.this.reactiveTypes != null) {
+					if (ReactiveListDialog.this.reactiveTypes.contains(reactive.getReactiveType())) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return true;
+				}
+			}
+		});
+
+		// Cargamos el listado de los reactivos que filtramos.
+		for (Reactive r : reactives) {
 			model.addElement(r);
 		}
 		this.reactiveList.setModel(model);
@@ -342,7 +366,7 @@ public class ReactiveListDialog extends JDialog {
 	public ReactiveListDialog createCrudDialog() {
 		this.setTitle(HolderMessage.getMessage("reactive.manager.title.crud"));
 
-		this.reactiveTypes = ReactiveTypeImpl.values();
+		this.reactiveTypes = null;
 
 		this.isSelectDialog = false;
 		this.reactivesSelected = null;
@@ -359,11 +383,14 @@ public class ReactiveListDialog extends JDialog {
 	 *            El listado de los reactivos que podemos seleccionar dentro de esta ventana de listado.
 	 * @return La ventana de selección de reactivos.
 	 */
-	public ReactiveListDialog createSelectDialog(ReactiveType[] reactiveTypes) {
+	public ReactiveListDialog createSelectDialog(List<ReactiveType> reactiveTypes) {
 		this.setTitle(HolderMessage.getMessage("reactive.manager.title.select"));
 
-		this.reactiveTypes = reactiveTypes;
-
+		if (reactiveTypes != null) {
+			this.reactiveTypes = reactiveTypes;
+		} else {
+			this.reactiveTypes = null;
+		}
 		this.isSelectDialog = true;
 		this.reactivesSelected = null;
 
