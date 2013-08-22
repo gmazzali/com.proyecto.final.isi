@@ -7,10 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 import com.proyecto.model.material.Material;
+import com.proyecto.model.material.instrument.type.impl.InstrumentTypeImpl;
 
 /**
  * La clase que definimos para los distintos tipos de instrumentos que tenemos en el sistema.
@@ -68,6 +70,14 @@ public abstract class Instrument extends Material<Integer> {
 	public String getDescription() {
 		return this.description;
 	}
+
+	/**
+	 * La función encargada de retornar el tipo de instrumento que corresponde con el elemento que esta dentro de este instrumento.
+	 * 
+	 * @return El tipo de instrumento de este elemento.
+	 */
+	@Transient
+	public abstract InstrumentTypeImpl getInstrumentType();
 
 	/**
 	 * La función encargada de cargar la descripción del instrumento.

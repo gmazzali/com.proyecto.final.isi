@@ -399,6 +399,7 @@ ALTER TABLE REACTIVES_IN_ACTIVITIES ADD CONSTRAINT FK_REACTIVES_IN_ACTIVITIES_RE
 DELETE FROM ANSWERS;
 DELETE FROM OPTIONS;
 DELETE FROM INSTRUMENTS;
+DELETE FROM ACTIVITIES;
 
 ############################################################
 ############################################################

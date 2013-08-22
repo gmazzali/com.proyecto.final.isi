@@ -1,5 +1,8 @@
 package com.proyecto.model.material.reactive.type.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.instrument.type.InstrumentType;
 import com.proyecto.model.material.instrument.type.impl.InstrumentTypeImpl;
@@ -30,7 +33,7 @@ public enum ReactiveTypeImpl implements ReactiveType {
 	/**
 	 * Los tipos de instrumentos que se permite cargar dentro de este tipo de reactivo.
 	 */
-	private InstrumentType[] instrumentsTypeAllowed;
+	private List<InstrumentType> instrumentsTypeAllowed;
 
 	/**
 	 * El constructor de un tipo de reactivo.
@@ -42,7 +45,7 @@ public enum ReactiveTypeImpl implements ReactiveType {
 	 */
 	private ReactiveTypeImpl(String name, InstrumentType[] instrumentsTypesAllowed) {
 		this.name = name;
-		this.instrumentsTypeAllowed = instrumentsTypesAllowed;
+		this.instrumentsTypeAllowed = Arrays.asList(instrumentsTypesAllowed);
 	}
 
 	@Override
@@ -56,7 +59,7 @@ public enum ReactiveTypeImpl implements ReactiveType {
 	}
 
 	@Override
-	public InstrumentType[] getInstrumentsTypesAllowed() {
+	public List<InstrumentType> getInstrumentsTypesAllowed() {
 		return this.instrumentsTypeAllowed;
 	}
 }
