@@ -21,8 +21,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.CollectionUtils;
-import org.springframework.cglib.core.Predicate;
 
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
@@ -232,30 +230,12 @@ public class ActivityListDialog extends JDialog {
 	private void loadReactiveList() throws CheckedException {
 		DefaultListModel<Activity> model = new DefaultListModel<Activity>();
 
-		// El listado de los reactivos.
-		List<Activity> activity = this.activityService.findBySubject(this.accessControl.getSubjectSelected());
+		// El listado de las actividades.
+		List<Activity> activities = this.activityService.findBySubject(this.accessControl.getSubjectSelected(), this.activityTypes);
 
-		// Filtramos la lista.
-		CollectionUtils.filter(activity, new Predicate() {
-
-			@Override
-			public boolean evaluate(Object arg0) {
-				Activity activity = (Activity) arg0;
-				if (ActivityListDialog.this.activityTypes != null) {
-					if (ActivityListDialog.this.activityTypes.contains(activity.getActivityType())) {
-						return true;
-					} else {
-						return false;
-					}
-				} else {
-					return true;
-				}
-			}
-		});
-
-		// Cargamos el listado de los reactivos que filtramos.
-		for (Activity r : activity) {
-			model.addElement(r);
+		// Cargamos el listado de las actividades que filtramos.
+		for (Activity activity : activities) {
+			model.addElement(activity);
 		}
 		this.activityList.setModel(model);
 	}

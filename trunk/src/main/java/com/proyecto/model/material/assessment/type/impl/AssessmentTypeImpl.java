@@ -36,7 +36,7 @@ public enum AssessmentTypeImpl implements AssessmentType {
 	 * El constructor de un tipo de evaluación dentro del sistema.
 	 * 
 	 * @param name
-	 *            El nombre del tipo de evauación.
+	 *            El nombre del tipo de evaluación.
 	 * @param activityTypesAllowed
 	 *            Los tipos de actividades permitidos dentro de este evaluación.
 	 */
@@ -52,7 +52,7 @@ public enum AssessmentTypeImpl implements AssessmentType {
 
 	@Override
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	@Override
