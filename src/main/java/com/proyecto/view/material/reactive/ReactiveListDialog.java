@@ -21,8 +21,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.CollectionUtils;
-import org.springframework.cglib.core.Predicate;
 
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
@@ -233,25 +231,7 @@ public class ReactiveListDialog extends JDialog {
 		DefaultListModel<Reactive> model = new DefaultListModel<Reactive>();
 
 		// El listado de los reactivos.
-		List<Reactive> reactives = this.reactiveService.findBySubject(this.accessControl.getSubjectSelected());
-
-		// Filtramos la lista.
-		CollectionUtils.filter(reactives, new Predicate() {
-
-			@Override
-			public boolean evaluate(Object arg0) {
-				Reactive reactive = (Reactive) arg0;
-				if (ReactiveListDialog.this.reactiveTypes != null) {
-					if (ReactiveListDialog.this.reactiveTypes.contains(reactive.getReactiveType())) {
-						return true;
-					} else {
-						return false;
-					}
-				} else {
-					return true;
-				}
-			}
-		});
+		List<Reactive> reactives = this.reactiveService.findBySubject(this.accessControl.getSubjectSelected(), this.reactiveTypes);
 
 		// Cargamos el listado de los reactivos que filtramos.
 		for (Reactive r : reactives) {
@@ -367,7 +347,7 @@ public class ReactiveListDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("reactive.manager.title.crud"));
 
 		this.reactiveTypes = null;
-		
+
 		this.isSelectDialog = false;
 		this.reactivesSelected = null;
 

@@ -18,7 +18,6 @@ import javax.persistence.Transient;
 import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 import com.proyecto.model.material.Material;
-import com.proyecto.model.material.activity.type.ActivityType;
 import com.proyecto.model.material.activity.type.impl.ActivityTypeImpl;
 import com.proyecto.model.material.reactive.Reactive;
 
@@ -47,7 +46,6 @@ public class Activity extends Material<Integer> {
 	 * La descripción de la actividad.
 	 */
 	private String description;
-
 	/**
 	 * El listado de los reactivos de la actividad.
 	 */
@@ -82,7 +80,7 @@ public class Activity extends Material<Integer> {
 	 *            El reactivo que queremos almacenar dentro de esta actividad.
 	 */
 	public void addReactive(Reactive reactive) {
-		if (reactive != null) {
+		if (this.reactives != null && reactive != null) {
 			this.reactives.add(reactive);
 		}
 	}
@@ -94,7 +92,7 @@ public class Activity extends Material<Integer> {
 	 *            El listado de reactivos que tenemos dentro de esta actividad.
 	 */
 	public void addAllReactives(List<Reactive> reactives) {
-		if (reactives != null) {
+		if (this.reactives != null && reactives != null) {
 			this.reactives.addAll(reactives);
 		}
 	}
@@ -106,7 +104,7 @@ public class Activity extends Material<Integer> {
 	 *            El reactivo que queremos quitar dentro de esta actividad.
 	 */
 	public void removeReactive(Reactive reactive) {
-		if (reactive != null) {
+		if (this.reactives != null && reactive != null) {
 			this.reactives.remove(reactive);
 		}
 	}
@@ -118,7 +116,7 @@ public class Activity extends Material<Integer> {
 	 *            El listado de reactivos que queremos quitar dentro de esta actividad.
 	 */
 	public void removeAllReactive(List<Reactive> reactives) {
-		if (reactives != null) {
+		if (this.reactives != null && reactives != null) {
 			this.reactives.removeAll(reactives);
 		}
 	}
@@ -127,7 +125,9 @@ public class Activity extends Material<Integer> {
 	 * La función encargada de vaciar el contenido de los reactivos que tenemos dentro de esta actividad.
 	 */
 	public void clearReactive() {
-		this.reactives.clear();
+		if (this.reactives != null) {
+			this.reactives.clear();
+		}
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class Activity extends Material<Integer> {
 	 * @return El tipo de actividad a la que pertenece este elemento. En caso de que todavía no tenga un reactivo asociado, retornamos un valor nulo.
 	 */
 	@Transient
-	public ActivityType getActivityType() {
+	public ActivityTypeImpl getActivityType() {
 		if (this.reactives != null && !this.reactives.isEmpty()) {
 			switch (this.reactives.get(0).getReactiveType()) {
 				case FORMAL:
