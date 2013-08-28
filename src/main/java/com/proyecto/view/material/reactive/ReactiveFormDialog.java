@@ -427,10 +427,9 @@ public class ReactiveFormDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("reactive.form.title.new"));
 
 		this.reactiveTypes = reactiveTypes;
-		this.reloadReactiveTypeInComboBox();
-
 		this.reactive = new Reactive();
 
+		this.reloadReactiveTypeInComboBox();
 		this.emptyFields();
 
 		return this;
@@ -449,9 +448,10 @@ public class ReactiveFormDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("reactive.form.title.edit"));
 
 		this.reactiveTypes = reactiveTypes;
-		this.reloadReactiveTypeInComboBox();
-
 		this.reactive = reactive;
+
+		this.reloadReactiveTypeInComboBox();
+		this.emptyFields();
 		this.fromReactiveToDialog();
 
 		return this;
