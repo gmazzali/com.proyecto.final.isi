@@ -61,7 +61,7 @@ public class ChoiceInstrumentServiceTest {
 
 		SingleChoiceInstrumentService service = HolderApplicationContext.getContext().getBean(SingleChoiceInstrumentService.class);
 
-		options = new ArrayList<>();
+		options = new ArrayList<Option>();
 		option = new TrueOption();
 		option.setDescription("Opcion 1 - V");
 		option.setInstrument(instrument);
@@ -102,7 +102,7 @@ public class ChoiceInstrumentServiceTest {
 			e.printStackTrace();
 		}
 
-		options = new ArrayList<>();
+		options = new ArrayList<Option>();
 		option = new TrueOption();
 		option.setDescription("Opcion 11 - V");
 		option.setInstrument(instrument);
@@ -161,7 +161,7 @@ public class ChoiceInstrumentServiceTest {
 
 		MultipleChoiceInstrumentService service = HolderApplicationContext.getContext().getBean(MultipleChoiceInstrumentService.class);
 
-		options = new ArrayList<>();
+		options = new ArrayList<Option>();
 		option = new TrueOption();
 		option.setDescription("Opcion 1 - V");
 		option.setInstrument(instrument);
@@ -202,7 +202,7 @@ public class ChoiceInstrumentServiceTest {
 			e.printStackTrace();
 		}
 
-		options = new ArrayList<>();
+		options = new ArrayList<Option>();
 		option = new TrueOption();
 		option.setDescription("Opcion 11 - V");
 		option.setInstrument(instrument);

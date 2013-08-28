@@ -116,7 +116,7 @@ public class ReactiveListDialog extends JDialog {
 		reactiveScrollPane.setBounds(10, 11, 627, 355);
 		contentPanel.add(reactiveScrollPane);
 
-		this.reactiveList = new JList<>();
+		this.reactiveList = new JList<Reactive>();
 		this.reactiveList.setModel(new DefaultListModel<Reactive>());
 		this.reactiveList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		this.reactiveList.setFont(new Font("Arial", Font.PLAIN, 12));

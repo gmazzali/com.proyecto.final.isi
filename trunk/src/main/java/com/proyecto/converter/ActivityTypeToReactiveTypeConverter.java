@@ -46,13 +46,6 @@ public class ActivityTypeToReactiveTypeConverter {
 				}
 			}
 		}
-
-		// Cargamos el arreglo de retorno.
-		List<ReactiveType> returnArray = new ArrayList<ReactiveType>();
-		for (ReactiveType reactiveType : reactiveTypes) {
-			returnArray.add(reactiveType);
-		}
-
-		return returnArray;
+		return new ArrayList<ReactiveType>(reactiveTypes);
 	}
 }

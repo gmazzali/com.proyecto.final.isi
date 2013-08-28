@@ -117,7 +117,7 @@ public class ActivityListDialog extends JDialog {
 		activitiesScrollPane.setBounds(10, 11, 627, 355);
 		contentPanel.add(activitiesScrollPane);
 
-		this.activityList = new JList<>();
+		this.activityList = new JList<Activity>();
 		this.activityList.setModel(new DefaultListModel<Activity>());
 		this.activityList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		this.activityList.setFont(new Font("Arial", Font.PLAIN, 12));

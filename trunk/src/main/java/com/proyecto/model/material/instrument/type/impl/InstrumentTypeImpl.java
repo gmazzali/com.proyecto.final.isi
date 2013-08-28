@@ -92,7 +92,7 @@ public enum InstrumentTypeImpl implements InstrumentType {
 				Object object = instrument.getInstrumentClass().newInstance();
 				System.out.println(" --> " + object);
 			}
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

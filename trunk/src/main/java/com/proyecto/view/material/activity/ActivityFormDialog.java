@@ -138,7 +138,7 @@ public class ActivityFormDialog extends JDialog {
 		reactivesScrollPane.setBounds(10, 198, 630, 160);
 		this.getContentPane().add(reactivesScrollPane);
 
-		this.reactivesList = new JList<>();
+		this.reactivesList = new JList<Reactive>();
 		this.reactivesList.setModel(new DefaultListModel<Reactive>());
 		reactivesScrollPane.setViewportView(this.reactivesList);
 
@@ -175,7 +175,7 @@ public class ActivityFormDialog extends JDialog {
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ActivityFormDialog.this.saveActivivty();
+				ActivityFormDialog.this.saveActivity();
 			}
 		});
 		this.getContentPane().add(this.commitButton);
@@ -242,7 +242,7 @@ public class ActivityFormDialog extends JDialog {
 	/**
 	 * La función encargada de guardar la actividad dentro de la base de datos.
 	 */
-	private void saveActivivty() {
+	private void saveActivity() {
 		new Thread() {
 			@Override
 			public void run() {
@@ -316,7 +316,7 @@ public class ActivityFormDialog extends JDialog {
 		// Cargamos la descripción.
 		this.descriptionTextArea.setText(this.activity.getDescription());
 
-		// Si tenemos instrumento, lo cargamos y seteamos el tipo de evaluación.
+		// Si tenemos reactivos, los cargamos.
 		if (this.activity.getReactives() != null && !this.activity.getReactives().isEmpty()) {
 
 			// Cargamos la lista de reactivos.
@@ -333,8 +333,8 @@ public class ActivityFormDialog extends JDialog {
 	private void emptyFields() {
 		this.descriptionTextArea.setText("");
 
-		DefaultListModel<Reactive> model = (DefaultListModel<Reactive>) this.reactivesList.getModel();
-		model.clear();
+		DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
+		reactiveModel.clear();
 	}
 
 	/**
@@ -356,7 +356,7 @@ public class ActivityFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de configurar la ventana para la edición de un reactivo.
+	 * La función encargada de configurar la ventana para la edición de una actividad.
 	 * 
 	 * @param activity
 	 *            La actividad que vamos a editar.

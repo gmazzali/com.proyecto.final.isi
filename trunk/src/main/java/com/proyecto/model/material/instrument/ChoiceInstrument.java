@@ -42,7 +42,7 @@ public abstract class ChoiceInstrument extends ObjectiveActivityInstrument {
 	 */
 	public ChoiceInstrument() {
 		super();
-		this.options = new ArrayList<>();
+		this.options = new ArrayList<Option>();
 	}
 
 	/**
