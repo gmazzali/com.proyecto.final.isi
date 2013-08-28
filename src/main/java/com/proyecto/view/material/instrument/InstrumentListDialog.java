@@ -540,7 +540,7 @@ public class InstrumentListDialog extends JDialog {
 	private void initServices() {
 		// Si es la primera vez que usamos el mapa, lo cargamos.
 		if (this.services == null) {
-			this.services = new HashMap<>();
+			this.services = new HashMap<Class<? extends Instrument>, InstrumentService<? extends Instrument>>();
 
 			this.services.put(RestrictedEssayActivityInstrument.class, this.restrictedEssayActivityInstrumentService);
 			this.services.put(UnrestrictedEssayActivityInstrument.class, this.unrestrictedEssayActivityInstrumentService);

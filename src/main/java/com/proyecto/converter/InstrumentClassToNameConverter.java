@@ -46,7 +46,7 @@ public class InstrumentClassToNameConverter {
 	public static String converter(Class<? extends Instrument> instrumentClass) {
 
 		if (InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS == null) {
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS = new HashMap<>();
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS = new HashMap<Class<? extends Instrument>, String>();
 
 			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(FormalInstrument.class, "instrument.type.formal");
 

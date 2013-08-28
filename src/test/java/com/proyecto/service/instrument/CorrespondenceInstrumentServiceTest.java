@@ -58,7 +58,7 @@ public class CorrespondenceInstrumentServiceTest {
 		CorrespondenceInstrumentService service = HolderApplicationContext.getContext().getBean(CorrespondenceInstrumentService.class);
 
 		relation = new RelationAnswer();
-		relations = new ArrayList<>();
+		relations = new ArrayList<RelationAnswer>();
 		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 1");
 		relation.setRightSide("derecha 1");
@@ -116,7 +116,7 @@ public class CorrespondenceInstrumentServiceTest {
 			e.printStackTrace();
 		}
 
-		relations = new ArrayList<>();
+		relations = new ArrayList<RelationAnswer>();
 		relation = new RelationAnswer();
 		relation.setInstrument(correspondence);
 		relation.setLeftSide("izquierda 11");

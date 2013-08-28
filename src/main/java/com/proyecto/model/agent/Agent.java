@@ -57,7 +57,7 @@ public class Agent extends Entity<Integer> {
 	public Agent() {
 		this.name = "";
 		this.password = "";
-		this.subjects = new ArrayList<>();
+		this.subjects = new ArrayList<Subject>();
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package com.proyecto.converter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.proyecto.model.material.activity.type.ActivityType;
@@ -24,7 +26,7 @@ public class AssessmentTypeToActivityTypeConverter {
 	 * @return El listado de los tipos de actividades válidos para el conjunto de tipos de evaluaciones recibido, en caso de recibir un conjunto de
 	 *         tipos de evaluaciones nulo, retornamos un listado de los tipos de actividades válido para todo los tipos de evaluaciones.
 	 */
-	public static ActivityType[] converter(AssessmentType[] assessmentTypes) {
+	public static List<ActivityType> converter(List<AssessmentType> assessmentTypes) {
 
 		// El set de los actividades.
 		Set<ActivityType> activityTypes = new HashSet<ActivityType>();
@@ -45,13 +47,6 @@ public class AssessmentTypeToActivityTypeConverter {
 			}
 		}
 
-		// Cargamos el arreglo de retorno.
-		ActivityType[] returnArray = new ActivityType[activityTypes.size()];
-		Integer index = 0;
-		for (ActivityType activityType : activityTypes) {
-			returnArray[index++] = activityType;
-		}
-
-		return returnArray;
+		return new ArrayList<ActivityType>(activityTypes);
 	}
 }

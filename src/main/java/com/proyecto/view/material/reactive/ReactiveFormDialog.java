@@ -251,7 +251,7 @@ public class ReactiveFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de cargar el tipo de reactivo que tenemos de acuerdo el instrumento que tenemos dentro del reactivo.
+	 * La función encargada de cargar el tipo de reactivo en el combo de selección de tipo de acuerdo el instrumento que tenemos dentro del reactivo.
 	 */
 	private void setReactiveTypeComboBoxFromInstrument() {
 		ReactiveType reactiveType = null;

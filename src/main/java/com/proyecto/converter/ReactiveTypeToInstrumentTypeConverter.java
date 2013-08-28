@@ -46,13 +46,6 @@ public class ReactiveTypeToInstrumentTypeConverter {
 				}
 			}
 		}
-
-		// Cargamos el arreglo de retorno.
-		List<InstrumentType> returnArray = new ArrayList<InstrumentType>();
-		for (InstrumentType instrumentType : instrumentTypes) {
-			returnArray.add(instrumentType);
-		}
-
-		return returnArray;
+		return new ArrayList<InstrumentType>(instrumentTypes);
 	}
 }

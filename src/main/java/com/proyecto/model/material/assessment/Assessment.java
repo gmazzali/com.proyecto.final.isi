@@ -71,7 +71,7 @@ public class Assessment extends Material<Integer> {
 		this.description = null;
 		this.assessmentTypeByTime = null;
 		this.assessmentDate = null;
-		this.activities = new ArrayList<>();
+		this.activities = new ArrayList<Activity>();
 	}
 
 	@Override
