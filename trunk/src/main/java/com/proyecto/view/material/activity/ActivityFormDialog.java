@@ -370,6 +370,7 @@ public class ActivityFormDialog extends JDialog {
 		this.activityTypes = activityTypes;
 		this.activity = activity;
 
+		this.emptyFields();
 		this.fromActivityToDialog();
 
 		return this;
