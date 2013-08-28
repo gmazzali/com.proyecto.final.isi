@@ -26,21 +26,13 @@ public abstract class InstrumentServiceImpl<E extends Instrument> extends Materi
 	private ReactiveService reactiveService;
 
 	@Override
+	@Deprecated
 	public Boolean isValidDeleteInstrument(E instrument) throws CheckedException {
 		List<Reactive> reactives = this.reactiveService.findByInstrument(instrument);
 		if (reactives != null && reactives.isEmpty()) {
 			return true;
 		} else {
 			return false;
-		}
-	}
-
-	@Override
-	public void delete(E entity) throws CheckedException {
-		if (this.isValidDeleteInstrument(entity)) {
-			super.delete(entity);
-		} else {
-			throw new CheckedException("instrument.delete.invalid.reference");
 		}
 	}
 }
