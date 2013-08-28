@@ -212,6 +212,7 @@ public class ActivityListDialog extends JDialog {
 							ActivityListDialog.this.loadReactiveList();
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(ActivityListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+							e.printStackTrace();
 						} finally {
 							ActivityListDialog.this.afterExecuteProccess();
 						}

@@ -18,6 +18,8 @@ public interface InstrumentService<E extends Instrument> extends MaterialService
 	/**
 	 * La función encargada de verificar que el instrumento que queremos eliminar no se encuentre apuntado por un reactivo.
 	 * 
+	 * @Deprecated
+	 * 
 	 * @param instrument
 	 *            El instrumento que queremos verificar.
 	 * @return TRUE en caso de que el instrumento no se encuentre apuntado por ningún reactivo, en caso de que este apuntado por al menos 1 retornará
@@ -25,5 +27,6 @@ public interface InstrumentService<E extends Instrument> extends MaterialService
 	 * @throws CheckedException
 	 *             En caso de que ocurra una falla en la base de datos a la hora de verificar que existan reactivos que hacen uso de este instrumento.
 	 */
+	@Deprecated
 	public Boolean isValidDeleteInstrument(E instrument) throws CheckedException;
 }

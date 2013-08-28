@@ -1,6 +1,8 @@
 package com.proyecto.view.material.assessment;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -127,6 +130,7 @@ public class AssessmentFormDialog extends JDialog {
 		this.assessmentTypeByTimeComboBox = new JComboBox<AssessmentTypeByTimeImpl>();
 		this.assessmentTypeByTimeComboBox.setBounds(10, 24, 333, 26);
 		this.getContentPane().add(this.assessmentTypeByTimeComboBox);
+		this.initAssessmentTypeByTimeComboBox();
 
 		JLabel assessmentTimeLabel = new JLabel(HolderMessage.getMessage("assessment.form.label.time"));
 		assessmentTimeLabel.setFont(new Font("Arial", Font.BOLD, 11));
@@ -167,10 +171,22 @@ public class AssessmentFormDialog extends JDialog {
 
 		this.addActivityButton = new JButton(Resources.ADD_ELEMENT_ICON);
 		this.addActivityButton.setBounds(650, 242, 35, 35);
+		this.addActivityButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AssessmentFormDialog.this.addActivities();
+			}
+		});
 		this.getContentPane().add(this.addActivityButton);
 
 		this.removeActivityButton = new JButton(Resources.DELETE_ELEMENT_ICON);
 		this.removeActivityButton.setBounds(650, 288, 35, 35);
+		this.removeActivityButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AssessmentFormDialog.this.removeActivities();
+			}
+		});
 		this.getContentPane().add(this.removeActivityButton);
 
 		JSeparator separator = new JSeparator();
@@ -183,15 +199,51 @@ public class AssessmentFormDialog extends JDialog {
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
 		this.rejectButton.setBounds(650, 385, 35, 35);
+		this.rejectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AssessmentFormDialog.this.dispose();
+			}
+		});
 		this.getContentPane().add(this.rejectButton);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setBounds(603, 385, 35, 35);
+		this.commitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AssessmentFormDialog.this.saveAssessment();
+			}
+		});
 		this.getContentPane().add(this.commitButton);
 	}
 
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.assessmentTypeByTimeComboBox.setEnabled(enabled);
+		this.assessmentTimeDateChooser.setEnabled(enabled);
+
+		this.activitiesList.setEnabled(enabled);
+
+		this.addActivityButton.setEnabled(enabled);
+		this.removeActivityButton.setEnabled(enabled);
+		this.commitButton.setEnabled(enabled);
+		this.rejectButton.setEnabled(enabled);
+	}
+
 	/**
-	 * La fución encargada de cargar nuevas actividades desde la ventana de selección.
+	 * La función de carga del combo de tipo de evaluación por el momento.
+	 */
+	private void initAssessmentTypeByTimeComboBox() {
+		this.assessmentTypeByTimeComboBox.removeAllItems();
+
+		for (AssessmentTypeByTimeImpl type : AssessmentTypeByTimeImpl.values()) {
+			this.assessmentTypeByTimeComboBox.addItem(type);
+		}
+	}
+
+	/**
+	 * La función encargada de cargar nuevas actividades desde la ventana de selección.
 	 */
 	private void addActivities() {
 		// Abrimos la ventana de selección de actividades.
@@ -236,7 +288,7 @@ public class AssessmentFormDialog extends JDialog {
 				try {
 					AssessmentFormDialog.this.beforeProccessAssessment();
 					AssessmentFormDialog.this.fromDialogToAssessment();
-					AssessmentFormDialog.this.assessmentService.saveOrUpdate(assessment);
+					AssessmentFormDialog.this.assessmentService.saveOrUpdate(AssessmentFormDialog.this.assessment);
 					AssessmentFormDialog.this.dispose();
 				} catch (CheckedException e) {
 					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -281,7 +333,7 @@ public class AssessmentFormDialog extends JDialog {
 			this.assessment.setAssessmentTypeByTime((AssessmentTypeByTimeImpl) this.assessmentTypeByTimeComboBox.getSelectedItem());
 		}
 
-		// Cargamos la fecha de la evauación.
+		// Cargamos la fecha de la evaluación.
 		if (this.assessmentTimeDateChooser.getDate() == null) {
 			throw new CheckedException("assessment.form.error.time");
 		} else {

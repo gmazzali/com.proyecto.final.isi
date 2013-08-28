@@ -3,6 +3,7 @@ package com.proyecto.model.material;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,12 +33,17 @@ public class Material<PK extends Serializable> extends Entity<PK> {
 	 */
 	public interface Attributes extends Entity.Attributes {
 		static final String SUBJECT = "subject";
+		static final String ACTIVE = "active";
 	}
 
 	/**
 	 * La materia a la que pertenece este elemento.
 	 */
 	private Subject subject;
+	/**
+	 * El estado booleano que nos indica si el material esta activo.
+	 */
+	private Boolean active;
 
 	/**
 	 * El constructor por omisión.
@@ -45,6 +51,7 @@ public class Material<PK extends Serializable> extends Entity<PK> {
 	public Material() {
 		super();
 		this.subject = null;
+		this.active = true;
 	}
 
 	/**
@@ -59,6 +66,16 @@ public class Material<PK extends Serializable> extends Entity<PK> {
 	}
 
 	/**
+	 * La función encargada de indicar el estado del material dentro del sistema.
+	 * 
+	 * @return El estado del material dentro del sistema.
+	 */
+	@Column(name = "ACTIVE", columnDefinition = "bool", nullable = false)
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	/**
 	 * La función encargada de cargar la materia a la que pertenece este elemento.
 	 * 
 	 * @param subject
@@ -66,5 +83,15 @@ public class Material<PK extends Serializable> extends Entity<PK> {
 	 */
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+	}
+
+	/**
+	 * La función encargada cargar dentro del material su estado.
+	 * 
+	 * @param active
+	 *            El estado que vamos a cargarle dentro del material.
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 }
