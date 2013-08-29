@@ -412,8 +412,6 @@ public class ReactiveFormDialog extends JDialog {
 	private void emptyFields() {
 		this.descriptionTextArea.setText("");
 		this.instrumentTextArea.setText("");
-
-		this.instrument = null;
 	}
 
 	/**
@@ -428,9 +426,10 @@ public class ReactiveFormDialog extends JDialog {
 
 		this.reactiveTypes = reactiveTypes;
 		this.reactive = new Reactive();
+		this.instrument = null;
 
-		this.reloadReactiveTypeInComboBox();
 		this.emptyFields();
+		this.reloadReactiveTypeInComboBox();
 
 		return this;
 	}
@@ -449,10 +448,11 @@ public class ReactiveFormDialog extends JDialog {
 
 		this.reactiveTypes = reactiveTypes;
 		this.reactive = reactive;
+		this.instrument = null;
 
-		this.reloadReactiveTypeInComboBox();
 		this.emptyFields();
 		this.fromReactiveToDialog();
+		this.reloadReactiveTypeInComboBox();
 
 		return this;
 	}

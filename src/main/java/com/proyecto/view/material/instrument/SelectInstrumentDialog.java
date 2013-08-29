@@ -302,9 +302,10 @@ public class SelectInstrumentDialog extends JDialog {
 			// Si tenemos algún dialogo.
 			if (dialog != null) {
 				dialog.setLocationRelativeTo(this);
+				this.dispose();
 				dialog.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.select.dialog.not.implement"), "Información",
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.form.select.not.implement"), "Información",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
@@ -318,13 +319,12 @@ public class SelectInstrumentDialog extends JDialog {
 	 * @return La ventana de selección de instrumento.
 	 */
 	public SelectInstrumentDialog createNewDialog(List<InstrumentType> instrumentTypes) {
-		this.setTitle(HolderMessage.getMessage("instrument.select.dialog.title"));
+		this.setTitle(HolderMessage.getMessage("instrument.form.select.title"));
 
 		// Seteamos el tipo de instrumento que podemos crear dentro de esta ventana.
 		this.instrumentTypes = instrumentTypes;
 		this.updateLevelOneComboBox();
 
-		this.setModal(true);
 		return this;
 	}
 

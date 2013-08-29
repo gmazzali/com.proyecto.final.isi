@@ -18,30 +18,27 @@ import com.proyecto.model.material.assessment.type.impl.AssessmentTypeImpl;
 public class AssessmentTypeToActivityTypeConverter {
 
 	/**
-	 * La función encargada de tomar un listado de los tipos de evaluaciones y retornar un listado de los posibles tipos de actividades para ese
-	 * conjunto de tipos de evaluaciones.
+	 * La función encargada de tomar un tipo de evaluación y retornar un listado de los posibles tipos de actividades para ese tipo de evaluación.
 	 * 
-	 * @param assessmentTypes
-	 *            El conjunto de tipos de evaluaciones que vamos a analizar, puede ser nulo.
+	 * @param assessmentType
+	 *            El tipo de evaluación que vamos a analizar, puede ser nulo.
 	 * @return El listado de los tipos de actividades válidos para el conjunto de tipos de evaluaciones recibido, en caso de recibir un conjunto de
 	 *         tipos de evaluaciones nulo, retornamos un listado de los tipos de actividades válido para todo los tipos de evaluaciones.
 	 */
-	public static List<ActivityType> converter(List<AssessmentType> assessmentTypes) {
+	public static List<ActivityType> converter(AssessmentType assessmentType) {
 
 		// El set de los actividades.
 		Set<ActivityType> activityTypes = new HashSet<ActivityType>();
 
-		// Si el listado recibido no es nulo, lo recorremos.
-		if (assessmentTypes != null) {
+		// Si el tipo recibido no es nulo, lo recorremos.
+		if (assessmentType != null) {
 			// Recorremos el listado de los tipos de evaluaciones.
-			for (AssessmentType assessmentType : assessmentTypes) {
-				for (ActivityType activityType : assessmentType.getActivityTypesAllowed()) {
-					activityTypes.add(activityType);
-				}
+			for (ActivityType activityType : assessmentType.getActivityTypesAllowed()) {
+				activityTypes.add(activityType);
 			}
 		} else {
-			for (AssessmentType assessmentType : AssessmentTypeImpl.values()) {
-				for (ActivityType activityType : assessmentType.getActivityTypesAllowed()) {
+			for (AssessmentType type : AssessmentTypeImpl.values()) {
+				for (ActivityType activityType : type.getActivityTypesAllowed()) {
 					activityTypes.add(activityType);
 				}
 			}

@@ -68,13 +68,10 @@ public class AssessmentFormDialog extends JDialog {
 	private AssessmentService assessmentService;
 
 	/**
-	 * La evaluación que vamos a editar.
+	 * La evaluación que vamos a editar y el tipo de la misma.
 	 */
 	private Assessment assessment;
-	/**
-	 * El listado de los tipos de evaluaciones que podemos editar dentro de esta ventana.
-	 */
-	private List<AssessmentType> assessmentTypes;
+	private AssessmentType assessmentType;
 
 	/**
 	 * El combo con los tipos de evaluaciones de acuerdo al momento para el que se define la misma.
@@ -223,6 +220,7 @@ public class AssessmentFormDialog extends JDialog {
 		this.assessmentTypeByTimeComboBox.setEnabled(enabled);
 		this.assessmentTimeDateChooser.setEnabled(enabled);
 
+		this.descritionTextArea.setEnabled(enabled);
 		this.activitiesList.setEnabled(enabled);
 
 		this.addActivityButton.setEnabled(enabled);
@@ -247,7 +245,7 @@ public class AssessmentFormDialog extends JDialog {
 	 */
 	private void addActivities() {
 		// Abrimos la ventana de selección de actividades.
-		ActivityListDialog dialog = this.activityListDialog.createSelectDialog(AssessmentTypeToActivityTypeConverter.converter(this.assessmentTypes));
+		ActivityListDialog dialog = this.activityListDialog.createSelectDialog(AssessmentTypeToActivityTypeConverter.converter(this.assessmentType));
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 
@@ -405,14 +403,14 @@ public class AssessmentFormDialog extends JDialog {
 	/**
 	 * La función encargada de configurar la ventana para dar de alta una nueva evaluación.
 	 * 
-	 * @param assessmentTypes
-	 *            El listado de los tipos de evaluaciones que podemos seleccionar dentro de la ventana de edición.
+	 * @param assessmentType
+	 *            El tipo de evaluación que podemos seleccionar dentro de la ventana de edición.
 	 * @return La ventana con el formulario configurado para dar de alta una evaluación.
 	 */
-	public AssessmentFormDialog createNewDialog(List<AssessmentType> assessmentTypes) {
+	public AssessmentFormDialog createNewDialog(AssessmentType assessmentType) {
 		this.setTitle(HolderMessage.getMessage("assessment.form.title.new"));
 
-		this.assessmentTypes = assessmentTypes;
+		this.assessmentType = assessmentType;
 		this.assessment = new Assessment();
 
 		this.emptyFields();
@@ -425,14 +423,14 @@ public class AssessmentFormDialog extends JDialog {
 	 * 
 	 * @param assessment
 	 *            La evaluación que vamos a editar.
-	 * @param assessmentTypes
-	 *            El listado de los tipos de evaluaciones que podemos seleccionar dentro de la ventana de edición.
+	 * @param assessmentType
+	 *            El tipo de evaluación que podemos seleccionar dentro de la ventana de edición.
 	 * @return La ventana del formulario ya configurado para la edición del reactivo.
 	 */
-	public AssessmentFormDialog createEditDialog(Assessment assessment, List<AssessmentType> assessmentTypes) {
+	public AssessmentFormDialog createEditDialog(Assessment assessment, AssessmentType assessmentType) {
 		this.setTitle(HolderMessage.getMessage("assessment.form.title.edit"));
 
-		this.assessmentTypes = assessmentTypes;
+		this.assessmentType = assessmentType;
 		this.assessment = assessment;
 
 		this.emptyFields();
