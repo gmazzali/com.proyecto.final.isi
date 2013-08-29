@@ -23,6 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.common.util.annotations.View;
 import com.proyecto.security.AccessControl;
 import com.proyecto.view.login.SelectSubjectDialog;
+import com.proyecto.view.material.activity.ActivityListDialog;
+import com.proyecto.view.material.instrument.InstrumentListDialog;
+import com.proyecto.view.material.reactive.ReactiveListDialog;
 import com.proyecto.view.rule.RuleSetListDialog;
 
 /**
@@ -47,8 +50,21 @@ public class AssessmentManagerDialog extends JFrame {
 	 */
 	@Autowired
 	private SelectSubjectDialog selectSubjectDialog;
+
 	/**
-	 * La ventana de edición de conjuntos de reglas.
+	 * Las ventanas de administración de materiales.
+	 */
+	@Autowired
+	private ActivityListDialog activityListDialog;
+
+	@Autowired
+	private ReactiveListDialog reactiveListDialog;
+
+	@Autowired
+	private InstrumentListDialog instrumentListDialog;
+	
+	/**
+	 * La ventana de adminitración de conjuntos de reglas.
 	 */
 	@Autowired
 	private RuleSetListDialog ruleSetListDialog;
