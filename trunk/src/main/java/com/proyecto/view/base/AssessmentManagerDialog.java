@@ -26,6 +26,7 @@ import com.proyecto.view.login.SelectSubjectDialog;
 import com.proyecto.view.material.activity.ActivityListDialog;
 import com.proyecto.view.material.instrument.InstrumentListDialog;
 import com.proyecto.view.material.reactive.ReactiveListDialog;
+import com.proyecto.view.rule.RuleListDialog;
 import com.proyecto.view.rule.RuleSetListDialog;
 
 /**
@@ -62,12 +63,15 @@ public class AssessmentManagerDialog extends JFrame {
 
 	@Autowired
 	private InstrumentListDialog instrumentListDialog;
-	
+
 	/**
-	 * La ventana de adminitración de conjuntos de reglas.
+	 * La ventana de adminitración de reglas.
 	 */
 	@Autowired
 	private RuleSetListDialog ruleSetListDialog;
+
+	@Autowired
+	private RuleListDialog ruleListDialog;
 
 	/**
 	 * Los labels de los datos de acceso.
