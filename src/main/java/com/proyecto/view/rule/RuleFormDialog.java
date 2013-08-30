@@ -86,7 +86,7 @@ public class RuleFormDialog extends JDialog {
 
 		JLabel ruleLabel = new JLabel("Regla");
 		ruleLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleLabel.setBounds(10, 116, 162, 14);
+		ruleLabel.setBounds(10, 116, 75, 14);
 		contentPanel.add(ruleLabel);
 
 		this.ruleTextField = new JTextPane();
@@ -118,6 +118,48 @@ public class RuleFormDialog extends JDialog {
 			}
 		});
 		contentPanel.add(cancelButton);
+		
+		JButton btnNewButton = new JButton("=>");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			String contentRule =	ruleTextField.getText();
+			ruleTextField.setText(contentRule+"=>");
+			
+			}
+		});
+		btnNewButton.setBounds(95, 112, 53, 23);
+		contentPanel.add(btnNewButton);
+		
+		JButton button = new JButton("|");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String contentRule =	ruleTextField.getText();
+				ruleTextField.setText(contentRule+"|");
+			}
+		});
+		button.setBounds(150, 112, 53, 23);
+		contentPanel.add(button);
+		
+		JButton button_1 = new JButton("?");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String contentRule =	ruleTextField.getText();
+				ruleTextField.setText(contentRule+"?");
+			}
+		});
+		button_1.setBounds(202, 112, 53, 23);
+		contentPanel.add(button_1);
+		
+		JButton button_2 = new JButton("=");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String contentRule =	ruleTextField.getText();
+				ruleTextField.setText(contentRule+"=");
+			}
+		});
+		button_2.setBounds(255, 112, 53, 23);
+		contentPanel.add(button_2);
 	}
 
 	/**
