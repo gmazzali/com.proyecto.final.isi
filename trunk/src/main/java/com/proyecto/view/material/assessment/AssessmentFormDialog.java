@@ -449,10 +449,8 @@ public class AssessmentFormDialog extends JDialog {
 
 			HolderApplicationContext.initApplicationContext(files);
 
-			List<AssessmentType> assessmentTypes = new ArrayList<AssessmentType>();
-			assessmentTypes.add(AssessmentTypeImpl.FORMAL);
-
-			AssessmentFormDialog dialog = HolderApplicationContext.getContext().getBean(AssessmentFormDialog.class).createNewDialog(assessmentTypes);
+			AssessmentFormDialog dialog = HolderApplicationContext.getContext().getBean(AssessmentFormDialog.class)
+					.createNewDialog(AssessmentTypeImpl.FORMAL);
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.Service;
 import com.common.util.exception.CheckedException;
-import com.common.util.model.query.filter.Filter;
+import com.common.util.model.filter.Filter;
 import com.proyecto.dao.agent.AgentDao;
 import com.proyecto.model.agent.Agent;
 import com.proyecto.service.ProyectoServiceImpl;

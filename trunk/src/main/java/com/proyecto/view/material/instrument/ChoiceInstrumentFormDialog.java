@@ -21,7 +21,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.common.util.exception.CheckedException;
@@ -63,7 +62,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	 * El combo del tipo de opción, el campo para la opción que estamos editando y los botones de todos los anteriores.
 	 */
 	private JComboBox<TrueFalseAnswerTypeEnum> optionAnswerComboBox;
-	private JTextField optionTextField;
+	private JTextArea optionTextArea;
 	private JRadioButton allChoiceRadioButton;
 	private JRadioButton noneChoiceRadioButton;
 	/**
@@ -88,18 +87,18 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	 * La función encargada de inicializar la ventana de edición de un instrumento de correspondencia.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 906, 384);
+		this.setBounds(100, 100, 750, 498);
 		this.getContentPane().setLayout(null);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.description"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 16, 884, 14);
+		descriptionLabel.setBounds(10, 16, 728, 14);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(10, 33, 884, 63);
+		descriptionScrollPane.setBounds(10, 33, 728, 92);
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
@@ -117,11 +116,11 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel choiceLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.options"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		choiceLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		choiceLabel.setBounds(10, 108, 884, 14);
+		choiceLabel.setBounds(10, 137, 728, 14);
 		this.getContentPane().add(choiceLabel);
 
 		JScrollPane choiceScrollPane = new JScrollPane();
-		choiceScrollPane.setBounds(10, 124, 884, 122);
+		choiceScrollPane.setBounds(10, 153, 728, 122);
 		this.getContentPane().add(choiceScrollPane);
 
 		this.optionsList = new JList<Option>();
@@ -149,7 +148,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 		this.optionAnswerComboBox = new JComboBox<TrueFalseAnswerTypeEnum>();
 		this.optionAnswerComboBox.setFont(this.getContentPane().getFont());
-		this.optionAnswerComboBox.setBounds(10, 253, 137, 30);
+		this.optionAnswerComboBox.setBounds(10, 302, 125, 30);
 		for (TrueFalseAnswerTypeEnum item : TrueFalseAnswerTypeEnum.values()) {
 			this.optionAnswerComboBox.addItem(item);
 		}
@@ -164,36 +163,36 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.optionAnswerComboBox.setSelectedIndex(-1);
 		this.getContentPane().add(this.optionAnswerComboBox);
 
-		this.optionTextField = new JTextField();
-		this.optionTextField.setFont(this.getContentPane().getFont());
-		this.optionTextField.setBounds(159, 253, 735, 30);
-		this.optionTextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					ChoiceInstrumentFormDialog.this.addOption();
-				}
-			}
-		});
-		this.optionTextField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				ChoiceInstrumentFormDialog.this.optionTextField.selectAll();
-			}
-		});
-		this.getContentPane().add(this.optionTextField);
+		JScrollPane optionScrollPane = new JScrollPane();
+		optionScrollPane.setBounds(147, 287, 591, 61);
+		this.getContentPane().add(optionScrollPane);
+
+		this.optionTextArea = new JTextArea();
+		this.optionTextArea.setWrapStyleWord(true);
+		this.optionTextArea.setLineWrap(true);
+		optionScrollPane.setViewportView(this.optionTextArea);
+
+		JRadioButton allTrueRadioButton = new JRadioButton(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.true"));
+		allTrueRadioButton.setFont(new Font("Arial", Font.BOLD, 11));
+		allTrueRadioButton.setBounds(147, 360, 591, 18);
+		this.getContentPane().add(allTrueRadioButton);
+
+		JRadioButton allFalseRadioButton = new JRadioButton(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.false"));
+		allFalseRadioButton.setFont(new Font("Arial", Font.BOLD, 11));
+		allFalseRadioButton.setBounds(147, 380, 591, 18);
+		this.getContentPane().add(allFalseRadioButton);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 295, 884, 2);
+		separator.setBounds(10, 410, 728, 2);
 		this.getContentPane().add(separator);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(765, 311, 35, 35);
+		this.progressLabel.setBounds(609, 424, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
-		this.commitButton.setBounds(812, 311, 35, 35);
+		this.commitButton.setBounds(656, 424, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -204,7 +203,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
 		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
-		this.rejectButton.setBounds(859, 311, 35, 35);
+		this.rejectButton.setBounds(703, 424, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -236,7 +235,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	 */
 	private void addOption() {
 		// Obtenemos su descripción y el tipo de opción.
-		String optionDescription = this.optionTextField.getText().trim();
+		String optionDescription = this.optionTextArea.getText().trim();
 		TrueFalseAnswerTypeEnum answerType = (TrueFalseAnswerTypeEnum) this.optionAnswerComboBox.getSelectedItem();
 
 		// Corroboramos que haya algo en la descripción de la opción.
@@ -262,8 +261,8 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 				// Borramos el campo de tipo de respuesta y de su descripción.
 				this.optionAnswerComboBox.setSelectedIndex(-1);
-				this.optionTextField.setText("");
-				this.optionTextField.requestFocus();
+				this.optionTextArea.setText("");
+				this.optionTextArea.requestFocus();
 			}
 		}
 	}
@@ -286,8 +285,8 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 			// Cargamos la opción para editarla.
 			this.optionAnswerComboBox.setSelectedItem(option.getAnswerType());
-			this.optionTextField.setText(option.getDescription());
-			this.optionTextField.requestFocus();
+			this.optionTextArea.setText(option.getDescription());
+			this.optionTextArea.requestFocus();
 		}
 	}
 
@@ -318,7 +317,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.optionsList.setEnabled(b);
 
 		this.optionAnswerComboBox.setEnabled(b);
-		this.optionTextField.setEnabled(b);
+		this.optionTextArea.setEnabled(b);
 
 		this.commitButton.setEnabled(b);
 		this.rejectButton.setEnabled(b);
@@ -377,7 +376,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		DefaultListModel<Option> optionModel = (DefaultListModel<Option>) this.optionsList.getModel();
 		optionModel.clear();
 
-		this.optionTextField.setText("");
+		this.optionTextArea.setText("");
 	}
 
 	@Override

@@ -164,6 +164,8 @@ public class ReactiveFormDialog extends JDialog {
 		contentPanel.add(instrumentScrollPane);
 
 		this.instrumentTextArea = new JTextArea();
+		this.instrumentTextArea.setWrapStyleWord(true);
+		this.instrumentTextArea.setLineWrap(true);
 		this.instrumentTextArea.setEnabled(false);
 		this.instrumentTextArea.setFont(this.getContentPane().getFont());
 		this.instrumentTextArea.setBorder(new LineBorder(Color.LIGHT_GRAY));

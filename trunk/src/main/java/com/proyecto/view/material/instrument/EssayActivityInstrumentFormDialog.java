@@ -131,6 +131,15 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 	}
 
 	@Override
+	public void setEnabled(boolean enabled) {
+		this.descriptionTextArea.setEnabled(enabled);
+		this.answerTextArea.setEnabled(enabled);
+
+		this.commitButton.setEnabled(enabled);
+		this.rejectButton.setEnabled(enabled);
+	}
+
+	@Override
 	protected void emptyFields() {
 		this.descriptionTextArea.setText("");
 		this.answerTextArea.setText("");
@@ -170,17 +179,6 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 		} else {
 			this.answerTextArea.setText("");
 		}
-	}
-
-	@Override
-	public void setEnabled(boolean b) {
-		super.setEnabled(b);
-
-		this.descriptionTextArea.setEnabled(b);
-		this.answerTextArea.setEnabled(b);
-
-		this.commitButton.setEnabled(b);
-		this.rejectButton.setEnabled(b);
 	}
 
 	@Override

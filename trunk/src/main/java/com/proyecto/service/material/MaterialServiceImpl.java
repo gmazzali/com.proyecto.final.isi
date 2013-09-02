@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.common.util.exception.CheckedException;
-import com.common.util.model.query.filter.Filter;
+import com.common.util.model.filter.Filter;
 import com.proyecto.model.agent.Subject;
 import com.proyecto.model.material.Material;
 import com.proyecto.service.ProyectoServiceImpl;
