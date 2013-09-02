@@ -236,7 +236,6 @@ public class InstrumentListDialog extends JDialog {
 		this.instrumentTable = new JTable();
 		this.instrumentTable.setFillsViewportHeight(true);
 		this.instrumentTable.setShowHorizontalLines(true);
-		this.instrumentTable.setShowVerticalLines(true);
 		this.instrumentTable.setModel(new DefaultTableModel());
 		this.instrumentTable.setFont(this.getContentPane().getFont());
 		instrumentScrollPane.setViewportView(this.instrumentTable);

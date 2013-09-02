@@ -1,32 +1,38 @@
 package com.proyecto.view.base;
 
 import java.awt.Color;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
+import com.common.util.holder.HolderApplicationContext;
+import com.common.util.holder.HolderMessage;
+import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.security.AccessControl;
+import com.proyecto.view.Resources;
 import com.proyecto.view.login.SelectSubjectDialog;
 import com.proyecto.view.material.activity.ActivityListDialog;
 import com.proyecto.view.material.instrument.InstrumentListDialog;
 import com.proyecto.view.material.reactive.ReactiveListDialog;
-import com.proyecto.view.rule.RuleListDialog;
 import com.proyecto.view.rule.RuleSetListDialog;
 
 /**
@@ -47,12 +53,6 @@ public class AssessmentManagerDialog extends JFrame {
 	private AccessControl accessControl;
 
 	/**
-	 * La ventana de selección de materias.
-	 */
-	@Autowired
-	private SelectSubjectDialog selectSubjectDialog;
-
-	/**
 	 * Las ventanas de administración de materiales.
 	 */
 	@Autowired
@@ -65,14 +65,30 @@ public class AssessmentManagerDialog extends JFrame {
 	private InstrumentListDialog instrumentListDialog;
 
 	/**
-	 * La ventana de adminitración de reglas.
+	 * La ventana de selección de materias.
+	 */
+	@Autowired
+	private SelectSubjectDialog selectSubjectDialog;
+	/**
+	 * La ventana de edición de conjuntos de reglas.
 	 */
 	@Autowired
 	private RuleSetListDialog ruleSetListDialog;
 
-	@Autowired
-	private RuleListDialog ruleListDialog;
-
+	/**
+	 * La barra de menu.
+	 */
+	private JMenuBar menuBar;
+	/**
+	 * La lista de evaluaciones.
+	 */
+	private JList<Assessment> assessmentList;
+	/**
+	 * Los botones de acciones.
+	 */
+	private JButton newButton;
+	private JButton modifyButton;
+	private JButton deleteButton;
 	/**
 	 * Los labels de los datos de acceso.
 	 */
@@ -92,128 +108,160 @@ public class AssessmentManagerDialog extends JFrame {
 	 */
 	private void init() {
 		this.setResizable(false);
-		this.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
-		this.setFont(new Font("Arial", Font.PLAIN, 12));
-		this.setTitle("Menu Principal\r\n");
-		this.setBounds(100, 100, 743, 487);
+		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
+		this.setBounds(100, 100, 695, 534);
 
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 737, 23);
+		this.menuBar = new JMenuBar();
+		this.menuBar.setFont(this.getContentPane().getFont());
+		this.menuBar.setBounds(0, 0, 689, 23);
 
-		JMenu systemMenu = new JMenu("Sistema");
-		systemMenu.setFont(new Font("Arial", Font.BOLD, 12));
-		systemMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		menuBar.add(systemMenu);
+		// Los menu de sistemas.
+		JMenu menuSistemas = new JMenu(HolderMessage.getMessage("main.menu.system"));
+		menuSistemas.setFont(this.menuBar.getFont());
+		menuSistemas.setHorizontalAlignment(SwingConstants.LEFT);
+		this.menuBar.add(menuSistemas);
 
-		JMenuItem exitItemMenu = new JMenuItem("Salir");
-		exitItemMenu.addActionListener(new ActionListener() {
+		JMenuItem itemMenuSalir = new JMenuItem(HolderMessage.getMessage("main.menu.system.exit"));
+		itemMenuSalir.setFont(this.menuBar.getFont());
+		itemMenuSalir.setHorizontalAlignment(SwingConstants.LEFT);
+		itemMenuSalir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				AssessmentManagerDialog.this.dispose();
 			}
 		});
+		menuSistemas.add(itemMenuSalir);
 
-		JMenuItem changeSubjectItemMenu = new JMenuItem("Cambio de Materia");
-		changeSubjectItemMenu.setFont(new Font("Arial", Font.PLAIN, 12));
-		changeSubjectItemMenu.addActionListener(new ActionListener() {
+		JMenuItem itemMenuCambioMateria = new JMenuItem(HolderMessage.getMessage("main.menu.system.subject.change"));
+		itemMenuCambioMateria.setFont(this.menuBar.getFont());
+		itemMenuCambioMateria.setHorizontalAlignment(SwingConstants.LEFT);
+		itemMenuCambioMateria.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AssessmentManagerDialog.this.changeSubject();
 			}
 		});
-		systemMenu.add(changeSubjectItemMenu);
-		exitItemMenu.setFont(new Font("Arial", Font.PLAIN, 12));
-		exitItemMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		systemMenu.add(exitItemMenu);
+		menuSistemas.add(itemMenuCambioMateria);
 
-		JMenu ruleMenu = new JMenu("Reglas");
-		ruleMenu.setFont(new Font("Arial", Font.BOLD, 12));
-		ruleMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		menuBar.add(ruleMenu);
+		// Los menu de reglas.
+		JMenu menuReglas = new JMenu(HolderMessage.getMessage("main.menu.rules"));
+		menuReglas.setFont(this.menuBar.getFont());
+		menuReglas.setHorizontalAlignment(SwingConstants.LEFT);
+		this.menuBar.add(menuReglas);
 
-		JMenuItem managerRulesItemMenu = new JMenuItem("Administrar");
-		managerRulesItemMenu.addActionListener(new ActionListener() {
+		JMenuItem itemMenuReglas = new JMenuItem(HolderMessage.getMessage("main.menu.rules.set.manager"));
+		itemMenuReglas.setFont(this.menuBar.getFont());
+		itemMenuReglas.setHorizontalAlignment(SwingConstants.LEFT);
+		itemMenuReglas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AssessmentManagerDialog.this.managerRules();
 			}
 		});
-		managerRulesItemMenu.setFont(new Font("Arial", Font.PLAIN, 12));
-		managerRulesItemMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		ruleMenu.add(managerRulesItemMenu);
+		menuReglas.add(itemMenuReglas);
 
-		JMenu resourceMenu = new JMenu("Recursos");
-		resourceMenu.setFont(new Font("Arial", Font.BOLD, 12));
-		resourceMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		menuBar.add(resourceMenu);
+		// Los menu de los materiales.
+		JMenu menuRecursos = new JMenu(HolderMessage.getMessage("main.menu.material"));
+		menuRecursos.setFont(this.menuBar.getFont());
+		menuRecursos.setHorizontalAlignment(SwingConstants.LEFT);
+		this.menuBar.add(menuRecursos);
 
-		JMenuItem mntmActividades = new JMenuItem("Actividades");
-		mntmActividades.setFont(new Font("Arial", Font.PLAIN, 12));
-		resourceMenu.add(mntmActividades);
+		JMenuItem itemMenuActividades = new JMenuItem(HolderMessage.getMessage("main.menu.material.activity.manager"));
+		itemMenuActividades.setFont(this.menuBar.getFont());
+		itemMenuActividades.setHorizontalAlignment(SwingConstants.LEFT);
+		itemMenuActividades.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = AssessmentManagerDialog.this.activityListDialog.createCrudDialog();
+				dialog.setLocationRelativeTo(AssessmentManagerDialog.this);
+				dialog.setVisible(true);
+			}
+		});
+		menuRecursos.add(itemMenuActividades);
 
-		JMenuItem mntmReactivos = new JMenuItem("Reactivos");
-		mntmReactivos.setFont(new Font("Arial", Font.PLAIN, 12));
-		resourceMenu.add(mntmReactivos);
+		JMenuItem itemMenuReactivos = new JMenuItem(HolderMessage.getMessage("main.menu.material.reactive.manager"));
+		itemMenuReactivos.setFont(this.menuBar.getFont());
+		itemMenuReactivos.setHorizontalAlignment(SwingConstants.LEFT);
+		itemMenuReactivos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = AssessmentManagerDialog.this.reactiveListDialog.createCrudDialog();
+				dialog.setLocationRelativeTo(AssessmentManagerDialog.this);
+				dialog.setVisible(true);
+			}
+		});
+		menuRecursos.add(itemMenuReactivos);
 
-		JMenuItem mntmInstrumentros = new JMenuItem("Instrumentros");
-		mntmInstrumentros.setFont(new Font("Arial", Font.PLAIN, 12));
-		resourceMenu.add(mntmInstrumentros);
+		JMenuItem itemMenuInstrumentos = new JMenuItem(HolderMessage.getMessage("main.menu.material.instrument.manager"));
+		itemMenuInstrumentos.setFont(this.menuBar.getFont());
+		itemMenuInstrumentos.setHorizontalAlignment(SwingConstants.LEFT);
+		itemMenuInstrumentos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = AssessmentManagerDialog.this.instrumentListDialog.createCrudDialog();
+				dialog.setLocationRelativeTo(AssessmentManagerDialog.this);
+				dialog.setVisible(true);
+			}
+		});
+		menuRecursos.add(itemMenuInstrumentos);
+		this.getContentPane().add(this.menuBar);
 
-		JButton newButton = new JButton("Crear Evaluaci\u00F3n");
-		newButton.setBounds(518, 35, 207, 30);
-		newButton.setFont(new Font("Arial", Font.BOLD, 12));
+		JScrollPane assessmentScrollPane = new JScrollPane();
+		assessmentScrollPane.setBounds(10, 35, 624, 425);
+		this.getContentPane().add(assessmentScrollPane);
 
-		JButton deleteButton = new JButton("Eliminar Evaluaci\u00F3n");
-		deleteButton.setBounds(518, 119, 207, 30);
-		deleteButton.addActionListener(new ActionListener() {
+		this.assessmentList = new JList<Assessment>();
+		this.assessmentList.setModel(new DefaultListModel<Assessment>());
+		assessmentScrollPane.setViewportView(this.assessmentList);
+
+		// El contenido de la ventana.
+		this.newButton = new JButton(Resources.ADD_ELEMENT_ICON);
+		this.newButton.setBounds(644, 35, 35, 35);
+		this.getContentPane().add(this.newButton);
+
+		this.modifyButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
+		this.modifyButton.setBounds(644, 77, 35, 35);
+		this.getContentPane().add(this.modifyButton);
+
+		this.deleteButton = new JButton(Resources.DELETE_ELEMENT_ICON);
+		this.deleteButton.setBounds(644, 119, 35, 35);
+		this.deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		deleteButton.setFont(new Font("Arial", Font.BOLD, 12));
+		this.getContentPane().add(this.deleteButton);
 
-		JButton modifyButton = new JButton("Modificar Evaluaci\u00F3n");
-		modifyButton.setBounds(518, 77, 207, 30);
-		modifyButton.setFont(new Font("Arial", Font.BOLD, 12));
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 35, 496, 411);
-
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
-		panel.setBounds(518, 356, 207, 90);
+		JPanel dataPanel = new JPanel();
+		dataPanel.setBorder(null);
+		dataPanel.setBounds(0, 471, 689, 35);
+		this.getContentPane().add(dataPanel);
 
 		JLabel agentLabel = new JLabel("Agente:");
-		agentLabel.setBounds(6, 3, 54, 17);
+		agentLabel.setBounds(6, 3, 284, 14);
 		agentLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		agentLabel.setFont(new Font("Arial", Font.BOLD, 11));
 
 		this.subjectNameLabel = new JLabel("NOMBRE MATERIA");
 		this.subjectNameLabel.setForeground(Color.BLUE);
 		this.subjectNameLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-		this.subjectNameLabel.setBounds(6, 68, 200, 16);
+		this.subjectNameLabel.setBounds(300, 20, 284, 14);
 		this.getContentPane().setLayout(null);
-		this.getContentPane().add(scrollPane);
-		this.getContentPane().add(newButton);
-		this.getContentPane().add(modifyButton);
-		this.getContentPane().add(deleteButton);
-		this.getContentPane().add(menuBar);
-		this.getContentPane().add(panel);
-		panel.setLayout(null);
-		panel.add(agentLabel);
+		dataPanel.setLayout(null);
+		dataPanel.add(agentLabel);
 
 		this.agentNameLabel = new JLabel("NOMBRE AGENTE");
 		this.agentNameLabel.setForeground(Color.BLUE);
 		this.agentNameLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-		this.agentNameLabel.setBounds(6, 23, 200, 16);
-		panel.add(this.agentNameLabel);
+		this.agentNameLabel.setBounds(6, 20, 284, 14);
+		dataPanel.add(this.agentNameLabel);
 
 		JLabel subjectLabel = new JLabel("Materia:");
-		subjectLabel.setBounds(6, 51, 54, 14);
+		subjectLabel.setBounds(300, 3, 284, 14);
 		subjectLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		subjectLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		panel.add(subjectLabel);
-		panel.add(this.subjectNameLabel);
+		dataPanel.add(subjectLabel);
+		dataPanel.add(this.subjectNameLabel);
 	}
 
 	/**
@@ -255,5 +303,28 @@ public class AssessmentManagerDialog extends JFrame {
 	public JFrame createFrame() {
 		this.loadAgentData();
 		return this;
+	}
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+
+			UIManager.setLookAndFeel(new NimbusLookAndFeel());
+			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
+			HolderApplicationContext.initApplicationContext(files);
+
+			// MultipleChoiceInstrument instrument =
+			// HolderApplicationContext.getContext().getBean(MultipleChoiceInstrumentService.class).findById(37);
+			// MultipleChoiceInstrumentFormDialog dialog = (MultipleChoiceInstrumentFormDialog) HolderApplicationContext.getContext()
+			// .getBean(MultipleChoiceInstrumentFormDialog.class).createEditDialog(instrument);
+			AssessmentManagerDialog dialog = (AssessmentManagerDialog) HolderApplicationContext.getContext().getBean(AssessmentManagerDialog.class)
+					.createFrame();
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
