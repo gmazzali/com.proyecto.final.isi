@@ -305,8 +305,8 @@ public class SelectInstrumentDialog extends JDialog {
 				this.dispose();
 				dialog.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.form.select.not.implement"), "Información",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.form.select.not.implement"),
+						HolderMessage.getMessage("dialog.message.info.title"), JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
