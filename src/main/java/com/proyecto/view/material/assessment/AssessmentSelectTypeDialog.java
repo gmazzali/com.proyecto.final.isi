@@ -1,9 +1,13 @@
 package com.proyecto.view.material.assessment;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +16,7 @@ import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.material.assessment.type.AssessmentType;
 import com.proyecto.model.material.assessment.type.impl.AssessmentTypeImpl;
+import com.proyecto.view.Resources;
 
 /**
  * La clase que nos permite crear una ventana de selección de un tipo de evaluación que vamos a crear de acuerdo al contenido de la misma.
@@ -40,7 +45,7 @@ public class AssessmentSelectTypeDialog extends JDialog {
 	 * El combo de tipo de evaluación.
 	 */
 	// private JComboBox<AssessmentType> assessmentTypeComboBox;
-	private JComboBox assessmentTypeComboBox;
+	private JComboBox<AssessmentType> assessmentTypeComboBox;
 
 	/**
 	 * Constructor de la ventana de selección de un tipo de evaluación.
@@ -54,11 +59,41 @@ public class AssessmentSelectTypeDialog extends JDialog {
 	 * La función encargada de inicializar los componentes de la ventana.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 701, 459);
+		this.setBounds(100, 100, 450, 155);
 		this.setModal(true);
 		this.setResizable(false);
 		this.getContentPane().setLayout(null);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
+
+		JLabel assessmentTypeLabel = new JLabel(HolderMessage.getMessage("assessment.form.select.type.label"));
+		assessmentTypeLabel.setFont(new Font("Arial", Font.BOLD, 11));
+		assessmentTypeLabel.setBounds(10, 11, 424, 15);
+		this.getContentPane().add(assessmentTypeLabel);
+
+		this.assessmentTypeComboBox = new JComboBox<AssessmentType>();
+		this.assessmentTypeComboBox.setBounds(10, 37, 424, 30);
+		this.getContentPane().add(this.assessmentTypeComboBox);
+		this.initAssessmentTypeComboBox();
+
+		JButton commitButton = new JButton(Resources.COMMIT_ICON);
+		commitButton.setBounds(354, 79, 35, 35);
+		commitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AssessmentSelectTypeDialog.this.createNewAssessment();
+			}
+		});
+		this.getContentPane().add(commitButton);
+
+		JButton rejectButton = new JButton(Resources.CLOSE_ICON);
+		rejectButton.setBounds(399, 79, 35, 35);
+		rejectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AssessmentSelectTypeDialog.this.dispose();
+			}
+		});
+		this.getContentPane().add(rejectButton);
 	}
 
 	@Override
@@ -118,7 +153,7 @@ public class AssessmentSelectTypeDialog extends JDialog {
 		if (assessment != null) {
 			this.assessment = assessment;
 			this.assessmentType = assessment.getAssessmentyType();
-			
+
 			JDialog dialog = this.assessmentFormDialog.createEditDialog(this.assessment, this.assessmentType);
 			dialog.setLocationRelativeTo(this);
 			dialog.setVisible(true);

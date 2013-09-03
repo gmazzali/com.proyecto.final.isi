@@ -172,6 +172,7 @@ public class ActivityFormDialog extends JDialog {
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setBounds(603, 384, 35, 35);
+		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -182,6 +183,7 @@ public class ActivityFormDialog extends JDialog {
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
 		this.rejectButton.setBounds(650, 384, 35, 35);
+		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -252,7 +254,8 @@ public class ActivityFormDialog extends JDialog {
 					ActivityFormDialog.this.activityService.saveOrUpdate(ActivityFormDialog.this.activity);
 					ActivityFormDialog.this.dispose();
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ActivityFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ActivityFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
 				} finally {
 					ActivityFormDialog.this.afterProccessActivity();
 				}

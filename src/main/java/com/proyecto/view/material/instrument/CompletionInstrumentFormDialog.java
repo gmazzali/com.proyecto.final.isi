@@ -238,8 +238,8 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 				this.emptyCompletePhrase();
 
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.formal.objective.completion.form.error.index.parser"), "Error",
-						JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.formal.objective.completion.form.error.index.parser"),
+						HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.WARNING_MESSAGE);
 				this.indexTextField.requestFocus();
 			}
 		} else if (this.editingAnswer != null) {

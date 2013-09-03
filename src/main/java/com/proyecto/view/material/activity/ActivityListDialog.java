@@ -211,7 +211,8 @@ public class ActivityListDialog extends JDialog {
 							// Cargamos el listado de actividades.
 							ActivityListDialog.this.loadReactiveList();
 						} catch (Exception e) {
-							JOptionPane.showMessageDialog(ActivityListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(ActivityListDialog.this, e.getMessage(),
+									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 							e.printStackTrace();
 						} finally {
 							ActivityListDialog.this.afterExecuteProccess();
@@ -296,8 +297,8 @@ public class ActivityListDialog extends JDialog {
 		if (this.activityList.getSelectedValue() != null) {
 
 			// Pedimos confirmación de borrado.
-			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("activity.manager.delete.confirm"), "Confirmación",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("activity.manager.delete.confirm"),
+					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				new Thread() {
 					@Override
 					public void run() {
@@ -307,7 +308,7 @@ public class ActivityListDialog extends JDialog {
 							ActivityListDialog.this.updateActivities();
 						} catch (CheckedException e) {
 							JOptionPane.showMessageDialog(ActivityListDialog.this, HolderMessage.getMessage("activity.manager.delete.failed"),
-									"Error", JOptionPane.ERROR_MESSAGE);
+									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 						} finally {
 							ActivityListDialog.this.afterExecuteProccess();
 						}

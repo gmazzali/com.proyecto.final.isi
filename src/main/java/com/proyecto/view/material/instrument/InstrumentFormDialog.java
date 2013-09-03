@@ -8,6 +8,7 @@ import javax.swing.WindowConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.exception.CheckedException;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.instrument.Instrument;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.instrument.InstrumentService;
@@ -85,7 +86,8 @@ public abstract class InstrumentFormDialog extends JDialog {
 					InstrumentFormDialog.this.getInstrumentService().saveOrUpdate(InstrumentFormDialog.this.getInstrument());
 					InstrumentFormDialog.this.dispose();
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(InstrumentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(InstrumentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
 				} finally {
 					InstrumentFormDialog.this.afterProccessInstrument();
 				}

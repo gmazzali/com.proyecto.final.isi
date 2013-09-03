@@ -20,6 +20,7 @@ import com.common.util.annotations.View;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.agent.Subject;
 import com.proyecto.security.AccessControl;
+import com.proyecto.view.Resources;
 import com.proyecto.view.base.AssessmentManagerDialog;
 
 /**
@@ -59,8 +60,8 @@ public class SelectSubjectDialog extends JDialog {
 	 */
 	private void init() {
 		this.setFont(new Font("Arial", Font.PLAIN, 12));
-		this.setTitle("Materia a Seleccionar");
-		this.setBounds(100, 100, 393, 146);
+		this.setTitle(HolderMessage.getMessage("login.subject.select.subject.title"));
+		this.setBounds(100, 100, 393, 149);
 		this.getContentPane().setLayout(new BorderLayout());
 
 		JPanel contentPanel = new JPanel();
@@ -68,18 +69,18 @@ public class SelectSubjectDialog extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel seleccionLabel = new JLabel("Seleccionar Una Materia");
+		JLabel seleccionLabel = new JLabel(HolderMessage.getMessage("login.subject.select.subject.subject.label"));
 		seleccionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		seleccionLabel.setBounds(10, 11, 131, 14);
+		seleccionLabel.setBounds(10, 11, 367, 15);
 		contentPanel.add(seleccionLabel);
 
 		this.subjectComboBox = new JComboBox<Subject>();
-		this.subjectComboBox.setBounds(10, 36, 367, 29);
+		this.subjectComboBox.setBounds(10, 36, 367, 30);
 		contentPanel.add(this.subjectComboBox);
 
-		JButton commitButton = new JButton("Aceptar");
+		JButton commitButton = new JButton("");
 		commitButton.setFont(new Font("Arial", Font.BOLD, 12));
-		commitButton.setBounds(167, 76, 100, 30);
+		commitButton.setBounds(297, 76, 35, 35);
 		commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -89,9 +90,9 @@ public class SelectSubjectDialog extends JDialog {
 		contentPanel.add(commitButton);
 		this.getRootPane().setDefaultButton(commitButton);
 
-		JButton rejectButton = new JButton("Cancelar");
+		JButton rejectButton = new JButton(Resources.CLOSE_ICON);
 		rejectButton.setFont(new Font("Arial", Font.BOLD, 12));
-		rejectButton.setBounds(277, 76, 100, 30);
+		rejectButton.setBounds(342, 76, 35, 35);
 		rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -127,7 +128,8 @@ public class SelectSubjectDialog extends JDialog {
 			frame.setVisible(true);
 
 		} else {
-			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("subject.select.required"), "Advertencia", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.subject.select.required"),
+					HolderMessage.getMessage("dialog.message.warning.title"), JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

@@ -194,18 +194,9 @@ public class AssessmentFormDialog extends JDialog {
 		this.progressLabel.setBounds(558, 385, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
-		this.rejectButton = new JButton(Resources.CLOSE_ICON);
-		this.rejectButton.setBounds(650, 385, 35, 35);
-		this.rejectButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				AssessmentFormDialog.this.dispose();
-			}
-		});
-		this.getContentPane().add(this.rejectButton);
-
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setBounds(603, 385, 35, 35);
+		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -213,6 +204,17 @@ public class AssessmentFormDialog extends JDialog {
 			}
 		});
 		this.getContentPane().add(this.commitButton);
+
+		this.rejectButton = new JButton(Resources.CLOSE_ICON);
+		this.rejectButton.setBounds(650, 385, 35, 35);
+		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
+		this.rejectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AssessmentFormDialog.this.dispose();
+			}
+		});
+		this.getContentPane().add(this.rejectButton);
 	}
 
 	@Override
@@ -289,7 +291,8 @@ public class AssessmentFormDialog extends JDialog {
 					AssessmentFormDialog.this.assessmentService.saveOrUpdate(AssessmentFormDialog.this.assessment);
 					AssessmentFormDialog.this.dispose();
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
 				} finally {
 					AssessmentFormDialog.this.afterProccessAssessment();
 				}

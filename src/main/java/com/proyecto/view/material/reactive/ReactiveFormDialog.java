@@ -127,7 +127,7 @@ public class ReactiveFormDialog extends JDialog {
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-		JLabel selectionTypeEvaluationLabel = new JLabel("Tipo de Evaluaci\u00F3n");
+		JLabel selectionTypeEvaluationLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.type"));
 		selectionTypeEvaluationLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		selectionTypeEvaluationLabel.setBounds(10, 11, 104, 14);
 		contentPanel.add(selectionTypeEvaluationLabel);
@@ -137,7 +137,7 @@ public class ReactiveFormDialog extends JDialog {
 		this.assessementTypeComboBox.setBounds(10, 27, 701, 30);
 		contentPanel.add(this.assessementTypeComboBox);
 
-		JLabel descriptionLabel = new JLabel("Descripci\u00F3n");
+		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.description"));
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		descriptionLabel.setBounds(10, 68, 65, 14);
 		contentPanel.add(descriptionLabel);
@@ -154,7 +154,7 @@ public class ReactiveFormDialog extends JDialog {
 		this.descriptionTextArea.setBackground(Color.WHITE);
 		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
-		JLabel instrumentLabel = new JLabel("Instrumento");
+		JLabel instrumentLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.instrument"));
 		instrumentLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		instrumentLabel.setBounds(10, 185, 69, 14);
 		contentPanel.add(instrumentLabel);
@@ -195,22 +195,24 @@ public class ReactiveFormDialog extends JDialog {
 		separator.setBounds(10, 302, 701, 2);
 		contentPanel.add(separator);
 
+		this.progressLabel = new JLabel();
+		this.progressLabel.setBounds(582, 316, 35, 35);
+		contentPanel.add(this.progressLabel);
+
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setBounds(629, 316, 35, 35);
+		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ReactiveFormDialog.this.saveReactive();
 			}
 		});
-
-		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(582, 316, 35, 35);
-		contentPanel.add(this.progressLabel);
 		contentPanel.add(this.commitButton);
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
 		this.rejectButton.setBounds(676, 316, 35, 35);
+		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -339,7 +341,8 @@ public class ReactiveFormDialog extends JDialog {
 					ReactiveFormDialog.this.reactiveService.saveOrUpdate(ReactiveFormDialog.this.reactive);
 					ReactiveFormDialog.this.dispose();
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ReactiveFormDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ReactiveFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
 				} finally {
 					ReactiveFormDialog.this.afterProccessReactive();
 				}

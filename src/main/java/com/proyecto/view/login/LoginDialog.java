@@ -23,6 +23,7 @@ import com.common.util.holder.HolderMessage;
 import com.proyecto.model.agent.Agent;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.agent.AgentService;
+import com.proyecto.view.Resources;
 
 /**
  * La ventana de login que vamos a ocupar dentro del sistema.
@@ -71,8 +72,8 @@ public class LoginDialog extends JDialog {
 	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
-		this.setTitle("Ingreso al Sistema");
-		this.setBounds(100, 100, 350, 153);
+		this.setTitle(HolderMessage.getMessage("login.title"));
+		this.setBounds(100, 100, 349, 196);
 		this.getContentPane().setLayout(new BorderLayout());
 
 		JPanel contentPanel = new JPanel();
@@ -80,48 +81,46 @@ public class LoginDialog extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel userNameLabel = new JLabel("Usuario:");
-		userNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLabel userNameLabel = new JLabel(HolderMessage.getMessage("login.agent"));
+		userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		userNameLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		userNameLabel.setBounds(10, 15, 74, 16);
+		userNameLabel.setBounds(10, 15, 324, 16);
 		contentPanel.add(userNameLabel);
 
 		this.userNameTextField = new JTextField();
-		this.userNameTextField.setBounds(94, 11, 240, 25);
+		this.userNameTextField.setBounds(10, 34, 324, 25);
 		contentPanel.add(this.userNameTextField);
 
-		JLabel userPassLabel = new JLabel("Contrase\u00F1a:");
-		userPassLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLabel userPassLabel = new JLabel(HolderMessage.getMessage("login.password"));
+		userPassLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		userPassLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		userPassLabel.setBounds(10, 51, 74, 16);
+		userPassLabel.setBounds(10, 70, 324, 16);
 		contentPanel.add(userPassLabel);
 
 		this.userPassField = new JPasswordField();
-		this.userPassField.setBounds(94, 47, 240, 25);
+		this.userPassField.setBounds(10, 88, 324, 25);
 		contentPanel.add(this.userPassField);
 
-		JButton okButton = new JButton("Ingresar");
-		okButton.setFont(new Font("Arial", Font.BOLD, 12));
-		okButton.setBounds(124, 83, 100, 30);
-		okButton.addActionListener(new ActionListener() {
+		JButton commitButton = new JButton(Resources.COMMIT_ICON);
+		commitButton.setBounds(255, 124, 35, 35);
+		commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				LoginDialog.this.loggin();
 			}
 		});
-		contentPanel.add(okButton);
-		this.getRootPane().setDefaultButton(okButton);
+		contentPanel.add(commitButton);
+		this.getRootPane().setDefaultButton(commitButton);
 
-		JButton cancelButton = new JButton("Cancelar");
-		cancelButton.setFont(new Font("Arial", Font.BOLD, 12));
-		cancelButton.setBounds(234, 83, 100, 30);
-		cancelButton.addActionListener(new ActionListener() {
+		JButton rejectButton = new JButton(Resources.CLOSE_ICON);
+		rejectButton.setBounds(300, 124, 35, 35);
+		rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				LoginDialog.this.dispose();
 			}
 		});
-		contentPanel.add(cancelButton);
+		contentPanel.add(rejectButton);
 	}
 
 	/**
@@ -149,10 +148,12 @@ public class LoginDialog extends JDialog {
 				dialog.setVisible(true);
 
 			} else {
-				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.password.invalid"), "Advertencia", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.password.invalid"),
+						HolderMessage.getMessage("dialog.message.warning.title"), JOptionPane.WARNING_MESSAGE);
 			}
 		} else {
-			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.name.invalid"), "Advertencia", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.name.invalid"),
+					HolderMessage.getMessage("dialog.message.warning.title"), JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -162,8 +163,7 @@ public class LoginDialog extends JDialog {
 	public static void main(String[] args) {
 		try {
 
-			String[] files =
-				{ "/com/proyecto/spring/general-application-context.xml" };
+			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
 			LoginDialog dialog = HolderApplicationContext.getContext().getBean(LoginDialog.class);

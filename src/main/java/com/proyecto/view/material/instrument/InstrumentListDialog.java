@@ -327,8 +327,8 @@ public class InstrumentListDialog extends JDialog {
 				return false;
 			}
 		};
-		tableModel.addColumn("Descripcion");
-		tableModel.addColumn("Tipo");
+		tableModel.addColumn(HolderMessage.getMessage("instrument.manager.dialog.table.column.description"));
+		tableModel.addColumn(HolderMessage.getMessage("instrument.manager.dialog.table.column.type"));
 
 		// Seteamos el modelo a la tabla.
 		this.instrumentTable.setModel(tableModel);
@@ -411,7 +411,8 @@ public class InstrumentListDialog extends JDialog {
 					// Volvemos a cargar el listado de instrumentos y la tabla de los mismos.
 					InstrumentListDialog.this.updateInstrumentsList();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
 				} finally {
 					InstrumentListDialog.this.afterExecuteProccess();
 				}
@@ -598,8 +599,8 @@ public class InstrumentListDialog extends JDialog {
 			final Instrument deleteInstrument = this.instruments.get(this.instrumentTable.convertRowIndexToModel(instrumentIndex));
 			final InstrumentService<Instrument> instrumentService = this.getInstrumentService(deleteInstrument.getClass());
 
-			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("instrument.manager.dialog.delete.confirm"), "Confirmación",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("instrument.manager.dialog.delete.confirm"),
+					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
 				new Thread() {
 					@Override
@@ -609,7 +610,8 @@ public class InstrumentListDialog extends JDialog {
 							instrumentService.delete(deleteInstrument);
 							InstrumentListDialog.this.updateInstruments();
 						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(),
+									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 						} finally {
 							InstrumentListDialog.this.afterExecuteProccess();
 

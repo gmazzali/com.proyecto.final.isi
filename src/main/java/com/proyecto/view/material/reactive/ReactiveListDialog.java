@@ -211,7 +211,8 @@ public class ReactiveListDialog extends JDialog {
 							// Cargamos el listado de reactivos.
 							ReactiveListDialog.this.loadReactiveList();
 						} catch (Exception e) {
-							JOptionPane.showMessageDialog(ReactiveListDialog.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(ReactiveListDialog.this, e.getMessage(),
+									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 						} finally {
 							ReactiveListDialog.this.afterExecuteProccess();
 						}
@@ -295,8 +296,8 @@ public class ReactiveListDialog extends JDialog {
 		if (this.reactiveList.getSelectedValue() != null) {
 
 			// Pedimos confirmación de borrado.
-			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("reactive.manager.delete.confirm"), "Confirmación",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("reactive.manager.delete.confirm"),
+					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				new Thread() {
 					@Override
 					public void run() {
@@ -306,7 +307,7 @@ public class ReactiveListDialog extends JDialog {
 							ReactiveListDialog.this.updateReactives();
 						} catch (CheckedException e) {
 							JOptionPane.showMessageDialog(ReactiveListDialog.this, HolderMessage.getMessage("reactive.manager.delete.failed"),
-									"Error", JOptionPane.ERROR_MESSAGE);
+									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 						} finally {
 							ReactiveListDialog.this.afterExecuteProccess();
 						}
