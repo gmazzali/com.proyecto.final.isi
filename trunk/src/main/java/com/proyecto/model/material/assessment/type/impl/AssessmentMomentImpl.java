@@ -1,7 +1,7 @@
 package com.proyecto.model.material.assessment.type.impl;
 
 import com.common.util.holder.HolderMessage;
-import com.proyecto.model.material.assessment.type.AssessmentTypeByTime;
+import com.proyecto.model.material.assessment.type.AssessmentMoment;
 
 /**
  * La enumeración que define los tipos de evaluación que tenemos dentro del sistema de acuerdo al momento en el que son tomadas las mismas.
@@ -9,7 +9,7 @@ import com.proyecto.model.material.assessment.type.AssessmentTypeByTime;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum AssessmentTypeByTimeImpl implements AssessmentTypeByTime {
+public enum AssessmentMomentImpl implements AssessmentMoment {
 
 	/**
 	 * El tipo de evaluación diagnostica tomada al principio del curso.
@@ -35,7 +35,7 @@ public enum AssessmentTypeByTimeImpl implements AssessmentTypeByTime {
 	 * @param name
 	 *            El nombre del tipo de evaluación.
 	 */
-	private AssessmentTypeByTimeImpl(String name) {
+	private AssessmentMomentImpl(String name) {
 		this.name = name;
 	}
 
