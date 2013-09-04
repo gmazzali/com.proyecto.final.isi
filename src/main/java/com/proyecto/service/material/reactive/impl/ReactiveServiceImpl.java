@@ -8,7 +8,7 @@ import org.springframework.cglib.core.Predicate;
 
 import com.common.util.annotations.Service;
 import com.common.util.exception.CheckedException;
-import com.common.util.model.filter.Filter;
+import com.common.util.model.query.filter.Filter;
 import com.proyecto.dao.material.reactive.ReactiveDao;
 import com.proyecto.model.agent.Subject;
 import com.proyecto.model.material.instrument.Instrument;

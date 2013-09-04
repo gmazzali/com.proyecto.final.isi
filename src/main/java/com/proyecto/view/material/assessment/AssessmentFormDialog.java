@@ -30,7 +30,7 @@ import com.proyecto.converter.AssessmentTypeToActivityTypeConverter;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.material.assessment.type.AssessmentType;
-import com.proyecto.model.material.assessment.type.impl.AssessmentTypeByTimeImpl;
+import com.proyecto.model.material.assessment.type.impl.AssessmentMomentImpl;
 import com.proyecto.model.material.assessment.type.impl.AssessmentTypeImpl;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.assessment.AssessmentService;
@@ -76,7 +76,7 @@ public class AssessmentFormDialog extends JDialog {
 	/**
 	 * El combo con los tipos de evaluaciones de acuerdo al momento para el que se define la misma.
 	 */
-	private JComboBox<AssessmentTypeByTimeImpl> assessmentTypeByTimeComboBox;
+	private JComboBox<AssessmentMomentImpl> assessmentMomentComboBox;
 	/**
 	 * El campo de la fecha de la evaluación.
 	 */
@@ -119,15 +119,15 @@ public class AssessmentFormDialog extends JDialog {
 		this.getContentPane().setLayout(null);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 
-		JLabel assessmentTypeLabel = new JLabel(HolderMessage.getMessage("assessment.form.label.type.by.time"));
+		JLabel assessmentTypeLabel = new JLabel(HolderMessage.getMessage("assessment.form.label.moment"));
 		assessmentTypeLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		assessmentTypeLabel.setBounds(10, 6, 333, 16);
 		this.getContentPane().add(assessmentTypeLabel);
 
-		this.assessmentTypeByTimeComboBox = new JComboBox<AssessmentTypeByTimeImpl>();
-		this.assessmentTypeByTimeComboBox.setBounds(10, 24, 333, 26);
-		this.getContentPane().add(this.assessmentTypeByTimeComboBox);
-		this.initAssessmentTypeByTimeComboBox();
+		this.assessmentMomentComboBox = new JComboBox<AssessmentMomentImpl>();
+		this.assessmentMomentComboBox.setBounds(10, 24, 333, 26);
+		this.getContentPane().add(this.assessmentMomentComboBox);
+		this.initAssessmentMomentComboBox();
 
 		JLabel assessmentTimeLabel = new JLabel(HolderMessage.getMessage("assessment.form.label.time"));
 		assessmentTimeLabel.setFont(new Font("Arial", Font.BOLD, 11));
@@ -219,7 +219,7 @@ public class AssessmentFormDialog extends JDialog {
 
 	@Override
 	public void setEnabled(boolean enabled) {
-		this.assessmentTypeByTimeComboBox.setEnabled(enabled);
+		this.assessmentMomentComboBox.setEnabled(enabled);
 		this.assessmentTimeDateChooser.setEnabled(enabled);
 
 		this.descritionTextArea.setEnabled(enabled);
@@ -234,11 +234,11 @@ public class AssessmentFormDialog extends JDialog {
 	/**
 	 * La función de carga del combo de tipo de evaluación por el momento.
 	 */
-	private void initAssessmentTypeByTimeComboBox() {
-		this.assessmentTypeByTimeComboBox.removeAllItems();
+	private void initAssessmentMomentComboBox() {
+		this.assessmentMomentComboBox.removeAllItems();
 
-		for (AssessmentTypeByTimeImpl type : AssessmentTypeByTimeImpl.values()) {
-			this.assessmentTypeByTimeComboBox.addItem(type);
+		for (AssessmentMomentImpl type : AssessmentMomentImpl.values()) {
+			this.assessmentMomentComboBox.addItem(type);
 		}
 	}
 
@@ -328,10 +328,10 @@ public class AssessmentFormDialog extends JDialog {
 		this.assessment.setSubject(this.accessControl.getSubjectSelected());
 
 		// Cargamos el tipo de acuerdo al momento de la misma.
-		if (this.assessmentTypeByTimeComboBox.getSelectedItem() == null) {
+		if (this.assessmentMomentComboBox.getSelectedItem() == null) {
 			throw new CheckedException("assessment.form.error.type.by.time");
 		} else {
-			this.assessment.setAssessmentTypeByTime((AssessmentTypeByTimeImpl) this.assessmentTypeByTimeComboBox.getSelectedItem());
+			this.assessment.setAssessmentMoment((AssessmentMomentImpl) this.assessmentMomentComboBox.getSelectedItem());
 		}
 
 		// Cargamos la fecha de la evaluación.
@@ -368,8 +368,8 @@ public class AssessmentFormDialog extends JDialog {
 	 */
 	private void fromAssessmentToDialog() {
 		// Cargamos el tipo.
-		if (this.assessment.getAssessmentTypeByTime() != null) {
-			this.assessmentTypeByTimeComboBox.setSelectedItem(this.assessment.getAssessmentTypeByTime());
+		if (this.assessment.getAssessmentMoment() != null) {
+			this.assessmentMomentComboBox.setSelectedItem(this.assessment.getAssessmentMoment());
 		}
 
 		// Cargamos la fecha.
@@ -395,7 +395,7 @@ public class AssessmentFormDialog extends JDialog {
 	 * La función encargada de vaciar el contenido de la ventana.
 	 */
 	private void emptyFields() {
-		this.assessmentTypeByTimeComboBox.setSelectedIndex(-1);
+		this.assessmentMomentComboBox.setSelectedIndex(-1);
 		this.assessmentTimeDateChooser.setDate(null);
 		this.descritionTextArea.setText("");
 

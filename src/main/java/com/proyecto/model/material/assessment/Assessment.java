@@ -22,7 +22,7 @@ import com.common.util.annotations.Model;
 import com.common.util.model.Entity;
 import com.proyecto.model.material.Material;
 import com.proyecto.model.material.activity.Activity;
-import com.proyecto.model.material.assessment.type.impl.AssessmentTypeByTimeImpl;
+import com.proyecto.model.material.assessment.type.impl.AssessmentMomentImpl;
 import com.proyecto.model.material.assessment.type.impl.AssessmentTypeImpl;
 
 /**
@@ -43,6 +43,8 @@ public class Assessment extends Material<Integer> {
 	 */
 	public interface Attributes extends Material.Attributes {
 		static final String DESCRIPTION = "description";
+		static final String ASSESSMENT_MOMENT = "assessmentMoment";
+		static final String ASSESSMENT_DATE = "assessmentDate";
 		static final String ACTIVITIES = "activities";
 	}
 
@@ -53,7 +55,7 @@ public class Assessment extends Material<Integer> {
 	/**
 	 * El tipo de evaluación de acuerdo al momento en el que va a tomarse la misma.
 	 */
-	private AssessmentTypeByTimeImpl assessmentTypeByTime;
+	private AssessmentMomentImpl assessmentMoment;
 	/**
 	 * La fecha asignada a la evaluación.
 	 */
@@ -69,7 +71,7 @@ public class Assessment extends Material<Integer> {
 	public Assessment() {
 		super();
 		this.description = null;
-		this.assessmentTypeByTime = null;
+		this.assessmentMoment = null;
 		this.assessmentDate = null;
 		this.activities = new ArrayList<Activity>();
 	}
@@ -165,14 +167,14 @@ public class Assessment extends Material<Integer> {
 	}
 
 	/**
-	 * La función encargada de retornar el tipo de evaluación de acuerdo al momento en el que la misma es tomada.
+	 * La función encargada de retornar el momento en el que la evaluación es tomada.
 	 * 
-	 * @return El tipo de evaluación de acuerdo al momento en el que la misma es tomada.
+	 * @return El momento en el que la evaluación es tomada.
 	 */
-	@Column(name = "ASSESSMENT_TYPE", columnDefinition = "varchar(20)", nullable = false)
+	@Column(name = "ASSESSMENT_MOMENT", columnDefinition = "varchar(20)", nullable = false)
 	@Enumerated(EnumType.STRING)
-	public AssessmentTypeByTimeImpl getAssessmentTypeByTime() {
-		return this.assessmentTypeByTime;
+	public AssessmentMomentImpl getAssessmentMoment() {
+		return this.assessmentMoment;
 	}
 
 	/**
@@ -196,11 +198,11 @@ public class Assessment extends Material<Integer> {
 	public AssessmentTypeImpl getAssessmentyType() {
 		if (this.activities != null && !this.activities.isEmpty()) {
 			switch (this.activities.get(0).getActivityType()) {
-				case FORMAL:
-					return AssessmentTypeImpl.FORMAL;
+			case FORMAL:
+				return AssessmentTypeImpl.FORMAL;
 
-				case SEMIFORMAL:
-					return AssessmentTypeImpl.SEMIFORMAL;
+			case SEMIFORMAL:
+				return AssessmentTypeImpl.SEMIFORMAL;
 			}
 		}
 		return null;
@@ -227,13 +229,13 @@ public class Assessment extends Material<Integer> {
 	}
 
 	/**
-	 * La función encargada de cargar el tipo de evaluación de acuerdo al momento en el que la misma es establecida.
+	 * La función encargada de cargar el momento en el que la evaluación es tomada.
 	 * 
-	 * @param assessmentTypeByTime
-	 *            El tipo de evaluación de acuerdo al momento en el que la misma es establecida.
+	 * @param assessmentMoment
+	 *            El momento en el que la evaluación es tomada.
 	 */
-	public void setAssessmentTypeByTime(AssessmentTypeByTimeImpl assessmentTypeByTime) {
-		this.assessmentTypeByTime = assessmentTypeByTime;
+	public void setAssessmentMoment(AssessmentMomentImpl assessmentMoment) {
+		this.assessmentMoment = assessmentMoment;
 	}
 
 	/**
