@@ -13,11 +13,11 @@ import com.proyecto.model.material.assessment.Assessment;
  */
 public interface AssessmentOntology extends Serializable {
 	/**
-	 * La función encargada de vaciar el contenido de la ontología anterior para cargarla con la nueva evaluación.
+	 * La función encargada de cargar el contenido de la ontología en base a la evaluación que recibimos.
 	 * 
 	 * @param assessment
 	 *            La evaluación que vamos a cargar dentro de la ontología.
 	 * @return La ontología que creamos con la evaluación.
 	 */
-	public OntModel initAssessmentOntology(Assessment assessment);
+	public OntModel loadAssessmentToOntology(Assessment assessment);
 }
