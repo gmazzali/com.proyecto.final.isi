@@ -439,9 +439,17 @@ public class AssessmentFormDialog extends JDialog {
 		// Si tenemos actividades, las cargamos.
 		if (this.assessment.getActivities() != null && !this.assessment.getActivities().isEmpty()) {
 
+			List<Activity> oldActivities = this.assessment.getActivities();
+			List<Activity> newActivities = new ArrayList<Activity>();
+			
+			// Actualizamos las actividades.
+			for (Activity activity : oldActivities) {
+				newActivities.add(this.activityService.findById(activity.getId()));
+			}
+			
 			// Cargamos la lista de reactivos.
 			DefaultListModel<Activity> activityModel = (DefaultListModel<Activity>) this.activitiesList.getModel();
-			for (Activity activity : this.assessment.getActivities()) {
+			for (Activity activity : newActivities) {
 				activityModel.addElement(activity);
 			}
 		}
