@@ -18,7 +18,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,6 +32,7 @@ import com.proyecto.model.material.assessment.type.AssessmentType;
 import com.proyecto.model.material.assessment.type.impl.AssessmentMomentImpl;
 import com.proyecto.model.material.assessment.type.impl.AssessmentTypeImpl;
 import com.proyecto.security.AccessControl;
+import com.proyecto.service.material.activity.ActivityService;
 import com.proyecto.service.material.assessment.AssessmentService;
 import com.proyecto.view.Resources;
 import com.proyecto.view.material.activity.ActivityListDialog;
@@ -62,10 +62,13 @@ public class AssessmentFormDialog extends JDialog {
 	private ActivityListDialog activityListDialog;
 
 	/*
-	 * El servicio para las evaluaciones.
+	 * El servicio para las evaluaciones y las actividades.
 	 */
 	@Autowired
 	private AssessmentService assessmentService;
+
+	@Autowired
+	private ActivityService activityService;
 
 	/**
 	 * La evaluación que vamos a editar y el tipo de la misma.
@@ -246,36 +249,89 @@ public class AssessmentFormDialog extends JDialog {
 	 * La función encargada de cargar nuevas actividades desde la ventana de selección.
 	 */
 	private void addActivities() {
-		// Abrimos la ventana de selección de actividades.
-		ActivityListDialog dialog = this.activityListDialog.createSelectDialog(AssessmentTypeToActivityTypeConverter.converter(this.assessmentType));
-		dialog.setLocationRelativeTo(this);
-		dialog.setVisible(true);
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					// Abrimos la ventana de selección de actividades.
+					ActivityListDialog dialog = AssessmentFormDialog.this.activityListDialog.createSelectDialog(AssessmentTypeToActivityTypeConverter
+							.converter(AssessmentFormDialog.this.assessmentType));
+					dialog.setLocationRelativeTo(AssessmentFormDialog.this);
+					dialog.setVisible(true);
 
-		if (dialog.getSelectedActivities() != null && !dialog.getSelectedActivities().isEmpty()) {
+					// Deshabilitamos la ventana y actualizamos el listado de actividades.
+					AssessmentFormDialog.this.beforeProccessAssessment();
 
-			// Cargamos la lista de actividades a las que ya tenemos.
-			DefaultListModel<Activity> activityModel = (DefaultListModel<Activity>) this.activitiesList.getModel();
-			for (Activity activity : dialog.getSelectedActivities()) {
-				if (!activityModel.contains(activity)) {
-					activityModel.addElement(activity);
+					// Actualizamos el listado de actividades anteriores.
+					AssessmentFormDialog.this.updateActivities();
+
+					// Cargamos el listado de las nuevas actividades.
+					if (dialog.getSelectedActivities() != null && !dialog.getSelectedActivities().isEmpty()) {
+
+						// Cargamos la lista de actividades a las que ya tenemos.
+						DefaultListModel<Activity> activityModel = (DefaultListModel<Activity>) AssessmentFormDialog.this.activitiesList.getModel();
+						for (Activity activity : dialog.getSelectedActivities()) {
+							if (!activityModel.contains(activity)) {
+								activityModel.addElement(activity);
+							}
+						}
+					}
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
+				} finally {
+					AssessmentFormDialog.this.afterProccessAssessment();
 				}
 			}
+		}.start();
+	}
+
+	/**
+	 * La función encargada de actualizar el listado de los actividades que tenemos dentro de la evaluación y que se vea reflejado el cambio en la
+	 * ventana de edición.
+	 */
+	private void updateActivities() {
+		DefaultListModel<Activity> oldActivityModel = (DefaultListModel<Activity>) this.activitiesList.getModel();
+		DefaultListModel<Activity> newActivityModel = new DefaultListModel<Activity>();
+		Activity oldActivity = null;
+		Activity newActivity = null;
+		for (Integer index = 0; index < oldActivityModel.getSize(); index++) {
+			oldActivity = oldActivityModel.get(index);
+			newActivity = this.activityService.findById(oldActivity.getId());
+			newActivityModel.add(newActivity);
 		}
+		this.activitiesList.setModel(newActivityModel);
 	}
 
 	/**
 	 * La función encargada de quitar las actividades que tenemos seleccionada dentro de la lista.
 	 */
 	private void removeActivities() {
-		// Vemos si tenemos algo seleccionado de la lista y lo quitamos.
-		if (!this.activitiesList.getSelectedValuesList().isEmpty()) {
-			List<Activity> activities = this.activitiesList.getSelectedValuesList();
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					// Deshabilitamos la ventana y actualizamos el listado de actividades.
+					AssessmentFormDialog.this.beforeProccessAssessment();
 
-			DefaultListModel<Activity> activityModel = (DefaultListModel<Activity>) this.activitiesList.getModel();
-			for (Activity activity : activities) {
-				activityModel.removeElement(activity);
+					// Vemos si tenemos algo seleccionado de la lista y lo quitamos.
+					if (!AssessmentFormDialog.this.activitiesList.getSelectedValuesList().isEmpty()) {
+						List<Activity> activities = AssessmentFormDialog.this.activitiesList.getSelectedValuesList();
+
+						DefaultListModel<Activity> activityModel = (DefaultListModel<Activity>) AssessmentFormDialog.this.activitiesList.getModel();
+						for (Activity activity : activities) {
+							activityModel.removeElement(activity);
+						}
+					}// Actualizamos el listado de actividades anteriores.
+					AssessmentFormDialog.this.updateActivities();
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
+				} finally {
+					AssessmentFormDialog.this.afterProccessAssessment();
+				}
 			}
-		}
+		}.start();
 	}
 
 	/**
