@@ -18,6 +18,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -289,8 +290,11 @@ public class AssessmentFormDialog extends JDialog {
 	/**
 	 * La función encargada de actualizar el listado de los actividades que tenemos dentro de la evaluación y que se vea reflejado el cambio en la
 	 * ventana de edición.
+	 * 
+	 * @throws CheckedException
+	 *             En caso de que ocurra un fallo a la hora de actualizar el listado de actividades.
 	 */
-	private void updateActivities() {
+	private void updateActivities() throws CheckedException {
 		DefaultListModel<Activity> oldActivityModel = (DefaultListModel<Activity>) this.activitiesList.getModel();
 		DefaultListModel<Activity> newActivityModel = new DefaultListModel<Activity>();
 		Activity oldActivity = null;
@@ -298,7 +302,7 @@ public class AssessmentFormDialog extends JDialog {
 		for (Integer index = 0; index < oldActivityModel.getSize(); index++) {
 			oldActivity = oldActivityModel.get(index);
 			newActivity = this.activityService.findById(oldActivity.getId());
-			newActivityModel.add(newActivity);
+			newActivityModel.addElement(newActivity);
 		}
 		this.activitiesList.setModel(newActivityModel);
 	}
@@ -441,12 +445,16 @@ public class AssessmentFormDialog extends JDialog {
 
 			List<Activity> oldActivities = this.assessment.getActivities();
 			List<Activity> newActivities = new ArrayList<Activity>();
-			
+
 			// Actualizamos las actividades.
-			for (Activity activity : oldActivities) {
-				newActivities.add(this.activityService.findById(activity.getId()));
+			try {
+				for (Activity activity : oldActivities) {
+					newActivities.add(this.activityService.findById(activity.getId()));
+				}
+			} catch (CheckedException e) {
+				e.printStackTrace();
 			}
-			
+
 			// Cargamos la lista de reactivos.
 			DefaultListModel<Activity> activityModel = (DefaultListModel<Activity>) this.activitiesList.getModel();
 			for (Activity activity : newActivities) {

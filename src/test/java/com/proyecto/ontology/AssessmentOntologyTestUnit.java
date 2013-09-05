@@ -1,13 +1,14 @@
 package com.proyecto.ontology;
 
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.common.util.holder.HolderApplicationContext;
 import com.proyecto.CreateExampleMaterial;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.material.reactive.Reactive;
-import com.proyecto.ontology.impl.AssessmentOntologyImpl;
 
 /**
  * La clase que nos permite probar la creación de una ontología en base a una evaluación.
@@ -16,6 +17,15 @@ import com.proyecto.ontology.impl.AssessmentOntologyImpl;
  * @version 1.0
  */
 public class AssessmentOntologyTestUnit {
+
+	/**
+	 * Antes de que arranque la ejecución de la clase, cargamos el dao.
+	 */
+	@BeforeClass
+	public static void beforeClass() {
+		String[] files = { "/com/proyecto/spring/general-application-context.xml" };
+		HolderApplicationContext.initApplicationContext(files);
+	}
 
 	/**
 	 * Al finalizar dejamos un espacio en blanco en la consola.
@@ -54,7 +64,7 @@ public class AssessmentOntologyTestUnit {
 		System.out.println("##################################################################################");
 		System.out.println("##################################################################################");
 
-		AssessmentOntology assessmentOntology = new AssessmentOntologyImpl();
-		assessmentOntology.initAssessmentOntology(assessment).write(System.out);
+		AssessmentOntology assessmentOntology = HolderApplicationContext.getContext().getBean(AssessmentOntology.class);
+		assessmentOntology.loadAssessmentToOntology(assessment).write(System.out);
 	}
 }

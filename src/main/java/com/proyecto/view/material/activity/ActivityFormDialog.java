@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -251,8 +252,11 @@ public class ActivityFormDialog extends JDialog {
 	/**
 	 * La función encargada de actualizar el listado de los reactivos que tenemos dentro de la actividad y que se vea reflejado el cambio en la
 	 * ventana de edición.
+	 * 
+	 * @throws CheckedException
+	 *             En caso de falla en la actualización de los reactivos.
 	 */
-	private void updateReactives() {
+	private void updateReactives() throws CheckedException {
 		DefaultListModel<Reactive> oldReactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
 		DefaultListModel<Reactive> newReactiveModel = new DefaultListModel<Reactive>();
 		Reactive oldReactive = null;
@@ -260,7 +264,7 @@ public class ActivityFormDialog extends JDialog {
 		for (Integer index = 0; index < oldReactiveModel.getSize(); index++) {
 			oldReactive = oldReactiveModel.get(index);
 			newReactive = this.reactiveService.findById(oldReactive.getId());
-			newReactiveModel.add(newReactive);
+			newReactiveModel.addElement(newReactive);
 		}
 		this.reactivesList.setModel(newReactiveModel);
 	}
@@ -383,8 +387,12 @@ public class ActivityFormDialog extends JDialog {
 			List<Reactive> newReactives = new ArrayList<Reactive>();
 
 			// Actualizamos los reactivos.
-			for (Reactive reactive : oldReactives) {
-				newReactives.add(this.reactiveService.findById(reactive.getId()));
+			try {
+				for (Reactive reactive : oldReactives) {
+					newReactives.add(this.reactiveService.findById(reactive.getId()));
+				}
+			} catch (CheckedException e) {
+				e.printStackTrace();
 			}
 
 			// Cargamos la lista de reactivos.
