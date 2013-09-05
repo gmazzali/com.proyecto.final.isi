@@ -1,5 +1,7 @@
 package com.proyecto.model.material.activity;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +66,23 @@ public class Activity extends Material<Integer> {
 	public String toString() {
 		return this.description;
 	};
+
+	@Override
+	public void print(OutputStream stream) {
+		try {
+			stream.write("///////////////////// ACTIVITY /////////////////////\n".getBytes());
+			stream.write(("ID: " + this.id + "\n").getBytes());
+			stream.write(("Subject: " + this.subject + "\n").getBytes());
+			stream.write(("Descripción: " + this.description + "\n").getBytes());
+
+			for (Reactive reactive : this.reactives) {
+				reactive.print(stream);
+			}
+			stream.write("\n".getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Id
 	@Column(name = "ID_ACTIVITY")

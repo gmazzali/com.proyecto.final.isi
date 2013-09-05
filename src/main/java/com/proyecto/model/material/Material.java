@@ -1,5 +1,6 @@
 package com.proyecto.model.material;
 
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
@@ -24,7 +25,7 @@ import com.proyecto.model.agent.Subject;
  */
 @Model
 @MappedSuperclass
-public class Material<PK extends Serializable> extends Entity<PK> {
+public abstract class Material<PK extends Serializable> extends Entity<PK> {
 
 	private static final long serialVersionUID = -2080313336152464288L;
 
@@ -39,11 +40,11 @@ public class Material<PK extends Serializable> extends Entity<PK> {
 	/**
 	 * La materia a la que pertenece este elemento.
 	 */
-	private Subject subject;
+	protected Subject subject;
 	/**
 	 * El estado booleano que nos indica si el material esta activo.
 	 */
-	private Boolean active;
+	protected Boolean active;
 
 	/**
 	 * El constructor por omisión.
@@ -53,6 +54,14 @@ public class Material<PK extends Serializable> extends Entity<PK> {
 		this.subject = null;
 		this.active = true;
 	}
+
+	/**
+	 * La función encargada de imprimir el contenido del material en la salida que recibimos.
+	 * 
+	 * @param stream
+	 *            El objeto de salida.
+	 */
+	public abstract void print(OutputStream stream);
 
 	/**
 	 * La función que retorna la materia a la que pertenece este elemento.

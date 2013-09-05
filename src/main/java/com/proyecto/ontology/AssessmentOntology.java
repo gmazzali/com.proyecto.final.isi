@@ -17,13 +17,7 @@ public interface AssessmentOntology extends Serializable {
 	 * 
 	 * @param assessment
 	 *            La evaluación que vamos a cargar dentro de la ontología.
+	 * @return La ontología que creamos con la evaluación.
 	 */
-	public void initAssessmentOntology(Assessment assessment);
-
-	/**
-	 * La función encargada de retornar la ontologia de la evaluación que creamos.
-	 * 
-	 * @return La ontologia con la evaluación creada.
-	 */
-	public OntModel getAssessmentOntology();
+	public OntModel initAssessmentOntology(Assessment assessment);
 }

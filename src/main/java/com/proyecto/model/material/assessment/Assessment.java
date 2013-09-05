@@ -1,5 +1,8 @@
 package com.proyecto.model.material.assessment;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,6 +82,25 @@ public class Assessment extends Material<Integer> {
 	@Override
 	public String toString() {
 		return this.description;
+	}
+
+	@Override
+	public void print(OutputStream stream) {
+		try {
+			stream.write("#################### ASSESSMENT ####################\n".getBytes());
+			stream.write(("ID: " + this.id + "\n").getBytes());
+			stream.write(("Subject: " + this.subject + "\n").getBytes());
+			stream.write(("Descripción: " + this.description + "\n").getBytes());
+			stream.write(("Fecha: " + new SimpleDateFormat("dd/MM/yyyy").format(this.assessmentDate) + "\n").getBytes());
+			stream.write(("Momento: " + this.assessmentMoment.getName() + "\n").getBytes());
+
+			for (Activity activity : this.activities) {
+				activity.print(stream);
+			}
+			stream.write("\n".getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Id
@@ -198,11 +220,11 @@ public class Assessment extends Material<Integer> {
 	public AssessmentTypeImpl getAssessmentyType() {
 		if (this.activities != null && !this.activities.isEmpty()) {
 			switch (this.activities.get(0).getActivityType()) {
-			case FORMAL:
-				return AssessmentTypeImpl.FORMAL;
+				case FORMAL:
+					return AssessmentTypeImpl.FORMAL;
 
-			case SEMIFORMAL:
-				return AssessmentTypeImpl.SEMIFORMAL;
+				case SEMIFORMAL:
+					return AssessmentTypeImpl.SEMIFORMAL;
 			}
 		}
 		return null;
