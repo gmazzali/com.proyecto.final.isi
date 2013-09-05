@@ -18,7 +18,7 @@ public class InstrumentOntologyImpl implements InstrumentOntology {
 
 	@Override
 	public <I extends Instrument> Individual loadInstrumentToOntology(OntModel ontology, Reactive reactive, I instrument) {
-		// TODO gmazzali Hacer el metodo de carga de un instrumento en una ontología.
-		return null;
+		// TODO gmazzali Hacer el método de carga de un instrumento en una ontología.
+		return ontology.createIndividual("Instrument", null);
 	}
 }
