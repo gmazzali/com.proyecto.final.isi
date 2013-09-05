@@ -553,7 +553,6 @@ public class AssessmentManagerDialog extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
 			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);

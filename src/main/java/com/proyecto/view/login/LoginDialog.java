@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.border.EmptyBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +43,13 @@ public class LoginDialog extends JDialog {
 	 */
 	@Autowired
 	private AgentService agentService;
+	
 	/**
 	 * El control de acceso donde vamos a poner el agente que ingresa a este sistema.
 	 */
 	@Autowired
 	private AccessControl accessControl;
+	
 	/**
 	 * La ventana de selección de materia.
 	 */
@@ -162,7 +166,7 @@ public class LoginDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-
+			UIManager.setLookAndFeel(new NimbusLookAndFeel());
 			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 

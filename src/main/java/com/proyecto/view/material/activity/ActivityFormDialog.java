@@ -19,7 +19,6 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,6 +33,7 @@ import com.proyecto.model.material.assessment.type.impl.AssessmentTypeImpl;
 import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.activity.ActivityService;
+import com.proyecto.service.material.reactive.ReactiveService;
 import com.proyecto.view.Resources;
 import com.proyecto.view.material.reactive.ReactiveListDialog;
 
@@ -61,10 +61,13 @@ public class ActivityFormDialog extends JDialog {
 	private ReactiveListDialog reactiveListDialog;
 
 	/**
-	 * El servicio de las actividades.
+	 * El servicio de las actividades y los reactivos.
 	 */
 	@Autowired
 	private ActivityService activityService;
+
+	@Autowired
+	private ReactiveService reactiveService;
 
 	/**
 	 * Los tipos validos de actividades que vamos a poder editar dentro de esta ventana.
@@ -209,36 +212,90 @@ public class ActivityFormDialog extends JDialog {
 	 * La función encargada de cargar un nuevo reactivo dentro de la actividad.
 	 */
 	private void addReactives() {
-		// Abrimos la ventana de selección de reactivos.
-		ReactiveListDialog dialog = this.reactiveListDialog.createSelectDialog(ActivityTypeToReactiveTypeConverter.converter(this.activityTypes));
-		dialog.setLocationRelativeTo(this);
-		dialog.setVisible(true);
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					// Abrimos la ventana de selección de reactivos.
+					ReactiveListDialog dialog = ActivityFormDialog.this.reactiveListDialog.createSelectDialog(ActivityTypeToReactiveTypeConverter
+							.converter(ActivityFormDialog.this.activityTypes));
+					dialog.setLocationRelativeTo(ActivityFormDialog.this);
+					dialog.setVisible(true);
 
-		if (dialog.getSelectedReactives() != null && !dialog.getSelectedReactives().isEmpty()) {
+					// Deshabilitamos la ventana y actualizamos el listado de actividades.
+					ActivityFormDialog.this.beforeProccessActivity();
 
-			// Cargamos la lista de reactivos a los que ya tenemos.
-			DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
-			for (Reactive reactive : dialog.getSelectedReactives()) {
-				if (!reactiveModel.contains(reactive)) {
-					reactiveModel.addElement(reactive);
+					// Actualizamos el listado de reactivos anteriores.
+					ActivityFormDialog.this.updateReactives();
+
+					// Cargamos el listado de los nuevos reactivos.
+					if (dialog.getSelectedReactives() != null && !dialog.getSelectedReactives().isEmpty()) {
+						// Cargamos la lista de reactivos a los que ya tenemos.
+						DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) ActivityFormDialog.this.reactivesList.getModel();
+						for (Reactive reactive : dialog.getSelectedReactives()) {
+							if (!reactiveModel.contains(reactive)) {
+								reactiveModel.addElement(reactive);
+							}
+						}
+					}
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(ActivityFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
+				} finally {
+					ActivityFormDialog.this.afterProccessActivity();
 				}
 			}
+		}.start();
+	}
+
+	/**
+	 * La función encargada de actualizar el listado de los reactivos que tenemos dentro de la actividad y que se vea reflejado el cambio en la
+	 * ventana de edición.
+	 */
+	private void updateReactives() {
+		DefaultListModel<Reactive> oldReactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
+		DefaultListModel<Reactive> newReactiveModel = new DefaultListModel<Reactive>();
+		Reactive oldReactive = null;
+		Reactive newReactive = null;
+		for (Integer index = 0; index < oldReactiveModel.getSize(); index++) {
+			oldReactive = oldReactiveModel.get(index);
+			newReactive = this.reactiveService.findById(oldReactive.getId());
+			newReactiveModel.add(newReactive);
 		}
+		this.reactivesList.setModel(newReactiveModel);
 	}
 
 	/**
 	 * La función encargada de quitar un reactivo desde de la actividad.
 	 */
 	private void removeReactives() {
-		// Vemos si tenemos algo seleccionado de la lista y lo quitamos.
-		if (!this.reactivesList.getSelectedValuesList().isEmpty()) {
-			List<Reactive> reactives = this.reactivesList.getSelectedValuesList();
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					// Deshabilitamos la ventana y actualizamos el listado de reactivos.
+					ActivityFormDialog.this.beforeProccessActivity();
 
-			DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
-			for (Reactive reactive : reactives) {
-				reactiveModel.removeElement(reactive);
+					// Vemos si tenemos algo seleccionado de la lista y lo quitamos.
+					if (!ActivityFormDialog.this.reactivesList.getSelectedValuesList().isEmpty()) {
+						List<Reactive> reactives = ActivityFormDialog.this.reactivesList.getSelectedValuesList();
+
+						DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) ActivityFormDialog.this.reactivesList.getModel();
+						for (Reactive reactive : reactives) {
+							reactiveModel.removeElement(reactive);
+						}
+
+						// Actualizamos el listado de reactivos anteriores.
+						ActivityFormDialog.this.updateReactives();
+					}
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(ActivityFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
+				} finally {
+					ActivityFormDialog.this.afterProccessActivity();
+				}
 			}
-		}
+		}.start();
 	}
 
 	/**

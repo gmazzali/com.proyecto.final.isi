@@ -78,7 +78,7 @@ public class SelectSubjectDialog extends JDialog {
 		this.subjectComboBox.setBounds(10, 36, 367, 30);
 		contentPanel.add(this.subjectComboBox);
 
-		JButton commitButton = new JButton("");
+		JButton commitButton = new JButton(Resources.COMMIT_ICON);
 		commitButton.setFont(new Font("Arial", Font.BOLD, 12));
 		commitButton.setBounds(297, 76, 35, 35);
 		commitButton.addActionListener(new ActionListener() {
