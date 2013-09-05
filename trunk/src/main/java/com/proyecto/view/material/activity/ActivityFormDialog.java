@@ -379,9 +379,17 @@ public class ActivityFormDialog extends JDialog {
 		// Si tenemos reactivos, los cargamos.
 		if (this.activity.getReactives() != null && !this.activity.getReactives().isEmpty()) {
 
+			List<Reactive> oldReactives = this.activity.getReactives();
+			List<Reactive> newReactives = new ArrayList<Reactive>();
+
+			// Actualizamos los reactivos.
+			for (Reactive reactive : oldReactives) {
+				newReactives.add(this.reactiveService.findById(reactive.getId()));
+			}
+
 			// Cargamos la lista de reactivos.
 			DefaultListModel<Reactive> reactiveModel = (DefaultListModel<Reactive>) this.reactivesList.getModel();
-			for (Reactive reactive : this.activity.getReactives()) {
+			for (Reactive reactive : newReactives) {
 				reactiveModel.addElement(reactive);
 			}
 		}
