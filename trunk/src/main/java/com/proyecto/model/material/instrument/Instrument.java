@@ -1,5 +1,8 @@
 package com.proyecto.model.material.instrument;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,6 +54,18 @@ public abstract class Instrument extends Material<Integer> {
 	@Override
 	public String toString() {
 		return this.description;
+	}
+
+	@Override
+	public void print(OutputStream stream) {
+		try {
+			stream.write("-------------------- INSTRUMENT --------------------\n".getBytes());
+			stream.write(("ID: " + this.id + "\n").getBytes());
+			stream.write(("Subject: " + this.subject + "\n").getBytes());
+			stream.write(("Descripción: " + this.description + "\n").getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Id

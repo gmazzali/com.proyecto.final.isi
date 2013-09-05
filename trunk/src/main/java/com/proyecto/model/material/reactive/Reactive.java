@@ -1,5 +1,8 @@
 package com.proyecto.model.material.reactive;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -59,6 +62,22 @@ public class Reactive extends Material<Integer> {
 	@Override
 	public String toString() {
 		return this.description;
+	}
+
+	@Override
+	public void print(OutputStream stream) {
+		try {
+			stream.write("--------------------- REACTIVE ---------------------\n".getBytes());
+			stream.write(("ID: " + this.id + "\n").getBytes());
+			stream.write(("Subject: " + this.subject + "\n").getBytes());
+			stream.write(("Descripción: " + this.description + "\n").getBytes());
+			if (this.instrument != null) {
+				this.instrument.print(stream);
+			}
+			stream.write("\n".getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Id
