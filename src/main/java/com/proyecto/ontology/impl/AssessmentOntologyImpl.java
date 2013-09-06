@@ -83,7 +83,7 @@ public class AssessmentOntologyImpl implements AssessmentOntology {
 
 		for (Activity activity : assessment.getActivities()) {
 			statements.add(ontology.createLiteralStatement(assessmentIndividual, haveActivities,
-					this.activityOntology.loadActivityToOntology(ontology, assessment, activity)));
+					this.activityOntology.loadActivityToOntology(ontology, assessmentIndividual, activity)));
 		}
 
 		ontology.add(statements);

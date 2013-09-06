@@ -13,7 +13,6 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
-import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.ontology.InstrumentOntology;
 import com.proyecto.ontology.ReactiveOntology;
@@ -35,7 +34,7 @@ public class ReactiveOntologyImpl implements ReactiveOntology {
 	private InstrumentOntology instrumentOntology;
 
 	@Override
-	public <R extends Reactive> Individual loadReactiveToOntology(OntModel ontology, Activity activity, R reactive) {
+	public <R extends Reactive> Individual loadReactiveToOntology(OntModel ontology, Individual activity, R reactive) {
 		String className = ConstantsOntology.NAMESPACE + reactive.getClass().getSimpleName();
 		String individualName = className + "_" + reactive.getId();
 
@@ -54,7 +53,7 @@ public class ReactiveOntologyImpl implements ReactiveOntology {
 		List<Statement> statements = new ArrayList<Statement>();
 		statements.add(ontology.createLiteralStatement(reactiveIndividual, haveDescription, description));
 		statements.add(ontology.createLiteralStatement(reactiveIndividual, haveReactive,
-				this.instrumentOntology.loadInstrumentToOntology(ontology, reactive, reactive.getInstrument())));
+				this.instrumentOntology.loadInstrumentToOntology(ontology, reactiveIndividual, reactive.getInstrument())));
 
 		ontology.add(statements);
 
