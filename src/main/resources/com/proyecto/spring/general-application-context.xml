@@ -12,7 +12,7 @@
 	<!-- Cargamos las propiedades que tienen los mensaje del sistema -->
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="cacheSeconds" value="30"/>
+		<property name="cacheSeconds" value="600" />
 		<property name="basenames">
 			<list>
 				<value>file:///${proyecto.configuration.dir}/messages/messages</value>
@@ -20,7 +20,7 @@
 		</property>
 	</bean>
 
-	<bean id="holderMessage" class="com.common.util.holder.HolderMessage" >
+	<bean id="holderMessage" class="com.common.util.holder.HolderMessage" lazy-init="false" depends-on="messageSource">
 		<property name="resources" ref="messageSource" />
 	</bean>
 
@@ -45,7 +45,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- La lectura de las clases de los DAO, los servicios y las vistas -->
 
 	<context:annotation-config />
@@ -73,5 +73,5 @@
 				<prop key="hibernate.hbm2ddl.auto">${jdbc.hbm_to_ddl}</prop>
 			</props>
 		</property>
-	</bean>	
+	</bean>
 </beans>
