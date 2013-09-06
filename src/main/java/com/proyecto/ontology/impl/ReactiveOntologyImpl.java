@@ -44,7 +44,7 @@ public class ReactiveOntologyImpl implements ReactiveOntology {
 
 		// Creamos las relaciones.
 		DatatypeProperty haveDescription = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_REACTIVE_HAVE_DESCRIPTION);
-		DatatypeProperty haveReactive = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_REACTIVE_HAVE_INSTRUMENT);
+		DatatypeProperty haveInstrument = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_REACTIVE_HAVE_INSTRUMENT);
 
 		// Creamos los literales.
 		Literal description = ontology.createTypedLiteral(reactive.getDescription(), XSDDatatype.XSDstring);
@@ -52,7 +52,7 @@ public class ReactiveOntologyImpl implements ReactiveOntology {
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
 		statements.add(ontology.createLiteralStatement(reactiveIndividual, haveDescription, description));
-		statements.add(ontology.createLiteralStatement(reactiveIndividual, haveReactive,
+		statements.add(ontology.createLiteralStatement(reactiveIndividual, haveInstrument,
 				this.instrumentOntology.loadInstrumentToOntology(ontology, reactiveIndividual, reactive.getInstrument())));
 
 		ontology.add(statements);
