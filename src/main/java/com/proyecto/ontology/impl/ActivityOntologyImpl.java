@@ -17,8 +17,8 @@ import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.ontology.ActivityOntology;
-import com.proyecto.ontology.ConstantsOntology;
 import com.proyecto.ontology.ReactiveOntology;
+import com.proyecto.util.ConstantsOntology;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de la carga de actividades dentro de una ontología.
