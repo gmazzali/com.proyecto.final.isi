@@ -19,7 +19,7 @@ import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.ontology.ActivityOntology;
 import com.proyecto.ontology.AssessmentOntology;
-import com.proyecto.ontology.ConstantsOntology;
+import com.proyecto.util.ConstantsOntology;
 
 /**
  * La clase que va a crear y mantener la ontología de una evaluación.

@@ -15,9 +15,9 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.reactive.Reactive;
-import com.proyecto.ontology.ConstantsOntology;
 import com.proyecto.ontology.InstrumentOntology;
 import com.proyecto.ontology.ReactiveOntology;
+import com.proyecto.util.ConstantsOntology;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de la carga de reactivos dentro de una ontología.
@@ -45,7 +45,7 @@ public class ReactiveOntologyImpl implements ReactiveOntology {
 
 		// Creamos las relaciones.
 		DatatypeProperty haveDescription = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_REACTIVE_HAVE_DESCRIPTION);
-		// DatatypeProperty haveReactive = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_REACTIVE_HAVE_INSTRUMENT);
+		DatatypeProperty haveReactive = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_REACTIVE_HAVE_INSTRUMENT);
 
 		// Creamos los literales.
 		Literal description = ontology.createTypedLiteral(reactive.getDescription(), XSDDatatype.XSDstring);
@@ -53,8 +53,8 @@ public class ReactiveOntologyImpl implements ReactiveOntology {
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
 		statements.add(ontology.createLiteralStatement(reactiveIndividual, haveDescription, description));
-		// statements.add(ontology.createLiteralStatement(reactiveIndividual, haveReactive,
-		// this.instrumentOntology.loadInstrumentToOntology(ontology, reactive, reactive.getInstrument())));
+		statements.add(ontology.createLiteralStatement(reactiveIndividual, haveReactive,
+				this.instrumentOntology.loadInstrumentToOntology(ontology, reactive, reactive.getInstrument())));
 
 		ontology.add(statements);
 
