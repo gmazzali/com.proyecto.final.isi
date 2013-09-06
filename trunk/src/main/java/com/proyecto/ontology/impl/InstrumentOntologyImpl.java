@@ -20,7 +20,6 @@ import com.proyecto.model.material.instrument.CompletionInstrument;
 import com.proyecto.model.material.instrument.CorrespondenceInstrument;
 import com.proyecto.model.material.instrument.EssayActivityInstrument;
 import com.proyecto.model.material.instrument.Instrument;
-import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.model.option.Option;
 import com.proyecto.ontology.InstrumentOntology;
 import com.proyecto.util.ConstantsOntology;
@@ -35,7 +34,7 @@ import com.proyecto.util.ConstantsOntology;
 public class InstrumentOntologyImpl implements InstrumentOntology {
 
 	@Override
-	public <I extends Instrument> Individual loadInstrumentToOntology(OntModel ontology, Reactive reactive, I instrument) {
+	public <I extends Instrument> Individual loadInstrumentToOntology(OntModel ontology, Individual reactive, I instrument) {
 		// Creamos el nombre de la clase y del individuo.
 		String className = ConstantsOntology.NAMESPACE + instrument.getClass().getSimpleName();
 		String individualName = className + "_" + instrument.getId();

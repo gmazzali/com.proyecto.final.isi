@@ -14,7 +14,6 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.model.material.activity.Activity;
-import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.ontology.ActivityOntology;
 import com.proyecto.ontology.ReactiveOntology;
@@ -36,7 +35,7 @@ public class ActivityOntologyImpl implements ActivityOntology {
 	private ReactiveOntology reactiveOntology;
 
 	@Override
-	public <A extends Activity> Individual loadActivityToOntology(OntModel ontology, Assessment assessment, A activity) {
+	public <A extends Activity> Individual loadActivityToOntology(OntModel ontology, Individual assessment, A activity) {
 		String className = ConstantsOntology.NAMESPACE + activity.getClass().getSimpleName();
 		String individualName = className + "_" + activity.getId();
 
@@ -57,7 +56,7 @@ public class ActivityOntologyImpl implements ActivityOntology {
 
 		for (Reactive reactive : activity.getReactives()) {
 			statements.add(ontology.createLiteralStatement(activityIndividual, haveReactive,
-					this.reactiveOntology.loadReactiveToOntology(ontology, activity, reactive)));
+					this.reactiveOntology.loadReactiveToOntology(ontology, activityIndividual, reactive)));
 		}
 
 		ontology.add(statements);

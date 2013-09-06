@@ -3,7 +3,6 @@ package com.proyecto.ontology;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.activity.Activity;
-import com.proyecto.model.material.assessment.Assessment;
 
 /**
  * La interfaz que define el comportamiento definido para cargar una ontología con una actividad.
@@ -19,10 +18,10 @@ public interface ActivityOntology {
 	 * @param ontology
 	 *            La ontología donde vamos a almacenar la actividad.
 	 * @param assessment
-	 *            La evaluación a la que permtenece la actividad.
+	 *            El individuo que reprensenta la evaluación a la que permtenece la actividad.
 	 * @param activity
 	 *            La actividad que vamos a almacenar.
 	 * @return El individuo que acabamos de crear y cargar dentro de la ontología.
 	 */
-	public <A extends Activity> Individual loadActivityToOntology(OntModel ontology, Assessment assessment, A activity);
+	public <A extends Activity> Individual loadActivityToOntology(OntModel ontology, Individual assessment, A activity);
 }
