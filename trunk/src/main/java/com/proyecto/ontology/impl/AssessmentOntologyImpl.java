@@ -68,7 +68,7 @@ public class AssessmentOntologyImpl implements AssessmentOntology {
 		DatatypeProperty haveDescription = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
 		DatatypeProperty haveMoment = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_MOMENT);
 		DatatypeProperty haveDate = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_DATE);
-		DatatypeProperty haveActivities = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
+		DatatypeProperty haveActivitiy = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
 
 		// Creamos los literales.
 		Literal description = ontology.createTypedLiteral(assessment.getDescription(), XSDDatatype.XSDstring);
@@ -82,7 +82,7 @@ public class AssessmentOntologyImpl implements AssessmentOntology {
 		statements.add(ontology.createLiteralStatement(assessmentIndividual, haveDate, date));
 
 		for (Activity activity : assessment.getActivities()) {
-			statements.add(ontology.createLiteralStatement(assessmentIndividual, haveActivities,
+			statements.add(ontology.createLiteralStatement(assessmentIndividual, haveActivitiy,
 					this.activityOntology.loadActivityToOntology(ontology, assessmentIndividual, activity)));
 		}
 
