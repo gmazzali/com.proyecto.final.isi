@@ -389,7 +389,7 @@ public class AssessmentFormDialog extends JDialog {
 
 		// Cargamos el tipo de acuerdo al momento de la misma.
 		if (this.assessmentMomentComboBox.getSelectedItem() == null) {
-			throw new CheckedException("assessment.form.error.type.by.time");
+			throw new CheckedException("assessment.form.error.moment");
 		} else {
 			this.assessment.setAssessmentMoment((AssessmentMomentImpl) this.assessmentMomentComboBox.getSelectedItem());
 		}
