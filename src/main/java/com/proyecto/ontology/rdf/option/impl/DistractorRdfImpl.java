@@ -1,5 +1,6 @@
 package com.proyecto.ontology.rdf.option.impl;
 
+import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
@@ -40,5 +41,10 @@ public class DistractorRdfImpl extends OptionRdfImpl<Distractor> implements Dist
 			superClass.addSubClass(this.distractorOptionClass);
 		}
 		return this.distractorOptionClass;
+	}
+	
+	@Override
+	public Individual createIndividual(OntModel ontology, Distractor entity) {
+		return super.createIndividual(ontology, entity);
 	}
 }

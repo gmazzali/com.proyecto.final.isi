@@ -1,5 +1,6 @@
 package com.proyecto.ontology.rdf.option.impl;
 
+import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
@@ -40,5 +41,10 @@ public class TrueOptionRdfImpl extends OptionRdfImpl<TrueOption> implements True
 			superClass.addSubClass(this.trueOptionClass);
 		}
 		return this.trueOptionClass;
+	}
+	
+	@Override
+	public Individual createIndividual(OntModel ontology, TrueOption entity) {
+		return super.createIndividual(ontology, entity);
 	}
 }
