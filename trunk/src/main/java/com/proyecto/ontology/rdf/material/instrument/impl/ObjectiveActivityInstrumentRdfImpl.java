@@ -20,7 +20,7 @@ public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActi
 		ObjectiveActivityInstrumentRdf<I> {
 
 	/**
-	 * La clase del intrumento formal de ensayo.
+	 * La clase del instrumento formal de ensayo.
 	 */
 	private OntClass objectiveActivityInstrumentClass;
 

@@ -33,13 +33,13 @@ public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfI
 	private CompletionAnswerRdf completionAnswerRdf;
 
 	/**
-	 * La clase del intrumento objectivo de correspondencia.
+	 * La clase del instrumento objetivo de correspondencia.
 	 */
 	private OntClass completionInstrumentClass;
 	/**
-	 * Las relaciones del intrumento objectivo de correspondencia.
+	 * Las relaciones del instrumento objetivo de correspondencia.
 	 */
-	private ObjectProperty haveCompletes;
+	private ObjectProperty haveComplete;
 
 	@Override
 	public OntClass initClass(OntModel ontology) {
@@ -61,10 +61,10 @@ public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfI
 		}
 
 		// Creamos las relaciones.
-		if (this.haveCompletes == null) {
-			this.haveCompletes = ontology.getObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
-			if (this.haveCompletes == null) {
-				this.haveCompletes = ontology.createObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
+		if (this.haveComplete == null) {
+			this.haveComplete = ontology.getObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
+			if (this.haveComplete == null) {
+				this.haveComplete = ontology.createObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
 			}
 		}
 
@@ -79,8 +79,8 @@ public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfI
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
 		for (CompletionAnswer answer : entity.getAnswers()) {
-			statements.add(ontology.createLiteralStatement(individual, this.haveCompletes,
-					this.completionAnswerRdf.createIndividual(ontology, answer)));
+			statements
+					.add(ontology.createLiteralStatement(individual, this.haveComplete, this.completionAnswerRdf.createIndividual(ontology, answer)));
 		}
 		ontology.add(statements);
 
