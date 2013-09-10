@@ -48,7 +48,7 @@ public abstract class InstrumentRdfImpl<I extends Instrument> extends MaterialRd
 			}
 		}
 
-		// Creamos las realaciones.
+		// Creamos las relaciones.
 		if (this.haveDescription == null) {
 			this.haveDescription = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_INSTRUMENT_HAVE_DESCRIPTION);
 			if (this.haveDescription == null) {
@@ -63,7 +63,7 @@ public abstract class InstrumentRdfImpl<I extends Instrument> extends MaterialRd
 	public Individual loadEntityData(OntModel ontology, Individual individual, I entity) {
 		// Cargamos el padre.
 		individual = super.loadEntityData(ontology, individual, entity);
-		
+
 		// Creamos los literales.
 		Literal description = ontology.createTypedLiteral(entity.getDescription(), XSDDatatype.XSDstring);
 

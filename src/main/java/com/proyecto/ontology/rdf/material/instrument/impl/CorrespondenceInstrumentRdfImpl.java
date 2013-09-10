@@ -34,11 +34,11 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 	private RelationAnswerRdf relationAnswerRdf;
 
 	/**
-	 * La clase del intrumento objectivo de correspondencia.
+	 * La clase del instrumento objetivo de correspondencia.
 	 */
 	private OntClass correspondenceInstrumentClass;
 	/**
-	 * Las relaciones del intrumento objectivo de correspondencia.
+	 * Las relaciones del instrumento objetivo de correspondencia.
 	 */
 	private ObjectProperty haveRelation;
 

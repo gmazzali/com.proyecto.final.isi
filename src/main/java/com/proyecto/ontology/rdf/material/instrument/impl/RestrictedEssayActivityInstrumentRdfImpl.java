@@ -19,7 +19,7 @@ public class RestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstr
 		RestrictedEssayActivityInstrumentRdf {
 
 	/**
-	 * La clase del intrumento formal de ensayo restringido.
+	 * La clase del instrumento formal de ensayo restringido.
 	 */
 	private OntClass restrictedEssayActivityInstrumentClass;
 

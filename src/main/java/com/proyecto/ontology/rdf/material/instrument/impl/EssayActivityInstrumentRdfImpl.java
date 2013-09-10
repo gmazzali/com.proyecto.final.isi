@@ -28,13 +28,13 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 		EssayActivityInstrumentRdf<I> {
 
 	/**
-	 * El servicio de las respuetas de ensayos.
+	 * El servicio de las respuestas de ensayos.
 	 */
 	@Autowired
 	private EssayActivityAnswerRdf essayActivityAnswerRdf;
 
 	/**
-	 * La clase del intrumento formal de ensayo.
+	 * La clase del instrumento formal de ensayo.
 	 */
 	private OntClass essayActivityInstrumentClass;
 	/**
@@ -66,7 +66,7 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 			this.haveAnswer = ontology.getObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
 			if (this.haveAnswer == null) {
 				this.haveAnswer = ontology.createObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
-				this.haveAnswer.setDomain(essayActivityInstrumentClass);
+				this.haveAnswer.setDomain(this.essayActivityInstrumentClass);
 				this.haveAnswer.setRange(this.essayActivityAnswerRdf.initClass(ontology));
 			}
 		}
@@ -78,7 +78,7 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 	public Individual loadEntityData(OntModel ontology, Individual individual, I entity) {
 		// Cargamos el padre.
 		individual = super.loadEntityData(ontology, individual, entity);
-		
+
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
 		statements.add(ontology.createLiteralStatement(individual, this.haveAnswer,

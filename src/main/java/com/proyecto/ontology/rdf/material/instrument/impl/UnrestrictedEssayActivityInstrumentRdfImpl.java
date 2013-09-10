@@ -15,10 +15,11 @@ import com.proyecto.util.ConstantsOntology;
  * @version 1.0
  */
 @RdfService
-public class UnrestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstrumentRdfImpl<UnrestrictedEssayActivityInstrument> implements UnrestrictedEssayActivityInstrumentRdf {
+public class UnrestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstrumentRdfImpl<UnrestrictedEssayActivityInstrument> implements
+		UnrestrictedEssayActivityInstrumentRdf {
 
 	/**
-	 * La clase del intrumento formal de ensayo no restringido.
+	 * La clase del instrumento formal de ensayo no restringido.
 	 */
 	private OntClass unrestrictedEssayActivityInstrumentClass;
 
@@ -31,7 +32,8 @@ public class UnrestrictedEssayActivityInstrumentRdfImpl extends EssayActivityIns
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String unrestrictedEssayActivityInstrumentClassName = ConstantsOntology.NAMESPACE + UnrestrictedEssayActivityInstrument.class.getSimpleName();
+			String unrestrictedEssayActivityInstrumentClassName = ConstantsOntology.NAMESPACE
+					+ UnrestrictedEssayActivityInstrument.class.getSimpleName();
 			this.unrestrictedEssayActivityInstrumentClass = ontology.getOntClass(unrestrictedEssayActivityInstrumentClassName);
 
 			if (this.unrestrictedEssayActivityInstrumentClass == null) {

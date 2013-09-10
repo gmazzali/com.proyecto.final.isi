@@ -41,12 +41,15 @@ public abstract class SemiFormalInstrumentRdfImpl<I extends SemiFormalInstrument
 
 			superClass.addSubClass(this.semiformalInstrumentClass);
 		}
-		
+
 		return this.semiformalInstrumentClass;
 	}
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, I entity) {
+		// Cargamos el padre.
+		individual = super.loadEntityData(ontology, individual, entity);
+
 		return individual;
 	}
 }
