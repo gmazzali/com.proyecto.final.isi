@@ -16,21 +16,29 @@ import com.proyecto.util.ConstantsOntology;
 @RdfService
 public class DistractorRdfImpl extends OptionRdfImpl<Distractor> implements DistractorRdf {
 
+	/**
+	 * La clase de una opción falsa.
+	 */
+	private OntClass distractorOptionClass;
+
 	@Override
-	public OntClass createClass(OntModel ontology) {
-		// Creamos u obtenemos la clase superior.
-		OntClass superClass = super.createClass(ontology);
+	public OntClass initClass(OntModel ontology) {
+		// Creamos la clase si es nula.
+		if (this.distractorOptionClass == null) {
 
-		// Creamos u obtenemos la clase hija.
-		String distractorOptionClassName = ConstantsOntology.NAMESPACE + Distractor.class.getSimpleName();
-		OntClass distractorOptionClass = ontology.getOntClass(distractorOptionClassName);
+			// Creamos u obtenemos la clase superior.
+			OntClass superClass = super.initClass(ontology);
 
-		if (distractorOptionClass == null) {
-			distractorOptionClass = ontology.createClass(distractorOptionClassName);
+			// Creamos u obtenemos la clase hija.
+			String distractorOptionClassName = ConstantsOntology.NAMESPACE + Distractor.class.getSimpleName();
+			this.distractorOptionClass = ontology.getOntClass(distractorOptionClassName);
+
+			if (this.distractorOptionClass == null) {
+				this.distractorOptionClass = ontology.createClass(distractorOptionClassName);
+			}
+
+			superClass.addSubClass(this.distractorOptionClass);
 		}
-
-		superClass.addSubClass(distractorOptionClass);
-
-		return distractorOptionClass;
+		return this.distractorOptionClass;
 	}
 }

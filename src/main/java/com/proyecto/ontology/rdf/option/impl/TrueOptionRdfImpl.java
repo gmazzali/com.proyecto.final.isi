@@ -16,21 +16,29 @@ import com.proyecto.util.ConstantsOntology;
 @RdfService
 public class TrueOptionRdfImpl extends OptionRdfImpl<TrueOption> implements TrueOptionRdf {
 
+	/**
+	 * La clase de una opción verdadera.
+	 */
+	private OntClass trueOptionClass;
+
 	@Override
-	public OntClass createClass(OntModel ontology) {
-		// Creamos u obtenemos la clase superior.
-		OntClass superClass = super.createClass(ontology);
+	public OntClass initClass(OntModel ontology) {
+		// Creamos la clase solo si es nula.
+		if (this.trueOptionClass == null) {
 
-		// Creamos u obtenemos la clase hija.
-		String trueOptionClassName = ConstantsOntology.NAMESPACE + TrueOption.class.getSimpleName();
-		OntClass trueOptionClass = ontology.getOntClass(trueOptionClassName);
+			// Creamos u obtenemos la clase superior.
+			OntClass superClass = super.initClass(ontology);
 
-		if (trueOptionClass == null) {
-			trueOptionClass = ontology.createClass(trueOptionClassName);
+			// Creamos u obtenemos la clase hija.
+			String trueOptionClassName = ConstantsOntology.NAMESPACE + TrueOption.class.getSimpleName();
+			this.trueOptionClass = ontology.getOntClass(trueOptionClassName);
+
+			if (this.trueOptionClass == null) {
+				this.trueOptionClass = ontology.createClass(trueOptionClassName);
+			}
+
+			superClass.addSubClass(this.trueOptionClass);
 		}
-
-		superClass.addSubClass(trueOptionClass);
-
-		return trueOptionClass;
+		return this.trueOptionClass;
 	}
 }

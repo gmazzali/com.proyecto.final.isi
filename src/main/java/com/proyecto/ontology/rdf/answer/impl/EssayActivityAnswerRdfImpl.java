@@ -24,20 +24,41 @@ import com.proyecto.util.ConstantsOntology;
 @RdfService
 public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswer> implements EssayActivityAnswerRdf {
 
+	/**
+	 * La clase de repuesta de ensayo.
+	 */
+	private OntClass essayActivityAnswerClass;
+	/**
+	 * Las relaciones de la clase de respuesta de ensayo.
+	 */
+	private DatatypeProperty haveAnswer;
+
 	@Override
-	public OntClass createClass(OntModel ontology) {
-		// Creamos u obtenemos la clase superior.
-		OntClass superClass = super.createClass(ontology);
+	public OntClass initClass(OntModel ontology) {
+		// Creamos la clase si es nula.
+		if (this.essayActivityAnswerClass == null) {
+			
+			// Creamos u obtenemos la clase superior.
+			OntClass superClass = super.initClass(ontology);
 
-		// Creamos u obtenemos la clase hija.
-		String essayActivityAnswerClassName = ConstantsOntology.NAMESPACE + EssayActivityAnswer.class.getSimpleName();
-		OntClass essayActivityAnswerClass = ontology.getOntClass(essayActivityAnswerClassName);
+			// Creamos u obtenemos la clase hija.
+			String essayActivityAnswerClassName = ConstantsOntology.NAMESPACE + EssayActivityAnswer.class.getSimpleName();
+			this.essayActivityAnswerClass = ontology.getOntClass(essayActivityAnswerClassName);
 
-		if (essayActivityAnswerClass == null) {
-			essayActivityAnswerClass = ontology.createClass(essayActivityAnswerClassName);
+			if (this.essayActivityAnswerClass == null) {
+				this.essayActivityAnswerClass = ontology.createClass(essayActivityAnswerClassName);
+			}
+
+			superClass.addSubClass(this.essayActivityAnswerClass);
 		}
 
-		superClass.addSubClass(essayActivityAnswerClass);
+		// Creamos las relaciones.
+		if (this.haveAnswer == null) {
+			this.haveAnswer = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
+			if (this.haveAnswer == null) {
+				this.haveAnswer = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
+			}
+		}
 
 		return essayActivityAnswerClass;
 	}
@@ -47,15 +68,12 @@ public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswe
 		// Cargamos el padre.
 		individual = super.loadEntityData(ontology, individual, answer);
 
-		// Creamos las relaciones.
-		DatatypeProperty haveAnswer = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
-
 		// Creamos los literales.
 		Literal phrase = ontology.createTypedLiteral(answer.getAnswer(), XSDDatatype.XSDstring);
 
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
-		statements.add(ontology.createLiteralStatement(individual, haveAnswer, phrase));
+		statements.add(ontology.createLiteralStatement(individual, this.haveAnswer, phrase));
 
 		ontology.add(statements);
 

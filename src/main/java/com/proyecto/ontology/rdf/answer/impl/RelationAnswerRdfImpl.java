@@ -24,20 +24,49 @@ import com.proyecto.util.ConstantsOntology;
 @RdfService
 public class RelationAnswerRdfImpl extends AnswerRdfImpl<RelationAnswer> implements RelationAnswerRdf {
 
+	/**
+	 * La clase de respuesta para correspondencias.
+	 */
+	private OntClass relationAnswerClass;
+	/**
+	 * Las relaciones de las respuestas para correspondencias.
+	 */
+	private DatatypeProperty haveLeftSide;
+	private DatatypeProperty haveRightSide;
+
 	@Override
-	public OntClass createClass(OntModel ontology) {
-		// Creamos u obtenemos la clase superior.
-		OntClass superClass = super.createClass(ontology);
+	public OntClass initClass(OntModel ontology) {
+		// Creamos la clase si es nula.
+		if (this.relationAnswerClass == null) {
+			// Creamos u obtenemos la clase superior.
+			OntClass superClass = super.initClass(ontology);
 
-		// Creamos u obtenemos la clase hija.
-		String relationAnswerClassName = ConstantsOntology.NAMESPACE + RelationAnswer.class.getSimpleName();
-		OntClass relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
+			// Creamos u obtenemos la clase hija.
+			String relationAnswerClassName = ConstantsOntology.NAMESPACE + RelationAnswer.class.getSimpleName();
+			relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
 
-		if (relationAnswerClass == null) {
-			relationAnswerClass = ontology.createClass(relationAnswerClassName);
+			if (relationAnswerClass == null) {
+				relationAnswerClass = ontology.createClass(relationAnswerClassName);
+			}
+
+			superClass.addSubClass(relationAnswerClass);
 		}
 
-		superClass.addSubClass(relationAnswerClass);
+		// Creamos las realaciones.
+		if (this.haveLeftSide == null) {
+			this.haveLeftSide = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_LEFT_SIDE);
+			if (this.haveLeftSide == null) {
+				this.haveLeftSide = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_LEFT_SIDE);
+
+			}
+		}
+		if (this.haveRightSide == null) {
+			this.haveRightSide = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
+			if (this.haveRightSide == null) {
+				this.haveRightSide = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
+
+			}
+		}
 
 		return relationAnswerClass;
 	}
@@ -47,21 +76,17 @@ public class RelationAnswerRdfImpl extends AnswerRdfImpl<RelationAnswer> impleme
 		// Cargamos el padre.
 		individual = super.loadEntityData(ontology, individual, answer);
 
-		// Creamos las relaciones.
-		DatatypeProperty haveLeftSide = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_LEFT_SIDE);
-		DatatypeProperty haveRightSide = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
-
 		// Creamos los literales y los cargamos.
 		List<Statement> statements = new ArrayList<Statement>();
 		Literal leftSide = null;
 		Literal rightSide = null;
 		if (answer.getLeftSide() != null) {
 			leftSide = ontology.createTypedLiteral(answer.getLeftSide(), XSDDatatype.XSDstring);
-			statements.add(ontology.createLiteralStatement(individual, haveLeftSide, leftSide));
+			statements.add(ontology.createLiteralStatement(individual, this.haveLeftSide, leftSide));
 		}
 		if (answer.getRightSide() != null) {
 			rightSide = ontology.createTypedLiteral(answer.getRightSide(), XSDDatatype.XSDstring);
-			statements.add(ontology.createLiteralStatement(individual, haveRightSide, rightSide));
+			statements.add(ontology.createLiteralStatement(individual, this.haveRightSide, rightSide));
 		}
 
 		ontology.add(statements);

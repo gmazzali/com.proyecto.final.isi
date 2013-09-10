@@ -19,16 +19,24 @@ import com.proyecto.util.ConstantsOntology;
  */
 public abstract class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implements AnswerRdf<A> {
 
+	/**
+	 * La clase de respuesta.
+	 */
+	private OntClass answerClass;
+
 	@Override
-	public OntClass createClass(OntModel ontology) {
-		String answerClassName = ConstantsOntology.NAMESPACE + Answer.class.getSimpleName();
-		OntClass answerClass = ontology.getOntClass(answerClassName);
-
+	public OntClass initClass(OntModel ontology) {
+		// Creamos la clase solo si es nula.
 		if (answerClass == null) {
-			answerClass = ontology.createClass(answerClassName);
-		}
+			
+			String answerClassName = ConstantsOntology.NAMESPACE + Answer.class.getSimpleName();
+			this.answerClass = ontology.getOntClass(answerClassName);
 
-		return answerClass;
+			if (answerClass == null) {
+				this.answerClass = ontology.createClass(answerClassName);
+			}
+		}
+		return this.answerClass;
 	}
 
 	@Override
