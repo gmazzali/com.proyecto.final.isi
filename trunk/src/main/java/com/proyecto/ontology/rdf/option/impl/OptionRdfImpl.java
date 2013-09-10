@@ -71,6 +71,8 @@ public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implemen
 			this.haveAnswer = ontology.getObjectProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
 			if (this.haveAnswer == null) {
 				this.haveAnswer = ontology.createObjectProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
+				this.haveAnswer.setDomain(this.optionClass);
+				this.haveAnswer.setRange(this.trueFalseAnswerRdf.initClass(ontology));
 			}
 		}
 
