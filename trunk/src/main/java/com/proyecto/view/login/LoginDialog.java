@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,8 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,13 +44,13 @@ public class LoginDialog extends JDialog {
 	 */
 	@Autowired
 	private AgentService agentService;
-	
+
 	/**
 	 * El control de acceso donde vamos a poner el agente que ingresa a este sistema.
 	 */
 	@Autowired
 	private AccessControl accessControl;
-	
+
 	/**
 	 * La ventana de selección de materia.
 	 */
@@ -168,6 +169,7 @@ public class LoginDialog extends JDialog {
 		try {
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
 			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
+			HolderMessage.setLocale(new Locale("EN", "us"));
 			HolderApplicationContext.initApplicationContext(files);
 
 			LoginDialog dialog = HolderApplicationContext.getContext().getBean(LoginDialog.class);
