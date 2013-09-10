@@ -24,22 +24,43 @@ import com.proyecto.util.ConstantsOntology;
 @RdfService
 public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> implements TrueFalseAnswerRdf {
 
+	/**
+	 * La clase de respuesta booleana.
+	 */
+	private OntClass relationAnswerClass;
+	/**
+	 * Las relaciones de las respuestas booleanas.
+	 */
+	private DatatypeProperty haveValue;
+
 	@Override
-	public OntClass createClass(OntModel ontology) {
-		// Creamos u obtenemos la clase superior.
-		OntClass superClass = super.createClass(ontology);
+	public OntClass initClass(OntModel ontology) {
+		// Creamos la clase si es nula.
+		if (this.relationAnswerClass == null) {
+			
+			// Creamos u obtenemos la clase superior.
+			OntClass superClass = super.initClass(ontology);
 
-		// Creamos u obtenemos la clase hija.
-		String relationAnswerClassName = ConstantsOntology.NAMESPACE + TrueFalseAnswer.class.getSimpleName();
-		OntClass relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
+			// Creamos u obtenemos la clase hija.
+			String relationAnswerClassName = ConstantsOntology.NAMESPACE + TrueFalseAnswer.class.getSimpleName();
+			this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
 
-		if (relationAnswerClass == null) {
-			relationAnswerClass = ontology.createClass(relationAnswerClassName);
+			if (this.relationAnswerClass == null) {
+				this.relationAnswerClass = ontology.createClass(relationAnswerClassName);
+			}
+
+			superClass.addSubClass(this.relationAnswerClass);
 		}
 
-		superClass.addSubClass(relationAnswerClass);
+		// Creamos las relaciones.
+		if (this.haveValue == null) {
+			this.haveValue = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+			if (this.haveValue == null) {
+				this.haveValue = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+			}
+		}
 
-		return relationAnswerClass;
+		return this.relationAnswerClass;
 	}
 
 	@Override
@@ -47,15 +68,12 @@ public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> imple
 		// Cargamos el padre.
 		individual = super.loadEntityData(ontology, individual, answer);
 
-		// Creamos las relaciones.
-		DatatypeProperty haveValue = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
-
 		// Creamos los literales.
 		Literal value = ontology.createTypedLiteral(answer.getValue(), XSDDatatype.XSDboolean);
 
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
-		statements.add(ontology.createLiteralStatement(individual, haveValue, value));
+		statements.add(ontology.createLiteralStatement(individual, this.haveValue, value));
 
 		ontology.add(statements);
 

@@ -19,7 +19,7 @@ public abstract class ProyectoRdfImpl<E extends Persistence<?>> implements Proye
 	@Override
 	public Individual createIndividual(OntModel ontology, E entity) {
 		// Creamos la clase.
-		OntClass entityClass = this.createClass(ontology);
+		OntClass entityClass = this.initClass(ontology);
 
 		// Recuperamos o creamos el individuo.
 		String entityIndividualName = entityClass.getNameSpace() + entityClass.getLocalName() + "_" + entity.getId();

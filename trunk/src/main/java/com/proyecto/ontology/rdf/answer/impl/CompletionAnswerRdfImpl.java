@@ -24,22 +24,50 @@ import com.proyecto.util.ConstantsOntology;
 @RdfService
 public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> implements CompletionAnswerRdf {
 
+	/**
+	 * La clase de respuesta para completar.
+	 */
+	private OntClass completionAnswerClass;
+	/**
+	 * Las relaciones de la clase de respuesta para completar.
+	 */
+	private DatatypeProperty haveIndex;
+	private DatatypeProperty havePhrase;
+
 	@Override
-	public OntClass createClass(OntModel ontology) {
-		// Creamos u obtenemos la clase superior.
-		OntClass superClass = super.createClass(ontology);
+	public OntClass initClass(OntModel ontology) {
+		// Creamos la clase solo si es nula.
+		if (this.completionAnswerClass == null) {
 
-		// Creamos u obtenemos la clase hija.
-		String completionAnswerClassName = ConstantsOntology.NAMESPACE + CompletionAnswer.class.getSimpleName();
-		OntClass completionAnswerClass = ontology.getOntClass(completionAnswerClassName);
+			// Creamos u obtenemos la clase superior.
+			OntClass superClass = super.initClass(ontology);
 
-		if (completionAnswerClass == null) {
-			completionAnswerClass = ontology.createClass(completionAnswerClassName);
+			// Creamos u obtenemos la clase hija.
+			String completionAnswerClassName = ConstantsOntology.NAMESPACE + CompletionAnswer.class.getSimpleName();
+			this.completionAnswerClass = ontology.getOntClass(completionAnswerClassName);
+
+			if (completionAnswerClass == null) {
+				this.completionAnswerClass = ontology.createClass(completionAnswerClassName);
+			}
+
+			superClass.addSubClass(this.completionAnswerClass);
+		}
+		
+		// Creamos las relaciones si son nulas.
+		if (this.haveIndex == null) {
+			this.haveIndex = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+			if (this.haveIndex == null) {
+				this.haveIndex = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+			}
+		}
+		if (this.havePhrase == null) {
+			this.havePhrase = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+			if (this.havePhrase == null) {
+				this.havePhrase = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+			}
 		}
 
-		superClass.addSubClass(completionAnswerClass);
-
-		return completionAnswerClass;
+		return this.completionAnswerClass;
 	}
 
 	@Override
@@ -47,18 +75,14 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 		// Cargamos el padre.
 		individual = super.loadEntityData(ontology, individual, answer);
 
-		// Creamos las relaciones.
-		DatatypeProperty haveIndex = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
-		DatatypeProperty havePhrase = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
-
 		// Creamos los literales.
 		Literal index = ontology.createTypedLiteral(answer.getIndex(), XSDDatatype.XSDstring);
 		Literal phrase = ontology.createTypedLiteral(answer.getPhrase(), XSDDatatype.XSDstring);
 
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
-		statements.add(ontology.createLiteralStatement(individual, haveIndex, index));
-		statements.add(ontology.createLiteralStatement(individual, havePhrase, phrase));
+		statements.add(ontology.createLiteralStatement(individual, this.haveIndex, index));
+		statements.add(ontology.createLiteralStatement(individual, this.havePhrase, phrase));
 
 		ontology.add(statements);
 

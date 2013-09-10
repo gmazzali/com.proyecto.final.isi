@@ -30,16 +30,48 @@ import com.proyecto.util.ConstantsOntology;
  */
 public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implements OptionRdf<O> {
 
+	/**
+	 * El sevicio para las respuestas booleanas.
+	 */
 	@Autowired
 	private TrueFalseAnswerRdf trueFalseAnswerRdf;
 
-	@Override
-	public OntClass createClass(OntModel ontology) {
-		String optionClassName = ConstantsOntology.NAMESPACE + Option.class.getSimpleName();
-		OntClass optionClass = ontology.getOntClass(optionClassName);
+	/**
+	 * La clase de opción.
+	 */
+	private OntClass optionClass;
+	/**
+	 * Las relaciones de la clase de opciones.
+	 */
+	private DatatypeProperty haveDescription;
+	private ObjectProperty haveAnswer;
 
-		if (optionClass == null) {
-			optionClass = ontology.createClass(optionClassName);
+	@Override
+	public OntClass initClass(OntModel ontology) {
+		// Creamos la clase si es nula.
+		if (this.optionClass == null) {
+
+			String optionClassName = ConstantsOntology.NAMESPACE + Option.class.getSimpleName();
+			this.optionClass = ontology.getOntClass(optionClassName);
+
+			if (this.optionClass == null) {
+				this.optionClass = ontology.createClass(optionClassName);
+			}
+		}
+
+		// Creamos las realaciones.
+		if (this.haveDescription == null) {
+			this.haveDescription = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_DESCRIPTION);
+			if (this.haveDescription == null) {
+				this.haveDescription = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_DESCRIPTION);
+			}
+		}
+
+		if (this.haveAnswer == null) {
+			this.haveAnswer = ontology.getObjectProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
+			if (this.haveAnswer == null) {
+				this.haveAnswer = ontology.createObjectProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
+			}
 		}
 
 		return optionClass;
@@ -47,17 +79,13 @@ public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implemen
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, O entity) {
-		// Creamos las relaciones.
-		DatatypeProperty haveDescription = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_DESCRIPTION);
-		ObjectProperty haveAnswer = ontology.createObjectProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
-
 		// Creamos los literales.
 		Literal description = ontology.createTypedLiteral(entity.getDescription(), XSDDatatype.XSDstring);
 
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
-		statements.add(ontology.createLiteralStatement(individual, haveDescription, description));
-		statements.add(ontology.createLiteralStatement(individual, haveAnswer,
+		statements.add(ontology.createLiteralStatement(individual, this.haveDescription, description));
+		statements.add(ontology.createLiteralStatement(individual, this.haveAnswer,
 				this.trueFalseAnswerRdf.createIndividual(ontology, entity.getTrueFalseAnswer())));
 
 		ontology.add(statements);

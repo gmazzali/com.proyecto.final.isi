@@ -17,13 +17,13 @@ import com.hp.hpl.jena.ontology.OntModel;
 public interface ProyectoRdf<E extends Persistence<?>> {
 
 	/**
-	 * La función encargada de crear la clase dentro de la ontología.
+	 * La función encargada de crear e inicializar la clase dentro de la ontología.
 	 * 
 	 * @param ontology
 	 *            La ontología donde vamos a crear la clase.
 	 * @return La clase que creamos dentro de la ontología.
 	 */
-	public OntClass createClass(OntModel ontology);
+	public OntClass initClass(OntModel ontology);
 
 	/**
 	 * La función encargada de cargar los datos desde una entidad a un individuo dentro de la ontología.
