@@ -1,10 +1,19 @@
 package com.proyecto.ontology;
 
+import java.io.FileOutputStream;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.common.util.holder.HolderApplicationContext;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.proyecto.CreateExampleMaterial;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.assessment.Assessment;
@@ -65,6 +74,38 @@ public class AssessmentOntologyTestUnit {
 		System.out.println("##################################################################################");
 
 		AssessmentOntology assessmentOntology = HolderApplicationContext.getContext().getBean(AssessmentOntology.class);
-		assessmentOntology.loadAssessmentToOntology(assessment).write(System.out);
+		OntModel ontology = assessmentOntology.loadAssessmentToOntology(assessment);
+
+		ontology.write(System.out);
+		try {
+			FileOutputStream salida = new FileOutputStream("C:/Users/Guillermo Mazzali/Desktop/salida.rdf");
+			ontology.write(salida);
+			salida.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		assessment.print(System.out);
+		System.out.println("##################################################################################");
+		System.out.println("##################################################################################");
+		System.out.println("##################################################################################");
+
+		String queryString = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX owl: <http://www.w3.org/2002/07/owl#> select ?class (count(?instance) as ?count)"
+				+ "where {  ?class a rdfs:Class . ?instance a ?class . } group by ?class";
+
+		Query query = QueryFactory.create(queryString);
+
+		// Execute the query and obtain results
+		QueryExecution qe = QueryExecutionFactory.create(query, ontology);
+		ResultSet results = qe.execSelect();
+
+		// Output query results
+		ResultSetFormatter.out(System.out, results, query);
+
+		qe.close();
+
+		System.out.println("##################################################################################");
+		System.out.println("##################################################################################");
+		System.out.println("##################################################################################");
 	}
 }

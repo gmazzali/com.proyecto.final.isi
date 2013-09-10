@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.ontology.DatatypeProperty;
 import com.hp.hpl.jena.ontology.Individual;
+import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
@@ -48,7 +49,7 @@ public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implemen
 	public Individual loadEntityData(OntModel ontology, Individual individual, O entity) {
 		// Creamos las relaciones.
 		DatatypeProperty haveDescription = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_DESCRIPTION);
-		DatatypeProperty haveAnswer = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
+		ObjectProperty haveAnswer = ontology.createObjectProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
 
 		// Creamos los literales.
 		Literal description = ontology.createTypedLiteral(entity.getDescription(), XSDDatatype.XSDstring);

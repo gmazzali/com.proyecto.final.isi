@@ -14,8 +14,8 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.model.material.reactive.Reactive;
-import com.proyecto.ontology.InstrumentOntology;
 import com.proyecto.ontology.ReactiveOntology;
+import com.proyecto.ontology.material.instrument.InstrumentOntology;
 import com.proyecto.util.ConstantsOntology;
 
 /**
