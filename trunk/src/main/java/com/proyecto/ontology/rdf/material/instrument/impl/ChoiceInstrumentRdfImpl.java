@@ -13,7 +13,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.model.material.instrument.ChoiceInstrument;
 import com.proyecto.model.option.Option;
 import com.proyecto.ontology.rdf.material.instrument.ChoiceInstrumentRdf;
-import com.proyecto.ontology.rdf.option.factory.OptionRdfFactory;
+import com.proyecto.ontology.rdf.option.factory.OptionFactoryRdf;
 import com.proyecto.util.Constants;
 
 /**
@@ -34,7 +34,7 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 	 * Los servicios de las opciones.
 	 */
 	@Autowired
-	private OptionRdfFactory optionRdfFactory;
+	private OptionFactoryRdf optionFactoryRdf;
 
 	/**
 	 * La clase del instrumento formal objetivo de selección.
@@ -70,7 +70,7 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 			if (this.haveOption == null) {
 				this.haveOption = ontology.createObjectProperty(Constants.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
 				this.haveOption.addDomain(this.choiceInstrumentClass);
-				this.haveOption.addRange(this.optionRdfFactory.topClassHierachy(ontology));
+				this.haveOption.addRange(this.optionFactoryRdf.topClassHierachy(ontology));
 			}
 		}
 
@@ -86,7 +86,7 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 		List<Statement> statements = new ArrayList<Statement>();
 		for (Option option : entity.getOptions()) {
 			statements.add(ontology.createLiteralStatement(individual, this.haveOption,
-					this.optionRdfFactory.loadInstrumentToOntology(ontology, option)));
+					this.optionFactoryRdf.loadInstrumentToOntology(ontology, option)));
 		}
 		ontology.add(statements);
 

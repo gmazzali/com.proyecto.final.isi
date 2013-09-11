@@ -12,16 +12,15 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.proyecto.model.answer.TrueFalseAnswer;
 import com.proyecto.model.option.Distractor;
 import com.proyecto.model.option.TrueOption;
-import com.proyecto.ontology.rdf.option.DistractorRdf;
-import com.proyecto.ontology.rdf.option.TrueOptionRdf;
+import com.proyecto.ontology.rdf.option.factory.OptionFactoryRdf;
 
 /**
- * La clase de prueba para las opciones en la ontología.
+ * La clase de prueba para la factoría de las opciones en la ontología.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class OptionRdfTestUnit {
+public class OptionFactoryRdfTestUnit {
 
 	/**
 	 * Antes de que arranque la ejecución de la clase, cargamos el dao.
@@ -41,13 +40,13 @@ public class OptionRdfTestUnit {
 	}
 
 	/**
-	 * Las pruebas sobre las opciones.
+	 * Las pruebas sobre la factoría de las opciones.
 	 */
 	@Test
-	public void pruebaDeLasOpciones() {
-		
+	public void pruebaDeLaFactoriaDeLasOpciones() {
+
 		System.out.println("######################################################################");
-		System.out.println("####################### OPCIONES EN ONTOLOGÍAS #######################");
+		System.out.println("################# FACTORÍA DE OPCIONES EN ONTOLOGÍAS #################");
 		System.out.println("######################################################################");
 
 		TrueFalseAnswer trueFalseAnswer1 = new TrueFalseAnswer();
@@ -72,11 +71,8 @@ public class OptionRdfTestUnit {
 
 		OntModel ontology = ModelFactory.createOntologyModel();
 
-		TrueOptionRdf trueOptionRdf = HolderApplicationContext.getBean(TrueOptionRdf.class);
-		trueOptionRdf.createIndividual(ontology, trueOption1);
-
-		DistractorRdf distractorRdf = HolderApplicationContext.getBean(DistractorRdf.class);
-		distractorRdf.createIndividual(ontology, distractor1);
+		HolderApplicationContext.getBean(OptionFactoryRdf.class).loadInstrumentToOntology(ontology, distractor1);
+		HolderApplicationContext.getBean(OptionFactoryRdf.class).loadInstrumentToOntology(ontology, trueOption1);
 
 		ontology.write(System.out);
 

@@ -12,7 +12,7 @@ import com.proyecto.model.option.TrueOption;
 import com.proyecto.ontology.rdf.option.DistractorRdf;
 import com.proyecto.ontology.rdf.option.OptionRdf;
 import com.proyecto.ontology.rdf.option.TrueOptionRdf;
-import com.proyecto.ontology.rdf.option.factory.OptionRdfFactory;
+import com.proyecto.ontology.rdf.option.factory.OptionFactoryRdf;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de la manipulación de las opciones dentro de una ontología.
@@ -21,7 +21,7 @@ import com.proyecto.ontology.rdf.option.factory.OptionRdfFactory;
  * @version 1.0
  */
 @RdfService
-public class OptionRdfFactoryImpl implements OptionRdfFactory {
+public class OptionFactoryRdfImpl implements OptionFactoryRdf {
 
 	private static final long serialVersionUID = 3268962980372820126L;
 
