@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.option.Distractor;
 import com.proyecto.ontology.rdf.option.DistractorRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de las opciones falsas dentro de la ontología.
@@ -31,7 +31,7 @@ public class DistractorRdfImpl extends OptionRdfImpl<Distractor> implements Dist
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String distractorOptionClassName = ConstantsOntology.NAMESPACE + Distractor.class.getSimpleName();
+			String distractorOptionClassName = Constants.NAMESPACE + Distractor.class.getSimpleName();
 			this.distractorOptionClass = ontology.getOntClass(distractorOptionClassName);
 
 			if (this.distractorOptionClass == null) {
@@ -42,9 +42,9 @@ public class DistractorRdfImpl extends OptionRdfImpl<Distractor> implements Dist
 		}
 		return this.distractorOptionClass;
 	}
-	
+
 	@Override
-	public Individual createIndividual(OntModel ontology, Distractor entity) {
-		return super.createIndividual(ontology, entity);
+	public Individual loadEntityData(OntModel ontology, Individual individual, Distractor entity) {
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

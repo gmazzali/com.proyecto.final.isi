@@ -5,7 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.CompositeInstrument;
 import com.proyecto.ontology.rdf.material.instrument.CompositeInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos semiformales compuesto dentro de la ontología.
@@ -33,7 +33,7 @@ public abstract class CompositeInstrumentRdfImpl<I extends CompositeInstrument> 
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String compositeInstrumentClassName = ConstantsOntology.NAMESPACE + CompositeInstrument.class.getSimpleName();
+			String compositeInstrumentClassName = Constants.NAMESPACE + CompositeInstrument.class.getSimpleName();
 			this.compositeInstrumentClass = ontology.getOntClass(compositeInstrumentClassName);
 
 			if (this.compositeInstrumentClass == null) {

@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.UnrestrictedEssayActivityInstrument;
 import com.proyecto.ontology.rdf.material.instrument.UnrestrictedEssayActivityInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales de ensayos no restringidos dentro de la ontología.
@@ -32,7 +32,7 @@ public class UnrestrictedEssayActivityInstrumentRdfImpl extends EssayActivityIns
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String unrestrictedEssayActivityInstrumentClassName = ConstantsOntology.NAMESPACE
+			String unrestrictedEssayActivityInstrumentClassName = Constants.NAMESPACE
 					+ UnrestrictedEssayActivityInstrument.class.getSimpleName();
 			this.unrestrictedEssayActivityInstrumentClass = ontology.getOntClass(unrestrictedEssayActivityInstrumentClassName);
 

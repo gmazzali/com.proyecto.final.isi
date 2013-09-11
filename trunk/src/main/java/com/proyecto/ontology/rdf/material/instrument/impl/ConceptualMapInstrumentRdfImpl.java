@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.ConceptualMapInstrument;
 import com.proyecto.ontology.rdf.material.instrument.ConceptualMapInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos semiformales simples de mapas conceptuales dentro de la
@@ -32,7 +32,7 @@ public class ConceptualMapInstrumentRdfImpl extends SimpleInstrumentRdfImpl<Conc
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String conceptualMapInstrumentClassName = ConstantsOntology.NAMESPACE + ConceptualMapInstrument.class.getSimpleName();
+			String conceptualMapInstrumentClassName = Constants.NAMESPACE + ConceptualMapInstrument.class.getSimpleName();
 			this.conceptualMapInstrumentClass = ontology.getOntClass(conceptualMapInstrumentClassName);
 
 			if (this.conceptualMapInstrumentClass == null) {

@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.EssayInstrument;
 import com.proyecto.ontology.rdf.material.instrument.EssayInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos semiformales simples de ensayos dentro de la ontología.
@@ -31,7 +31,7 @@ public class EssayInstrumentRdfImpl extends SimpleInstrumentRdfImpl<EssayInstrum
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String essayInstrumentClassName = ConstantsOntology.NAMESPACE + EssayInstrument.class.getSimpleName();
+			String essayInstrumentClassName = Constants.NAMESPACE + EssayInstrument.class.getSimpleName();
 			this.essayInstrumentClass = ontology.getOntClass(essayInstrumentClassName);
 
 			if (this.essayInstrumentClass == null) {

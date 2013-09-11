@@ -13,7 +13,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.RelationAnswer;
 import com.proyecto.ontology.rdf.answer.RelationAnswerRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define comportamiento de las respuestas para las relaciones dentro de la ontología.
@@ -42,7 +42,7 @@ public class RelationAnswerRdfImpl extends AnswerRdfImpl<RelationAnswer> impleme
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String relationAnswerClassName = ConstantsOntology.NAMESPACE + RelationAnswer.class.getSimpleName();
+			String relationAnswerClassName = Constants.NAMESPACE + RelationAnswer.class.getSimpleName();
 			relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
 
 			if (relationAnswerClass == null) {
@@ -54,16 +54,16 @@ public class RelationAnswerRdfImpl extends AnswerRdfImpl<RelationAnswer> impleme
 
 		// Creamos las realaciones.
 		if (this.haveLeftSide == null) {
-			this.haveLeftSide = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_LEFT_SIDE);
+			this.haveLeftSide = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_RELATION_LEFT_SIDE);
 			if (this.haveLeftSide == null) {
-				this.haveLeftSide = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_LEFT_SIDE);
+				this.haveLeftSide = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_RELATION_LEFT_SIDE);
 
 			}
 		}
 		if (this.haveRightSide == null) {
-			this.haveRightSide = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
+			this.haveRightSide = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
 			if (this.haveRightSide == null) {
-				this.haveRightSide = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
+				this.haveRightSide = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
 
 			}
 		}

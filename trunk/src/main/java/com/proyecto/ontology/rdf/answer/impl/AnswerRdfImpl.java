@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.answer.Answer;
 import com.proyecto.ontology.rdf.ProyectoRdfImpl;
 import com.proyecto.ontology.rdf.answer.AnswerRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define comportamiento de las respuestas dentro de la ontología.
@@ -29,7 +29,7 @@ public abstract class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A>
 		// Creamos la clase solo si es nula.
 		if (answerClass == null) {
 			
-			String answerClassName = ConstantsOntology.NAMESPACE + Answer.class.getSimpleName();
+			String answerClassName = Constants.NAMESPACE + Answer.class.getSimpleName();
 			this.answerClass = ontology.getOntClass(answerClassName);
 
 			if (answerClass == null) {

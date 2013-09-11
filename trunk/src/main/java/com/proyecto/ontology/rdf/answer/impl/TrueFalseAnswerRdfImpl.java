@@ -13,7 +13,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.TrueFalseAnswer;
 import com.proyecto.ontology.rdf.answer.TrueFalseAnswerRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define comportamiento de las respuestas booleanas dentro de la ontología.
@@ -42,7 +42,7 @@ public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> imple
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String relationAnswerClassName = ConstantsOntology.NAMESPACE + TrueFalseAnswer.class.getSimpleName();
+			String relationAnswerClassName = Constants.NAMESPACE + TrueFalseAnswer.class.getSimpleName();
 			this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
 
 			if (this.relationAnswerClass == null) {
@@ -54,9 +54,9 @@ public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> imple
 
 		// Creamos las relaciones.
 		if (this.haveValue == null) {
-			this.haveValue = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+			this.haveValue = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
 			if (this.haveValue == null) {
-				this.haveValue = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+				this.haveValue = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
 			}
 		}
 

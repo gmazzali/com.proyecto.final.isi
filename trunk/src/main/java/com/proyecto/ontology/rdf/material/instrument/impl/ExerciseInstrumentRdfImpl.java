@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.ExerciseInstrument;
 import com.proyecto.ontology.rdf.material.instrument.ExerciseInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos semiformales simples de ejercicios dentro de la ontología.
@@ -31,7 +31,7 @@ public class ExerciseInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ExerciseI
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String exerciseInstrumentClassName = ConstantsOntology.NAMESPACE + ExerciseInstrument.class.getSimpleName();
+			String exerciseInstrumentClassName = Constants.NAMESPACE + ExerciseInstrument.class.getSimpleName();
 			this.exerciseInstrumentClass = ontology.getOntClass(exerciseInstrumentClassName);
 
 			if (this.exerciseInstrumentClass == null) {

@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.PortfolioInstrument;
 import com.proyecto.ontology.rdf.material.instrument.PortfolioInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La interfaz que define el comportamiento de los instrumentos semiformales compuesto de portfolio dentro de la ontología.
@@ -31,7 +31,7 @@ public class PortfolioInstrumentRdfImpl extends CompositeInstrumentRdfImpl<Portf
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String portfolioInstrumentClassName = ConstantsOntology.NAMESPACE + PortfolioInstrument.class.getSimpleName();
+			String portfolioInstrumentClassName = Constants.NAMESPACE + PortfolioInstrument.class.getSimpleName();
 			this.portfolioInstrumentClass = ontology.getOntClass(portfolioInstrumentClassName);
 
 			if (this.portfolioInstrumentClass == null) {

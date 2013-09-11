@@ -5,7 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.FormalInstrument;
 import com.proyecto.ontology.rdf.material.instrument.FormalInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales dentro de la ontología.
@@ -32,7 +32,7 @@ public abstract class FormalInstrumentRdfImpl<I extends FormalInstrument> extend
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String formalInstrumentClassName = ConstantsOntology.NAMESPACE + FormalInstrument.class.getSimpleName();
+			String formalInstrumentClassName = Constants.NAMESPACE + FormalInstrument.class.getSimpleName();
 			this.formalInstrumentClass = ontology.getOntClass(formalInstrumentClassName);
 
 			if (this.formalInstrumentClass == null) {

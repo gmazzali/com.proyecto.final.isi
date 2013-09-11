@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.SingleChoiceInstrument;
 import com.proyecto.ontology.rdf.material.instrument.SingleChoiceInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos de selección simple dentro de la ontología.
@@ -31,7 +31,7 @@ public class SingleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Singl
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String singleChoiceInstrumentClassName = ConstantsOntology.NAMESPACE + SingleChoiceInstrument.class.getSimpleName();
+			String singleChoiceInstrumentClassName = Constants.NAMESPACE + SingleChoiceInstrument.class.getSimpleName();
 			this.singleChoiceInstrumentClass = ontology.getOntClass(singleChoiceInstrumentClassName);
 
 			if (this.singleChoiceInstrumentClass == null) {

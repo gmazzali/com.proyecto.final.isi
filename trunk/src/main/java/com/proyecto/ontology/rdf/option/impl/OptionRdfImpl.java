@@ -17,7 +17,7 @@ import com.proyecto.model.option.Option;
 import com.proyecto.ontology.rdf.ProyectoRdfImpl;
 import com.proyecto.ontology.rdf.answer.TrueFalseAnswerRdf;
 import com.proyecto.ontology.rdf.option.OptionRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de las opciones dentro de la ontología.
@@ -31,7 +31,7 @@ import com.proyecto.util.ConstantsOntology;
 public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implements OptionRdf<O> {
 
 	/**
-	 * El sevicio para las respuestas booleanas.
+	 * El servicio para las respuestas booleanas.
 	 */
 	@Autowired
 	private TrueFalseAnswerRdf trueFalseAnswerRdf;
@@ -51,7 +51,7 @@ public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implemen
 		// Creamos la clase si es nula.
 		if (this.optionClass == null) {
 
-			String optionClassName = ConstantsOntology.NAMESPACE + Option.class.getSimpleName();
+			String optionClassName = Constants.NAMESPACE + Option.class.getSimpleName();
 			this.optionClass = ontology.getOntClass(optionClassName);
 
 			if (this.optionClass == null) {
@@ -59,24 +59,24 @@ public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implemen
 			}
 		}
 
-		// Creamos las realaciones.
+		// Creamos las relaciones.
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_DESCRIPTION);
+			this.haveDescription = ontology.getDatatypeProperty(Constants.PROPERTY_OPTION_HAVE_DESCRIPTION);
 			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_DESCRIPTION);
+				this.haveDescription = ontology.createDatatypeProperty(Constants.PROPERTY_OPTION_HAVE_DESCRIPTION);
 			}
 		}
 
 		if (this.haveAnswer == null) {
-			this.haveAnswer = ontology.getObjectProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
+			this.haveAnswer = ontology.getObjectProperty(Constants.PROPERTY_OPTION_HAVE_ANSWER);
 			if (this.haveAnswer == null) {
-				this.haveAnswer = ontology.createObjectProperty(ConstantsOntology.PROPERTY_OPTION_HAVE_ANSWER);
+				this.haveAnswer = ontology.createObjectProperty(Constants.PROPERTY_OPTION_HAVE_ANSWER);
 				this.haveAnswer.setDomain(this.optionClass);
 				this.haveAnswer.setRange(this.trueFalseAnswerRdf.initClass(ontology));
 			}
 		}
 
-		return optionClass;
+		return this.optionClass;
 	}
 
 	@Override

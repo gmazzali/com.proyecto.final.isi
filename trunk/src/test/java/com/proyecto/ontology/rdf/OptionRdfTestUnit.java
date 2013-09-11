@@ -77,7 +77,8 @@ public class OptionRdfTestUnit {
 		ontology.write(System.out);
 
 		try {
-			FileOutputStream salida = new FileOutputStream("C:/Users/Guillermo Mazzali/Desktop/salida.rdf");
+			String archivo = System.getProperty("proyecto.configuration.dir") + "/ontology.rdf";
+			FileOutputStream salida = new FileOutputStream(archivo);
 			ontology.write(salida);
 			salida.close();
 		} catch (Exception e) {

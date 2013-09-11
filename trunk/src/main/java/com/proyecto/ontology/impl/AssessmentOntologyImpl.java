@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.common.util.annotations.Service;
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.ontology.DatatypeProperty;
 import com.hp.hpl.jena.ontology.Individual;
@@ -19,7 +18,7 @@ import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.ontology.ActivityOntology;
 import com.proyecto.ontology.AssessmentOntology;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que va a crear y mantener la ontología de una evaluación.
@@ -27,7 +26,6 @@ import com.proyecto.util.ConstantsOntology;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-@Service
 public class AssessmentOntologyImpl implements AssessmentOntology {
 
 	private static final long serialVersionUID = 4074693337639314224L;
@@ -61,14 +59,14 @@ public class AssessmentOntologyImpl implements AssessmentOntology {
 		String individualName = className + "_" + assessment.getId();
 
 		// Creamos la clase y la instancia de la evaluación.
-		OntClass assessmentClass = ontology.createClass(ConstantsOntology.NAMESPACE + className);
-		Individual assessmentIndividual = assessmentClass.createIndividual(ConstantsOntology.NAMESPACE + individualName);
+		OntClass assessmentClass = ontology.createClass(Constants.NAMESPACE + className);
+		Individual assessmentIndividual = assessmentClass.createIndividual(Constants.NAMESPACE + individualName);
 
 		// Creamos las relaciones.
-		DatatypeProperty haveDescription = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
-		DatatypeProperty haveMoment = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_MOMENT);
-		DatatypeProperty haveDate = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_DATE);
-		DatatypeProperty haveActivitiy = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
+		DatatypeProperty haveDescription = ontology.createDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
+		DatatypeProperty haveMoment = ontology.createDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_MOMENT);
+		DatatypeProperty haveDate = ontology.createDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_DATE);
+		DatatypeProperty haveActivitiy = ontology.createDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
 
 		// Creamos los literales.
 		Literal description = ontology.createTypedLiteral(assessment.getDescription(), XSDDatatype.XSDstring);
