@@ -18,6 +18,8 @@ import com.proyecto.util.Constants;
  */
 public abstract class SemiFormalInstrumentRdfImpl<I extends SemiFormalInstrument> extends InstrumentRdfImpl<I> implements SemiFormalInstrumentRdf<I> {
 
+	private static final long serialVersionUID = 6549137300525586052L;
+	
 	/**
 	 * La clase de un instrumento semiformal.
 	 */

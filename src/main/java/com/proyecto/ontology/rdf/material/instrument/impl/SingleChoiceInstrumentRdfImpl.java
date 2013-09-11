@@ -17,6 +17,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class SingleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<SingleChoiceInstrument> implements SingleChoiceInstrumentRdf {
 
+	private static final long serialVersionUID = -6547404846642123076L;
+	
 	/**
 	 * La clase del instrumento formal objetivo de selección.
 	 */

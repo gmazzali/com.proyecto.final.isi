@@ -19,6 +19,8 @@ import com.proyecto.util.Constants;
 public abstract class CompositeInstrumentRdfImpl<I extends CompositeInstrument> extends SemiFormalInstrumentRdfImpl<I> implements
 		CompositeInstrumentRdf<I> {
 
+	private static final long serialVersionUID = 4614351162794504739L;
+	
 	/**
 	 * La clase de un instrumento semiformal compuesto.
 	 */

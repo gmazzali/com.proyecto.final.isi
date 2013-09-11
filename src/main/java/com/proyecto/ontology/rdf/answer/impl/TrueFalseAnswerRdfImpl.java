@@ -24,6 +24,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> implements TrueFalseAnswerRdf {
 
+	private static final long serialVersionUID = -161154895220919711L;
+	
 	/**
 	 * La clase de respuesta booleana.
 	 */

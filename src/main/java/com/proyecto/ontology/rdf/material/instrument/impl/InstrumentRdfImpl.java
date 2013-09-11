@@ -10,6 +10,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.Instrument;
 import com.proyecto.ontology.rdf.material.MaterialRdfImpl;
 import com.proyecto.ontology.rdf.material.instrument.InstrumentRdf;
@@ -24,8 +25,11 @@ import com.proyecto.util.Constants;
  * @param <I>
  *            La clase de instrumentos que vamos a manejar dentro de la ontología.
  */
-public abstract class InstrumentRdfImpl<I extends Instrument> extends MaterialRdfImpl<I> implements InstrumentRdf<I> {
+@RdfService
+public class InstrumentRdfImpl<I extends Instrument> extends MaterialRdfImpl<I> implements InstrumentRdf<I> {
 
+	private static final long serialVersionUID = 3190643394940661101L;
+	
 	/**
 	 * La clase de instrumento.
 	 */

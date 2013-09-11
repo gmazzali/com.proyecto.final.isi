@@ -26,6 +26,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfImpl<CompletionInstrument> implements CompletionInstrumentRdf {
 
+	private static final long serialVersionUID = 9078655177679015093L;
+	
 	/**
 	 * El servicio de ontología para las respuestas de completar.
 	 */

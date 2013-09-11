@@ -17,6 +17,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class EssayInstrumentRdfImpl extends SimpleInstrumentRdfImpl<EssayInstrument> implements EssayInstrumentRdf {
 
+	private static final long serialVersionUID = -6286660102531768307L;
+	
 	/**
 	 * La clase de un instrumento semiformal simple de ensayo.
 	 */

@@ -17,6 +17,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class DistractorRdfImpl extends OptionRdfImpl<Distractor> implements DistractorRdf {
 
+	private static final long serialVersionUID = 4718979750310471461L;
+	
 	/**
 	 * La clase de una opción falsa.
 	 */

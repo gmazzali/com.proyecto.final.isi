@@ -3,6 +3,7 @@ package com.proyecto.ontology.rdf.material.instrument.factory.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hp.hpl.jena.ontology.Individual;
+import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.CompletionInstrument;
@@ -21,6 +22,7 @@ import com.proyecto.ontology.rdf.material.instrument.ConceptualMapInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.CorrespondenceInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.EssayInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.ExerciseInstrumentRdf;
+import com.proyecto.ontology.rdf.material.instrument.InstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.MultipleChoiceInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.PortfolioInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.RestrictedEssayActivityInstrumentRdf;
@@ -36,6 +38,14 @@ import com.proyecto.ontology.rdf.material.instrument.factory.InstrumentFactoryRd
  */
 @RdfService
 public class InstrumentRdfFactoryImpl implements InstrumentFactoryRdf {
+
+	private static final long serialVersionUID = 5888104376867686724L;
+
+	/**
+	 * El servicio de la clase superior de la jerarquía de instrumentos.
+	 */
+	@Autowired
+	private InstrumentRdf<?> instrumentRdf;
 
 	/**
 	 * Los servicios de los instrumentos dentro de la ontología.
@@ -70,6 +80,11 @@ public class InstrumentRdfFactoryImpl implements InstrumentFactoryRdf {
 	@Autowired
 	private PortfolioInstrumentRdf portfolioInstrumentRdf;
 
+	@Override
+	public OntClass topClassHierachy(OntModel ontology) {
+		return this.instrumentRdf.initClass(ontology);
+	}
+	
 	@Override
 	public Individual loadInstrumentToOntology(OntModel ontology, Instrument instrument) {
 

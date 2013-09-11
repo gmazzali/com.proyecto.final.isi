@@ -17,6 +17,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class ExerciseInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ExerciseInstrument> implements ExerciseInstrumentRdf {
 
+	private static final long serialVersionUID = -38293121719559319L;
+	
 	/**
 	 * La clase de un instrumento semiformal simple de ejercicios.
 	 */
