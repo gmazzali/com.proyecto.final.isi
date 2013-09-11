@@ -49,6 +49,10 @@ public class InstrumentFactoryTestUnit {
 	@Test
 	public void pruebaDeLaFactoriaInstrumentos() {
 
+		System.out.println("######################################################################");
+		System.out.println("################ FACTORÍA DE INSTRUMENTO EN ONTOLOGÍA ################");
+		System.out.println("######################################################################");
+
 		// Creamos los instrumentos.
 		RestrictedEssayActivityInstrument restrictedEssayActivityInstrument = CreateExampleMaterial.createInstrumentRestrictedEssayActivity(10);
 		UnrestrictedEssayActivityInstrument unrestrictedEssayActivityInstrument = CreateExampleMaterial.createInstrumentUnrestrictedEssayActivity(20);

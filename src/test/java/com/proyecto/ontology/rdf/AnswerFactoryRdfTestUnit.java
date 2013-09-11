@@ -13,18 +13,15 @@ import com.proyecto.model.answer.CompletionAnswer;
 import com.proyecto.model.answer.EssayActivityAnswer;
 import com.proyecto.model.answer.RelationAnswer;
 import com.proyecto.model.answer.TrueFalseAnswer;
-import com.proyecto.ontology.rdf.answer.CompletionAnswerRdf;
-import com.proyecto.ontology.rdf.answer.EssayActivityAnswerRdf;
-import com.proyecto.ontology.rdf.answer.RelationAnswerRdf;
-import com.proyecto.ontology.rdf.answer.TrueFalseAnswerRdf;
+import com.proyecto.ontology.rdf.answer.factory.AnswerFactoryRdf;
 
 /**
- * La clase de prueba para las respuestas en la ontología.
+ * La clase de prueba para la factoría de las respuestas en la ontología.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class AnswerRdfTestUnit {
+public class AnswerFactoryRdfTestUnit {
 
 	/**
 	 * Antes de que arranque la ejecución de la clase, cargamos el dao.
@@ -44,15 +41,15 @@ public class AnswerRdfTestUnit {
 	}
 
 	/**
-	 * Las pruebas sobre las respuestas.
+	 * Las pruebas sobre la factoría de las respuestas.
 	 */
 	@Test
-	public void pruebaDeLasRespuestas() {
-		
+	public void pruebaDeLaFactoriaDeLasRespuestas() {
+
 		System.out.println("######################################################################");
-		System.out.println("###################### RESPUESTAS EN ONTOLOGÍAS ######################");
+		System.out.println("################# FACTORÍA DE RESPUESTA EN ONTOLOGÍA #################");
 		System.out.println("######################################################################");
-		
+
 		// Creamos un par de respuestas.
 		CompletionAnswer completionAnswer = new CompletionAnswer();
 		completionAnswer.setId(1);
@@ -74,13 +71,10 @@ public class AnswerRdfTestUnit {
 
 		OntModel ontology = ModelFactory.createOntologyModel();
 
-		HolderApplicationContext.getBean(CompletionAnswerRdf.class).createIndividual(ontology, completionAnswer);
-
-		HolderApplicationContext.getBean(EssayActivityAnswerRdf.class).createIndividual(ontology, essayActivityAnswer);
-
-		HolderApplicationContext.getBean(RelationAnswerRdf.class).createIndividual(ontology, relationAnswer);
-
-		HolderApplicationContext.getBean(TrueFalseAnswerRdf.class).createIndividual(ontology, trueFalseAnswer);
+		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadInstrumentToOntology(ontology, completionAnswer);
+		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadInstrumentToOntology(ontology, essayActivityAnswer);
+		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadInstrumentToOntology(ontology, relationAnswer);
+		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadInstrumentToOntology(ontology, trueFalseAnswer);
 
 		ontology.write(System.out);
 

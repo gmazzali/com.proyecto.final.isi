@@ -9,5 +9,5 @@ import com.proyecto.ontology.rdf.FactoryRdf;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public interface OptionRdfFactory extends FactoryRdf<Option> {
+public interface OptionFactoryRdf extends FactoryRdf<Option> {
 }

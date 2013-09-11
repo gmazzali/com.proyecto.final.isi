@@ -53,6 +53,10 @@ public class InstrumentRdfTestUnit {
 	 */
 	@Test
 	public void pruebaDeLosInstrumentos() {
+		
+		System.out.println("######################################################################");
+		System.out.println("##################### INSTRUMENTOS EN ONTOLOGÍAS #####################");
+		System.out.println("######################################################################");
 
 		// Creamos los instrumentos.
 		RestrictedEssayActivityInstrument restrictedEssayActivityInstrument = CreateExampleMaterial.createInstrumentRestrictedEssayActivity(10);
