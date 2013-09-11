@@ -95,7 +95,7 @@ public class CreateExampleMaterial {
 	 *            El id del instrumento a crear.
 	 * @return El instrumento de ensayo irrestricto.
 	 */
-	public static Instrument createInstrumentUnrestrictedEssayActivity(Integer id) {
+	public static UnrestrictedEssayActivityInstrument createInstrumentUnrestrictedEssayActivity(Integer id) {
 		UnrestrictedEssayActivityInstrument unrestrictedEssayActivityInstrument = new UnrestrictedEssayActivityInstrument();
 
 		unrestrictedEssayActivityInstrument.setId(id);
@@ -116,7 +116,7 @@ public class CreateExampleMaterial {
 	 *            El id del instrumento a crear.
 	 * @return El instrumento de ensayo restricto.
 	 */
-	public static Instrument createInstrumentRestrictedEssayActivity(Integer id) {
+	public static RestrictedEssayActivityInstrument createInstrumentRestrictedEssayActivity(Integer id) {
 		RestrictedEssayActivityInstrument restrictedEssayActivityInstrument = new RestrictedEssayActivityInstrument();
 
 		restrictedEssayActivityInstrument.setId(id);
@@ -137,7 +137,7 @@ public class CreateExampleMaterial {
 	 *            El id del instrumento a crear.
 	 * @return El instrumento de selección simple.
 	 */
-	public static Instrument createInstrumentSingleChoice(Integer id) {
+	public static SingleChoiceInstrument createInstrumentSingleChoice(Integer id) {
 		SingleChoiceInstrument singleChoiceInstrument = new SingleChoiceInstrument();
 
 		singleChoiceInstrument.setId(id);
@@ -178,7 +178,7 @@ public class CreateExampleMaterial {
 	 *            El id del instrumento a crear.
 	 * @return El instrumento de selección multiple.
 	 */
-	public static Instrument createInstrumentMultipleChoice(Integer id) {
+	public static MultipleChoiceInstrument createInstrumentMultipleChoice(Integer id) {
 		MultipleChoiceInstrument multipleChoiceInstrument = new MultipleChoiceInstrument();
 
 		multipleChoiceInstrument.setId(id);
@@ -219,7 +219,7 @@ public class CreateExampleMaterial {
 	 *            El id del instrumento a crear.
 	 * @return El instrumento de correspondencia.
 	 */
-	public static Instrument createInstrumentCorrespondence(Integer id) {
+	public static CorrespondenceInstrument createInstrumentCorrespondence(Integer id) {
 		CorrespondenceInstrument correspondenceInstrument = new CorrespondenceInstrument();
 
 		correspondenceInstrument.setId(id);
@@ -251,7 +251,7 @@ public class CreateExampleMaterial {
 	 *            El id del instrumento a crear.
 	 * @return El instrumento de completar.
 	 */
-	public static Instrument createInstrumentCompletion(Integer id) {
+	public static CompletionInstrument createInstrumentCompletion(Integer id) {
 		CompletionInstrument completionInstrument = new CompletionInstrument();
 
 		completionInstrument.setId(id);
@@ -271,5 +271,4 @@ public class CreateExampleMaterial {
 
 		return completionInstrument;
 	}
-
 }

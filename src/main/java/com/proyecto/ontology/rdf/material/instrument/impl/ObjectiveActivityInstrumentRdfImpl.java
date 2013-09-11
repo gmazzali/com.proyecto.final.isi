@@ -5,7 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.ObjectiveActivityInstrument;
 import com.proyecto.ontology.rdf.material.instrument.ObjectiveActivityInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos dentro de la ontología.
@@ -33,7 +33,7 @@ public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActi
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String objectiveActivityInstrumentClassName = ConstantsOntology.NAMESPACE + ObjectiveActivityInstrument.class.getSimpleName();
+			String objectiveActivityInstrumentClassName = Constants.NAMESPACE + ObjectiveActivityInstrument.class.getSimpleName();
 			this.objectiveActivityInstrumentClass = ontology.getOntClass(objectiveActivityInstrumentClassName);
 
 			if (this.objectiveActivityInstrumentClass == null) {

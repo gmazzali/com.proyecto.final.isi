@@ -13,7 +13,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.CompletionAnswer;
 import com.proyecto.ontology.rdf.answer.CompletionAnswerRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define comportamiento de las respuestas para completar dentro de la ontología.
@@ -43,7 +43,7 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String completionAnswerClassName = ConstantsOntology.NAMESPACE + CompletionAnswer.class.getSimpleName();
+			String completionAnswerClassName = Constants.NAMESPACE + CompletionAnswer.class.getSimpleName();
 			this.completionAnswerClass = ontology.getOntClass(completionAnswerClassName);
 
 			if (completionAnswerClass == null) {
@@ -55,15 +55,15 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 		
 		// Creamos las relaciones si son nulas.
 		if (this.haveIndex == null) {
-			this.haveIndex = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+			this.haveIndex = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
 			if (this.haveIndex == null) {
-				this.haveIndex = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+				this.haveIndex = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
 			}
 		}
 		if (this.havePhrase == null) {
-			this.havePhrase = ontology.getDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+			this.havePhrase = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
 			if (this.havePhrase == null) {
-				this.havePhrase = ontology.createDatatypeProperty(ConstantsOntology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+				this.havePhrase = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
 			}
 		}
 

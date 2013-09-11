@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.MultipleChoiceInstrument;
 import com.proyecto.ontology.rdf.material.instrument.MultipleChoiceInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos de selección multiple dentro de la
@@ -32,7 +32,7 @@ public class MultipleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Mul
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String multipleChoiceInstrumentClassName = ConstantsOntology.NAMESPACE + MultipleChoiceInstrument.class.getSimpleName();
+			String multipleChoiceInstrumentClassName = Constants.NAMESPACE + MultipleChoiceInstrument.class.getSimpleName();
 			this.multipleChoiceInstrumentClass = ontology.getOntClass(multipleChoiceInstrumentClassName);
 
 			if (this.multipleChoiceInstrumentClass == null) {

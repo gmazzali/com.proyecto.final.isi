@@ -6,7 +6,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.ontology.rdf.material.instrument.RestrictedEssayActivityInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales de ensayos restringidos dentro de la ontología.
@@ -32,7 +32,7 @@ public class RestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstr
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String restrictedEssayActivityInstrumentClassName = ConstantsOntology.NAMESPACE + RestrictedEssayActivityInstrument.class.getSimpleName();
+			String restrictedEssayActivityInstrumentClassName = Constants.NAMESPACE + RestrictedEssayActivityInstrument.class.getSimpleName();
 			this.restrictedEssayActivityInstrumentClass = ontology.getOntClass(restrictedEssayActivityInstrumentClassName);
 
 			if (this.restrictedEssayActivityInstrumentClass == null) {

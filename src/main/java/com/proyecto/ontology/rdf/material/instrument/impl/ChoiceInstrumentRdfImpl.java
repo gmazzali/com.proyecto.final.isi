@@ -18,7 +18,7 @@ import com.proyecto.model.option.TrueOption;
 import com.proyecto.ontology.rdf.material.instrument.ChoiceInstrumentRdf;
 import com.proyecto.ontology.rdf.option.DistractorRdf;
 import com.proyecto.ontology.rdf.option.TrueOptionRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos de selección dentro de la ontología.
@@ -59,7 +59,7 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String choiceInstrumentClassName = ConstantsOntology.NAMESPACE + ChoiceInstrument.class.getSimpleName();
+			String choiceInstrumentClassName = Constants.NAMESPACE + ChoiceInstrument.class.getSimpleName();
 			this.choiceInstrumentClass = ontology.getOntClass(choiceInstrumentClassName);
 
 			if (this.choiceInstrumentClass == null) {
@@ -71,9 +71,12 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 
 		// Cargamos las relaciones.
 		if (this.haveOption == null) {
-			this.haveOption = ontology.getObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
+			this.haveOption = ontology.getObjectProperty(Constants.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
 			if (this.haveOption == null) {
-				this.haveOption = ontology.createObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
+				this.haveOption = ontology.createObjectProperty(Constants.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
+				this.haveOption.addDomain(this.choiceInstrumentClass);
+				this.haveOption.addRange(this.trueOptionRdf.initClass(ontology));
+				this.haveOption.addRange(this.distractorRdf.initClass(ontology));
 			}
 		}
 

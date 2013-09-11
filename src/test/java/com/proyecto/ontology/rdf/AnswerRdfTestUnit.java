@@ -17,10 +17,6 @@ import com.proyecto.ontology.rdf.answer.CompletionAnswerRdf;
 import com.proyecto.ontology.rdf.answer.EssayActivityAnswerRdf;
 import com.proyecto.ontology.rdf.answer.RelationAnswerRdf;
 import com.proyecto.ontology.rdf.answer.TrueFalseAnswerRdf;
-import com.proyecto.ontology.rdf.answer.impl.CompletionAnswerRdfImpl;
-import com.proyecto.ontology.rdf.answer.impl.EssayActivityAnswerRdfImpl;
-import com.proyecto.ontology.rdf.answer.impl.RelationAnswerRdfImpl;
-import com.proyecto.ontology.rdf.answer.impl.TrueFalseAnswerRdfImpl;
 
 /**
  * La clase de prueba para las respuestas en la ontología.
@@ -73,22 +69,19 @@ public class AnswerRdfTestUnit {
 
 		OntModel ontology = ModelFactory.createOntologyModel();
 
-		CompletionAnswerRdf completionAnswerRdf = HolderApplicationContext.getBean(CompletionAnswerRdfImpl.class);
-		completionAnswerRdf.createIndividual(ontology, completionAnswer);
+		HolderApplicationContext.getBean(CompletionAnswerRdf.class).createIndividual(ontology, completionAnswer);
 
-		EssayActivityAnswerRdf essayActivityAnswerRdf = HolderApplicationContext.getBean(EssayActivityAnswerRdfImpl.class);
-		essayActivityAnswerRdf.createIndividual(ontology, essayActivityAnswer);
+		HolderApplicationContext.getBean(EssayActivityAnswerRdf.class).createIndividual(ontology, essayActivityAnswer);
 
-		RelationAnswerRdf relationAnswerRdf = HolderApplicationContext.getBean(RelationAnswerRdfImpl.class);
-		relationAnswerRdf.createIndividual(ontology, relationAnswer);
+		HolderApplicationContext.getBean(RelationAnswerRdf.class).createIndividual(ontology, relationAnswer);
 
-		TrueFalseAnswerRdf trueFalseAnswerRdf = HolderApplicationContext.getBean(TrueFalseAnswerRdfImpl.class);
-		trueFalseAnswerRdf.createIndividual(ontology, trueFalseAnswer);
+		HolderApplicationContext.getBean(TrueFalseAnswerRdf.class).createIndividual(ontology, trueFalseAnswer);
 
 		ontology.write(System.out);
 
 		try {
-			FileOutputStream salida = new FileOutputStream("C:/Users/Guillermo Mazzali/Desktop/salida.rdf");
+			String archivo = System.getProperty("proyecto.configuration.dir") + "/ontology.rdf";
+			FileOutputStream salida = new FileOutputStream(archivo);
 			ontology.write(salida);
 			salida.close();
 		} catch (Exception e) {

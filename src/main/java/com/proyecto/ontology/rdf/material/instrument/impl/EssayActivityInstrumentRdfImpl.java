@@ -13,7 +13,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.model.material.instrument.EssayActivityInstrument;
 import com.proyecto.ontology.rdf.answer.EssayActivityAnswerRdf;
 import com.proyecto.ontology.rdf.material.instrument.EssayActivityInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales de ensayos dentro de la ontología.
@@ -51,7 +51,7 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String essayActivityInstrumentClassName = ConstantsOntology.NAMESPACE + EssayActivityInstrument.class.getSimpleName();
+			String essayActivityInstrumentClassName = Constants.NAMESPACE + EssayActivityInstrument.class.getSimpleName();
 			this.essayActivityInstrumentClass = ontology.getOntClass(essayActivityInstrumentClassName);
 
 			if (this.essayActivityInstrumentClass == null) {
@@ -63,9 +63,9 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 
 		// Creamos las relaciones.
 		if (this.haveAnswer == null) {
-			this.haveAnswer = ontology.getObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
+			this.haveAnswer = ontology.getObjectProperty(Constants.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
 			if (this.haveAnswer == null) {
-				this.haveAnswer = ontology.createObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
+				this.haveAnswer = ontology.createObjectProperty(Constants.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
 				this.haveAnswer.setDomain(this.essayActivityInstrumentClass);
 				this.haveAnswer.setRange(this.essayActivityAnswerRdf.initClass(ontology));
 			}

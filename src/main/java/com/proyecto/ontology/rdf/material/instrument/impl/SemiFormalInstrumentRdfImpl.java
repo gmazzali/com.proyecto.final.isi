@@ -5,7 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.SemiFormalInstrument;
 import com.proyecto.ontology.rdf.material.instrument.SemiFormalInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos semiformales dentro de la ontología.
@@ -32,7 +32,7 @@ public abstract class SemiFormalInstrumentRdfImpl<I extends SemiFormalInstrument
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String semiformalInstrumentClassName = ConstantsOntology.NAMESPACE + SemiFormalInstrument.class.getSimpleName();
+			String semiformalInstrumentClassName = Constants.NAMESPACE + SemiFormalInstrument.class.getSimpleName();
 			this.semiformalInstrumentClass = ontology.getOntClass(semiformalInstrumentClassName);
 
 			if (this.semiformalInstrumentClass == null) {

@@ -15,7 +15,7 @@ import com.proyecto.model.answer.RelationAnswer;
 import com.proyecto.model.material.instrument.CorrespondenceInstrument;
 import com.proyecto.ontology.rdf.answer.RelationAnswerRdf;
 import com.proyecto.ontology.rdf.material.instrument.CorrespondenceInstrumentRdf;
-import com.proyecto.util.ConstantsOntology;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos de correspondencia dentro de la ontología.
@@ -51,7 +51,7 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String correspondenceInstrumentClassName = ConstantsOntology.NAMESPACE + CorrespondenceInstrument.class.getSimpleName();
+			String correspondenceInstrumentClassName = Constants.NAMESPACE + CorrespondenceInstrument.class.getSimpleName();
 			this.correspondenceInstrumentClass = ontology.getOntClass(correspondenceInstrumentClassName);
 
 			if (this.correspondenceInstrumentClass == null) {
@@ -63,9 +63,11 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 
 		// Creamos las relaciones.
 		if (this.haveRelation == null) {
-			this.haveRelation = ontology.getObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
+			this.haveRelation = ontology.getObjectProperty(Constants.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
 			if (this.haveRelation == null) {
-				this.haveRelation = ontology.createObjectProperty(ConstantsOntology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
+				this.haveRelation = ontology.createObjectProperty(Constants.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
+				this.haveRelation.addDomain(this.correspondenceInstrumentClass);
+				this.haveRelation.addRange(this.relationAnswerRdf.initClass(ontology));
 			}
 		}
 
@@ -79,9 +81,11 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
+
 		for (RelationAnswer answer : entity.getRelations()) {
 			statements.add(ontology.createLiteralStatement(individual, this.haveRelation, this.relationAnswerRdf.createIndividual(ontology, answer)));
 		}
+
 		ontology.add(statements);
 
 		return individual;

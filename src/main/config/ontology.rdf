@@ -1,0 +1,224 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://www.assessments.com/#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" > 
+  <rdf:Description rdf:about="http://www.assessments.com/#UnrestrictedEssayActivityInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#EssayActivityInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueOption_40">
+    <j.0:option_have_answer rdf:resource="http://www.assessments.com/#TrueFalseAnswer_41"/>
+    <j.0:option_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">multiple option t</j.0:option_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#TrueOption"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#relation_answer_have_left_side">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#CompletionAnswer">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#complete_answer_have_phrase">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#SingleChoiceInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#CompletionInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#choice_instrument_have_option">
+    <rdfs:range rdf:resource="http://www.assessments.com/#Distractor"/>
+    <rdfs:range rdf:resource="http://www.assessments.com/#TrueOption"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueOption">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueFalseAnswer">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#RestrictedEssayActivityInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#EssayActivityInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueFalseAnswer_41">
+    <j.0:truefalse_answer_have_value rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</j.0:truefalse_answer_have_value>
+    <rdf:type rdf:resource="http://www.assessments.com/#TrueFalseAnswer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#truefalse_answer_have_value">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Distractor_31">
+    <j.0:option_have_answer rdf:resource="http://www.assessments.com/#TrueFalseAnswer_31"/>
+    <j.0:option_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single option f</j.0:option_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#Distractor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#complete_answer_have_index">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueFalseAnswer_31">
+    <j.0:truefalse_answer_have_value rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</j.0:truefalse_answer_have_value>
+    <rdf:type rdf:resource="http://www.assessments.com/#TrueFalseAnswer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#MultipleChoiceInstrument_40">
+    <j.0:choice_instrument_have_option rdf:resource="http://www.assessments.com/#Distractor_41"/>
+    <j.0:choice_instrument_have_option rdf:resource="http://www.assessments.com/#TrueOption_40"/>
+    <j.0:instrument_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">multiple choice instrument</j.0:instrument_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#MultipleChoiceInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#relation_answer_have_right_side">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#ChoiceInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#CorrespondenceInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Instrument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#completion_instrument_have_complete">
+    <rdfs:range rdf:resource="http://www.assessments.com/#CompletionAnswer"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#CompletionInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#RelationAnswer_60">
+    <j.0:relation_answer_have_right_side rdf:datatype="http://www.w3.org/2001/XMLSchema#string">right side 1</j.0:relation_answer_have_right_side>
+    <j.0:relation_answer_have_left_side rdf:datatype="http://www.w3.org/2001/XMLSchema#string">left side 1</j.0:relation_answer_have_left_side>
+    <rdf:type rdf:resource="http://www.assessments.com/#RelationAnswer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#MultipleChoiceInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Option">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#EssayActivityInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#RelationAnswer">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#ObjectiveActivityInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#EssayActivityAnswer">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#RelationAnswer_61">
+    <j.0:relation_answer_have_left_side rdf:datatype="http://www.w3.org/2001/XMLSchema#string">left side 2</j.0:relation_answer_have_left_side>
+    <rdf:type rdf:resource="http://www.assessments.com/#RelationAnswer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#CompletionAnswer_51">
+    <j.0:complete_answer_have_phrase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">complete answer 2</j.0:complete_answer_have_phrase>
+    <j.0:complete_answer_have_index rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2</j.0:complete_answer_have_index>
+    <rdf:type rdf:resource="http://www.assessments.com/#CompletionAnswer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#essay_answer_have_description">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#FormalInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Answer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Distractor_41">
+    <j.0:option_have_answer rdf:resource="http://www.assessments.com/#TrueFalseAnswer_41"/>
+    <j.0:option_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">multiple option f</j.0:option_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#Distractor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#CompletionInstrument_50">
+    <j.0:completion_instrument_have_complete rdf:resource="http://www.assessments.com/#CompletionAnswer_51"/>
+    <j.0:completion_instrument_have_complete rdf:resource="http://www.assessments.com/#CompletionAnswer_50"/>
+    <j.0:instrument_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">completion instrument</j.0:instrument_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#CompletionInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Distractor">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#essay_instrument_have_answer">
+    <rdfs:range rdf:resource="http://www.assessments.com/#EssayActivityAnswer"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#EssayActivityInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#RestrictedEssayActivityInstrument_10">
+    <j.0:essay_instrument_have_answer rdf:resource="http://www.assessments.com/#EssayActivityAnswer_10"/>
+    <j.0:instrument_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">restricted essay instrument</j.0:instrument_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#RestrictedEssayActivityInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#instrument_have_description">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#EssayActivityAnswer_10">
+    <j.0:essay_answer_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">restricted essay answer</j.0:essay_answer_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#EssayActivityAnswer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#option_have_description">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#CorrespondenceInstrument_60">
+    <j.0:correspondence_instrument_have_relation rdf:resource="http://www.assessments.com/#RelationAnswer_62"/>
+    <j.0:correspondence_instrument_have_relation rdf:resource="http://www.assessments.com/#RelationAnswer_61"/>
+    <j.0:correspondence_instrument_have_relation rdf:resource="http://www.assessments.com/#RelationAnswer_60"/>
+    <j.0:instrument_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">correspondence instrument</j.0:instrument_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#CorrespondenceInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#RelationAnswer_62">
+    <j.0:relation_answer_have_right_side rdf:datatype="http://www.w3.org/2001/XMLSchema#string">right side 3</j.0:relation_answer_have_right_side>
+    <rdf:type rdf:resource="http://www.assessments.com/#RelationAnswer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#UnrestrictedEssayActivityInstrument_20">
+    <j.0:essay_instrument_have_answer rdf:resource="http://www.assessments.com/#EssayActivityAnswer_20"/>
+    <j.0:instrument_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unrestricted essay instrument</j.0:instrument_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#UnrestrictedEssayActivityInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#CompletionAnswer_50">
+    <j.0:complete_answer_have_phrase rdf:datatype="http://www.w3.org/2001/XMLSchema#string">complete answer 1</j.0:complete_answer_have_phrase>
+    <j.0:complete_answer_have_index rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</j.0:complete_answer_have_index>
+    <rdf:type rdf:resource="http://www.assessments.com/#CompletionAnswer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#SingleChoiceInstrument_30">
+    <j.0:choice_instrument_have_option rdf:resource="http://www.assessments.com/#Distractor_31"/>
+    <j.0:choice_instrument_have_option rdf:resource="http://www.assessments.com/#TrueOption_30"/>
+    <j.0:instrument_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single choice instrument</j.0:instrument_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#SingleChoiceInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#option_have_answer">
+    <rdfs:range rdf:resource="http://www.assessments.com/#TrueFalseAnswer"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueOption_30">
+    <j.0:option_have_answer rdf:resource="http://www.assessments.com/#TrueFalseAnswer_31"/>
+    <j.0:option_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single option t</j.0:option_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#TrueOption"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#correspondence_instrument_have_relation">
+    <rdfs:range rdf:resource="http://www.assessments.com/#RelationAnswer"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#CorrespondenceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#EssayActivityAnswer_20">
+    <j.0:essay_answer_have_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unrestricted essay answer</j.0:essay_answer_have_description>
+    <rdf:type rdf:resource="http://www.assessments.com/#EssayActivityAnswer"/>
+  </rdf:Description>
+</rdf:RDF>
