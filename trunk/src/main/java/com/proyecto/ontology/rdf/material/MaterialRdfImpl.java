@@ -16,6 +16,8 @@ import com.proyecto.ontology.rdf.ProyectoRdfImpl;
  */
 public abstract class MaterialRdfImpl<M extends Material<?>> extends ProyectoRdfImpl<M> implements MaterialRdf<M> {
 
+	private static final long serialVersionUID = 6920907403789436984L;
+
 	public Individual loadEntityData(OntModel ontology, Individual individual, M entity) {
 		return individual;
 	};

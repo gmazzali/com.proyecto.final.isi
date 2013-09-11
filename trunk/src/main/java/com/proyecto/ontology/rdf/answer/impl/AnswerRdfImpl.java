@@ -3,6 +3,7 @@ package com.proyecto.ontology.rdf.answer.impl;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.Answer;
 import com.proyecto.ontology.rdf.ProyectoRdfImpl;
 import com.proyecto.ontology.rdf.answer.AnswerRdf;
@@ -17,8 +18,11 @@ import com.proyecto.util.Constants;
  * @param <A>
  *            La clase de respuesta que vamos a cargar.
  */
-public abstract class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implements AnswerRdf<A> {
+@RdfService
+public class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implements AnswerRdf<A> {
 
+	private static final long serialVersionUID = 7933072370435571965L;
+	
 	/**
 	 * La clase de respuesta.
 	 */

@@ -24,6 +24,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class RelationAnswerRdfImpl extends AnswerRdfImpl<RelationAnswer> implements RelationAnswerRdf {
 
+	private static final long serialVersionUID = -3230778665793275321L;
+	
 	/**
 	 * La clase de respuesta para correspondencias.
 	 */

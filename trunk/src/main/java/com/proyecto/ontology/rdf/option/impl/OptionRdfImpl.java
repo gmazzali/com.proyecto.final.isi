@@ -13,6 +13,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.proyecto.annotation.RdfService;
 import com.proyecto.model.option.Option;
 import com.proyecto.ontology.rdf.ProyectoRdfImpl;
 import com.proyecto.ontology.rdf.answer.TrueFalseAnswerRdf;
@@ -28,10 +29,13 @@ import com.proyecto.util.Constants;
  * @param <O>
  *            La clase de opción que vamos a manejar dentro de la ontología.
  */
+@RdfService
 public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implements OptionRdf<O> {
 
+	private static final long serialVersionUID = -8539107768475990485L;
+	
 	/**
-	 * El servicio para las respuestas booleanas.
+	 * El servicio para las respuestas.
 	 */
 	@Autowired
 	private TrueFalseAnswerRdf trueFalseAnswerRdf;

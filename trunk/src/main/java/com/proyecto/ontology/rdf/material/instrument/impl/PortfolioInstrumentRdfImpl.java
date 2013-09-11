@@ -17,6 +17,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class PortfolioInstrumentRdfImpl extends CompositeInstrumentRdfImpl<PortfolioInstrument> implements PortfolioInstrumentRdf {
 
+	private static final long serialVersionUID = -1461483353780944367L;
+	
 	/**
 	 * La clase de un instrumento semiformal compuesto de portfolio.
 	 */

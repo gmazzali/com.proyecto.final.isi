@@ -27,6 +27,8 @@ import com.proyecto.util.Constants;
 public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfImpl<CorrespondenceInstrument> implements
 		CorrespondenceInstrumentRdf {
 
+	private static final long serialVersionUID = -1498928921943169924L;
+
 	/**
 	 * El servicio de ontología para las respuestas de correspondencia.
 	 */

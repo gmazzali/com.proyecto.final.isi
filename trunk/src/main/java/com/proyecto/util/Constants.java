@@ -26,7 +26,7 @@ public class Constants {
 	 */
 	public static final String PROPERTY_ACTIVITY_BELONG_TO_ASSESSMENT = Constants.NAMESPACE + "activity_belong_to_assessment";
 	public static final String PROPERTY_ACTIVITY_HAVE_DESCRIPTION = Constants.NAMESPACE + "activity_have_description";
-	public static final String PROPERTY_ACTIVITY_HAVE_REACTIVES = Constants.NAMESPACE + "activity_have_reactives";
+	public static final String PROPERTY_ACTIVITY_HAVE_REACTIVE = Constants.NAMESPACE + "activity_have_reactives";
 
 	/**
 	 * Las propiedades de los reactivos.

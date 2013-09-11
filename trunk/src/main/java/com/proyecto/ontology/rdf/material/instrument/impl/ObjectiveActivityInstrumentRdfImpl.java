@@ -19,6 +19,8 @@ import com.proyecto.util.Constants;
 public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActivityInstrument> extends FormalInstrumentRdfImpl<I> implements
 		ObjectiveActivityInstrumentRdf<I> {
 
+	private static final long serialVersionUID = 6932122018155450815L;
+	
 	/**
 	 * La clase del instrumento formal de ensayo.
 	 */

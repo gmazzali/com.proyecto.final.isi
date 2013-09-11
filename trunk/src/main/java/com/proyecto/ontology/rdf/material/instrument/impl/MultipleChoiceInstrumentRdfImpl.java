@@ -18,6 +18,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class MultipleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<MultipleChoiceInstrument> implements MultipleChoiceInstrumentRdf {
 
+	private static final long serialVersionUID = -9028203786061709849L;
+	
 	/**
 	 * La clase del instrumento formal objetivo de selección multiple.
 	 */

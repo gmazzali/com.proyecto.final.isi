@@ -1,5 +1,7 @@
 package com.proyecto.ontology.rdf;
 
+import java.io.Serializable;
+
 import com.common.util.model.Persistence;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
@@ -14,7 +16,7 @@ import com.hp.hpl.jena.ontology.OntModel;
  * @param <E>
  *            La clase de entidad que vamos a almacenar y manipular dentro de las ontologías.
  */
-public interface ProyectoRdf<E extends Persistence<?>> {
+public interface ProyectoRdf<E extends Persistence<?>> extends Serializable {
 
 	/**
 	 * La función encargada de crear e inicializar la clase dentro de la ontología.

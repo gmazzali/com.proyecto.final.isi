@@ -18,6 +18,8 @@ import com.proyecto.util.Constants;
 public class UnrestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstrumentRdfImpl<UnrestrictedEssayActivityInstrument> implements
 		UnrestrictedEssayActivityInstrumentRdf {
 
+	private static final long serialVersionUID = -2550089483112812514L;
+	
 	/**
 	 * La clase del instrumento formal de ensayo no restringido.
 	 */

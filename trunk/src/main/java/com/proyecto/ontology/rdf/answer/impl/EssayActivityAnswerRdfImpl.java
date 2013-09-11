@@ -24,6 +24,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswer> implements EssayActivityAnswerRdf {
 
+	private static final long serialVersionUID = -4349189368946092487L;
+	
 	/**
 	 * La clase de repuesta de ensayo.
 	 */

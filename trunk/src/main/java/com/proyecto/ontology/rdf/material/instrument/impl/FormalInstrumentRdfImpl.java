@@ -18,6 +18,8 @@ import com.proyecto.util.Constants;
  */
 public abstract class FormalInstrumentRdfImpl<I extends FormalInstrument> extends InstrumentRdfImpl<I> implements FormalInstrumentRdf<I> {
 
+	private static final long serialVersionUID = 5874218485643129270L;
+	
 	/**
 	 * La clase de un instrumento formal.
 	 */

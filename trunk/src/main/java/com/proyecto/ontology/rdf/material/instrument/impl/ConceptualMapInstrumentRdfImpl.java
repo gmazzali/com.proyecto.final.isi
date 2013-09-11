@@ -18,6 +18,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class ConceptualMapInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ConceptualMapInstrument> implements ConceptualMapInstrumentRdf {
 
+	private static final long serialVersionUID = 6629093865869793170L;
+	
 	/**
 	 * La clase de un instrumento semiformal simple de mapa conceptual.
 	 */

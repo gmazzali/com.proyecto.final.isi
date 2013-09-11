@@ -27,6 +27,8 @@ import com.proyecto.util.Constants;
 public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInstrument> extends FormalInstrumentRdfImpl<I> implements
 		EssayActivityInstrumentRdf<I> {
 
+	private static final long serialVersionUID = 2092146643897883340L;
+	
 	/**
 	 * El servicio de las respuestas de ensayos.
 	 */

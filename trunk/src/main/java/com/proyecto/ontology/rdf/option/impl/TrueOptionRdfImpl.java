@@ -17,6 +17,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class TrueOptionRdfImpl extends OptionRdfImpl<TrueOption> implements TrueOptionRdf {
 
+	private static final long serialVersionUID = -1333807761651940671L;
+	
 	/**
 	 * La clase de una opción verdadera.
 	 */

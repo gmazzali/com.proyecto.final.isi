@@ -10,14 +10,10 @@ import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Statement;
-import com.proyecto.model.answer.type.TrueFalseAnswerTypeEnum;
 import com.proyecto.model.material.instrument.ChoiceInstrument;
-import com.proyecto.model.option.Distractor;
 import com.proyecto.model.option.Option;
-import com.proyecto.model.option.TrueOption;
 import com.proyecto.ontology.rdf.material.instrument.ChoiceInstrumentRdf;
-import com.proyecto.ontology.rdf.option.DistractorRdf;
-import com.proyecto.ontology.rdf.option.TrueOptionRdf;
+import com.proyecto.ontology.rdf.option.factory.OptionRdfFactory;
 import com.proyecto.util.Constants;
 
 /**
@@ -32,14 +28,13 @@ import com.proyecto.util.Constants;
 public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extends ObjectiveActivityInstrumentRdfImpl<I> implements
 		ChoiceInstrumentRdf<I> {
 
+	private static final long serialVersionUID = -5609545469326584651L;
+
 	/**
 	 * Los servicios de las opciones.
 	 */
 	@Autowired
-	private TrueOptionRdf trueOptionRdf;
-
-	@Autowired
-	private DistractorRdf distractorRdf;
+	private OptionRdfFactory optionRdfFactory;
 
 	/**
 	 * La clase del instrumento formal objetivo de selección.
@@ -75,8 +70,7 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 			if (this.haveOption == null) {
 				this.haveOption = ontology.createObjectProperty(Constants.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
 				this.haveOption.addDomain(this.choiceInstrumentClass);
-				this.haveOption.addRange(this.trueOptionRdf.initClass(ontology));
-				this.haveOption.addRange(this.distractorRdf.initClass(ontology));
+				this.haveOption.addRange(this.optionRdfFactory.topClassHierachy(ontology));
 			}
 		}
 
@@ -91,13 +85,8 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
 		for (Option option : entity.getOptions()) {
-			if (option.getAnswerType() == TrueFalseAnswerTypeEnum.TRUE) {
-				statements.add(ontology.createLiteralStatement(individual, this.haveOption,
-						this.trueOptionRdf.createIndividual(ontology, (TrueOption) option)));
-			} else if (option.getAnswerType() == TrueFalseAnswerTypeEnum.FALSE) {
-				statements.add(ontology.createLiteralStatement(individual, this.haveOption,
-						this.distractorRdf.createIndividual(ontology, (Distractor) option)));
-			}
+			statements.add(ontology.createLiteralStatement(individual, this.haveOption,
+					this.optionRdfFactory.loadInstrumentToOntology(ontology, option)));
 		}
 		ontology.add(statements);
 

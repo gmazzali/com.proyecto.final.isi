@@ -24,6 +24,8 @@ import com.proyecto.util.Constants;
 @RdfService
 public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> implements CompletionAnswerRdf {
 
+	private static final long serialVersionUID = -405924855045939575L;
+	
 	/**
 	 * La clase de respuesta para completar.
 	 */

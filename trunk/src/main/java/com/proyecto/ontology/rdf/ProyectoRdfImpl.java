@@ -16,6 +16,9 @@ import com.hp.hpl.jena.ontology.OntModel;
  */
 public abstract class ProyectoRdfImpl<E extends Persistence<?>> implements ProyectoRdf<E> {
 
+	private static final long serialVersionUID = -1430642317860912928L;
+	
+
 	@Override
 	public Individual createIndividual(OntModel ontology, E entity) {
 		// Creamos la clase.
