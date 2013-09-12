@@ -29,11 +29,11 @@ import com.proyecto.util.Constants;
  * @param <O>
  *            La clase de opción que vamos a manejar dentro de la ontología.
  */
-@RdfService
+@RdfService("OptionRdf")
 public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implements OptionRdf<O> {
 
 	private static final long serialVersionUID = -8539107768475990485L;
-	
+
 	/**
 	 * El servicio para las respuestas.
 	 */

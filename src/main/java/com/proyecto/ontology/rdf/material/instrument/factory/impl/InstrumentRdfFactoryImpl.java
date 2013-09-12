@@ -1,6 +1,7 @@
 package com.proyecto.ontology.rdf.material.instrument.factory.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
@@ -45,7 +46,8 @@ public class InstrumentRdfFactoryImpl implements InstrumentFactoryRdf {
 	 * El servicio de la clase superior de la jerarquía de instrumentos.
 	 */
 	@Autowired
-	private InstrumentRdf<?> instrumentRdf;
+	@Qualifier("InstrumentRdf")
+	private InstrumentRdf<Instrument> instrumentRdf;
 
 	/**
 	 * Los servicios de los instrumentos dentro de la ontología.
@@ -84,7 +86,7 @@ public class InstrumentRdfFactoryImpl implements InstrumentFactoryRdf {
 	public OntClass topClassHierachy(OntModel ontology) {
 		return this.instrumentRdf.initClass(ontology);
 	}
-	
+
 	@Override
 	public Individual loadInstrumentToOntology(OntModel ontology, Instrument instrument) {
 

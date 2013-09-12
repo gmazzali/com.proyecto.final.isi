@@ -21,7 +21,7 @@ import com.common.util.holder.HolderMessage;
 import com.proyecto.model.agent.Subject;
 import com.proyecto.security.AccessControl;
 import com.proyecto.view.Resources;
-import com.proyecto.view.base.AssessmentManagerDialog;
+import com.proyecto.view.base.MainWindowFrame;
 
 /**
  * La clase que crea la ventana donde van a desplegarse todas las materias a las que se encuentra inscrito el agente que esta logueado en el sistema
@@ -35,11 +35,17 @@ public class SelectSubjectDialog extends JDialog {
 
 	private static final long serialVersionUID = 1264943776318050914L;
 
-	@Autowired
-	private AssessmentManagerDialog assessmentManagerDialog;
-
+	/**
+	 * El control de acceso a la aplicación.
+	 */
 	@Autowired
 	private AccessControl accessControl;
+
+	/**
+	 * La ventana principal de la aplicación.
+	 */
+	@Autowired
+	private MainWindowFrame mainWindowFrame;
 
 	/**
 	 * El combo de las materias.
@@ -123,7 +129,7 @@ public class SelectSubjectDialog extends JDialog {
 			this.dispose();
 
 			// Abrimos la ventana de control de evaluaciones.
-			JFrame frame = this.assessmentManagerDialog.createFrame();
+			JFrame frame = this.mainWindowFrame.createFrame();
 			frame.setLocationRelativeTo(this);
 			frame.setVisible(true);
 

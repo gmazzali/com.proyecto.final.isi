@@ -1,6 +1,7 @@
 package com.proyecto.ontology.rdf.option.factory.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
@@ -29,7 +30,8 @@ public class OptionFactoryRdfImpl implements OptionFactoryRdf {
 	 * El servicio para la clase superior.
 	 */
 	@Autowired
-	private OptionRdf<?> optionRdf;
+	@Qualifier("OptionRdf")
+	private OptionRdf<Option> optionRdf;
 
 	/**
 	 * Los servicios para las opciones.
