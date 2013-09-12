@@ -39,11 +39,11 @@ public class ReactiveFactoryRdfTestUnit {
 	}
 
 	/**
-	 * Las pruebas sobre la factoria de los reactivos.
+	 * Las pruebas sobre la factoría de los reactivos.
 	 */
 	@Test
 	public void pruebaDeLaFactoriaDeLosReactivos() {
-		
+
 		System.out.println("######################################################################");
 		System.out.println("################# FACTORÍA DE REACTIVO EN ONTOLOGÍAS #################");
 		System.out.println("######################################################################");

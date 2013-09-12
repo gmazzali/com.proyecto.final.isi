@@ -1,6 +1,7 @@
 package com.proyecto.ontology.rdf.answer.factory.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
@@ -26,14 +27,15 @@ import com.proyecto.ontology.rdf.answer.factory.AnswerFactoryRdf;
  */
 @RdfService
 public class AnswerFactoryRdfImpl implements AnswerFactoryRdf {
-	
+
 	private static final long serialVersionUID = 8751798481664946895L;
 
 	/**
 	 * El servicio para la cima de la jerarquía.
 	 */
 	@Autowired
-	private AnswerRdf<?> answerRdf;
+	@Qualifier("AnswerRdf")
+	private AnswerRdf<Answer> answerRdf;
 
 	/**
 	 * Los servicios para las clases hijas.
@@ -77,7 +79,7 @@ public class AnswerFactoryRdfImpl implements AnswerFactoryRdf {
 			TrueFalseAnswer entity = (TrueFalseAnswer) answer;
 			return this.trueFalseAnswerRdf.createIndividual(ontology, entity);
 		}
-		
+
 		return null;
 	}
 }

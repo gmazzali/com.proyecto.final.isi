@@ -18,11 +18,11 @@ import com.proyecto.util.Constants;
  * @param <A>
  *            La clase de respuesta que vamos a cargar.
  */
-@RdfService
+@RdfService("AnswerRdf")
 public class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implements AnswerRdf<A> {
 
 	private static final long serialVersionUID = 7933072370435571965L;
-	
+
 	/**
 	 * La clase de respuesta.
 	 */
@@ -31,12 +31,12 @@ public class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implemen
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
-		if (answerClass == null) {
-			
+		if (this.answerClass == null) {
+
 			String answerClassName = Constants.NAMESPACE + Answer.class.getSimpleName();
 			this.answerClass = ontology.getOntClass(answerClassName);
 
-			if (answerClass == null) {
+			if (this.answerClass == null) {
 				this.answerClass = ontology.createClass(answerClassName);
 			}
 		}

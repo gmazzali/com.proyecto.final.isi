@@ -25,11 +25,11 @@ import com.proyecto.util.Constants;
  * @param <I>
  *            La clase de instrumentos que vamos a manejar dentro de la ontología.
  */
-@RdfService
+@RdfService("InstrumentRdf")
 public class InstrumentRdfImpl<I extends Instrument> extends MaterialRdfImpl<I> implements InstrumentRdf<I> {
 
 	private static final long serialVersionUID = 3190643394940661101L;
-	
+
 	/**
 	 * La clase de instrumento.
 	 */
