@@ -45,9 +45,10 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	private static final long serialVersionUID = 3339143561900518060L;
 
 	/*
-	 * El instrumento que vamos a manipular.
+	 * El instrumento que vamos a manipular y la opción dentro de la ventana.
 	 */
 	protected ChoiceInstrument choiceInstrument;
+	protected Option option;
 
 	/**
 	 * El listado de las opciones y la opción que estamos editando en la ventana.
@@ -175,11 +176,23 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		JRadioButton allTrueRadioButton = new JRadioButton(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.true"));
 		allTrueRadioButton.setFont(new Font("Arial", Font.BOLD, 11));
 		allTrueRadioButton.setBounds(147, 360, 591, 18);
+		allTrueRadioButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				managerAnswerRadioButtons(e);
+			}
+		});
 		this.getContentPane().add(allTrueRadioButton);
 
 		JRadioButton allFalseRadioButton = new JRadioButton(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.false"));
 		allFalseRadioButton.setFont(new Font("Arial", Font.BOLD, 11));
 		allFalseRadioButton.setBounds(147, 380, 591, 18);
+		allFalseRadioButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				managerAnswerRadioButtons(e);
+			}
+		});
 		this.getContentPane().add(allFalseRadioButton);
 
 		JSeparator separator = new JSeparator();
@@ -213,57 +226,88 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.rejectButton);
 	}
 
+	@Override
+	public void setEnabled(boolean b) {
+		super.setEnabled(b);
+
+		this.descriptionTextArea.setEnabled(b);
+
+		this.optionsList.setEnabled(b);
+
+		this.optionAnswerComboBox.setEnabled(b);
+		this.optionTextArea.setEnabled(b);
+
+		this.commitButton.setEnabled(b);
+		this.rejectButton.setEnabled(b);
+	}
+
 	/**
 	 * La función que administra los cambios sobre los radioButtons para las respuestas "Todas las anteriores" o "ninguna de las anteriores".
 	 */
 	@SuppressWarnings("unused")
-	private void managerAnswerRadioButtons() {
-		// Si está el botón de "Todas las anteriores" habilitado.
-		if (this.allChoiceRadioButton.isSelected()) {
+	private void managerAnswerRadioButtons(ActionEvent event) {
+		// El radioBotton que lanzo el evento.
+		JRadioButton button = (JRadioButton) event.getSource();
 
+		// Si el boton "Todas las anteriores" activo el método.
+		if (button == this.allChoiceRadioButton) {
+
+			// Si estaba seleccionado anteriormente, lo deseleccionamos y habilitamos la carga de la descripción.
+			if (this.allChoiceRadioButton.isSelected()) {
+				this.allChoiceRadioButton.setSelected(false);
+				this.noneChoiceRadioButton.setSelected(false);
+
+				this.optionTextArea.setText("");
+				this.optionTextArea.setEnabled(true);
+			}
+			// Sino, deshabilitamos la carga de datos en el cuadro de descripción de la opción.
+			else {
+				this.allChoiceRadioButton.setSelected(true);
+				this.noneChoiceRadioButton.setSelected(false);
+
+				this.optionTextArea.setText(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.true"));
+				this.optionTextArea.setEnabled(false);
+			}
+		} else if (button == this.noneChoiceRadioButton) {
+
+			// Si estaba seleccionado anteriormente, lo deseleccionamos y habilitamos la carga de la descripción.
+			if (this.noneChoiceRadioButton.isSelected()) {
+				this.allChoiceRadioButton.setSelected(false);
+				this.noneChoiceRadioButton.setSelected(false);
+
+				this.optionTextArea.setText("");
+				this.optionTextArea.setEnabled(true);
+			}
+			// Sino, deshabilitamos la carga de datos en el cuadro de descripción de la opción.
+			else {
+				this.allChoiceRadioButton.setSelected(false);
+				this.noneChoiceRadioButton.setSelected(true);
+
+				this.optionTextArea.setText(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.false"));
+				this.optionTextArea.setEnabled(false);
+			}
 		}
-
-		// Si está el botón de "Ninguna de las anteriores" habilitado.
-		if (this.noneChoiceRadioButton.isSelected()) {
-
-		}
-		// TODO gmazzali Hacer toda la administración de los radioButtons de la ventana.
 	}
 
 	/**
 	 * La función utilizada para agregar una nueva opción al listado ya cargado.
 	 */
 	private void addOption() {
-		// Obtenemos su descripción y el tipo de opción.
-		String optionDescription = this.optionTextArea.getText().trim();
-		TrueFalseAnswerTypeEnum answerType = (TrueFalseAnswerTypeEnum) this.optionAnswerComboBox.getSelectedItem();
+		try {
+			// Cargamos la opcion desde la ventana.
+			this.fromDialogToOption();
 
-		// Corroboramos que haya algo en la descripción de la opción.
-		if (answerType != null) {
-
-			Option option = null;
-			switch (answerType) {
-				case TRUE:
-					option = new TrueOption();
-					break;
-				case FALSE:
-					option = new Distractor();
-					break;
-			}
-
-			// Si hay una opción creada, la completamos.
-			if (option != null) {
-				option.setDescription(optionDescription);
-
+			// Cargamos la opción a la lista.
+			if (this.option != null) {
 				// Agregamos la opción al listado.
 				DefaultListModel<Option> optionModel = (DefaultListModel<Option>) this.optionsList.getModel();
-				optionModel.addElement(option);
-
-				// Borramos el campo de tipo de respuesta y de su descripción.
-				this.optionAnswerComboBox.setSelectedIndex(-1);
-				this.optionTextArea.setText("");
-				this.optionTextArea.requestFocus();
+				optionModel.addElement(this.option);
 			}
+
+			// Vaciamos los campos de opciones.
+			this.emptyOptionFields();
+		} catch (CheckedException ex) {
+			ex.printStackTrace();
 		}
 	}
 
@@ -275,18 +319,21 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		Integer optionIndex = this.optionsList.getSelectedIndex();
 
 		if (optionIndex >= 0) {
-			// Agregamos la opción que estamos editando.
-			this.addOption();
+			// Vemos si tenemos alguna opcion anterior, si la tenemos, la volvemos a guardar.
+			if (this.option != null) {
+				// Agregamos la opción al listado.
+				DefaultListModel<Option> optionModel = (DefaultListModel<Option>) this.optionsList.getModel();
+				optionModel.addElement(this.option);
+				this.emptyOptionFields();
+			}
 
-			// Modificamos la opción seleccionada.
+			// Volvemos a tomar la opción para la edición.
 			DefaultListModel<Option> optionModel = (DefaultListModel<Option>) this.optionsList.getModel();
-			Option option = optionModel.get(optionIndex);
+			this.option = optionModel.get(optionIndex);
 			optionModel.remove(optionIndex);
 
-			// Cargamos la opción para editarla.
-			this.optionAnswerComboBox.setSelectedItem(option.getAnswerType());
-			this.optionTextArea.setText(option.getDescription());
-			this.optionTextArea.requestFocus();
+			// Cargamos la opción dentro de la ventana para editarla.
+			this.fromOptionToDialog();
 		}
 	}
 
@@ -308,19 +355,64 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		return false;
 	}
 
-	@Override
-	public void setEnabled(boolean b) {
-		super.setEnabled(b);
+	/**
+	 * La función encargada de tomar una opción y cargarla dentro de la ventana de edición.
+	 */
+	// TODO gmazzali Hacer lo del pase de la opcion que estamos editando a la ventana.
+	private void fromOptionToDialog() {
+		// Cargamos la opción para editarla.
+		this.optionAnswerComboBox.setSelectedItem(this.option.getAnswerType());
+		this.optionTextArea.setText(this.option.getDescription());
+		this.optionTextArea.requestFocus();
+	}
 
-		this.descriptionTextArea.setEnabled(b);
+	/**
+	 * La función encargada de cargar una opción en base a lo que tenemos dentro de la ventana.
+	 * 
+	 * @throws CheckedException
+	 *             En caso de que la opción tenga valores inválidos.
+	 */
+	// TODO gmazzali Hacer lo del pase de los campos de la ventana a la opcion para guardarla.
+	private void fromDialogToOption() throws CheckedException {
+		// Obtenemos su descripción y el tipo de opción.
+		String optionDescription = this.optionTextArea.getText().trim();
+		TrueFalseAnswerTypeEnum answerType = (TrueFalseAnswerTypeEnum) this.optionAnswerComboBox.getSelectedItem();
 
-		this.optionsList.setEnabled(b);
+		// Corroboramos que se haya seleccionado un tipo de opción y la descripción tenga algo cargado.
+		if (answerType != null && !optionDescription.isEmpty()) {
 
-		this.optionAnswerComboBox.setEnabled(b);
-		this.optionTextArea.setEnabled(b);
+			// Si hay una opción cargada, verificamos que no se haya cambiado el tipo y modifcamos esa.
+			if (this.option != null && this.option.getAnswerType().equals(answerType)) {
+				this.option.setDescription(optionDescription);
+			}
+			// Sino, creamos una opción nueva.
+			else {
+				switch (answerType) {
+				case TRUE:
+					this.option = new TrueOption();
+					break;
+				case FALSE:
+					this.option = new Distractor();
+					break;
+				}
 
-		this.commitButton.setEnabled(b);
-		this.rejectButton.setEnabled(b);
+				this.option.setDescription(optionDescription);
+			}
+		} else {
+			throw new CheckedException("error.option.load");
+		}
+	}
+
+	/**
+	 * La función de vaciado de los campos de carga de las opciones.
+	 */
+	// TODO gmazzali Hacer lo del vaciado de los campos de las opciones.
+	private void emptyOptionFields() {
+		// Borramos el campo de tipo de respuesta, su descripción y la opción.
+		this.optionAnswerComboBox.setSelectedIndex(-1);
+		this.optionTextArea.setText("");
+		this.optionTextArea.requestFocus();
+		this.option = null;
 	}
 
 	@Override
@@ -376,7 +468,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		DefaultListModel<Option> optionModel = (DefaultListModel<Option>) this.optionsList.getModel();
 		optionModel.clear();
 
-		this.optionTextArea.setText("");
+		this.emptyOptionFields();
 	}
 
 	@Override
