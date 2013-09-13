@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -22,7 +23,6 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +32,9 @@ import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.rule.RuleSet;
 import com.proyecto.security.AccessControl;
+import com.proyecto.service.material.assessment.AssessmentService;
+import com.proyecto.service.rule.RuleSetService;
+import com.proyecto.view.Resources;
 import com.proyecto.view.login.SelectSubjectDialog;
 import com.proyecto.view.material.activity.ActivityListDialog;
 import com.proyecto.view.material.assessment.AssessmentListDialog;
@@ -84,6 +87,18 @@ public class MainWindowFrame extends JFrame {
 	private RuleSetListDialog ruleSetListDialog;
 
 	/**
+	 * El servicio de las evaluaciones.
+	 */
+	@Autowired
+	private AssessmentService assessmentService;
+
+	/**
+	 * El servicio de los conjuntos de reglas.
+	 */
+	@Autowired
+	private RuleSetService ruleSetService;
+
+	/**
 	 * La barra de menu.
 	 */
 	private JMenuBar menuBar;
@@ -95,8 +110,8 @@ public class MainWindowFrame extends JFrame {
 	/**
 	 * Las listas de evaluaciones y de conjuntos de reglas.
 	 */
-	private JList<RuleSet> ruleSetList;
 	private JList<Assessment> assessmentList;
+	private JList<RuleSet> ruleSetList;
 	/**
 	 * El area donde vamos a cargar el resultado de la validación de la evaluación.
 	 */
@@ -108,6 +123,15 @@ public class MainWindowFrame extends JFrame {
 	private JButton ruleSetManagerButton;
 	private JButton evaluateButton;
 	private JButton clearResultButton;
+	/**
+	 * El label de progreso.
+	 */
+	private JLabel progressLabel;
+
+	/**
+	 * El contador de procesos que corren de fondo.
+	 */
+	private Integer taskCount = 0;
 
 	/**
 	 * Constructor de la ventana principal.
@@ -416,6 +440,107 @@ public class MainWindowFrame extends JFrame {
 	}
 
 	/**
+	 * La función encargada de actualizar el listado de las evaluaciones que tenemos dentro de la ventana creando un proceso secundario.
+	 */
+	private void updateAssessmentList() {
+		// Ejecutamos las acciones antes de procesar.
+		this.beforeExecuteProccess();
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					// Sumamos 1 la cantidad de procesos.
+					MainWindowFrame.this.taskCount++;
+
+					// Cargamos el listado dentro de la tabla.
+					DefaultListModel<Assessment> model = new DefaultListModel<Assessment>();
+					List<Assessment> assessments = MainWindowFrame.this.assessmentService.findBySubject(MainWindowFrame.this.accessControl
+							.getSubjectSelected());
+
+					// Cargamos el listado de las evaluaciones que filtramos.
+					for (Assessment assessment : assessments) {
+						model.addElement(assessment);
+					}
+					MainWindowFrame.this.assessmentList.setModel(model);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(MainWindowFrame.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				} finally {
+					// Restamos 1 la cantidad de procesos.
+					MainWindowFrame.this.taskCount--;
+					MainWindowFrame.this.afterExecuteProccess();
+				}
+			}
+		}.start();
+	}
+
+	/**
+	 * La función encargada de actualizar el listado de las reglas que tenemos dentro de la ventana.
+	 */
+	private void updateRuleSetList() {
+		// Ejecutamos las acciones antes de procesar.
+		this.beforeExecuteProccess();
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					// Sumamos 1 la cantidad de procesos.
+					MainWindowFrame.this.taskCount++;
+
+					// Cargamos el listado dentro de la tabla.
+					DefaultListModel<RuleSet> model = new DefaultListModel<RuleSet>();
+					List<RuleSet> ruleSets = MainWindowFrame.this.ruleSetService.findAll();
+					// TODO gmazzali Hacer lo de la carga de los conjuntos por materias.
+
+					// Cargamos el listado de los conjuntos que filtramos.
+					for (RuleSet ruleSet : ruleSets) {
+						model.addElement(ruleSet);
+					}
+					MainWindowFrame.this.ruleSetList.setModel(model);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(MainWindowFrame.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				} finally {
+					// Restamos 1 la cantidad de procesos.
+					MainWindowFrame.this.taskCount--;
+					MainWindowFrame.this.afterExecuteProccess();
+				}
+			}
+		}.start();
+	}
+
+	/**
+	 * La función antes de procesar las evaluaciones.
+	 */
+	private void beforeExecuteProccess() {
+		this.setEnabled(false);
+
+		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+	}
+
+	/*
+	 * La función después de procesar las evaluaciones.
+	 */
+	private void afterExecuteProccess() {
+		if (taskCount <= 0) {
+			this.setEnabled(true);
+			this.progressLabel.setIcon(null);
+		}
+	}
+
+	/**
+	 * La función encargada de limpiar el área donde tenemos el resultado de la ejecución de la validación de las evaluaciones.
+	 */
+	private void clearResults() {
+		this.resultTextArea.setText("");
+	}
+
+	/**
 	 * La función encargada de crear la ventana principal de la aplicación.
 	 * 
 	 * @return La ventana principal de la aplicación cargada.
@@ -424,6 +549,8 @@ public class MainWindowFrame extends JFrame {
 		this.setTitle(HolderMessage.getMessage("main.window.title"));
 
 		this.updateAgentData();
+		this.updateAssessmentList();
+		this.updateRuleSetList();
 
 		return this;
 	}
