@@ -25,8 +25,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.service.rule.RuleService;
+import com.proyecto.view.Resources;
 
 /**
  * La ventana donde vamos a desplegar el listado de las reglas que vamos a tener dentro del sistema.
@@ -54,7 +56,6 @@ public class RuleListDialog extends JDialog {
 	/**
 	 * Los modelos de las listas de reglas y sus listas.
 	 */
-	private DefaultListModel<Rule> ruleModelList;
 	private JList<Rule> ruleList;
 
 	/**
@@ -81,8 +82,10 @@ public class RuleListDialog extends JDialog {
 		rulesScrollPane.setBounds(10, 11, 457, 340);
 		contentPanel.add(rulesScrollPane);
 
-		this.ruleModelList = new DefaultListModel<Rule>();
 		this.ruleList = new JList<Rule>();
+		this.ruleList.setModel(new DefaultListModel<Rule>());
+		this.ruleList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		this.ruleList.setFont(new Font("Arial", Font.PLAIN, 12));
 		this.ruleList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -91,15 +94,10 @@ public class RuleListDialog extends JDialog {
 				}
 			}
 		});
-		this.ruleList.setModel(this.ruleModelList);
-		this.ruleList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		this.ruleList.setFont(new Font("Arial", Font.PLAIN, 12));
-		rulesScrollPane.add(this.ruleList);
 		rulesScrollPane.setViewportView(this.ruleList);
 
-		JButton newRuleButton = new JButton("Crear");
-		newRuleButton.setFont(new Font("Arial", Font.BOLD, 12));
-		newRuleButton.setBounds(479, 11, 100, 30);
+		JButton newRuleButton = new JButton(Resources.ADD_ELEMENT_ICON);
+		newRuleButton.setBounds(479, 11, 35, 35);
 		newRuleButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -108,9 +106,8 @@ public class RuleListDialog extends JDialog {
 		});
 		contentPanel.add(newRuleButton);
 
-		JButton modifyRuleButton = new JButton("Editar");
-		modifyRuleButton.setFont(new Font("Arial", Font.BOLD, 12));
-		modifyRuleButton.setBounds(479, 53, 100, 30);
+		JButton modifyRuleButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
+		modifyRuleButton.setBounds(479, 53, 35, 35);
 		modifyRuleButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,9 +116,8 @@ public class RuleListDialog extends JDialog {
 		});
 		contentPanel.add(modifyRuleButton);
 
-		JButton deleteRuleButton = new JButton("Eliminar");
-		deleteRuleButton.setFont(new Font("Arial", Font.BOLD, 12));
-		deleteRuleButton.setBounds(479, 95, 100, 30);
+		JButton deleteRuleButton = new JButton(Resources.DELETE_ELEMENT_ICON);
+		deleteRuleButton.setBounds(479, 95, 35, 35);
 		contentPanel.add(deleteRuleButton);
 		deleteRuleButton.addActionListener(new ActionListener() {
 			@Override
@@ -130,9 +126,8 @@ public class RuleListDialog extends JDialog {
 			}
 		});
 
-		JButton backButton = new JButton("Volver");
-		backButton.setFont(new Font("Arial", Font.BOLD, 12));
-		backButton.setBounds(479, 321, 100, 30);
+		JButton backButton = new JButton(Resources.CLOSE_ICON);
+		backButton.setBounds(479, 321, 35, 35);
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -204,9 +199,11 @@ public class RuleListDialog extends JDialog {
 	 * 
 	 * @return La ventana para desplegar el listado de las reglas.
 	 */
-	public RuleListDialog createDialog() {
-		this.setTitle("Listado de Reglas");
+	public RuleListDialog createCrudDialog() {
+		this.setTitle(HolderMessage.getMessage("rule.manager.dialog.title"));
+		
 		this.loadRules();
+		
 		return this;
 	}
 
@@ -221,7 +218,7 @@ public class RuleListDialog extends JDialog {
 				{ "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			RuleListDialog dialog = HolderApplicationContext.getContext().getBean(RuleListDialog.class).createDialog();
+			RuleListDialog dialog = HolderApplicationContext.getContext().getBean(RuleListDialog.class).createCrudDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
