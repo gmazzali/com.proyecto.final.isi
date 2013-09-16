@@ -305,7 +305,7 @@ public class AssessmentListDialog extends JDialog {
 							AssessmentListDialog.this.assessmentService.delete(deletedAssessment);
 							AssessmentListDialog.this.updateAssessments();
 						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(AssessmentListDialog.this, e.getMessage(),
+							JOptionPane.showMessageDialog(AssessmentListDialog.this, HolderMessage.getMessage("assessment.manager.delete.failed"),
 									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 						} finally {
 							AssessmentListDialog.this.afterExecuteProccess();
@@ -339,10 +339,6 @@ public class AssessmentListDialog extends JDialog {
 			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			// MultipleChoiceInstrument instrument =
-			// HolderApplicationContext.getContext().getBean(MultipleChoiceInstrumentService.class).findById(37);
-			// MultipleChoiceInstrumentFormDialog dialog = (MultipleChoiceInstrumentFormDialog) HolderApplicationContext.getContext()
-			// .getBean(MultipleChoiceInstrumentFormDialog.class).createEditDialog(instrument);
 			AssessmentListDialog dialog = HolderApplicationContext.getContext().getBean(AssessmentListDialog.class).createCrudDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);

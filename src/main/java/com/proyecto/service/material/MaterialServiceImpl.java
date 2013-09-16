@@ -40,6 +40,16 @@ public abstract class MaterialServiceImpl<E extends Material<PK>, PK extends Ser
 		return this.findByFilter(filter);
 	}
 
+	@Override
+	public List<E> findAll() throws CheckedException {
+		Filter filter = new Filter();
+
+		// Cargamos solos los materiales activos.
+		filter = Filter.and(filter, Filter.eq(Material.Attributes.ACTIVE, true));
+
+		return this.findByFilter(filter);
+	}
+
 	/**
 	 * El borrado se realiza cambiando el estado del material a inactivo.
 	 * 

@@ -23,6 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -301,13 +302,23 @@ public class MainWindowFrame extends JFrame {
 		this.resultTextArea.setEditable(false);
 		resultScrollPane.setViewportView(this.resultTextArea);
 
-		this.clearResultButton = new JButton();
+		this.clearResultButton = new JButton(Resources.ERASE_ICON);
 		this.clearResultButton.setBounds(530, 450, 35, 35);
+		this.clearResultButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainWindowFrame.this.clearResults();
+			}
+		});
 		this.getContentPane().add(this.clearResultButton);
 
-		this.evaluateButton = new JButton();
+		this.evaluateButton = new JButton(Resources.PROCCESS_ICON);
 		this.evaluateButton.setBounds(483, 450, 35, 35);
 		this.getContentPane().add(this.evaluateButton);
+
+		this.progressLabel = new JLabel();
+		this.progressLabel.setBounds(848, 450, 35, 35);
+		this.getContentPane().add(this.progressLabel);
 
 		JSeparator separator2 = new JSeparator();
 		separator2.setBounds(0, 497, 894, 2);
@@ -341,7 +352,6 @@ public class MainWindowFrame extends JFrame {
 		this.subjectNameLabel.setForeground(Color.BLUE);
 		this.subjectNameLabel.setFont(new Font("Arial", Font.PLAIN, 10));
 		dataPanel.add(this.subjectNameLabel);
-
 	}
 
 	@Override
@@ -381,7 +391,7 @@ public class MainWindowFrame extends JFrame {
 	 * La función que permite administrar las reglas que tenemos dentro del sistema.
 	 */
 	private void managerRules() {
-		JDialog dialog = this.ruleSetListDialog.createDialog();
+		JDialog dialog = this.ruleSetListDialog.createCrudDialog();
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 	}
@@ -527,7 +537,7 @@ public class MainWindowFrame extends JFrame {
 	 * La función después de procesar las evaluaciones.
 	 */
 	private void afterExecuteProccess() {
-		if (taskCount <= 0) {
+		if (this.taskCount <= 0) {
 			this.setEnabled(true);
 			this.progressLabel.setIcon(null);
 		}

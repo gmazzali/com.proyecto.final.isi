@@ -129,7 +129,7 @@ public class ReactiveFormDialog extends JDialog {
 
 		JLabel selectionTypeEvaluationLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.type"));
 		selectionTypeEvaluationLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		selectionTypeEvaluationLabel.setBounds(10, 11, 104, 14);
+		selectionTypeEvaluationLabel.setBounds(10, 11, 701, 14);
 		contentPanel.add(selectionTypeEvaluationLabel);
 
 		this.assessementTypeComboBox = new JComboBox<ReactiveType>();
@@ -139,7 +139,7 @@ public class ReactiveFormDialog extends JDialog {
 
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.description"));
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 68, 65, 14);
+		descriptionLabel.setBounds(10, 68, 701, 14);
 		contentPanel.add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
@@ -156,7 +156,7 @@ public class ReactiveFormDialog extends JDialog {
 
 		JLabel instrumentLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.instrument"));
 		instrumentLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		instrumentLabel.setBounds(10, 185, 69, 14);
+		instrumentLabel.setBounds(10, 185, 654, 14);
 		contentPanel.add(instrumentLabel);
 
 		JScrollPane instrumentScrollPane = new JScrollPane();

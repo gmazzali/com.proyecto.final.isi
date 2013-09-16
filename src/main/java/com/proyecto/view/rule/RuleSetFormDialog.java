@@ -14,7 +14,9 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -22,11 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.model.rule.RuleSet;
 import com.proyecto.service.rule.RuleService;
 import com.proyecto.service.rule.RuleSetService;
 import com.proyecto.util.Validator;
+import com.proyecto.view.Resources;
 
 /**
  * La clase que define la ventana de edición de un conjunto de reglas que tenemos dentro del sistema.
@@ -44,6 +48,7 @@ public class RuleSetFormDialog extends JDialog {
 	 */
 	@Autowired
 	private RuleService ruleService;
+
 	/**
 	 * El servicio del conjunto de reglas.
 	 */
@@ -56,19 +61,28 @@ public class RuleSetFormDialog extends JDialog {
 	private RuleSet ruleSet;
 
 	/**
-	 * Los modelos de las listas de reglas y sus listas.
-	 */
-	private DefaultListModel<Rule> enableRuleModelList;
-	private JList<Rule> enableRulesList;
-	private DefaultListModel<Rule> disableRuleModelList;
-	private JList<Rule> disableRulesList;
-	/**
 	 * La descripción del conjunto de reglas.
 	 */
 	private JTextPane descriptionTextPane;
+	/**
+	 * Los modelos de las listas de reglas y sus listas.
+	 */
+	private JList<Rule> activeRulesList;
+	private JList<Rule> deactiveRulesList;
+	/**
+	 * Los botones de acción.
+	 */
+	private JButton enableRuleButton;
+	private JButton disableRuleButton;
+	private JButton commitButton;
+	private JButton rejectButton;
+	/**
+	 * El label de progreso.
+	 */
+	private JLabel progressLabel;
 
 	/**
-	 * Create the dialog.
+	 * Constructor de una ventana de edición de un conjunto de regla.
 	 */
 	public RuleSetFormDialog() {
 		super();
@@ -79,8 +93,9 @@ public class RuleSetFormDialog extends JDialog {
 	 * La función encargada de crear la ventana de edición de conjuntos.
 	 */
 	public void init() {
+		this.setModal(true);
 		this.setResizable(false);
-		this.setBounds(100, 100, 840, 425);
+		this.setBounds(100, 100, 832, 446);
 		this.getContentPane().setLayout(new BorderLayout());
 
 		JPanel contentPanel = new JPanel();
@@ -88,109 +103,116 @@ public class RuleSetFormDialog extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel descriptionLabel = new JLabel("Descripci\u00F3n");
+		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("ruleset.form.label.description"));
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 11, 133, 14);
+		descriptionLabel.setBounds(10, 11, 807, 14);
 		contentPanel.add(descriptionLabel);
 
 		this.descriptionTextPane = new JTextPane();
-		this.descriptionTextPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		this.descriptionTextPane.setBorder(new LineBorder(Color.GRAY, 2));
 		this.descriptionTextPane.setFont(new Font("Arial", Font.PLAIN, 12));
-		this.descriptionTextPane.setBounds(10, 36, 815, 58);
+		this.descriptionTextPane.setBounds(10, 36, 807, 58);
 		contentPanel.add(this.descriptionTextPane);
+
+		JLabel enableRuleLabel = new JLabel(HolderMessage.getMessage("ruleset.form.label.rules.active"));
+		enableRuleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		enableRuleLabel.setFont(new Font("Arial", Font.BOLD, 11));
+		enableRuleLabel.setBounds(10, 106, 375, 14);
+		contentPanel.add(enableRuleLabel);
 
 		JScrollPane enableRulesScrollPane = new JScrollPane();
 		enableRulesScrollPane.setBounds(10, 130, 375, 216);
 		contentPanel.add(enableRulesScrollPane);
 
-		this.enableRuleModelList = new DefaultListModel<Rule>();
-		this.enableRulesList = new JList<Rule>();
-		this.enableRulesList.setSize(388, 214);
-		this.enableRulesList.setModel(this.enableRuleModelList);
-		this.enableRulesList.setFont(new Font("Arial", Font.BOLD, 11));
-		enableRulesScrollPane.add(this.enableRulesList);
-		enableRulesScrollPane.setViewportView(this.enableRulesList);
+		this.activeRulesList = new JList<Rule>();
+		this.activeRulesList.setBorder(new LineBorder(new Color(128, 128, 128)));
+		this.activeRulesList.setSize(388, 214);
+		this.activeRulesList.setModel(new DefaultListModel<Rule>());
+		this.activeRulesList.setFont(new Font("Arial", Font.BOLD, 11));
+		enableRulesScrollPane.setViewportView(this.activeRulesList);
 
-		JScrollPane disableRulesScrollPane = new JScrollPane();
-		disableRulesScrollPane.setBounds(450, 130, 375, 216);
-		contentPanel.add(disableRulesScrollPane);
-
-		this.disableRuleModelList = new DefaultListModel<Rule>();
-		this.disableRulesList = new JList<Rule>();
-		this.disableRulesList.setLocation(441, 0);
-		this.disableRulesList.setModel(this.disableRuleModelList);
-		this.disableRulesList.setFont(new Font("Arial", Font.BOLD, 11));
-		disableRulesScrollPane.add(this.disableRulesList);
-		disableRulesScrollPane.setViewportView(this.disableRulesList);
-
-		JLabel enableRuleLabel = new JLabel("Reglas Activas");
-		enableRuleLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		enableRuleLabel.setBounds(157, 106, 80, 14);
-		contentPanel.add(enableRuleLabel);
-
-		JLabel disableRuleLabel = new JLabel("Reglas Desactivadas");
-		disableRuleLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		disableRuleLabel.setBounds(581, 105, 112, 14);
-		contentPanel.add(disableRuleLabel);
-
-		JButton enableRuleButton = new JButton("<<");
-		enableRuleButton.setFont(new Font("Arial", Font.BOLD, 11));
-		enableRuleButton.setBounds(395, 130, 45, 38);
-		enableRuleButton.addActionListener(new ActionListener() {
+		this.enableRuleButton = new JButton(Resources.ADD_RULE_ICON);
+		this.enableRuleButton.setFont(new Font("Arial", Font.BOLD, 11));
+		this.enableRuleButton.setBounds(397, 130, 35, 35);
+		this.enableRuleButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleSetFormDialog.this.enableRule();
 			}
 		});
-		contentPanel.add(enableRuleButton);
+		contentPanel.add(this.enableRuleButton);
 
-		JButton disableRuleButton = new JButton(">>");
-		disableRuleButton.setFont(new Font("Arial", Font.BOLD, 11));
-		disableRuleButton.setBounds(395, 179, 45, 38);
-		disableRuleButton.addActionListener(new ActionListener() {
+		this.disableRuleButton = new JButton(Resources.REMOVE_RULE_ICON);
+		this.disableRuleButton.setFont(new Font("Arial", Font.BOLD, 11));
+		this.disableRuleButton.setBounds(397, 177, 35, 35);
+		this.disableRuleButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleSetFormDialog.this.disableRule();
 			}
 		});
-		contentPanel.add(disableRuleButton);
+		contentPanel.add(this.disableRuleButton);
 
-		JButton cancelButton = new JButton("Cancelar");
-		cancelButton.setFont(new Font("Arial", Font.BOLD, 12));
-		cancelButton.setBounds(725, 357, 100, 30);
-		cancelButton.addActionListener(new ActionListener() {
+		JLabel disableRuleLabel = new JLabel(HolderMessage.getMessage("ruleset.form.label.rules.deactive"));
+		disableRuleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		disableRuleLabel.setFont(new Font("Arial", Font.BOLD, 11));
+		disableRuleLabel.setBounds(442, 106, 375, 14);
+		contentPanel.add(disableRuleLabel);
+
+		JScrollPane disableRulesScrollPane = new JScrollPane();
+		disableRulesScrollPane.setBounds(442, 130, 375, 216);
+		contentPanel.add(disableRulesScrollPane);
+
+		this.deactiveRulesList = new JList<Rule>();
+		this.deactiveRulesList.setBorder(new LineBorder(new Color(128, 128, 128)));
+		this.deactiveRulesList.setLocation(441, 0);
+		this.deactiveRulesList.setModel(new DefaultListModel<Rule>());
+		this.deactiveRulesList.setFont(new Font("Arial", Font.BOLD, 11));
+		disableRulesScrollPane.setViewportView(this.deactiveRulesList);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 358, 807, 2);
+		contentPanel.add(separator);
+
+		this.progressLabel = new JLabel();
+		this.progressLabel.setBounds(688, 372, 35, 35);
+		contentPanel.add(this.progressLabel);
+
+		this.rejectButton = new JButton(Resources.CLOSE_ICON);
+		this.rejectButton.setBounds(782, 372, 35, 35);
+		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleSetFormDialog.this.dispose();
 			}
 		});
-		contentPanel.add(cancelButton);
+		contentPanel.add(this.rejectButton);
 
-		JButton commitButton = new JButton("Aceptar");
-		commitButton.setFont(new Font("Arial", Font.BOLD, 12));
-		commitButton.setBounds(615, 357, 100, 30);
-		commitButton.addActionListener(new ActionListener() {
+		this.commitButton = new JButton(Resources.COMMIT_ICON);
+		this.commitButton.setBounds(735, 372, 35, 35);
+		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleSetFormDialog.this.saveRuleSet();
 			}
 		});
-		contentPanel.add(commitButton);
-		this.getRootPane().setDefaultButton(commitButton);
+		contentPanel.add(this.commitButton);
 	}
 
 	/**
 	 * La función encargada de recuperar todas las reglas que tenemos dentro del sistema y cargarlas dentro de la lista de reglas desactivadas.
 	 */
 	private void loadDisableRules() {
-		this.enableRuleModelList.clear();
-		this.disableRuleModelList.clear();
 		try {
+			DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) this.deactiveRulesList.getModel();
+
 			for (Rule r : this.ruleService.findAll()) {
-				this.disableRuleModelList.addElement(r);
+				deactiveRuleModel.addElement(r);
 			}
 		} catch (CheckedException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("ruleset.form.error.load.rule"),
+					HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -198,10 +220,13 @@ public class RuleSetFormDialog extends JDialog {
 	 * La función encargada de filtrar las reglas que tenemos activadas dentro del conjunto para pasarlas a la otra lista.
 	 */
 	private void loadEnableRules() {
+		DefaultListModel<Rule> activeRuleModel = (DefaultListModel<Rule>) this.activeRulesList.getModel();
+		DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) this.deactiveRulesList.getModel();
+
 		for (Rule r : this.ruleSet.getRules()) {
-			if (this.disableRuleModelList.contains(r)) {
-				this.disableRuleModelList.removeElement(r);
-				this.enableRuleModelList.addElement(r);
+			if (deactiveRuleModel.contains(r)) {
+				deactiveRuleModel.removeElement(r);
+				activeRuleModel.addElement(r);
 			}
 		}
 	}
@@ -210,14 +235,16 @@ public class RuleSetFormDialog extends JDialog {
 	 * La función que pasa una regla de activada a desactivada.
 	 */
 	private void disableRule() {
-		int[] indexs = this.enableRulesList.getSelectedIndices();
+		DefaultListModel<Rule> activeRuleModel = (DefaultListModel<Rule>) this.activeRulesList.getModel();
+		DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) this.deactiveRulesList.getModel();
+
+		int[] indexs = this.activeRulesList.getSelectedIndices();
 		if (indexs.length > 0) {
 			for (int i = 0; i < indexs.length; i++) {
-				Rule rule = this.enableRuleModelList.getElementAt(indexs[i]);
-				this.enableRuleModelList.removeElement(rule);
-				this.disableRuleModelList.addElement(rule);
+				Rule rule = activeRuleModel.remove(indexs[i]);
+				deactiveRuleModel.addElement(rule);
 			}
-			this.enableRulesList.clearSelection();
+			this.activeRulesList.clearSelection();
 		}
 	}
 
@@ -225,14 +252,16 @@ public class RuleSetFormDialog extends JDialog {
 	 * La función que pasa una regla de desactivada a activada.
 	 */
 	private void enableRule() {
-		int[] indexs = this.disableRulesList.getSelectedIndices();
+		DefaultListModel<Rule> activeRuleModel = (DefaultListModel<Rule>) this.activeRulesList.getModel();
+		DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) this.deactiveRulesList.getModel();
+
+		int[] indexs = this.deactiveRulesList.getSelectedIndices();
 		if (indexs.length > 0) {
 			for (int i = 0; i < indexs.length; i++) {
-				Rule rule = this.disableRuleModelList.getElementAt(indexs[i]);
-				this.disableRuleModelList.removeElement(rule);
-				this.enableRuleModelList.addElement(rule);
+				Rule rule = deactiveRuleModel.remove(indexs[i]);
+				activeRuleModel.addElement(rule);
 			}
-			this.disableRulesList.clearSelection();
+			this.deactiveRulesList.clearSelection();
 		}
 	}
 
@@ -242,10 +271,15 @@ public class RuleSetFormDialog extends JDialog {
 	private void saveRuleSet() {
 		try {
 			this.fromDialogToRuleSet();
-			this.ruleSetService.saveOrUpdate(this.ruleSet);
-			this.dispose();
+			try {
+				this.ruleSetService.saveOrUpdate(this.ruleSet);
+				this.dispose();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("ruleset.form.error.save"),
+						HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+			}
 		} catch (CheckedException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -254,6 +288,13 @@ public class RuleSetFormDialog extends JDialog {
 	 */
 	private void emptyField() {
 		this.descriptionTextPane.setText("");
+
+		DefaultListModel<Rule> activeRuleModel = (DefaultListModel<Rule>) this.activeRulesList.getModel();
+		DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) this.deactiveRulesList.getModel();
+
+		activeRuleModel.clear();
+		deactiveRuleModel.clear();
+
 		this.loadDisableRules();
 	}
 
@@ -277,7 +318,7 @@ public class RuleSetFormDialog extends JDialog {
 		if (Validator.descriptionValidator(this.descriptionTextPane.getText())) {
 			this.ruleSet.setDescription(this.descriptionTextPane.getText());
 		} else {
-			throw new CheckedException("rule.set.description.empty");
+			throw new CheckedException("ruleset.form.error.description");
 		}
 
 		// El conjunto de las reglas.
@@ -287,7 +328,7 @@ public class RuleSetFormDialog extends JDialog {
 				this.ruleSet.getRules().add((Rule) o);
 			}
 		} else {
-			throw new CheckedException("rule.set.rules.empty");
+			throw new CheckedException("ruleset.form.error.rules");
 		}
 	}
 

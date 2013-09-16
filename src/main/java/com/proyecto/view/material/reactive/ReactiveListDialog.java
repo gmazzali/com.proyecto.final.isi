@@ -192,7 +192,6 @@ public class ReactiveListDialog extends JDialog {
 	 * La función encargada de actualizar el listado de los reactivos que tenemos dentro de la ventana.
 	 */
 	private void updateReactives() {
-
 		// Vaciamos la lista.
 		DefaultListModel<Reactive> model = (DefaultListModel<Reactive>) ReactiveListDialog.this.reactiveList.getModel();
 		model.clear();
