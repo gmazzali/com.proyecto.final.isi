@@ -14,15 +14,15 @@ public enum AssessmentMomentImpl implements AssessmentMoment {
 	/**
 	 * El tipo de evaluación diagnostica tomada al principio del curso.
 	 */
-	DIAGNOSTIC("assessment.type.time.diagnostic"),
+	DIAGNOSTIC("type.assessment.time.diagnostic"),
 	/**
 	 * El tipo de evaluación formativa tomada durante el cursado.
 	 */
-	FORMATIVE("assessment.type.time.formative"),
+	FORMATIVE("type.assessment.time.formative"),
 	/**
 	 * El tipo de evaluación sumativa tomada al final del cursado.
 	 */
-	SUMMATIVE("assessment.type.time.summative");
+	SUMMATIVE("type.assessment.time.summative");
 
 	/**
 	 * El nombre del tipo de evaluación por el momento en el que son tomadas.

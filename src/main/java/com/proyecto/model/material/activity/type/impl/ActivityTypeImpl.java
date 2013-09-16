@@ -16,11 +16,11 @@ public enum ActivityTypeImpl implements ActivityType {
 	/**
 	 * El tipo de actividad que solo permite reactivos formales.
 	 */
-	FORMAL("activity.type.formal", new ReactiveType[] { ReactiveTypeImpl.FORMAL }),
+	FORMAL("type.activity.formal", new ReactiveType[] { ReactiveTypeImpl.FORMAL }),
 	/**
 	 * El tipo de actividad que solo permite reactivos semiformales.
 	 */
-	SEMIFORMAL("activity.type.semiformal", new ReactiveType[] { ReactiveTypeImpl.SEMIFORMAL });
+	SEMIFORMAL("type.activity.semiformal", new ReactiveType[] { ReactiveTypeImpl.SEMIFORMAL });
 
 	/**
 	 * El nombre del tipo de actividad.

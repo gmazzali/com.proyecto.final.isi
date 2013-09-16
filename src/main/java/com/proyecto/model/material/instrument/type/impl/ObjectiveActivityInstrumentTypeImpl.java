@@ -18,15 +18,15 @@ public enum ObjectiveActivityInstrumentTypeImpl implements InstrumentType {
 	/**
 	 * El elemento que define un instrumento formal objetivo de selección.
 	 */
-	CHOICE("instrument.type.formal.objective.choice", ChoiceInstrument.class, ChoiceInstrumentTypeImpl.values()),
+	CHOICE("type.instrument.formal.objective.choice", ChoiceInstrument.class, ChoiceInstrumentTypeImpl.values()),
 	/**
 	 * El elemento que define un instrumento formal objetivo de correspondencia.
 	 */
-	CORRESPONDENCE("instrument.type.formal.objective.correspondence", CorrespondenceInstrument.class, null),
+	CORRESPONDENCE("type.instrument.formal.objective.correspondence", CorrespondenceInstrument.class, null),
 	/**
 	 * El elemento que define un instrumento formal objetivo para completar.
 	 */
-	COMPLETION("instrument.type.formal.objective.completion", CompletionInstrument.class, null);
+	COMPLETION("type.instrument.formal.objective.completion", CompletionInstrument.class, null);
 
 	/**
 	 * El nombre del tipo de instrumento.

@@ -17,11 +17,11 @@ public enum EssayActivityInstrumentTypeImpl implements InstrumentType {
 	/**
 	 * El elemento de los instrumentos formales de ensayos restringidos.
 	 */
-	RESTRICTED_INSTRUMENT("instrument.type.formal.essay.restricted", RestrictedEssayActivityInstrument.class, null),
+	RESTRICTED_INSTRUMENT("type.instrument.formal.essay.restricted", RestrictedEssayActivityInstrument.class, null),
 	/**
 	 * El elemento de los instrumentos formales de ensayos no restringidos.
 	 */
-	UNRESTRICTED_INSTRUMENT("instrument.type.formal.essay.unrestricted", UnrestrictedEssayActivityInstrument.class, null);
+	UNRESTRICTED_INSTRUMENT("type.instrument.formal.essay.unrestricted", UnrestrictedEssayActivityInstrument.class, null);
 
 	/**
 	 * El nombre del tipo de instrumento.

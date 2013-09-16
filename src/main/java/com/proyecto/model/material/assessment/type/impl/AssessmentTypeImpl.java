@@ -17,11 +17,11 @@ public enum AssessmentTypeImpl implements AssessmentType {
 	/**
 	 * El tipo de evaluación formal.
 	 */
-	FORMAL("assessment.type.formal", new ActivityType[] { ActivityTypeImpl.FORMAL }),
+	FORMAL("type.assessment.formal", new ActivityType[] { ActivityTypeImpl.FORMAL }),
 	/**
 	 * El tipo de evaluación semiformal.
 	 */
-	SEMIFORMAL("assessment.type.semiformal", new ActivityType[] { ActivityTypeImpl.SEMIFORMAL });
+	SEMIFORMAL("type.assessment.semiformal", new ActivityType[] { ActivityTypeImpl.SEMIFORMAL });
 
 	/**
 	 * El nombre del tipo de evaluación por el contenido.

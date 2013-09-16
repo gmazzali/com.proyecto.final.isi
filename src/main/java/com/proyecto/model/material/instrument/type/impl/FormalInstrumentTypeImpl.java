@@ -17,11 +17,11 @@ public enum FormalInstrumentTypeImpl implements InstrumentType {
 	/**
 	 * El elemento de los instrumentos formales objetivos.
 	 */
-	OBJETIVE_ACTIVITY("instrument.type.formal.objective", ObjectiveActivityInstrument.class, ObjectiveActivityInstrumentTypeImpl.values()),
+	OBJETIVE_ACTIVITY("type.instrument.formal.objective", ObjectiveActivityInstrument.class, ObjectiveActivityInstrumentTypeImpl.values()),
 	/**
 	 * El elemento de los instrumentos formales de ensayos.
 	 */
-	ESSAY_ACTIVITY("instrument.type.formal.essay", EssayActivityInstrument.class, EssayActivityInstrumentTypeImpl.values());
+	ESSAY_ACTIVITY("type.instrument.formal.essay", EssayActivityInstrument.class, EssayActivityInstrumentTypeImpl.values());
 
 	/**
 	 * El nombre del tipo de instrumento.

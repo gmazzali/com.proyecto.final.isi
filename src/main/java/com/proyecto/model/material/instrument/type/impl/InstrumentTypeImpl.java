@@ -19,11 +19,11 @@ public enum InstrumentTypeImpl implements InstrumentType {
 	/**
 	 * El elemento de los instrumentos formales.
 	 */
-	FORMAL("instrument.type.formal", FormalInstrument.class, FormalInstrumentTypeImpl.values()),
+	FORMAL("type.instrument.formal", FormalInstrument.class, FormalInstrumentTypeImpl.values()),
 	/**
 	 * El elemento de los instrumentos semiformales.
 	 */
-	SEMIFORMAL("instrument.type.semiformal", SemiFormalInstrument.class, SemiFormalInstrumentTypeImpl.values());
+	SEMIFORMAL("type.instrument.semiformal", SemiFormalInstrument.class, SemiFormalInstrumentTypeImpl.values());
 
 	/**
 	 * El nombre del tipo de instrumento.

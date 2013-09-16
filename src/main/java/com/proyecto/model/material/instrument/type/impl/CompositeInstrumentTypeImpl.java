@@ -16,7 +16,7 @@ public enum CompositeInstrumentTypeImpl implements InstrumentType {
 	/**
 	 * El elemento de los instrumentos semiformales compuesto de portfolio.
 	 */
-	PORTFOLIO("instrument.type.semiformal.composite.portfolio", PortfolioInstrument.class, null);
+	PORTFOLIO("type.instrument.semiformal.composite.portfolio", PortfolioInstrument.class, null);
 
 	/**
 	 * El nombre del tipo de instrumento.
