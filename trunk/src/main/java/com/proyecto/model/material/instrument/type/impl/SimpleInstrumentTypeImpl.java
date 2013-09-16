@@ -18,15 +18,15 @@ public enum SimpleInstrumentTypeImpl implements InstrumentType {
 	/**
 	 * El elemento de los instrumentos semiformales simples de mapas conceptuales.
 	 */
-	CONCEPTUAL_MAP("instrument.type.semiformal.simple.comceptual", ConceptualMapInstrument.class, null),
+	CONCEPTUAL_MAP("type.instrument.semiformal.simple.conceptual", ConceptualMapInstrument.class, null),
 	/**
 	 * El elemento de los instrumentos semiformales simples de ensayos.
 	 */
-	ESSAY("instrument.type.semiformal.simple.essay", EssayInstrument.class, null),
+	ESSAY("type.instrument.semiformal.simple.essay", EssayInstrument.class, null),
 	/**
 	 * El elemento de los instrumentos semiformales simples de ejercicios.
 	 */
-	EXERCISE("instrument.type.semiformal.simple.exercise", ExerciseInstrument.class, null);
+	EXERCISE("type.instrument.semiformal.simple.exercise", ExerciseInstrument.class, null);
 
 	/**
 	 * El nombre del tipo de instrumento.

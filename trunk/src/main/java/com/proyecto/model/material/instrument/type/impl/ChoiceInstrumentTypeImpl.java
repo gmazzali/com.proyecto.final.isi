@@ -17,11 +17,11 @@ public enum ChoiceInstrumentTypeImpl implements InstrumentType {
 	/**
 	 * El elemento que define un instrumento formal objetivo de selección simple.
 	 */
-	SINGLE_CHOICE("instrument.type.formal.objective.choice.single", SingleChoiceInstrument.class, null),
+	SINGLE_CHOICE("type.instrument.formal.objective.choice.single", SingleChoiceInstrument.class, null),
 	/**
 	 * El elemento que define un instrumento formal objetivo de selección multiple.
 	 */
-	MULTIPLE_CHOICE("instrument.type.formal.objective.choice.multiple", MultipleChoiceInstrument.class, null);
+	MULTIPLE_CHOICE("type.instrument.formal.objective.choice.multiple", MultipleChoiceInstrument.class, null);
 
 	/**
 	 * El nombre del tipo de instrumento.

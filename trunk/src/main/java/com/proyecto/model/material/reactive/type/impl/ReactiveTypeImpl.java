@@ -20,11 +20,11 @@ public enum ReactiveTypeImpl implements ReactiveType {
 	/**
 	 * El tipo de reactivo que solo permite instrumentos formales.
 	 */
-	FORMAL("reactive.type.formal", new InstrumentType[] { InstrumentTypeImpl.FORMAL }),
+	FORMAL("type.reactive.formal", new InstrumentType[] { InstrumentTypeImpl.FORMAL }),
 	/**
 	 * El tipo de reactivo que solo permite instrumentos semiformales.
 	 */
-	SEMIFORMAL("reactive.type.semiformal", new InstrumentType[] { InstrumentTypeImpl.SEMIFORMAL });
+	SEMIFORMAL("type.reactive.semiformal", new InstrumentType[] { InstrumentTypeImpl.SEMIFORMAL });
 
 	/**
 	 * El nombre del tipo de reactivo.

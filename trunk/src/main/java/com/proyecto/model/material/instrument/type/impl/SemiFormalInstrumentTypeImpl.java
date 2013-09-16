@@ -17,11 +17,11 @@ public enum SemiFormalInstrumentTypeImpl implements InstrumentType {
 	/**
 	 * El elemento de los instrumentos semiformales simples.
 	 */
-	SIMPLE_INSTRUMENT("instrument.type.semiformal.simple", SimpleInstrument.class, SimpleInstrumentTypeImpl.values()),
+	SIMPLE_INSTRUMENT("type.instrument.semiformal.simple", SimpleInstrument.class, SimpleInstrumentTypeImpl.values()),
 	/**
 	 * El elemento de los instrumentos semiformales compuestos.
 	 */
-	COMPOSITE_INSTRUMENT("instrument.type.semiformal.composite", CompositeInstrument.class, CompositeInstrumentTypeImpl.values());
+	COMPOSITE_INSTRUMENT("type.instrument.semiformal.composite", CompositeInstrument.class, CompositeInstrumentTypeImpl.values());
 
 	/**
 	 * El nombre del tipo de instrumento.

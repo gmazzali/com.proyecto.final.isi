@@ -48,33 +48,33 @@ public class InstrumentClassToNameConverter {
 		if (InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS == null) {
 			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS = new HashMap<Class<? extends Instrument>, String>();
 
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(FormalInstrument.class, "instrument.type.formal");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(FormalInstrument.class, "type.instrument.formal");
 
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(EssayActivityInstrument.class, "instrument.type.formal.essay");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(EssayActivityInstrument.class, "type.instrument.formal.essay");
 			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(UnrestrictedEssayActivityInstrument.class,
-					"instrument.type.formal.essay.unrestricted");
+					"type.instrument.formal.essay.unrestricted");
 			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(RestrictedEssayActivityInstrument.class,
-					"instrument.type.formal.essay.restricted");
+					"type.instrument.formal.essay.restricted");
 
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(ObjectiveActivityInstrument.class, "instrument.type.formal.objective");
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(ChoiceInstrument.class, "instrument.type.formal.objective.choice");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(ObjectiveActivityInstrument.class, "type.instrument.formal.objective");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(ChoiceInstrument.class, "type.instrument.formal.objective.choice");
 			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS
-					.put(SingleChoiceInstrument.class, "instrument.type.formal.objective.choice.single");
+					.put(SingleChoiceInstrument.class, "type.instrument.formal.objective.choice.single");
 			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(MultipleChoiceInstrument.class,
-					"instrument.type.formal.objective.choice.multiple");
+					"type.instrument.formal.objective.choice.multiple");
 			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(CorrespondenceInstrument.class,
-					"instrument.type.formal.objective.correspondence");
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(CompletionInstrument.class, "instrument.type.formal.objective.completion");
+					"type.instrument.formal.objective.correspondence");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(CompletionInstrument.class, "type.instrument.formal.objective.completion");
 
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(SemiFormalInstrument.class, "instrument.type.semiformal");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(SemiFormalInstrument.class, "type.instrument.semiformal");
 
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(SimpleInstrument.class, "instrument.type.semiformal.simple");
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(EssayInstrument.class, "instrument.type.semiformal.simple.essay");
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(ExerciseInstrument.class, "instrument.type.semiformal.simple.exercise");
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(ConceptualMapInstrument.class, "instrument.type.semiformal.simple.conceptual");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(SimpleInstrument.class, "type.instrument.semiformal.simple");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(EssayInstrument.class, "type.instrument.semiformal.simple.essay");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(ExerciseInstrument.class, "type.instrument.semiformal.simple.exercise");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(ConceptualMapInstrument.class, "type.instrument.semiformal.simple.conceptual");
 
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(CompositeInstrument.class, "instrument.type.semiformal.composite");
-			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(PortfolioInstrument.class, "instrument.type.semiformal.composite.portfolio");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(CompositeInstrument.class, "type.instrument.semiformal.composite");
+			InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.put(PortfolioInstrument.class, "type.instrument.semiformal.composite.portfolio");
 		}
 		return HolderMessage.getMessage(InstrumentClassToNameConverter.MAPPING_ISTRUMENT_CLASS.get(instrumentClass));
 	}
