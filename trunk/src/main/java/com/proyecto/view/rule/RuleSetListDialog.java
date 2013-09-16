@@ -338,7 +338,7 @@ public class RuleSetListDialog extends JDialog {
 	 * La ventana que despliega la ventana de gestión de reglas.
 	 */
 	protected void managerRule() {
-		RuleListDialog dialog = this.ruleListDialog.createDialog();
+		RuleListDialog dialog = this.ruleListDialog.createCrudDialog();
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 		this.loadRuleSets();

@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -27,6 +28,7 @@ import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.model.rule.RuleSet;
+import com.proyecto.security.AccessControl;
 import com.proyecto.service.rule.RuleService;
 import com.proyecto.service.rule.RuleSetService;
 import com.proyecto.util.Validator;
@@ -42,6 +44,12 @@ import com.proyecto.view.Resources;
 public class RuleSetFormDialog extends JDialog {
 
 	private static final long serialVersionUID = -6286788752888976971L;
+
+	/**
+	 * El control de acceso.
+	 */
+	@Autowired
+	private AccessControl accessControl;
 
 	/**
 	 * El servicio de las reglas que vamos a seleccionar.
@@ -63,7 +71,7 @@ public class RuleSetFormDialog extends JDialog {
 	/**
 	 * La descripción del conjunto de reglas.
 	 */
-	private JTextPane descriptionTextPane;
+	private JTextArea descriptionTextArea;
 	/**
 	 * Los modelos de las listas de reglas y sus listas.
 	 */
@@ -109,11 +117,11 @@ public class RuleSetFormDialog extends JDialog {
 		descriptionLabel.setBounds(10, 11, 807, 14);
 		contentPanel.add(descriptionLabel);
 
-		this.descriptionTextPane = new JTextPane();
-		this.descriptionTextPane.setBorder(new LineBorder(Color.GRAY, 2));
-		this.descriptionTextPane.setFont(new Font("Arial", Font.PLAIN, 12));
-		this.descriptionTextPane.setBounds(10, 36, 807, 58);
-		contentPanel.add(this.descriptionTextPane);
+		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setBorder(new LineBorder(Color.GRAY, 2));
+		this.descriptionTextArea.setFont(new Font("Arial", Font.PLAIN, 12));
+		this.descriptionTextArea.setBounds(10, 36, 807, 58);
+		contentPanel.add(this.descriptionTextArea);
 
 		JLabel enableRuleLabel = new JLabel(HolderMessage.getMessage("ruleset.form.label.rules.active"));
 		enableRuleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -200,35 +208,74 @@ public class RuleSetFormDialog extends JDialog {
 		contentPanel.add(this.commitButton);
 	}
 
-	/**
-	 * La función encargada de recuperar todas las reglas que tenemos dentro del sistema y cargarlas dentro de la lista de reglas desactivadas.
-	 */
-	private void loadDisableRules() {
-		try {
-			DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) this.deactiveRulesList.getModel();
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.descriptionTextArea.setEnabled(enabled);
 
-			for (Rule r : this.ruleService.findAll()) {
-				deactiveRuleModel.addElement(r);
-			}
-		} catch (CheckedException e) {
-			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("ruleset.form.error.load.rule"),
-					HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-		}
+		this.deactiveRulesList.setEnabled(enabled);
+		this.activeRulesList.setEnabled(enabled);
+
+		this.enableRuleButton.setEnabled(enabled);
+		this.disableRuleButton.setEnabled(enabled);
+		this.rejectButton.setEnabled(enabled);
+		this.commitButton.setEnabled(enabled);
 	}
 
 	/**
-	 * La función encargada de filtrar las reglas que tenemos activadas dentro del conjunto para pasarlas a la otra lista.
+	 * La función encargada de cargar el listado de las reglas activas que tenemos dentro del sistema para poder asignarlas a un conjunto dado.
 	 */
-	private void loadEnableRules() {
-		DefaultListModel<Rule> activeRuleModel = (DefaultListModel<Rule>) this.activeRulesList.getModel();
-		DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) this.deactiveRulesList.getModel();
+	private void loadRules() {
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					RuleSetFormDialog.this.beforeExecuteProccess();
 
-		for (Rule r : this.ruleSet.getRules()) {
-			if (deactiveRuleModel.contains(r)) {
-				deactiveRuleModel.removeElement(r);
-				activeRuleModel.addElement(r);
+					DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) deactiveRulesList.getModel();
+					DefaultListModel<Rule> activeRuleModel = (DefaultListModel<Rule>) activeRulesList.getModel();
+
+					// Cargamos todas las reglas activas que tenemos dentro del sistema.
+					for (Rule r : RuleSetFormDialog.this.ruleService.findAll()) {
+						deactiveRuleModel.addElement(r);
+					}
+
+					// Cargamos las reglas que tenemos en el conjunto dentro de la lista de seleccionada.
+					if (RuleSetFormDialog.this.ruleSet != null && RuleSetFormDialog.this.ruleSet.getRules() != null) {
+						for (Rule r : RuleSetFormDialog.this.ruleSet.getRules()) {
+							// Si la regla esta activa, la quitamos del conjunto de selección.
+							if (r.getActive()) {
+								deactiveRuleModel.removeElement(r);
+							}
+							// Agregamos la regla dentro del grupo de reglas seleccionadas.
+							activeRuleModel.addElement(r);
+						}
+					}
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(RuleSetFormDialog.this, HolderMessage.getMessage("ruleset.form.error.load.rule"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+				} finally {
+					RuleSetFormDialog.this.afterExecuteProccess();
+				}
 			}
-		}
+		}.start();
+	}
+
+	/**
+	 * La función antes de procesar los reactivos.
+	 */
+	private void beforeExecuteProccess() {
+		this.setEnabled(false);
+
+		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+	}
+
+	/*
+	 * La función después de procesar los reactivos.
+	 */
+	private void afterExecuteProccess() {
+		this.setEnabled(true);
+		this.progressLabel.setIcon(null);
 	}
 
 	/**
@@ -241,10 +288,20 @@ public class RuleSetFormDialog extends JDialog {
 		int[] indexs = this.activeRulesList.getSelectedIndices();
 		if (indexs.length > 0) {
 			for (int i = 0; i < indexs.length; i++) {
-				Rule rule = activeRuleModel.remove(indexs[i]);
-				deactiveRuleModel.addElement(rule);
+				Rule rule = activeRuleModel.get(indexs[i]);
+				if (rule.getActive()) {
+					activeRuleModel.removeElement(rule);
+					deactiveRuleModel.addElement(rule);
+				} else {
+					if (JOptionPane.showConfirmDialog(this,
+							HolderMessage.getMessage("ruleset.form.warning.delete.rule", new Object[] { rule.getDescription() }),
+							HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						activeRuleModel.removeElement(rule);
+					}
+				}
 			}
 			this.activeRulesList.clearSelection();
+			this.deactiveRulesList.clearSelection();
 		}
 	}
 
@@ -261,6 +318,8 @@ public class RuleSetFormDialog extends JDialog {
 				Rule rule = deactiveRuleModel.remove(indexs[i]);
 				activeRuleModel.addElement(rule);
 			}
+			
+			this.activeRulesList.clearSelection();
 			this.deactiveRulesList.clearSelection();
 		}
 	}
@@ -269,42 +328,49 @@ public class RuleSetFormDialog extends JDialog {
 	 * La función encargada de guardar un conjunto de reglas.
 	 */
 	private void saveRuleSet() {
-		try {
-			this.fromDialogToRuleSet();
-			try {
-				this.ruleSetService.saveOrUpdate(this.ruleSet);
-				this.dispose();
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("ruleset.form.error.save"),
-						HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					RuleSetFormDialog.this.beforeExecuteProccess();
+
+					RuleSetFormDialog.this.fromDialogToRuleSet();
+					try {
+						RuleSetFormDialog.this.ruleSetService.saveOrUpdate(RuleSetFormDialog.this.ruleSet);
+						RuleSetFormDialog.this.dispose();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(RuleSetFormDialog.this, HolderMessage.getMessage("ruleset.form.error.save"),
+								HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(RuleSetFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
+				} finally {
+					RuleSetFormDialog.this.afterExecuteProccess();
+				}
 			}
-		} catch (CheckedException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-		}
+		}.start();
 	}
 
 	/**
 	 * La función encargada de vaciar los campos de una regla.
 	 */
 	private void emptyField() {
-		this.descriptionTextPane.setText("");
+		this.descriptionTextArea.setText("");
 
 		DefaultListModel<Rule> activeRuleModel = (DefaultListModel<Rule>) this.activeRulesList.getModel();
 		DefaultListModel<Rule> deactiveRuleModel = (DefaultListModel<Rule>) this.deactiveRulesList.getModel();
 
 		activeRuleModel.clear();
 		deactiveRuleModel.clear();
-
-		this.loadDisableRules();
 	}
 
 	/**
 	 * La función que toma los datos del conjunto de reglas y los carga a la ventana.
 	 */
 	private void fromRuleSetToDialog() {
-		this.descriptionTextPane.setText(this.ruleSet.getDescription());
-		this.loadDisableRules();
-		this.loadEnableRules();
+		this.descriptionTextArea.setText(this.ruleSet.getDescription());
+		this.loadRules();
 	}
 
 	/**
@@ -314,18 +380,22 @@ public class RuleSetFormDialog extends JDialog {
 	 *             En caso de que el conjunto de reglas tenga algún parámetro fuera de lugar
 	 */
 	private void fromDialogToRuleSet() throws CheckedException {
+		// La materia del conjunto.
+		this.ruleSet.setSubject(accessControl.getSubjectSelected());
+		
 		// La descripción del conjunto de reglas.
-		if (Validator.descriptionValidator(this.descriptionTextPane.getText())) {
-			this.ruleSet.setDescription(this.descriptionTextPane.getText());
+		if (Validator.descriptionValidator(this.descriptionTextArea.getText())) {
+			this.ruleSet.setDescription(this.descriptionTextArea.getText().trim());
 		} else {
 			throw new CheckedException("ruleset.form.error.description");
 		}
 
 		// El conjunto de las reglas.
-		if (this.enableRuleModelList.getSize() > 0) {
-			this.ruleSet.getRules().clear();
-			for (Object o : this.enableRuleModelList.toArray()) {
-				this.ruleSet.getRules().add((Rule) o);
+		DefaultListModel<Rule> activeRuleModel = (DefaultListModel<Rule>) this.activeRulesList.getModel();
+		if (this.activeRuleModel.getSize() > 0) {
+			this.ruleSet.clearRules();
+			for (Object o : activeRuleModel.toArray()) {
+				this.ruleSet.addRule((Rule) o);
 			}
 		} else {
 			throw new CheckedException("ruleset.form.error.rules");
@@ -338,23 +408,31 @@ public class RuleSetFormDialog extends JDialog {
 	 * @return La ventana cargada con los datos para dar de alta un nuevo conjunto de reglas.
 	 */
 	public RuleSetFormDialog createNewDialog() {
-		this.setTitle("Nuevo conjunto");
+		this.setTitle(HolderMessage.getMessage("ruleset.form.title.new"));
+		
 		this.ruleSet = new RuleSet();
+		
 		this.emptyField();
+		this.loadRules();
+		
 		return this;
 	}
 
 	/**
 	 * La función que carga la ventana para modificar un conjunto de reglas que ya tenemos dentro de la base de datos.
 	 * 
-	 * @param editRuleSet
+	 * @param ruleSet
 	 *            El conjunto de reglas que queremos editar.
 	 * @return La ventana cargada con los datos para modificar un conjunto de reglas.
 	 */
-	public RuleSetFormDialog createEditDialog(RuleSet editRuleSet) {
-		this.setTitle("Editar conjunto");
-		this.ruleSet = editRuleSet;
+	public RuleSetFormDialog createEditDialog(RuleSet ruleSet) {
+		this.setTitle(HolderMessage.getMessage("ruleset.form.title.edit"));
+		
+		this.ruleSet = ruleSet;
+		
+		this.emptyField();
 		this.fromRuleSetToDialog();
+		
 		return this;
 	}
 }
