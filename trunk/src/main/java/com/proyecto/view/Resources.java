@@ -54,6 +54,28 @@ public class Resources {
 	public static final ImageIcon CLOSE_ICON = Resources.createStaticImage("com/proyecto/image/close_32.png", Resources.width, Resources.height);
 
 	/**
+	 * El icono para agregar una regla a un conjunto.
+	 */
+	public static final ImageIcon ADD_RULE_ICON = Resources
+			.createStaticImage("com/proyecto/image/add_rule_32.png", Resources.width, Resources.height);
+	/**
+	 * El icono para quitar una regla a un conjunto.
+	 */
+	public static final ImageIcon REMOVE_RULE_ICON = Resources.createStaticImage("com/proyecto/image/remove_rule_32.png", Resources.width,
+			Resources.height);
+
+	/**
+	 * El icono de procesado.
+	 */
+	public static final ImageIcon PROCCESS_ICON = Resources
+			.createStaticImage("com/proyecto/image/proccess_32.png", Resources.width, Resources.height);
+
+	/**
+	 * El icono de borrado de un resultado.
+	 */
+	public static final ImageIcon ERASE_ICON = Resources.createStaticImage("com/proyecto/image/eraser_32.png", Resources.width, Resources.height);
+
+	/**
 	 * Los archivos de los GIF de progresos.
 	 */
 	public static final ImageIcon PROGRESS_LIST_ICON = Resources.createGifImage("com/proyecto/image/progress_list.gif");

@@ -69,7 +69,6 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	/**
 	 * El grupo de los radioButtons de "todas las anteriores" y "ninguna de las anteriores"y dichos radioButton.
 	 */
-	private ButtonGroup optionTypeGroup;
 	private JRadioButton allOptionRadioButton;
 	private JRadioButton noneOptionRadioButton;
 	/**
@@ -94,7 +93,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	 * La función encargada de inicializar la ventana de edición de un instrumento de correspondencia.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 750, 498);
+		this.setBounds(100, 100, 750, 562);
 		this.getContentPane().setLayout(null);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 
@@ -153,26 +152,9 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 			}
 		});
 
-		JScrollPane optionScrollPane = new JScrollPane();
-		optionScrollPane.setBounds(10, 287, 563, 62);
-		this.getContentPane().add(optionScrollPane);
-
-		this.optionTextArea = new JTextArea();
-		this.optionTextArea.setWrapStyleWord(true);
-		this.optionTextArea.setLineWrap(true);
-		this.optionTextArea.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					ChoiceInstrumentFormDialog.this.addOption();
-				}
-			}
-		});
-		optionScrollPane.setViewportView(this.optionTextArea);
-
 		this.trueAnswerRadioButton = new JRadioButton(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.true"));
 		this.trueAnswerRadioButton.setFont(new Font("Arial", Font.BOLD, 11));
-		this.trueAnswerRadioButton.setBounds(585, 297, 153, 18);
+		this.trueAnswerRadioButton.setBounds(10, 301, 728, 18);
 		this.trueAnswerRadioButton.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -181,11 +163,15 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 				}
 			}
 		});
+
+		JSeparator separator1 = new JSeparator();
+		separator1.setBounds(10, 287, 728, 2);
+		this.getContentPane().add(separator1);
 		this.getContentPane().add(this.trueAnswerRadioButton);
 
 		this.falseAnswerRadioButton = new JRadioButton(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.false"));
 		this.falseAnswerRadioButton.setFont(new Font("Arial", Font.BOLD, 11));
-		this.falseAnswerRadioButton.setBounds(585, 319, 153, 18);
+		this.falseAnswerRadioButton.setBounds(10, 321, 728, 18);
 		this.falseAnswerRadioButton.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -202,8 +188,9 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.answerTypeGroup.clearSelection();
 
 		this.allOptionRadioButton = new JRadioButton(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.true"));
+
 		this.allOptionRadioButton.setFont(new Font("Arial", Font.BOLD, 11));
-		this.allOptionRadioButton.setBounds(10, 361, 728, 18);
+		this.allOptionRadioButton.setBounds(10, 353, 728, 18);
 		this.allOptionRadioButton.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -215,14 +202,15 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.allOptionRadioButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChoiceInstrumentFormDialog.this.managerOptionRadioButtons(e);
+				ChoiceInstrumentFormDialog.this.managerOptionRadioButtons(ChoiceInstrumentFormDialog.this.allOptionRadioButton);
 			}
 		});
 		this.getContentPane().add(this.allOptionRadioButton);
 
 		this.noneOptionRadioButton = new JRadioButton(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.false"));
+
 		this.noneOptionRadioButton.setFont(new Font("Arial", Font.BOLD, 11));
-		this.noneOptionRadioButton.setBounds(10, 381, 728, 18);
+		this.noneOptionRadioButton.setBounds(10, 373, 728, 18);
 		this.noneOptionRadioButton.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -234,27 +222,39 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.noneOptionRadioButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChoiceInstrumentFormDialog.this.managerOptionRadioButtons(e);
+				ChoiceInstrumentFormDialog.this.managerOptionRadioButtons(ChoiceInstrumentFormDialog.this.noneOptionRadioButton);
 			}
 		});
 		this.getContentPane().add(this.noneOptionRadioButton);
 
-		this.optionTypeGroup = new ButtonGroup();
-		this.optionTypeGroup.add(this.allOptionRadioButton);
-		this.optionTypeGroup.add(this.noneOptionRadioButton);
-		this.optionTypeGroup.clearSelection();
+		JScrollPane optionScrollPane = new JScrollPane();
+		optionScrollPane.setBounds(10, 403, 728, 62);
+		this.getContentPane().add(optionScrollPane);
 
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 410, 728, 2);
-		this.getContentPane().add(separator);
+		this.optionTextArea = new JTextArea();
+		this.optionTextArea.setWrapStyleWord(true);
+		this.optionTextArea.setLineWrap(true);
+		this.optionTextArea.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					ChoiceInstrumentFormDialog.this.addOption();
+				}
+			}
+		});
+		optionScrollPane.setViewportView(this.optionTextArea);
+
+		JSeparator separator2 = new JSeparator();
+		separator2.setBounds(10, 477, 728, 2);
+		this.getContentPane().add(separator2);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(609, 424, 35, 35);
+		this.progressLabel.setBounds(609, 491, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
-		this.commitButton.setBounds(656, 424, 35, 35);
+		this.commitButton.setBounds(656, 491, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -265,7 +265,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
 		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
-		this.rejectButton.setBounds(703, 424, 35, 35);
+		this.rejectButton.setBounds(703, 491, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -293,43 +293,28 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 	/**
 	 * La función que administra los cambios sobre los radioButtons para las respuestas "Todas las anteriores" o "ninguna de las anteriores".
+	 * 
+	 * @param selectButton
+	 *            El radioButton que fue activado.
 	 */
-	private void managerOptionRadioButtons(ActionEvent event) {
-		// El radioBotton que lanzo el evento.
-		JRadioButton button = (JRadioButton) event.getSource();
+	private void managerOptionRadioButtons(JRadioButton selectButton) {
+		// Si el que presionamos es igual al que tenemos activo, limpiamos la selección y habilitamos la carga de la descripción.
+		if (!selectButton.isSelected()) {
+			this.allOptionRadioButton.setSelected(false);
+			this.noneOptionRadioButton.setSelected(false);
+			this.optionTextArea.setText("");
+			this.optionTextArea.setEnabled(true);
+		}
+		// Si lo que presionamos no estaba seleccionado, cargamos la descripción y deshabilitarla.
+		else {
+			this.optionTextArea.setEnabled(false);
 
-		// Si el botón "Todas las anteriores" activo el método.
-		if (button == this.allOptionRadioButton) {
-
-			// Si no estaba seleccionada, la seleccionamos y cargamos la descripción de la opción.
-			if (!this.allOptionRadioButton.isSelected()) {
-				this.optionTypeGroup.clearSelection();
-				this.optionTextArea.setText("");
-				this.optionTextArea.setEnabled(true);
-			}
-			// Sino, deshabilitamos la carga de datos en el cuadro de descripción de la opción.
-			else {
-				// this.allOptionRadioButton.setSelected(true);
-				// this.noneOptionRadioButton.setSelected(false);
-
+			if (selectButton == this.allOptionRadioButton) {
+				this.noneOptionRadioButton.setSelected(false);
 				this.optionTextArea.setText(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.true"));
-				this.optionTextArea.setEnabled(false);
-			}
-		} else if (button == this.noneOptionRadioButton) {
-
-			// Si estaba seleccionado anteriormente, le quitamos la marca y habilitamos la carga de la descripción.
-			if (!this.noneOptionRadioButton.isSelected()) {
-				this.optionTypeGroup.clearSelection();
-				this.optionTextArea.setText("");
-				this.optionTextArea.setEnabled(true);
-			}
-			// Sino, deshabilitamos la carga de datos en el cuadro de descripción de la opción.
-			else {
-				// this.allOptionRadioButton.setSelected(false);
-				// this.noneOptionRadioButton.setSelected(true);
-
+			} else if (selectButton == this.noneOptionRadioButton) {
+				this.allOptionRadioButton.setSelected(false);
 				this.optionTextArea.setText(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.false"));
-				this.optionTextArea.setEnabled(false);
 			}
 		}
 	}
@@ -403,17 +388,16 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	/**
 	 * La función encargada de tomar una opción y cargarla dentro de la ventana de edición.
 	 */
-	// TODO gmazzali Hacer lo del pase de la opción que estamos editando a la ventana.
 	private void fromOptionToDialog() {
 		// Cargamos la opción para editarla.
 		switch (this.option.getAnswerType()) {
-		case TRUE:
-			this.answerTypeGroup.setSelected(this.trueAnswerRadioButton.getModel(), true);
-			break;
+			case TRUE:
+				this.answerTypeGroup.setSelected(this.trueAnswerRadioButton.getModel(), true);
+				break;
 
-		case FALSE:
-			this.answerTypeGroup.setSelected(this.falseAnswerRadioButton.getModel(), true);
-			break;
+			case FALSE:
+				this.answerTypeGroup.setSelected(this.falseAnswerRadioButton.getModel(), true);
+				break;
 		}
 
 		this.optionTextArea.setText(this.option.getDescription());
@@ -421,13 +405,13 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 
 		// Cargamos el tipo de opción.
 		if (this.option.getDescription().equals(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.true"))) {
-			this.optionTypeGroup.setSelected(this.allOptionRadioButton.getModel(), true);
+			this.allOptionRadioButton.setSelected(true);
+			this.optionTextArea.setEnabled(false);
 			this.optionTextArea.setText(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.true"));
-			this.optionTextArea.setEnabled(false);
 		} else if (this.option.getDescription().equals(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.false"))) {
-			this.optionTypeGroup.setSelected(this.noneOptionRadioButton.getModel(), true);
-			this.optionTextArea.setText(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.false"));
+			this.noneOptionRadioButton.setSelected(true);
 			this.optionTextArea.setEnabled(false);
+			this.optionTextArea.setText(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.all.false"));
 		}
 	}
 
@@ -437,7 +421,6 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	 * @throws CheckedException
 	 *             En caso de que la opción tenga valores inválidos.
 	 */
-	// TODO gmazzali Hacer lo del pase de los campos de la ventana a la opción para guardarla.
 	private void fromDialogToOption() throws CheckedException {
 		// Obtenemos su descripción y el tipo de opción.
 		String optionDescription = this.optionTextArea.getText().trim();
@@ -458,13 +441,13 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 			// Sino, creamos una opción nueva.
 			else {
 				switch (answerType) {
-				case TRUE:
-					this.option = new TrueOption();
-					break;
+					case TRUE:
+						this.option = new TrueOption();
+						break;
 
-				case FALSE:
-					this.option = new Distractor();
-					break;
+					case FALSE:
+						this.option = new Distractor();
+						break;
 				}
 
 				this.option.setDescription(optionDescription);
@@ -477,10 +460,10 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 	/**
 	 * La función de vaciado de los campos de carga de las opciones.
 	 */
-	// TODO gmazzali Hacer lo del vaciado de los campos de las opciones.
 	private void emptyOptionFields() {
 		// Borramos el campo de tipo de respuesta, su descripción y la opción.
-		this.optionTypeGroup.clearSelection();
+		this.allOptionRadioButton.setSelected(false);
+		this.noneOptionRadioButton.setSelected(false);
 
 		this.answerTypeGroup.clearSelection();
 

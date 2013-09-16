@@ -1,6 +1,7 @@
 package com.proyecto.view.rule;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -26,9 +28,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderApplicationContext;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.model.rule.RuleSet;
+import com.proyecto.security.AccessControl;
 import com.proyecto.service.rule.RuleSetService;
+import com.proyecto.view.Resources;
 
 /**
  * La ventana donde vamos a desplegar el listado de los conjuntos de reglas que vamos a tener dentro del sistema.
@@ -42,6 +47,12 @@ public class RuleSetListDialog extends JDialog {
 	private static final long serialVersionUID = 7024956097195227299L;
 
 	/**
+	 * El control de acceso.
+	 */
+	@Autowired
+	private AccessControl accessControl;
+
+	/**
 	 * El servicio de conjuntos.
 	 */
 	@Autowired
@@ -52,16 +63,19 @@ public class RuleSetListDialog extends JDialog {
 	 */
 	@Autowired
 	private RuleListDialog ruleListDialog;
+
 	@Autowired
 	private RuleSetFormDialog ruleSetFormDialog;
 
 	/**
 	 * Los modelos de las listas de conjuntos y sus reglas.
 	 */
-	private DefaultListModel<RuleSet> ruleSetModelList;
 	private JList<RuleSet> ruleSetList;
-	private DefaultListModel<Rule> ruleModelList;
 	private JList<Rule> ruleList;
+	/**
+	 * El label de progreso.
+	 */
+	private JLabel progressLabel;
 
 	/**
 	 * Constructor de la ventana que despliega el listado de los conjuntos de reglas.
@@ -73,7 +87,7 @@ public class RuleSetListDialog extends JDialog {
 	}
 
 	private void init() {
-		this.setBounds(100, 100, 568, 546);
+		this.setBounds(100, 100, 562, 556);
 
 		JPanel contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -81,47 +95,44 @@ public class RuleSetListDialog extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel ruleSetLabel = new JLabel("Conjuntos");
+		JLabel ruleSetLabel = new JLabel(HolderMessage.getMessage("ruleset.manager.dialog.label.sets"));
 		ruleSetLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleSetLabel.setBounds(6, 6, 57, 14);
+		ruleSetLabel.setBounds(6, 6, 503, 14);
 		contentPanel.add(ruleSetLabel);
 
 		JScrollPane ruleSetScrollPane = new JScrollPane();
-		ruleSetScrollPane.setBounds(6, 21, 435, 284);
+		ruleSetScrollPane.setBounds(6, 21, 503, 284);
 		contentPanel.add(ruleSetScrollPane);
 
-		this.ruleSetModelList = new DefaultListModel<RuleSet>();
 		this.ruleSetList = new JList<RuleSet>();
+		this.ruleSetList.setBorder(new LineBorder(Color.GRAY));
+		this.ruleSetList.setModel(new DefaultListModel<RuleSet>());
 		this.ruleSetList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				RuleSetListDialog.this.loadRules();
 			}
 		});
-		this.ruleSetList.setModel(this.ruleSetModelList);
 		this.ruleSetList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		this.ruleSetList.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleSetScrollPane.add(this.ruleSetList);
 		ruleSetScrollPane.setViewportView(this.ruleSetList);
 
-		JLabel ruleLabel = new JLabel("Reglas");
+		JLabel ruleLabel = new JLabel(HolderMessage.getMessage("ruleset.manager.dialog.label.rules"));
 		ruleLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleLabel.setBounds(6, 317, 45, 14);
+		ruleLabel.setBounds(6, 317, 503, 14);
 		contentPanel.add(ruleLabel);
 
 		JScrollPane ruleScrollPane = new JScrollPane();
-		ruleScrollPane.setBounds(6, 333, 435, 134);
+		ruleScrollPane.setBounds(6, 333, 503, 189);
 		contentPanel.add(ruleScrollPane);
 
-		this.ruleModelList = new DefaultListModel<Rule>();
 		this.ruleList = new JList<Rule>();
-		this.ruleList.setModel(this.ruleModelList);
+		this.ruleList.setBorder(new LineBorder(Color.GRAY));
+		this.ruleList.setModel(new DefaultListModel<Rule>());
 		this.ruleList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		this.ruleList.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleScrollPane.add(this.ruleList);
 		ruleScrollPane.setViewportView(this.ruleList);
 
-		JButton ruleManagerButton = new JButton("Gestionar Reglas");
+		JButton ruleManagerButton = new JButton("");
 		ruleManagerButton.setFont(new Font("Arial", Font.BOLD, 12));
 		ruleManagerButton.addActionListener(new ActionListener() {
 			@Override
@@ -129,12 +140,11 @@ public class RuleSetListDialog extends JDialog {
 				RuleSetListDialog.this.managerRule();
 			}
 		});
-		ruleManagerButton.setBounds(6, 479, 144, 30);
+		ruleManagerButton.setBounds(515, 333, 35, 35);
 		contentPanel.add(ruleManagerButton);
 
-		JButton newButton = new JButton("Crear");
-		newButton.setFont(new Font("Arial", Font.BOLD, 12));
-		newButton.setBounds(453, 21, 100, 30);
+		JButton newButton = new JButton(Resources.ADD_ELEMENT_ICON);
+		newButton.setBounds(515, 21, 35, 35);
 		newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -143,9 +153,8 @@ public class RuleSetListDialog extends JDialog {
 		});
 		contentPanel.add(newButton);
 
-		JButton modifyButton = new JButton("Modificar");
-		modifyButton.setFont(new Font("Arial", Font.BOLD, 12));
-		modifyButton.setBounds(453, 63, 100, 30);
+		JButton modifyButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
+		modifyButton.setBounds(515, 68, 35, 35);
 		modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -154,9 +163,8 @@ public class RuleSetListDialog extends JDialog {
 		});
 		contentPanel.add(modifyButton);
 
-		JButton deleteButton = new JButton("Borrar");
-		deleteButton.setFont(new Font("Arial", Font.BOLD, 12));
-		deleteButton.setBounds(453, 105, 100, 30);
+		JButton deleteButton = new JButton(Resources.DELETE_ELEMENT_ICON);
+		deleteButton.setBounds(515, 115, 35, 35);
 		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -165,9 +173,8 @@ public class RuleSetListDialog extends JDialog {
 		});
 		contentPanel.add(deleteButton);
 
-		JButton backButton = new JButton("Volver");
-		backButton.setFont(new Font("Arial", Font.BOLD, 12));
-		backButton.setBounds(453, 479, 100, 30);
+		JButton backButton = new JButton(Resources.CLOSE_ICON);
+		backButton.setBounds(515, 487, 35, 35);
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -175,34 +182,95 @@ public class RuleSetListDialog extends JDialog {
 			}
 		});
 		contentPanel.add(backButton);
+
+		this.progressLabel = new JLabel("");
+		this.progressLabel.setBounds(515, 440, 35, 35);
+		contentPanel.add(this.progressLabel);
 	}
 
 	/**
 	 * La función encargada de cargar los conjuntos de reglas.
 	 */
 	private void loadRuleSets() {
-		this.ruleSetModelList.clear();
-		try {
-			for (RuleSet rs : this.ruleSetService.findAll()) {
-				this.ruleSetModelList.addElement(rs);
+		new Thread() {
+			@Override
+			public void run() {
+				RuleSetListDialog.this.beforeExecuteProccess();
+
+				// Vaciamos la lista de conjuntos de reglas.
+				DefaultListModel<RuleSet> model = (DefaultListModel<RuleSet>) RuleSetListDialog.this.ruleSetList.getModel();
+				model.clear();
+
+				try {
+					for (RuleSet ruleSet : RuleSetListDialog.this.ruleSetService.findBySubject(RuleSetListDialog.this.accessControl
+							.getSubjectSelected())) {
+						model.addElement(ruleSet);
+					}
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(RuleSetListDialog.this, HolderMessage.getMessage("ruleset.manager.dialog.load.ruleset.failed"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				} finally {
+					RuleSetListDialog.this.afterExecuteProccess();
+				}
 			}
-		} catch (CheckedException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		}
+		}.start();
 	}
 
 	/**
 	 * La función que despliega el listado de las reglas que tenemos dentro del conjunto que seleccionamos.
 	 */
 	private void loadRules() {
-		this.ruleModelList.clear();
-		Integer index = this.ruleSetList.getSelectedIndex();
-		if (index != -1) {
-			RuleSet ruleSet = this.ruleSetModelList.get(index);
-			for (Rule r : ruleSet.getRules()) {
-				this.ruleModelList.addElement(r);
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					RuleSetListDialog.this.beforeExecuteProccess();
+
+					DefaultListModel<RuleSet> ruleSetModel = (DefaultListModel<RuleSet>) RuleSetListDialog.this.ruleSetList.getModel();
+					DefaultListModel<Rule> ruleModel = (DefaultListModel<Rule>) RuleSetListDialog.this.ruleList.getModel();
+
+					// Vaciamos la lista de reglas.
+					ruleModel.clear();
+
+					// Obtenemos el conjunto seleccionado.
+					Integer index = RuleSetListDialog.this.ruleSetList.getSelectedIndex();
+					if (index != -1) {
+						RuleSet ruleSet = ruleSetModel.get(index);
+
+						// Cargamos las reglas del conjunto seleccionado.
+						for (Rule r : ruleSet.getRules()) {
+							ruleModel.addElement(r);
+						}
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(RuleSetListDialog.this, HolderMessage.getMessage("ruleset.manager.dialog.load.rules.failed"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				} finally {
+					RuleSetListDialog.this.afterExecuteProccess();
+				}
 			}
-		}
+		}.start();
+	}
+
+	/**
+	 * La función antes de procesar los reactivos.
+	 */
+	private void beforeExecuteProccess() {
+		this.setEnabled(false);
+
+		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+	}
+
+	/*
+	 * La función después de procesar los reactivos.
+	 */
+	private void afterExecuteProccess() {
+		this.setEnabled(true);
+		this.progressLabel.setIcon(null);
 	}
 
 	/**
@@ -221,8 +289,11 @@ public class RuleSetListDialog extends JDialog {
 	 */
 	private void modifyRuleSet() {
 		Integer index = this.ruleSetList.getSelectedIndex();
+
 		if (index != -1) {
-			RuleSet ruleSet = this.ruleSetModelList.get(index);
+			DefaultListModel<RuleSet> ruleSetModel = (DefaultListModel<RuleSet>) RuleSetListDialog.this.ruleSetList.getModel();
+			RuleSet ruleSet = ruleSetModel.get(index);
+
 			RuleSetFormDialog dialog = this.ruleSetFormDialog.createEditDialog(ruleSet);
 			dialog.setLocationRelativeTo(this);
 			dialog.setModal(true);
@@ -236,16 +307,29 @@ public class RuleSetListDialog extends JDialog {
 	 */
 	private void deleteRuleSet() {
 		Integer index = this.ruleSetList.getSelectedIndex();
+
 		if (index != -1) {
-			RuleSet ruleSet = this.ruleSetModelList.get(index);
-			if (JOptionPane.showConfirmDialog(this, "Está seguro de borrar el conjunto \"" + ruleSet.getDescription() + "\"?", "Confirmación",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				try {
-					this.ruleSetService.delete(ruleSet);
-					this.loadRuleSets();
-				} catch (CheckedException ex) {
-					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
+			DefaultListModel<RuleSet> ruleSetModel = (DefaultListModel<RuleSet>) RuleSetListDialog.this.ruleSetList.getModel();
+			final RuleSet ruleSet = ruleSetModel.get(index);
+
+			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("ruleset.manager.dialog.delete.confirm"),
+					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				new Thread() {
+					@Override
+					public void run() {
+						try {
+							RuleSetListDialog.this.beforeExecuteProccess();
+							RuleSetListDialog.this.ruleSetService.delete(ruleSet);
+							RuleSetListDialog.this.loadRuleSets();
+						} catch (CheckedException ex) {
+							JOptionPane.showMessageDialog(RuleSetListDialog.this, HolderMessage.getMessage("ruleset.manager.dialog.delete.failed"),
+									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+						} finally {
+							RuleSetListDialog.this.afterExecuteProccess();
+
+						}
+					}
+				}.start();
 			}
 		}
 	}
@@ -256,7 +340,6 @@ public class RuleSetListDialog extends JDialog {
 	protected void managerRule() {
 		RuleListDialog dialog = this.ruleListDialog.createDialog();
 		dialog.setLocationRelativeTo(this);
-		dialog.setModal(true);
 		dialog.setVisible(true);
 		this.loadRuleSets();
 	}
@@ -266,8 +349,8 @@ public class RuleSetListDialog extends JDialog {
 	 * 
 	 * @return La ventana para desplegar el listado de las reglas.
 	 */
-	public RuleSetListDialog createDialog() {
-		this.setTitle("Listado de conjuntos de reglas");
+	public RuleSetListDialog createCrudDialog() {
+		this.setTitle(HolderMessage.getMessage("ruleset.manager.dialog.title"));
 		this.loadRuleSets();
 		return this;
 	}
@@ -279,11 +362,10 @@ public class RuleSetListDialog extends JDialog {
 		try {
 
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
-			String[] files =
-				{ "/com/proyecto/spring/general-application-context.xml" };
+			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
 			HolderApplicationContext.initApplicationContext(files);
 
-			RuleSetListDialog dialog = HolderApplicationContext.getContext().getBean(RuleSetListDialog.class).createDialog();
+			RuleSetListDialog dialog = HolderApplicationContext.getContext().getBean(RuleSetListDialog.class).createCrudDialog();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

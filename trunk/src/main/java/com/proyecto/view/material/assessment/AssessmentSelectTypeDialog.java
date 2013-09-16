@@ -44,7 +44,6 @@ public class AssessmentSelectTypeDialog extends JDialog {
 	/**
 	 * El combo de tipo de evaluación.
 	 */
-	// private JComboBox<AssessmentType> assessmentTypeComboBox;
 	private JComboBox<AssessmentType> assessmentTypeComboBox;
 
 	/**
