@@ -11,7 +11,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -19,9 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
+import com.common.util.holder.HolderMessage;
 import com.proyecto.model.rule.Rule;
+import com.proyecto.security.AccessControl;
 import com.proyecto.service.rule.RuleService;
 import com.proyecto.util.Validator;
+import com.proyecto.view.Resources;
 
 /**
  * La clase que despliega el formulario para edición de reglas dentro del sistema.
@@ -33,6 +38,12 @@ import com.proyecto.util.Validator;
 public class RuleFormDialog extends JDialog {
 
 	private static final long serialVersionUID = 1250114119899890805L;
+
+	/**
+	 * El control de acceso.
+	 */
+	@Autowired
+	private AccessControl accessControl;
 
 	/**
 	 * El servicio que vamos a ocupar.
@@ -48,8 +59,21 @@ public class RuleFormDialog extends JDialog {
 	/**
 	 * Los componentes de la ventana.
 	 */
-	private JTextPane ruleTextField;
-	private JTextPane descriptionTextPane;
+	private JTextArea ruleTextArea;
+	private JTextArea descriptionTextArea;
+	/**
+	 * Los botones de acción.
+	 */
+	private JButton btnNewButton;
+	private JButton button;
+	private JButton button_1;
+	private JButton button_2;
+	private JButton commitButton;
+	private JButton cancelButton;
+	/**
+	 * El label de progreso.
+	 */
+	private JLabel progressLabel;
 
 	/**
 	 * El constructor de una ventana de edición de reglas.
@@ -63,8 +87,9 @@ public class RuleFormDialog extends JDialog {
 	 * La función encargada de inicializar la ventana de edición de reglas.
 	 */
 	private void init() {
+		this.setModal(true);
 		this.setResizable(false);
-		this.setBounds(100, 100, 694, 312);
+		this.setBounds(100, 100, 690, 408);
 		this.getContentPane().setLayout(new BorderLayout());
 
 		JPanel contentPanel = new JPanel();
@@ -72,107 +97,169 @@ public class RuleFormDialog extends JDialog {
 		contentPanel.setLayout(null);
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-		JLabel descriptionLabel = new JLabel("Descripci\u00F3n");
-		descriptionLabel.setBounds(10, 11, 162, 14);
+		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("rule.form.label.description"));
+		descriptionLabel.setBounds(10, 10, 668, 16);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		contentPanel.add(descriptionLabel);
 
-		this.descriptionTextPane = new JTextPane();
-		this.descriptionTextPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		this.descriptionTextPane.setBackground(Color.WHITE);
-		this.descriptionTextPane.setFont(new Font("Arial", Font.PLAIN, 11));
-		this.descriptionTextPane.setBounds(10, 37, 668, 60);
-		contentPanel.add(this.descriptionTextPane);
+		JScrollPane descriptionScrollPane = new JScrollPane();
+		descriptionScrollPane.setBounds(6, 27, 672, 112);
+		contentPanel.add(descriptionScrollPane);
 
-		JLabel ruleLabel = new JLabel("Regla");
+		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setWrapStyleWord(true);
+		this.descriptionTextArea.setLineWrap(true);
+		this.descriptionTextArea.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		this.descriptionTextArea.setFont(new Font("Arial", Font.PLAIN, 11));
+		descriptionScrollPane.setViewportView(this.descriptionTextArea);
+
+		JLabel ruleLabel = new JLabel(HolderMessage.getMessage("rule.form.label.rule"));
 		ruleLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleLabel.setBounds(10, 116, 75, 14);
+		ruleLabel.setBounds(10, 149, 668, 16);
 		contentPanel.add(ruleLabel);
 
-		this.ruleTextField = new JTextPane();
-		this.ruleTextField.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		this.ruleTextField.setBounds(10, 141, 668, 90);
-		contentPanel.add(this.ruleTextField);
+		JScrollPane ruleScrollPane = new JScrollPane();
+		ruleScrollPane.setBounds(6, 166, 672, 118);
+		contentPanel.add(ruleScrollPane);
 
-		JButton commitButton = new JButton("Aceptar");
-		commitButton.setLocation(468, 243);
-		commitButton.setFont(new Font("Arial", Font.BOLD, 12));
-		commitButton.setSize(100, 30);
-		commitButton.addActionListener(new ActionListener() {
+		this.ruleTextArea = new JTextArea();
+		this.ruleTextArea.setLineWrap(true);
+		this.ruleTextArea.setWrapStyleWord(true);
+		ruleScrollPane.setViewportView(this.ruleTextArea);
+		this.ruleTextArea.setBorder(new LineBorder(Color.LIGHT_GRAY));
+
+		this.btnNewButton = new JButton("=>");
+		this.btnNewButton.setBounds(10, 291, 53, 23);
+		this.btnNewButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				String contentRule = RuleFormDialog.this.ruleTextArea.getText();
+				RuleFormDialog.this.ruleTextArea.setText(contentRule + "=>");
+
+			}
+		});
+		contentPanel.add(this.btnNewButton);
+
+		this.button = new JButton("|");
+		this.button.setBounds(65, 291, 53, 23);
+		this.button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String contentRule = RuleFormDialog.this.ruleTextArea.getText();
+				RuleFormDialog.this.ruleTextArea.setText(contentRule + "|");
+			}
+		});
+		contentPanel.add(this.button);
+
+		this.button_1 = new JButton("?");
+		this.button_1.setBounds(117, 291, 53, 23);
+		this.button_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String contentRule = RuleFormDialog.this.ruleTextArea.getText();
+				RuleFormDialog.this.ruleTextArea.setText(contentRule + "?");
+			}
+		});
+		contentPanel.add(this.button_1);
+
+		this.button_2 = new JButton("=");
+		this.button_2.setBounds(170, 291, 53, 23);
+		this.button_2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String contentRule = RuleFormDialog.this.ruleTextArea.getText();
+				RuleFormDialog.this.ruleTextArea.setText(contentRule + "=");
+			}
+		});
+		contentPanel.add(this.button_2);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 326, 668, 2);
+		contentPanel.add(separator);
+
+		this.progressLabel = new JLabel();
+		this.progressLabel.setBounds(549, 340, 35, 35);
+		contentPanel.add(this.progressLabel);
+
+		this.commitButton = new JButton(Resources.COMMIT_ICON);
+		this.commitButton.setBounds(596, 340, 35, 35);
+		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleFormDialog.this.saveRule();
 			}
 		});
-		contentPanel.add(commitButton);
-		this.getRootPane().setDefaultButton(commitButton);
+		contentPanel.add(this.commitButton);
 
-		JButton cancelButton = new JButton("Cancelar");
-		cancelButton.setLocation(578, 243);
-		cancelButton.setFont(new Font("Arial", Font.BOLD, 12));
-		cancelButton.setSize(100, 30);
-		cancelButton.addActionListener(new ActionListener() {
+		this.cancelButton = new JButton(Resources.CLOSE_ICON);
+		this.cancelButton.setBounds(643, 340, 35, 35);
+		this.cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				RuleFormDialog.this.dispose();
 			}
 		});
-		contentPanel.add(cancelButton);
-		
-		JButton btnNewButton = new JButton("=>");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			String contentRule =	ruleTextField.getText();
-			ruleTextField.setText(contentRule+"=>");
-			
-			}
-		});
-		btnNewButton.setBounds(95, 112, 53, 23);
-		contentPanel.add(btnNewButton);
-		
-		JButton button = new JButton("|");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String contentRule =	ruleTextField.getText();
-				ruleTextField.setText(contentRule+"|");
-			}
-		});
-		button.setBounds(150, 112, 53, 23);
-		contentPanel.add(button);
-		
-		JButton button_1 = new JButton("?");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String contentRule =	ruleTextField.getText();
-				ruleTextField.setText(contentRule+"?");
-			}
-		});
-		button_1.setBounds(202, 112, 53, 23);
-		contentPanel.add(button_1);
-		
-		JButton button_2 = new JButton("=");
-		button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String contentRule =	ruleTextField.getText();
-				ruleTextField.setText(contentRule+"=");
-			}
-		});
-		button_2.setBounds(255, 112, 53, 23);
-		contentPanel.add(button_2);
+		contentPanel.add(this.cancelButton);
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.ruleTextArea.setEnabled(enabled);
+		this.descriptionTextArea.setEnabled(enabled);
+
+		this.btnNewButton.setEnabled(enabled);
+		this.button.setEnabled(enabled);
+		this.button_1.setEnabled(enabled);
+		this.button_2.setEnabled(enabled);
+		this.commitButton.setEnabled(enabled);
+		this.cancelButton.setEnabled(enabled);
 	}
 
 	/**
 	 * La función encargada de guardar la regla dentro de la base de datos.
 	 */
 	private void saveRule() {
-		try {
-			this.fromDialogToRule();
-			this.ruleService.saveOrUpdate(this.rule);
-			this.dispose();
-		} catch (CheckedException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		}
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					RuleFormDialog.this.beforeExecuteProccess();
+
+					RuleFormDialog.this.fromDialogToRule();
+					try {
+						RuleFormDialog.this.ruleService.saveOrUpdate(RuleFormDialog.this.rule);
+						RuleFormDialog.this.dispose();
+					} catch (CheckedException e) {
+						JOptionPane.showMessageDialog(RuleFormDialog.this, HolderMessage.getMessage("rule.form.error.save"),
+								HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (CheckedException e) {
+					JOptionPane.showMessageDialog(RuleFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+							JOptionPane.ERROR_MESSAGE);
+				} finally {
+					RuleFormDialog.this.afterExecuteProccess();
+				}
+			}
+		}.start();
+	}
+
+	/**
+	 * La función antes de procesar.
+	 */
+	private void beforeExecuteProccess() {
+		this.setEnabled(false);
+
+		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+	}
+
+	/*
+	 * La función después de procesar.
+	 */
+	private void afterExecuteProccess() {
+		this.setEnabled(true);
+		this.progressLabel.setIcon(null);
 	}
 
 	/**
@@ -183,16 +270,16 @@ public class RuleFormDialog extends JDialog {
 	 */
 	private void fromDialogToRule() throws CheckedException {
 		// La descripción de la regla.
-		if (Validator.descriptionValidator(this.descriptionTextPane.getText())) {
-			this.rule.setDescription(this.descriptionTextPane.getText());
+		if (Validator.descriptionValidator(this.descriptionTextArea.getText())) {
+			this.rule.setDescription(this.descriptionTextArea.getText().trim());
 		} else {
-			throw new CheckedException("rule.description.empty");
+			throw new CheckedException("rule.form.error.description");
 		}
 		// La regla en si misma.
-		if (Validator.ruleValidator(this.ruleTextField.getText())) {
-			this.rule.setRule(this.ruleTextField.getText());
+		if (Validator.ruleValidator(this.ruleTextArea.getText())) {
+			this.rule.setRule(this.ruleTextArea.getText().trim());
 		} else {
-			throw new CheckedException("rule.rule.empty");
+			throw new CheckedException("rule.form.error.rule");
 		}
 	}
 
@@ -200,16 +287,16 @@ public class RuleFormDialog extends JDialog {
 	 * La función que toma los datos de la regla y los carga a la ventana.
 	 */
 	private void fromRuleToDialog() {
-		this.descriptionTextPane.setText(this.rule.getDescription());
-		this.ruleTextField.setText(this.rule.getRule());
+		this.descriptionTextArea.setText(this.rule.getDescription());
+		this.ruleTextArea.setText(this.rule.getRule());
 	}
 
 	/**
 	 * La función encargada de vaciar los campos de una regla.
 	 */
 	private void emptyField() {
-		this.descriptionTextPane.setText("");
-		this.ruleTextField.setText("");
+		this.descriptionTextArea.setText("");
+		this.ruleTextArea.setText("");
 	}
 
 	/**
@@ -218,23 +305,28 @@ public class RuleFormDialog extends JDialog {
 	 * @return La ventana cargada con los datos para dar de alta una nueva regla.
 	 */
 	public RuleFormDialog createNewDialog() {
-		this.setTitle("Nueva regla");
+		this.setTitle(HolderMessage.getMessage("rule.form.title.new"));
+
 		this.rule = new Rule();
 		this.emptyField();
+
 		return this;
 	}
 
 	/**
 	 * La función que carga la ventana para modificar una regla que ya tenemos dentro de la base de datos.
 	 * 
-	 * @param editRule
+	 * @param rule
 	 *            La regla que queremos editar.
 	 * @return La ventana cargada con los datos para modificar una regla.
 	 */
-	public RuleFormDialog createEditDialog(Rule editRule) {
-		this.setTitle("Editar regla");
-		this.rule = editRule;
+	public RuleFormDialog createEditDialog(Rule rule) {
+		this.setTitle(HolderMessage.getMessage("rule.form.title.edit"));
+
+		this.rule = rule;
+		this.emptyField();
 		this.fromRuleToDialog();
+
 		return this;
 	}
 }

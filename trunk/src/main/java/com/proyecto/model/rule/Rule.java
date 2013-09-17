@@ -97,7 +97,7 @@ public class Rule extends Entity<Integer> {
 	}
 
 	/**
-	 * La función que setea la descripción de la regla.
+	 * La función que carga la descripción de la regla.
 	 * 
 	 * @param description
 	 *            La descripción de la regla.
@@ -107,7 +107,7 @@ public class Rule extends Entity<Integer> {
 	}
 
 	/**
-	 * La función que setea la regla en si misma.
+	 * La función que carga la regla en si misma.
 	 * 
 	 * @param rule
 	 *            La regla en si misma.

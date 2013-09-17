@@ -64,7 +64,7 @@ public class AssessmentSelectTypeDialog extends JDialog {
 		this.getContentPane().setLayout(null);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 
-		JLabel assessmentTypeLabel = new JLabel(HolderMessage.getMessage("assessment.form.select.type.label"));
+		JLabel assessmentTypeLabel = new JLabel(HolderMessage.getMessage("assessment.select.type.label"));
 		assessmentTypeLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		assessmentTypeLabel.setBounds(10, 11, 424, 15);
 		this.getContentPane().add(assessmentTypeLabel);
@@ -135,7 +135,7 @@ public class AssessmentSelectTypeDialog extends JDialog {
 	 * @return La ventana de selección del tipo de evaluación.
 	 */
 	public AssessmentSelectTypeDialog createNewDialog() {
-		this.setTitle(HolderMessage.getMessage("assessment.form.select.title"));
+		this.setTitle(HolderMessage.getMessage("assessment.select.title"));
 
 		this.assessmentTypeComboBox.setSelectedIndex(-1);
 

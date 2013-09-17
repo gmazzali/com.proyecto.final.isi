@@ -1,5 +1,6 @@
 package com.proyecto.view.material.activity;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +114,7 @@ public class ActivityFormDialog extends JDialog {
 	 * La función encargada de inicializar la ventana.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 701, 459);
+		this.setBounds(100, 100, 701, 444);
 		this.setModal(true);
 		this.setResizable(false);
 		this.getContentPane().setLayout(null);
@@ -121,33 +123,37 @@ public class ActivityFormDialog extends JDialog {
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("activity.form.label.description"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 11, 675, 14);
+		descriptionLabel.setBounds(10, 10, 679, 14);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(10, 36, 675, 116);
+		descriptionScrollPane.setBounds(6, 25, 683, 135);
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setBorder(new LineBorder(Color.GRAY));
+		this.descriptionTextArea.setWrapStyleWord(true);
+		this.descriptionTextArea.setLineWrap(true);
 		this.descriptionTextArea.setFont(this.getContentPane().getFont());
 		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
 		JLabel activitiesLabel = new JLabel(HolderMessage.getMessage("activity.form.label.reactives"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		activitiesLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		activitiesLabel.setBounds(10, 173, 630, 14);
+		activitiesLabel.setBounds(10, 172, 630, 14);
 		this.getContentPane().add(activitiesLabel);
 
 		JScrollPane reactivesScrollPane = new JScrollPane();
-		reactivesScrollPane.setBounds(10, 198, 630, 160);
+		reactivesScrollPane.setBounds(6, 187, 642, 160);
 		this.getContentPane().add(reactivesScrollPane);
 
 		this.reactivesList = new JList<Reactive>();
+		this.reactivesList.setBorder(new LineBorder(Color.GRAY));
 		this.reactivesList.setModel(new DefaultListModel<Reactive>());
 		reactivesScrollPane.setViewportView(this.reactivesList);
 
 		this.addReactiveButton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.addReactiveButton.setBounds(650, 198, 35, 35);
+		this.addReactiveButton.setBounds(654, 187, 35, 35);
 		this.addReactiveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -157,7 +163,7 @@ public class ActivityFormDialog extends JDialog {
 		this.getContentPane().add(this.addReactiveButton);
 
 		this.removeReactiveButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.removeReactiveButton.setBounds(650, 244, 35, 35);
+		this.removeReactiveButton.setBounds(654, 233, 35, 35);
 		this.removeReactiveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -167,15 +173,15 @@ public class ActivityFormDialog extends JDialog {
 		this.getContentPane().add(this.removeReactiveButton);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 370, 675, 2);
+		separator.setBounds(10, 359, 679, 2);
 		this.getContentPane().add(separator);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(556, 384, 35, 35);
+		this.progressLabel.setBounds(560, 373, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
-		this.commitButton.setBounds(603, 384, 35, 35);
+		this.commitButton.setBounds(607, 373, 35, 35);
 		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
@@ -186,7 +192,7 @@ public class ActivityFormDialog extends JDialog {
 		this.getContentPane().add(this.commitButton);
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
-		this.rejectButton.setBounds(650, 384, 35, 35);
+		this.rejectButton.setBounds(654, 373, 35, 35);
 		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
@@ -240,8 +246,8 @@ public class ActivityFormDialog extends JDialog {
 						}
 					}
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ActivityFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ActivityFormDialog.this, HolderMessage.getMessage("activity.form.error.update"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 				} finally {
 					ActivityFormDialog.this.afterProccessActivity();
 				}
@@ -293,8 +299,9 @@ public class ActivityFormDialog extends JDialog {
 						ActivityFormDialog.this.updateReactives();
 					}
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ActivityFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ActivityFormDialog.this, HolderMessage.getMessage("activity.form.error.update"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
 				} finally {
 					ActivityFormDialog.this.afterProccessActivity();
 				}
@@ -312,11 +319,17 @@ public class ActivityFormDialog extends JDialog {
 				try {
 					ActivityFormDialog.this.beforeProccessActivity();
 					ActivityFormDialog.this.fromDialogToActivity();
-					ActivityFormDialog.this.activityService.saveOrUpdate(ActivityFormDialog.this.activity);
-					ActivityFormDialog.this.dispose();
+					try {
+						ActivityFormDialog.this.activityService.saveOrUpdate(ActivityFormDialog.this.activity);
+						ActivityFormDialog.this.dispose();
+					} catch (CheckedException e) {
+						JOptionPane.showMessageDialog(ActivityFormDialog.this, HolderMessage.getMessage("activity.form.error.save"),
+								HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					}
 				} catch (CheckedException e) {
 					JOptionPane.showMessageDialog(ActivityFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
 							JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
 				} finally {
 					ActivityFormDialog.this.afterProccessActivity();
 				}

@@ -1,5 +1,6 @@
 package com.proyecto.view.material.assessment;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 
@@ -95,21 +97,27 @@ public class AssessmentListDialog extends JDialog {
 		this.setResizable(false);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
-		this.setBounds(100, 100, 695, 465);
+		this.setBounds(100, 100, 683, 465);
+
+		JLabel assessmentListLabel = new JLabel(HolderMessage.getMessage("assessment.manager.label.assessments"));
+		assessmentListLabel.setFont(new Font("Arial", Font.BOLD, 11));
+		assessmentListLabel.setBounds(10, 10, 620, 16);
+		this.getContentPane().add(assessmentListLabel);
 
 		// El contenido de la ventana.
 		JScrollPane assessmentScrollPane = new JScrollPane();
-		assessmentScrollPane.setBounds(6, 6, 624, 425);
+		assessmentScrollPane.setBounds(6, 25, 624, 406);
 		this.getContentPane().add(assessmentScrollPane);
 
 		this.assessmentTable = new JTable();
+		this.assessmentTable.setBorder(new LineBorder(Color.GRAY));
 		this.assessmentTable.setShowHorizontalLines(true);
 		this.assessmentTable.setFillsViewportHeight(true);
 		assessmentScrollPane.setViewportView(this.assessmentTable);
 		this.initTableModel();
 
 		this.newButton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.newButton.setBounds(642, 6, 35, 35);
+		this.newButton.setBounds(636, 25, 35, 35);
 		this.newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,7 +127,7 @@ public class AssessmentListDialog extends JDialog {
 		this.getContentPane().add(this.newButton);
 
 		this.modifyButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
-		this.modifyButton.setBounds(642, 48, 35, 35);
+		this.modifyButton.setBounds(636, 67, 35, 35);
 		this.modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -129,7 +137,7 @@ public class AssessmentListDialog extends JDialog {
 		this.getContentPane().add(this.modifyButton);
 
 		this.deleteButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.deleteButton.setBounds(642, 90, 35, 35);
+		this.deleteButton.setBounds(636, 109, 35, 35);
 		this.deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -139,11 +147,11 @@ public class AssessmentListDialog extends JDialog {
 		this.getContentPane().add(this.deleteButton);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(642, 349, 35, 35);
+		this.progressLabel.setBounds(636, 349, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
 		this.closeButton = new JButton(Resources.CLOSE_ICON);
-		this.closeButton.setBounds(642, 396, 35, 35);
+		this.closeButton.setBounds(636, 396, 35, 35);
 		this.closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -160,6 +168,7 @@ public class AssessmentListDialog extends JDialog {
 		this.newButton.setEnabled(enabled);
 		this.modifyButton.setEnabled(enabled);
 		this.deleteButton.setEnabled(enabled);
+		this.closeButton.setEnabled(enabled);
 	}
 
 	/**
@@ -174,8 +183,8 @@ public class AssessmentListDialog extends JDialog {
 				return false;
 			}
 		};
-		tableModel.addColumn(HolderMessage.getMessage("assessment.manager.dialog.table.column.decription"));
-		tableModel.addColumn(HolderMessage.getMessage("assessment.manager.dialog.table.column.date"));
+		tableModel.addColumn(HolderMessage.getMessage("assessment.manager.table.column.description"));
+		tableModel.addColumn(HolderMessage.getMessage("assessment.manager.table.column.date"));
 
 		// Seteamos el modelo a la tabla.
 		this.assessmentTable.setModel(tableModel);
@@ -188,28 +197,30 @@ public class AssessmentListDialog extends JDialog {
 	 * La función encargada de actualizar el listado de las evaluaciones que tenemos dentro de la ventana.
 	 */
 	private void updateAssessments() {
-		// Ejecutamos las acciones antes de procesar.
-		this.beforeExecuteProccess();
-
-		// Vaciamos la lista de evaluaciones.
-		DefaultTableModel tableModel = (DefaultTableModel) this.assessmentTable.getModel();
-		tableModel.getDataVector().clear();
-
 		new Thread() {
 			@Override
 			public void run() {
 				try {
+					// Ejecutamos las acciones antes de procesar.
+					AssessmentListDialog.this.beforeExecuteProccess();
+
+					// Vaciamos la lista de evaluaciones.
+					DefaultTableModel tableModel = (DefaultTableModel) AssessmentListDialog.this.assessmentTable.getModel();
+					tableModel.getDataVector().clear();
+
 					// Vaciamos el listado.
 					AssessmentListDialog.this.assessments.clear();
+
 					// Cargamos el listado de las evaluaciones.
 					AssessmentListDialog.this.assessments.addAll(AssessmentListDialog.this.assessmentService
 							.findBySubject(AssessmentListDialog.this.accessControl.getSubjectSelected()));
+
 					// Cargamos el listado dentro de la tabla.
 					AssessmentListDialog.this.loadAssessmentTable();
 				} catch (Exception e) {
 					e.printStackTrace();
-					JOptionPane.showMessageDialog(AssessmentListDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(AssessmentListDialog.this, HolderMessage.getMessage("assessment.manager.load.assessments.failed"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 				} finally {
 					AssessmentListDialog.this.afterExecuteProccess();
 				}
@@ -294,7 +305,7 @@ public class AssessmentListDialog extends JDialog {
 		if (assessmentIndex >= 0) {
 			final Assessment deletedAssessment = this.assessments.get(this.assessmentTable.convertRowIndexToModel(assessmentIndex));
 
-			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("assessment.manager.dialog.delete.confirm"),
+			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("assessment.manager.delete.confirm"),
 					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
 				new Thread() {
@@ -323,7 +334,7 @@ public class AssessmentListDialog extends JDialog {
 	 * @return La ventana de administración de evaluaciones.
 	 */
 	public AssessmentListDialog createCrudDialog() {
-		this.setTitle(HolderMessage.getMessage("assessment.manager.dialog.title"));
+		this.setTitle(HolderMessage.getMessage("assessment.manager.title"));
 
 		this.updateAssessments();
 

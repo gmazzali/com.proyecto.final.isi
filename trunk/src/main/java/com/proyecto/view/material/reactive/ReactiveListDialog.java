@@ -1,6 +1,7 @@
 package com.proyecto.view.material.reactive;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +90,7 @@ public class ReactiveListDialog extends JDialog {
 	 * El label de progreso.
 	 */
 	private JLabel progressLabel;
+	private JLabel reactivesListLabel;
 
 	/**
 	 * Constructor de una ventana de listado de reactivos.
@@ -105,25 +108,31 @@ public class ReactiveListDialog extends JDialog {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		this.setBounds(100, 100, 700, 405);
+		this.setBounds(100, 100, 687, 405);
 		this.getContentPane().setLayout(new BorderLayout());
 		JPanel contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(null);
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 
+		this.reactivesListLabel = new JLabel(HolderMessage.getMessage("reactive.manager.label.reactives"));
+		this.reactivesListLabel.setFont(new Font("Arial", Font.BOLD, 11));
+		this.reactivesListLabel.setBounds(10, 10, 623, 16);
+		contentPanel.add(this.reactivesListLabel);
+
 		JScrollPane reactiveScrollPane = new JScrollPane();
-		reactiveScrollPane.setBounds(10, 11, 627, 355);
+		reactiveScrollPane.setBounds(6, 27, 627, 344);
 		contentPanel.add(reactiveScrollPane);
 
 		this.reactiveList = new JList<Reactive>();
+		this.reactiveList.setBorder(new LineBorder(Color.GRAY));
 		this.reactiveList.setModel(new DefaultListModel<Reactive>());
 		this.reactiveList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		this.reactiveList.setFont(new Font("Arial", Font.PLAIN, 12));
 		reactiveScrollPane.setViewportView(this.reactiveList);
 
 		this.newButton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.newButton.setBounds(649, 11, 35, 35);
+		this.newButton.setBounds(639, 27, 35, 35);
 		this.newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -133,7 +142,7 @@ public class ReactiveListDialog extends JDialog {
 		contentPanel.add(this.newButton);
 
 		this.modifyButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
-		this.modifyButton.setBounds(649, 57, 35, 35);
+		this.modifyButton.setBounds(639, 73, 35, 35);
 		this.modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -143,7 +152,7 @@ public class ReactiveListDialog extends JDialog {
 		contentPanel.add(this.modifyButton);
 
 		this.removeButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.removeButton.setBounds(649, 103, 35, 35);
+		this.removeButton.setBounds(639, 119, 35, 35);
 		this.removeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,7 +162,7 @@ public class ReactiveListDialog extends JDialog {
 		contentPanel.add(this.removeButton);
 
 		this.selectButton = new JButton(Resources.SELECT_ELEMENT_ICON);
-		this.selectButton.setBounds(649, 149, 35, 35);
+		this.selectButton.setBounds(639, 165, 35, 35);
 		this.selectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -163,11 +172,11 @@ public class ReactiveListDialog extends JDialog {
 		contentPanel.add(this.selectButton);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(649, 284, 35, 35);
+		this.progressLabel.setBounds(639, 284, 35, 35);
 		contentPanel.add(this.progressLabel);
 
 		this.closeButton = new JButton(Resources.CLOSE_ICON);
-		this.closeButton.setBounds(649, 331, 35, 35);
+		this.closeButton.setBounds(639, 336, 35, 35);
 		this.closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -210,7 +219,8 @@ public class ReactiveListDialog extends JDialog {
 							// Cargamos el listado de reactivos.
 							ReactiveListDialog.this.loadReactiveList();
 						} catch (Exception e) {
-							JOptionPane.showMessageDialog(ReactiveListDialog.this, e.getMessage(),
+							JOptionPane.showMessageDialog(ReactiveListDialog.this,
+									HolderMessage.getMessage("reactive.manager.load.reactives.failed"),
 									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 						} finally {
 							ReactiveListDialog.this.afterExecuteProccess();

@@ -156,12 +156,12 @@ public class MainWindowFrame extends JFrame {
 		this.menuBar.setBounds(0, 0, 894, 23);
 		this.getContentPane().add(this.menuBar);
 
-		JMenu menuSistemas = new JMenu(HolderMessage.getMessage("menu.system"));
+		JMenu menuSistemas = new JMenu(HolderMessage.getMessage("main.menu.system"));
 		menuSistemas.setHorizontalAlignment(SwingConstants.LEFT);
 		menuSistemas.setFont(this.menuBar.getFont());
 		this.menuBar.add(menuSistemas);
 
-		JMenuItem itemMenuCambioMateria = new JMenuItem(HolderMessage.getMessage("menu.system.subject.change"));
+		JMenuItem itemMenuCambioMateria = new JMenuItem(HolderMessage.getMessage("main.menu.system.subject.change"));
 		itemMenuCambioMateria.setHorizontalAlignment(SwingConstants.LEFT);
 		itemMenuCambioMateria.setFont(this.menuBar.getFont());
 		itemMenuCambioMateria.addActionListener(new ActionListener() {
@@ -172,7 +172,7 @@ public class MainWindowFrame extends JFrame {
 		});
 		menuSistemas.add(itemMenuCambioMateria);
 
-		JMenuItem itemMenuSalir = new JMenuItem(HolderMessage.getMessage("menu.system.exit"));
+		JMenuItem itemMenuSalir = new JMenuItem(HolderMessage.getMessage("main.menu.system.exit"));
 		itemMenuSalir.setHorizontalAlignment(SwingConstants.LEFT);
 		itemMenuSalir.setFont(this.menuBar.getFont());
 		itemMenuSalir.addActionListener(new ActionListener() {
@@ -183,12 +183,12 @@ public class MainWindowFrame extends JFrame {
 		});
 		menuSistemas.add(itemMenuSalir);
 
-		JMenu menuReglas = new JMenu(HolderMessage.getMessage("menu.rules"));
+		JMenu menuReglas = new JMenu(HolderMessage.getMessage("main.menu.rules"));
 		menuReglas.setHorizontalAlignment(SwingConstants.LEFT);
 		menuReglas.setFont(this.menuBar.getFont());
 		this.menuBar.add(menuReglas);
 
-		JMenuItem itemMenuReglas = new JMenuItem(HolderMessage.getMessage("menu.rules.set.manager"));
+		JMenuItem itemMenuReglas = new JMenuItem(HolderMessage.getMessage("main.menu.rules.set.manager"));
 		itemMenuReglas.setHorizontalAlignment(SwingConstants.LEFT);
 		itemMenuReglas.setFont(this.menuBar.getFont());
 		itemMenuReglas.addActionListener(new ActionListener() {
@@ -199,12 +199,12 @@ public class MainWindowFrame extends JFrame {
 		});
 		menuReglas.add(itemMenuReglas);
 
-		JMenu menuRecursos = new JMenu(HolderMessage.getMessage("menu.material"));
+		JMenu menuRecursos = new JMenu(HolderMessage.getMessage("main.menu.material"));
 		menuRecursos.setHorizontalAlignment(SwingConstants.LEFT);
 		menuRecursos.setFont(this.menuBar.getFont());
 		this.menuBar.add(menuRecursos);
 
-		JMenuItem itemMenuEvaluaciones = new JMenuItem(HolderMessage.getMessage("menu.material.assessment.manager"));
+		JMenuItem itemMenuEvaluaciones = new JMenuItem(HolderMessage.getMessage("main.menu.material.assessment.manager"));
 		itemMenuEvaluaciones.setHorizontalAlignment(SwingConstants.LEFT);
 		itemMenuEvaluaciones.setFont(this.menuBar.getFont());
 		itemMenuEvaluaciones.addActionListener(new ActionListener() {
@@ -215,7 +215,7 @@ public class MainWindowFrame extends JFrame {
 		});
 		menuRecursos.add(itemMenuEvaluaciones);
 
-		JMenuItem itemMenuActividades = new JMenuItem(HolderMessage.getMessage("menu.material.activity.manager"));
+		JMenuItem itemMenuActividades = new JMenuItem(HolderMessage.getMessage("main.menu.material.activity.manager"));
 		itemMenuActividades.setHorizontalAlignment(SwingConstants.LEFT);
 		itemMenuActividades.setFont(this.menuBar.getFont());
 		itemMenuActividades.addActionListener(new ActionListener() {
@@ -226,7 +226,7 @@ public class MainWindowFrame extends JFrame {
 		});
 		menuRecursos.add(itemMenuActividades);
 
-		JMenuItem itemMenuReactivos = new JMenuItem(HolderMessage.getMessage("menu.material.reactive.manager"));
+		JMenuItem itemMenuReactivos = new JMenuItem(HolderMessage.getMessage("main.menu.material.reactive.manager"));
 		itemMenuReactivos.setHorizontalAlignment(SwingConstants.LEFT);
 		itemMenuReactivos.setFont(this.menuBar.getFont());
 		itemMenuReactivos.addActionListener(new ActionListener() {
@@ -237,7 +237,7 @@ public class MainWindowFrame extends JFrame {
 		});
 		menuRecursos.add(itemMenuReactivos);
 
-		JMenuItem itemMenuInstrumentos = new JMenuItem(HolderMessage.getMessage("menu.material.instrument.manager"));
+		JMenuItem itemMenuInstrumentos = new JMenuItem(HolderMessage.getMessage("main.menu.material.instrument.manager"));
 		itemMenuInstrumentos.setHorizontalAlignment(SwingConstants.LEFT);
 		itemMenuInstrumentos.setFont(this.menuBar.getFont());
 		itemMenuInstrumentos.addActionListener(new ActionListener() {
@@ -261,11 +261,11 @@ public class MainWindowFrame extends JFrame {
 		this.assessmentList.setModel(new DefaultListModel<Assessment>());
 		assessmentScrollPane.setViewportView(this.assessmentList);
 
-		this.assessmentManagerButton = new JButton();
+		this.assessmentManagerButton = new JButton(Resources.CRUD_ICON);
 		this.assessmentManagerButton.setBounds(422, 52, 35, 35);
 		this.getContentPane().add(this.assessmentManagerButton);
 
-		JLabel ruleSetListLabel = new JLabel(HolderMessage.getMessage("main.window.list.rule.set.label"));
+		JLabel ruleSetListLabel = new JLabel(HolderMessage.getMessage("main.window.list.ruleset.label"));
 		ruleSetListLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		ruleSetListLabel.setBounds(10, 264, 400, 16);
 		this.getContentPane().add(ruleSetListLabel);
@@ -278,7 +278,7 @@ public class MainWindowFrame extends JFrame {
 		this.ruleSetList.setModel(new DefaultListModel<RuleSet>());
 		ruleSetScrollPane.setViewportView(this.ruleSetList);
 
-		this.ruleSetManagerButton = new JButton();
+		this.ruleSetManagerButton = new JButton(Resources.CRUD_ICON);
 		this.ruleSetManagerButton.setBounds(422, 285, 35, 35);
 		this.getContentPane().add(this.ruleSetManagerButton);
 
@@ -329,25 +329,25 @@ public class MainWindowFrame extends JFrame {
 		dataPanel.setBounds(10, 501, 707, 35);
 		this.getContentPane().add(dataPanel);
 
-		JLabel agentLabel = new JLabel(HolderMessage.getMessage("data.agent.name"));
+		JLabel agentLabel = new JLabel(HolderMessage.getMessage("main.data.agent"));
 		agentLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		agentLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		agentLabel.setBounds(6, 6, 341, 14);
 		dataPanel.add(agentLabel);
 
-		this.agentNameLabel = new JLabel(HolderMessage.getMessage("main.window.data.agent.null"));
+		this.agentNameLabel = new JLabel(HolderMessage.getMessage("main.data.agent.null"));
 		this.agentNameLabel.setBounds(6, 23, 341, 14);
 		this.agentNameLabel.setForeground(Color.BLUE);
 		this.agentNameLabel.setFont(new Font("Arial", Font.PLAIN, 10));
 		dataPanel.add(this.agentNameLabel);
 
-		JLabel subjectLabel = new JLabel(HolderMessage.getMessage("data.subject.name"));
+		JLabel subjectLabel = new JLabel(HolderMessage.getMessage("main.data.subject"));
 		subjectLabel.setBounds(359, 6, 341, 14);
 		subjectLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		subjectLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		dataPanel.add(subjectLabel);
 
-		this.subjectNameLabel = new JLabel(HolderMessage.getMessage("main.window.data.subject.null"));
+		this.subjectNameLabel = new JLabel(HolderMessage.getMessage("main.data.subject.null"));
 		this.subjectNameLabel.setBounds(359, 23, 341, 14);
 		this.subjectNameLabel.setForeground(Color.BLUE);
 		this.subjectNameLabel.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -439,13 +439,13 @@ public class MainWindowFrame extends JFrame {
 		if (this.accessControl.getAgentLogged() != null) {
 			this.agentNameLabel.setText(this.accessControl.getAgentLogged().getName());
 		} else {
-			this.agentNameLabel.setText(HolderMessage.getMessage("data.agent.null"));
+			this.agentNameLabel.setText(HolderMessage.getMessage("main.data.agent.null"));
 		}
 
 		if (this.accessControl.getSubjectSelected() != null) {
 			this.subjectNameLabel.setText(this.accessControl.getSubjectSelected().getName());
 		} else {
-			this.subjectNameLabel.setText(HolderMessage.getMessage("data.subject.null"));
+			this.subjectNameLabel.setText(HolderMessage.getMessage("main.data.subject.null"));
 		}
 	}
 

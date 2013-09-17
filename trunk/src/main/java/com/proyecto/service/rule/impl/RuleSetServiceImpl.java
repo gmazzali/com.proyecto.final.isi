@@ -34,7 +34,7 @@ public class RuleSetServiceImpl extends ProyectoServiceImpl<RuleSet, Integer> im
 
 	@Override
 	public List<RuleSet> findBySubject(Subject subjectSelected) throws CheckedException {
-		Filter filter = new Filter();
+		Filter filter = null;
 
 		// Si la asignatura no es nula, cargamos el filtro y buscamos los materiales.
 		if (subjectSelected != null) {
@@ -49,13 +49,14 @@ public class RuleSetServiceImpl extends ProyectoServiceImpl<RuleSet, Integer> im
 		return this.findByFilter(filter);
 	}
 
+	/**
+	 * La función que recupera todos los conjuntos activas dentro del sistema.
+	 * 
+	 * @return El listado de los conjuntos activos dentro del sistema.
+	 */
 	@Override
 	public List<RuleSet> findAll() throws CheckedException {
-		Filter filter = new Filter();
-
-		// Cargamos solos los conjuntos activos.
-		filter = Filter.and(filter, Filter.eq(RuleSet.Attributes.ACTIVE, true));
-
+		Filter filter = Filter.eq(RuleSet.Attributes.ACTIVE, true);
 		return this.findByFilter(filter);
 	}
 
@@ -73,10 +74,10 @@ public class RuleSetServiceImpl extends ProyectoServiceImpl<RuleSet, Integer> im
 	}
 
 	/**
-	 * El borrado se realiza cambiando el estado del material que corresponde con el id a inactivo.
+	 * El borrado se realiza cambiando el estado del conjunto que corresponde con el id a inactivo.
 	 * 
 	 * @param id
-	 *            El identificador del material que vamos a eliminar.
+	 *            El identificador del conjunto que vamos a eliminar.
 	 */
 	@Override
 	public void deleteById(Integer id) throws CheckedException {
