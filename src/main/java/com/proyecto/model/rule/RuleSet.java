@@ -66,7 +66,7 @@ public class RuleSet extends Entity<Integer> {
 		this.subject = null;
 		this.description = null;
 		this.rules = new ArrayList<Rule>();
-		this.active = false;
+		this.active = true;
 	}
 
 	@Override

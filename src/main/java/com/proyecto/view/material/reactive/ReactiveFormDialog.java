@@ -122,45 +122,45 @@ public class ReactiveFormDialog extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(null);
 
-		this.setBounds(100, 100, 727, 387);
+		this.setBounds(100, 100, 723, 451);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		JLabel selectionTypeEvaluationLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.type"));
 		selectionTypeEvaluationLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		selectionTypeEvaluationLabel.setBounds(10, 11, 701, 14);
+		selectionTypeEvaluationLabel.setBounds(10, 10, 701, 16);
 		contentPanel.add(selectionTypeEvaluationLabel);
 
 		this.assessementTypeComboBox = new JComboBox<ReactiveType>();
 		this.assessementTypeComboBox.setFont(this.getContentPane().getFont());
-		this.assessementTypeComboBox.setBounds(10, 27, 701, 30);
+		this.assessementTypeComboBox.setBounds(6, 27, 705, 30);
 		contentPanel.add(this.assessementTypeComboBox);
 
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.description"));
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 68, 701, 14);
+		descriptionLabel.setBounds(10, 69, 701, 16);
 		contentPanel.add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(10, 85, 701, 88);
+		descriptionScrollPane.setBounds(6, 86, 705, 120);
 		contentPanel.add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
 		this.descriptionTextArea.setLineWrap(true);
 		this.descriptionTextArea.setFont(this.getContentPane().getFont());
 		this.descriptionTextArea.setWrapStyleWord(true);
-		this.descriptionTextArea.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		this.descriptionTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.descriptionTextArea.setBackground(Color.WHITE);
 		descriptionScrollPane.setViewportView(this.descriptionTextArea);
 
 		JLabel instrumentLabel = new JLabel(HolderMessage.getMessage("reactive.form.label.instrument"));
 		instrumentLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		instrumentLabel.setBounds(10, 185, 654, 14);
+		instrumentLabel.setBounds(10, 218, 654, 16);
 		contentPanel.add(instrumentLabel);
 
 		JScrollPane instrumentScrollPane = new JScrollPane();
-		instrumentScrollPane.setBounds(10, 202, 654, 88);
+		instrumentScrollPane.setBounds(6, 235, 664, 120);
 		contentPanel.add(instrumentScrollPane);
 
 		this.instrumentTextArea = new JTextArea();
@@ -168,11 +168,11 @@ public class ReactiveFormDialog extends JDialog {
 		this.instrumentTextArea.setLineWrap(true);
 		this.instrumentTextArea.setEnabled(false);
 		this.instrumentTextArea.setFont(this.getContentPane().getFont());
-		this.instrumentTextArea.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		this.instrumentTextArea.setBorder(new LineBorder(Color.GRAY));
 		instrumentScrollPane.setViewportView(this.instrumentTextArea);
 
 		this.addInstrumentbutton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.addInstrumentbutton.setBounds(676, 202, 35, 35);
+		this.addInstrumentbutton.setBounds(676, 235, 35, 35);
 		this.addInstrumentbutton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -182,7 +182,7 @@ public class ReactiveFormDialog extends JDialog {
 		contentPanel.add(this.addInstrumentbutton);
 
 		this.removeInstrumentButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.removeInstrumentButton.setBounds(676, 255, 35, 35);
+		this.removeInstrumentButton.setBounds(676, 282, 35, 35);
 		this.removeInstrumentButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -192,15 +192,15 @@ public class ReactiveFormDialog extends JDialog {
 		contentPanel.add(this.removeInstrumentButton);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 302, 701, 2);
+		separator.setBounds(10, 367, 701, 2);
 		contentPanel.add(separator);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(582, 316, 35, 35);
+		this.progressLabel.setBounds(582, 381, 35, 35);
 		contentPanel.add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
-		this.commitButton.setBounds(629, 316, 35, 35);
+		this.commitButton.setBounds(629, 381, 35, 35);
 		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
@@ -211,7 +211,7 @@ public class ReactiveFormDialog extends JDialog {
 		contentPanel.add(this.commitButton);
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
-		this.rejectButton.setBounds(676, 316, 35, 35);
+		this.rejectButton.setBounds(676, 381, 35, 35);
 		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override

@@ -1,6 +1,7 @@
 package com.proyecto.view.material.activity;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +91,7 @@ public class ActivityListDialog extends JDialog {
 	 * El label de progreso.
 	 */
 	private JLabel progressLabel;
+	private JLabel activitiesListLabel;
 
 	/**
 	 * Constructor de la ventana de listado.
@@ -106,25 +109,31 @@ public class ActivityListDialog extends JDialog {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		this.setBounds(100, 100, 700, 405);
+		this.setBounds(100, 100, 690, 402);
 		this.getContentPane().setLayout(new BorderLayout());
 		JPanel contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(null);
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 
+		this.activitiesListLabel = new JLabel(HolderMessage.getMessage("activity.manager.label.activities"));
+		this.activitiesListLabel.setBounds(10, 10, 623, 16);
+		contentPanel.add(this.activitiesListLabel);
+		this.activitiesListLabel.setFont(new Font("Arial", Font.BOLD, 11));
+
 		JScrollPane activitiesScrollPane = new JScrollPane();
-		activitiesScrollPane.setBounds(10, 11, 627, 355);
+		activitiesScrollPane.setBounds(6, 27, 627, 341);
 		contentPanel.add(activitiesScrollPane);
 
 		this.activityList = new JList<Activity>();
+		this.activityList.setBorder(new LineBorder(Color.GRAY));
 		this.activityList.setModel(new DefaultListModel<Activity>());
 		this.activityList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		this.activityList.setFont(new Font("Arial", Font.PLAIN, 12));
 		activitiesScrollPane.setViewportView(this.activityList);
 
 		this.newButton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.newButton.setBounds(649, 11, 35, 35);
+		this.newButton.setBounds(640, 27, 35, 35);
 		this.newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +143,7 @@ public class ActivityListDialog extends JDialog {
 		contentPanel.add(this.newButton);
 
 		this.modifyButton = new JButton(Resources.MODIFY_ELEMENT_ICON);
-		this.modifyButton.setBounds(649, 57, 35, 35);
+		this.modifyButton.setBounds(640, 73, 35, 35);
 		this.modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +153,7 @@ public class ActivityListDialog extends JDialog {
 		contentPanel.add(this.modifyButton);
 
 		this.removeButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.removeButton.setBounds(649, 103, 35, 35);
+		this.removeButton.setBounds(640, 119, 35, 35);
 		this.removeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -154,7 +163,7 @@ public class ActivityListDialog extends JDialog {
 		contentPanel.add(this.removeButton);
 
 		this.selectButton = new JButton(Resources.SELECT_ELEMENT_ICON);
-		this.selectButton.setBounds(649, 149, 35, 35);
+		this.selectButton.setBounds(640, 165, 35, 35);
 		this.selectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -164,11 +173,11 @@ public class ActivityListDialog extends JDialog {
 		contentPanel.add(this.selectButton);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(649, 284, 35, 35);
+		this.progressLabel.setBounds(640, 286, 35, 35);
 		contentPanel.add(this.progressLabel);
 
 		this.closeButton = new JButton(Resources.CLOSE_ICON);
-		this.closeButton.setBounds(649, 331, 35, 35);
+		this.closeButton.setBounds(640, 333, 35, 35);
 		this.closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -211,7 +220,8 @@ public class ActivityListDialog extends JDialog {
 							// Cargamos el listado de actividades.
 							ActivityListDialog.this.loadReactiveList();
 						} catch (Exception e) {
-							JOptionPane.showMessageDialog(ActivityListDialog.this, e.getMessage(),
+							JOptionPane.showMessageDialog(ActivityListDialog.this,
+									HolderMessage.getMessage("activity.manager.load.activities.failed"),
 									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 							e.printStackTrace();
 						} finally {

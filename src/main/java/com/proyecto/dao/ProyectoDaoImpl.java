@@ -2,6 +2,7 @@ package com.proyecto.dao;
 
 import java.io.Serializable;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,5 +27,12 @@ public abstract class ProyectoDaoImpl<E extends Persistence<PK>, PK extends Seri
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
+	}
+
+	@Override
+	protected Session getSession() {
+		Session mySession = super.getSession();
+		mySession.clear();
+		return mySession;
 	}
 }

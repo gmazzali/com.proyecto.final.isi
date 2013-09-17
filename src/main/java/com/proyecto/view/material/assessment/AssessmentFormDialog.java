@@ -1,5 +1,6 @@
 package com.proyecto.view.material.assessment;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +119,7 @@ public class AssessmentFormDialog extends JDialog {
 	 * La función encargada de inicializar los componentes de la ventana.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 701, 459);
+		this.setBounds(100, 100, 697, 461);
 		this.setModal(true);
 		this.setResizable(false);
 		this.getContentPane().setLayout(null);
@@ -125,53 +127,55 @@ public class AssessmentFormDialog extends JDialog {
 
 		JLabel assessmentTypeLabel = new JLabel(HolderMessage.getMessage("assessment.form.label.moment"));
 		assessmentTypeLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		assessmentTypeLabel.setBounds(10, 6, 333, 16);
+		assessmentTypeLabel.setBounds(10, 10, 329, 16);
 		this.getContentPane().add(assessmentTypeLabel);
 
 		this.assessmentMomentComboBox = new JComboBox<AssessmentMomentImpl>();
-		this.assessmentMomentComboBox.setBounds(10, 24, 333, 26);
+		this.assessmentMomentComboBox.setBounds(6, 25, 333, 26);
 		this.getContentPane().add(this.assessmentMomentComboBox);
 		this.initAssessmentMomentComboBox();
 
 		JLabel assessmentTimeLabel = new JLabel(HolderMessage.getMessage("assessment.form.label.time"));
 		assessmentTimeLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		assessmentTimeLabel.setBounds(352, 5, 333, 16);
+		assessmentTimeLabel.setBounds(351, 10, 334, 16);
 		this.getContentPane().add(assessmentTimeLabel);
 
 		this.assessmentTimeDateChooser = new JDateChooser();
 		this.assessmentTimeDateChooser.setDateFormatString("dd/MM/yyyy");
-		this.assessmentTimeDateChooser.setBounds(355, 24, 330, 28);
+		this.assessmentTimeDateChooser.setBounds(348, 25, 337, 28);
 		this.getContentPane().add(this.assessmentTimeDateChooser);
 
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("assessment.form.label.description"));
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 62, 675, 16);
+		descriptionLabel.setBounds(10, 63, 675, 16);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(10, 84, 675, 124);
+		descriptionScrollPane.setBounds(6, 80, 679, 128);
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descritionTextArea = new JTextArea();
+		this.descritionTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.descritionTextArea.setWrapStyleWord(true);
 		this.descritionTextArea.setLineWrap(true);
 		descriptionScrollPane.setViewportView(this.descritionTextArea);
 
 		JLabel activitiesLabel = new JLabel(HolderMessage.getMessage("assessment.form.label.activities"));
 		activitiesLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		activitiesLabel.setBounds(10, 220, 675, 16);
+		activitiesLabel.setBounds(10, 220, 628, 16);
 		this.getContentPane().add(activitiesLabel);
 
 		JScrollPane activitiesScrollPane = new JScrollPane();
-		activitiesScrollPane.setBounds(10, 242, 628, 118);
+		activitiesScrollPane.setBounds(6, 237, 636, 128);
 		this.getContentPane().add(activitiesScrollPane);
 
 		this.activitiesList = new JList<Activity>();
+		this.activitiesList.setBorder(new LineBorder(Color.GRAY));
 		this.activitiesList.setModel(new DefaultListModel<Activity>());
 		activitiesScrollPane.setViewportView(this.activitiesList);
 
 		this.addActivityButton = new JButton(Resources.ADD_ELEMENT_ICON);
-		this.addActivityButton.setBounds(650, 242, 35, 35);
+		this.addActivityButton.setBounds(650, 237, 35, 35);
 		this.addActivityButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -181,7 +185,7 @@ public class AssessmentFormDialog extends JDialog {
 		this.getContentPane().add(this.addActivityButton);
 
 		this.removeActivityButton = new JButton(Resources.DELETE_ELEMENT_ICON);
-		this.removeActivityButton.setBounds(650, 288, 35, 35);
+		this.removeActivityButton.setBounds(650, 283, 35, 35);
 		this.removeActivityButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,15 +195,15 @@ public class AssessmentFormDialog extends JDialog {
 		this.getContentPane().add(this.removeActivityButton);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 372, 675, 2);
+		separator.setBounds(10, 377, 675, 2);
 		this.getContentPane().add(separator);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(558, 385, 35, 35);
+		this.progressLabel.setBounds(556, 391, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
-		this.commitButton.setBounds(603, 385, 35, 35);
+		this.commitButton.setBounds(603, 391, 35, 35);
 		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
@@ -210,7 +214,7 @@ public class AssessmentFormDialog extends JDialog {
 		this.getContentPane().add(this.commitButton);
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
-		this.rejectButton.setBounds(650, 385, 35, 35);
+		this.rejectButton.setBounds(650, 391, 35, 35);
 		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
@@ -278,8 +282,9 @@ public class AssessmentFormDialog extends JDialog {
 						}
 					}
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(AssessmentFormDialog.this, HolderMessage.getMessage("assessment.form.error.update"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
 				} finally {
 					AssessmentFormDialog.this.afterProccessAssessment();
 				}
@@ -329,8 +334,9 @@ public class AssessmentFormDialog extends JDialog {
 					}// Actualizamos el listado de actividades anteriores.
 					AssessmentFormDialog.this.updateActivities();
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(AssessmentFormDialog.this, HolderMessage.getMessage("assessment.form.error.update"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
 				} finally {
 					AssessmentFormDialog.this.afterProccessAssessment();
 				}
@@ -348,8 +354,14 @@ public class AssessmentFormDialog extends JDialog {
 				try {
 					AssessmentFormDialog.this.beforeProccessAssessment();
 					AssessmentFormDialog.this.fromDialogToAssessment();
-					AssessmentFormDialog.this.assessmentService.saveOrUpdate(AssessmentFormDialog.this.assessment);
-					AssessmentFormDialog.this.dispose();
+
+					try {
+						AssessmentFormDialog.this.assessmentService.saveOrUpdate(AssessmentFormDialog.this.assessment);
+						AssessmentFormDialog.this.dispose();
+					} catch (CheckedException e) {
+						JOptionPane.showMessageDialog(AssessmentFormDialog.this, HolderMessage.getMessage("assessment.form.error.save"),
+								HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					}
 				} catch (CheckedException e) {
 					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
 							JOptionPane.ERROR_MESSAGE);

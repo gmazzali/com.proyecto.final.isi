@@ -68,6 +68,7 @@
 				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
 				<prop key="hibernate.show_sql">${jdbc.show_sql}</prop>
 				<prop key="hibernate.format_sql">${jdbc.format_sql}</prop>
+				
 				<prop key="hibernate.connection.pool_size">${jdbc.pool_size}</prop>
 				<prop key="hibernate.bytecode.use_reflection_optimizer">${jdbc.use_reflection_optimizer}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${jdbc.hbm_to_ddl}</prop>
