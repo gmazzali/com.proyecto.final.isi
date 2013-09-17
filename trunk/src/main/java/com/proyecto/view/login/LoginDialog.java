@@ -77,7 +77,7 @@ public class LoginDialog extends JDialog {
 	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
-		this.setTitle(HolderMessage.getMessage("login.title"));
+		this.setTitle(HolderMessage.getMessage("login.form.title"));
 		this.setBounds(100, 100, 349, 196);
 		this.getContentPane().setLayout(new BorderLayout());
 
@@ -86,7 +86,7 @@ public class LoginDialog extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel userNameLabel = new JLabel(HolderMessage.getMessage("login.agent"));
+		JLabel userNameLabel = new JLabel(HolderMessage.getMessage("login.form.label.agent"));
 		userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		userNameLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		userNameLabel.setBounds(10, 15, 324, 16);
@@ -96,7 +96,7 @@ public class LoginDialog extends JDialog {
 		this.userNameTextField.setBounds(10, 34, 324, 25);
 		contentPanel.add(this.userNameTextField);
 
-		JLabel userPassLabel = new JLabel(HolderMessage.getMessage("login.password"));
+		JLabel userPassLabel = new JLabel(HolderMessage.getMessage("login.form.label.password"));
 		userPassLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		userPassLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		userPassLabel.setBounds(10, 70, 324, 16);
@@ -153,11 +153,11 @@ public class LoginDialog extends JDialog {
 				dialog.setVisible(true);
 
 			} else {
-				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.password.invalid"),
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.form.error.password"),
 						HolderMessage.getMessage("dialog.message.warning.title"), JOptionPane.WARNING_MESSAGE);
 			}
 		} else {
-			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.name.invalid"),
+			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.form.error.agent"),
 					HolderMessage.getMessage("dialog.message.warning.title"), JOptionPane.WARNING_MESSAGE);
 		}
 	}

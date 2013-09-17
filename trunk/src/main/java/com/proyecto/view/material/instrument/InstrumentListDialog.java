@@ -114,7 +114,7 @@ public class InstrumentListDialog extends JDialog {
 	 * La ventana de selección de un instrumento para su creación o edición.
 	 */
 	@Autowired
-	private SelectInstrumentDialog selectInstrumentDialog;
+	private InstrumentSelectDialog instrumentSelectDialog;
 
 	/**
 	 * El mapa con todos los servicios que vamos a utilizar dentro de esta ventana.
@@ -327,8 +327,8 @@ public class InstrumentListDialog extends JDialog {
 				return false;
 			}
 		};
-		tableModel.addColumn(HolderMessage.getMessage("instrument.manager.dialog.table.column.description"));
-		tableModel.addColumn(HolderMessage.getMessage("instrument.manager.dialog.table.column.type"));
+		tableModel.addColumn(HolderMessage.getMessage("instrument.manager.table.column.description"));
+		tableModel.addColumn(HolderMessage.getMessage("instrument.manager.table.column.type"));
 
 		// Seteamos el modelo a la tabla.
 		this.instrumentTable.setModel(tableModel);
@@ -411,8 +411,8 @@ public class InstrumentListDialog extends JDialog {
 					// Volvemos a cargar el listado de instrumentos y la tabla de los mismos.
 					InstrumentListDialog.this.updateInstrumentsList();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(InstrumentListDialog.this, HolderMessage.getMessage("instrument.manager.load.instruments.failed"),
+							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 				} finally {
 					InstrumentListDialog.this.afterExecuteProccess();
 				}
@@ -563,7 +563,7 @@ public class InstrumentListDialog extends JDialog {
 	 */
 	private void newInstrument() {
 		// Creamos la ventana para dar de alta un nuevo instrumento.
-		JDialog dialog = this.selectInstrumentDialog.createNewDialog(this.instrumentTypes);
+		JDialog dialog = this.instrumentSelectDialog.createNewDialog(this.instrumentTypes);
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
 
@@ -581,7 +581,7 @@ public class InstrumentListDialog extends JDialog {
 		// Si tenemos algo seleccionado.
 		if (instrumentIndex >= 0) {
 			// Creamos la ventana para modificar instrumento.
-			this.selectInstrumentDialog.createEditDialog(this.instruments.get(this.instrumentTable.convertRowIndexToModel(instrumentIndex)),
+			this.instrumentSelectDialog.createEditDialog(this.instruments.get(this.instrumentTable.convertRowIndexToModel(instrumentIndex)),
 					this.instrumentTypes);
 			this.updateInstruments();
 		}
@@ -599,7 +599,7 @@ public class InstrumentListDialog extends JDialog {
 			final Instrument deleteInstrument = this.instruments.get(this.instrumentTable.convertRowIndexToModel(instrumentIndex));
 			final InstrumentService<Instrument> instrumentService = this.getInstrumentService(deleteInstrument.getClass());
 
-			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("instrument.manager.dialog.delete.confirm"),
+			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("instrument.manager.delete.confirm"),
 					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
 				new Thread() {
@@ -610,11 +610,10 @@ public class InstrumentListDialog extends JDialog {
 							instrumentService.delete(deleteInstrument);
 							InstrumentListDialog.this.updateInstruments();
 						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(InstrumentListDialog.this, e.getMessage(),
+							JOptionPane.showMessageDialog(InstrumentListDialog.this, HolderMessage.getMessage("instrument.manager.delete.failed"),
 									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 						} finally {
 							InstrumentListDialog.this.afterExecuteProccess();
-
 						}
 					}
 				}.start();
@@ -652,7 +651,7 @@ public class InstrumentListDialog extends JDialog {
 	 * @return La ventana de administración de instrumento.
 	 */
 	public InstrumentListDialog createCrudDialog() {
-		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.crud"));
+		this.setTitle(HolderMessage.getMessage("instrument.manager.title.crud"));
 
 		this.selectedInstrument = null;
 		this.isSelectDialog = false;
@@ -671,7 +670,7 @@ public class InstrumentListDialog extends JDialog {
 	 * @return La ventana de selección de instrumento.
 	 */
 	public InstrumentListDialog createSelectDialog(List<InstrumentType> instrumentTypes) {
-		this.setTitle(HolderMessage.getMessage("instrument.manager.dialog.title.select"));
+		this.setTitle(HolderMessage.getMessage("instrument.manager.title.select"));
 
 		this.selectedInstrument = null;
 		this.isSelectDialog = true;

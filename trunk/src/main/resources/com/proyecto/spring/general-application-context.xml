@@ -30,6 +30,7 @@
 		<property name="locations">
 			<list>
 				<value>file:///${proyecto.configuration.dir}/jdbc.properties</value>
+				<value>file:///${proyecto.configuration.dir}/configuration.properties</value>
 			</list>
 		</property>
 	</bean>

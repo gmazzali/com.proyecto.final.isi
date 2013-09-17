@@ -66,7 +66,7 @@ public class SelectSubjectDialog extends JDialog {
 	 */
 	private void init() {
 		this.setFont(new Font("Arial", Font.PLAIN, 12));
-		this.setTitle(HolderMessage.getMessage("login.subject.select.subject.title"));
+		this.setTitle(HolderMessage.getMessage("login.select.subject.title"));
 		this.setBounds(100, 100, 393, 149);
 		this.getContentPane().setLayout(new BorderLayout());
 
@@ -75,7 +75,7 @@ public class SelectSubjectDialog extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel seleccionLabel = new JLabel(HolderMessage.getMessage("login.subject.select.subject.subject.label"));
+		JLabel seleccionLabel = new JLabel(HolderMessage.getMessage("login.select.subject.subject.label"));
 		seleccionLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		seleccionLabel.setBounds(10, 11, 367, 15);
 		contentPanel.add(seleccionLabel);
@@ -134,7 +134,7 @@ public class SelectSubjectDialog extends JDialog {
 			frame.setVisible(true);
 
 		} else {
-			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.subject.select.required"),
+			JOptionPane.showMessageDialog(this, HolderMessage.getMessage("login.select.subject.subject.required"),
 					HolderMessage.getMessage("dialog.message.warning.title"), JOptionPane.WARNING_MESSAGE);
 		}
 	}

@@ -38,7 +38,7 @@ import com.proyecto.view.Resources;
  * @version 1.0
  */
 @View
-public class SelectInstrumentDialog extends JDialog {
+public class InstrumentSelectDialog extends JDialog {
 
 	private static final long serialVersionUID = -3301595004234653551L;
 
@@ -85,7 +85,7 @@ public class SelectInstrumentDialog extends JDialog {
 	/**
 	 * Constructor de una ventana de selección de tipo de instrumento.
 	 */
-	public SelectInstrumentDialog() {
+	public InstrumentSelectDialog() {
 		super();
 		this.init();
 	}
@@ -106,8 +106,8 @@ public class SelectInstrumentDialog extends JDialog {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				SelectInstrumentDialog.this
-						.reloadComboBox(SelectInstrumentDialog.this.levelOneComboBox, SelectInstrumentDialog.this.levelTwoComboBox);
+				InstrumentSelectDialog.this
+						.reloadComboBox(InstrumentSelectDialog.this.levelOneComboBox, InstrumentSelectDialog.this.levelTwoComboBox);
 			}
 		});
 		this.getContentPane().add(this.levelOneComboBox);
@@ -119,8 +119,8 @@ public class SelectInstrumentDialog extends JDialog {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				SelectInstrumentDialog.this.reloadComboBox(SelectInstrumentDialog.this.levelTwoComboBox,
-						SelectInstrumentDialog.this.levelThreeComboBox);
+				InstrumentSelectDialog.this.reloadComboBox(InstrumentSelectDialog.this.levelTwoComboBox,
+						InstrumentSelectDialog.this.levelThreeComboBox);
 			}
 		});
 		this.getContentPane().add(this.levelTwoComboBox);
@@ -132,8 +132,8 @@ public class SelectInstrumentDialog extends JDialog {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				SelectInstrumentDialog.this.reloadComboBox(SelectInstrumentDialog.this.levelThreeComboBox,
-						SelectInstrumentDialog.this.levelFourComboBox);
+				InstrumentSelectDialog.this.reloadComboBox(InstrumentSelectDialog.this.levelThreeComboBox,
+						InstrumentSelectDialog.this.levelFourComboBox);
 			}
 		});
 		this.getContentPane().add(this.levelThreeComboBox);
@@ -152,7 +152,7 @@ public class SelectInstrumentDialog extends JDialog {
 		commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SelectInstrumentDialog.this.createNewInstrument();
+				InstrumentSelectDialog.this.createNewInstrument();
 			}
 		});
 		this.getContentPane().add(commitButton);
@@ -162,7 +162,7 @@ public class SelectInstrumentDialog extends JDialog {
 		rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SelectInstrumentDialog.this.dispose();
+				InstrumentSelectDialog.this.dispose();
 			}
 		});
 		this.getContentPane().add(rejectButton);
@@ -305,7 +305,7 @@ public class SelectInstrumentDialog extends JDialog {
 				this.dispose();
 				dialog.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.form.select.not.implement"),
+				JOptionPane.showMessageDialog(this, HolderMessage.getMessage("instrument.select.not.implement"),
 						HolderMessage.getMessage("dialog.message.info.title"), JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
@@ -318,8 +318,8 @@ public class SelectInstrumentDialog extends JDialog {
 	 *            El listado de los tipos de instrumentos que vamos a poder seleccionar dentro de esta ventana.
 	 * @return La ventana de selección de instrumento.
 	 */
-	public SelectInstrumentDialog createNewDialog(List<InstrumentType> instrumentTypes) {
-		this.setTitle(HolderMessage.getMessage("instrument.form.select.title"));
+	public InstrumentSelectDialog createNewDialog(List<InstrumentType> instrumentTypes) {
+		this.setTitle(HolderMessage.getMessage("instrument.select.title"));
 
 		// Seteamos el tipo de instrumento que podemos crear dentro de esta ventana.
 		this.instrumentTypes = instrumentTypes;
@@ -362,7 +362,7 @@ public class SelectInstrumentDialog extends JDialog {
 			//
 			// HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createEditDialog(instrument);
 			//
-			SelectInstrumentDialog dialog = HolderApplicationContext.getContext().getBean(SelectInstrumentDialog.class).createNewDialog(null);
+			InstrumentSelectDialog dialog = HolderApplicationContext.getContext().getBean(InstrumentSelectDialog.class).createNewDialog(null);
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

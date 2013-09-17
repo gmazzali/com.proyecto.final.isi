@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -23,7 +27,6 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -130,6 +133,11 @@ public class MainWindowFrame extends JFrame {
 	private JLabel progressLabel;
 
 	/**
+	 * El valor booleano que nos indica si nos encontramos procesando la ontología o no.
+	 */
+	private Boolean proccessing = false;
+
+	/**
 	 * El contador de procesos que corren de fondo.
 	 */
 	private Integer taskCount = 0;
@@ -140,6 +148,7 @@ public class MainWindowFrame extends JFrame {
 	public MainWindowFrame() {
 		super();
 		this.init();
+		this.updateResultTextArea();
 	}
 
 	/**
@@ -382,7 +391,7 @@ public class MainWindowFrame extends JFrame {
 	 */
 	private void closeApp() {
 		if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("main.window.confirm.exit"),
-				HolderMessage.getMessage("dialog.message.comfirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			System.exit(0);
 		}
 	}
@@ -521,6 +530,33 @@ public class MainWindowFrame extends JFrame {
 				}
 			}
 		}.start();
+	}
+
+	/**
+	 * La función encargada de actualizar el contenido del area de resultado de evaluación de acuerdo a una entrada de datos.
+	 */
+	private void updateResultTextArea() {
+		Thread updateResults = new Thread() {
+			@Override
+			public void run() {
+				do {
+					Thread.sleep(200);
+					
+					OutputStream outputStream = System.out;
+					InputStream inputStream = new ByteArrayInputStream(((ByteArrayOutputStream) outputStream).toByteArray());
+
+					byte[] bytes = new byte[inputStream.available()];
+					inputStream.read(bytes);
+					String result = new String(bytes);
+
+					// Cargamos la salida al area de resultado.
+					resultTextArea.setText(resultTextArea.getText() + result);
+
+				} while (proccessing);
+			}
+		};
+		updateResults.setDaemon(true);
+		updateResults.start();
 	}
 
 	/**
