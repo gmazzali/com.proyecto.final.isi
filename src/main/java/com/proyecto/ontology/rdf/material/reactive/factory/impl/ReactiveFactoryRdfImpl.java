@@ -33,7 +33,7 @@ public class ReactiveFactoryRdfImpl implements ReactiveFactoryRdf {
 	}
 
 	@Override
-	public Individual loadInstrumentToOntology(OntModel ontology, Reactive entity) {
+	public Individual loadEntityToOntology(OntModel ontology, Reactive entity) {
 		return this.reactiveRdf.createIndividual(ontology, entity);
 	}
 }

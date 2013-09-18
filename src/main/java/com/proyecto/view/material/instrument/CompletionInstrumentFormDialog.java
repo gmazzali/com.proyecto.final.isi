@@ -1,5 +1,6 @@
 package com.proyecto.view.material.instrument;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,21 +98,22 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	 * La función que inicializa la ventana.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 850, 305);
+		this.setBounds(100, 100, 872, 303);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.completion.form.label.description"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 11, 472, 14);
+		descriptionLabel.setBounds(10, 10, 468, 16);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(10, 30, 472, 179);
+		descriptionScrollPane.setBounds(6, 27, 473, 182);
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.descriptionTextArea.setFont(this.getContentPane().getFont());
 		this.descriptionTextArea.setLineWrap(true);
 		this.descriptionTextArea.setWrapStyleWord(true);
@@ -125,14 +128,15 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel completeLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.completion.form.label.completes"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		completeLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		completeLabel.setBounds(486, 11, 352, 14);
+		completeLabel.setBounds(490, 10, 369, 16);
 		this.getContentPane().add(completeLabel);
 
 		JScrollPane completeScrollPane = new JScrollPane();
-		completeScrollPane.setBounds(486, 30, 352, 142);
+		completeScrollPane.setBounds(486, 27, 375, 142);
 		this.getContentPane().add(completeScrollPane);
 
 		this.completeList = new JList<CompletionAnswer>();
+		this.completeList.setBorder(new LineBorder(Color.GRAY));
 		this.completeList.setFont(this.getContentPane().getFont());
 		this.completeList.setModel(new DefaultListModel<CompletionAnswer>());
 		this.completeList.addKeyListener(new KeyAdapter() {
@@ -148,7 +152,8 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		completeScrollPane.setViewportView(this.completeList);
 
 		this.indexTextField = new JTextField();
-		this.indexTextField.setBounds(486, 179, 65, 30);
+		this.indexTextField.setBorder(new LineBorder(new Color(128, 128, 128), 2));
+		this.indexTextField.setBounds(488, 176, 62, 30);
 		this.indexTextField.setFont(this.getContentPane().getFont());
 		this.indexTextField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -167,7 +172,8 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.indexTextField);
 
 		this.phraseTextField = new JTextField();
-		this.phraseTextField.setBounds(555, 179, 283, 30);
+		this.phraseTextField.setBorder(new LineBorder(Color.GRAY, 2));
+		this.phraseTextField.setBounds(560, 176, 299, 30);
 		this.phraseTextField.setFont(this.getContentPane().getFont());
 		this.phraseTextField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -186,16 +192,16 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.phraseTextField);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 221, 828, 2);
+		separator.setBounds(6, 221, 853, 2);
 		this.getContentPane().add(separator);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(709, 235, 35, 35);
+		this.progressLabel.setBounds(730, 235, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
-		this.commitButton.setBounds(756, 235, 35, 35);
+		this.commitButton.setBounds(777, 235, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -206,7 +212,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
 		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
-		this.rejectButton.setBounds(803, 235, 35, 35);
+		this.rejectButton.setBounds(824, 235, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -35,5 +35,5 @@ public interface FactoryRdf<E extends Persistence<?>> extends Serializable {
 	 *            La entidad que vamos a cargar dentro de la ontología.
 	 * @return El individuo que acabamos de cargar dentro de la ontología con los datos propios de la entidad recibida.
 	 */
-	public Individual loadInstrumentToOntology(OntModel ontology, E entity);
+	public Individual loadEntityToOntology(OntModel ontology, E entity);
 }

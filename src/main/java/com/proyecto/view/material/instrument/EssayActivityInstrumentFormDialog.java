@@ -1,5 +1,6 @@
 package com.proyecto.view.material.instrument;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderMessage;
@@ -63,20 +65,21 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 	 */
 	private void init() {
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
-		this.setBounds(100, 100, 887, 348);
+		this.setBounds(100, 100, 887, 354);
 		this.getContentPane().setLayout(null);
 
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.essay.form.label.description"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 11, 861, 14);
+		descriptionLabel.setBounds(10, 10, 861, 16);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(10, 30, 861, 95);
+		descriptionScrollPane.setBounds(6, 27, 869, 100);
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.descriptionTextArea.setFont(this.getContentPane().getFont());
 		this.descriptionTextArea.setWrapStyleWord(true);
 		this.descriptionTextArea.setLineWrap(true);
@@ -85,30 +88,31 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 		JLabel answerLabel = new JLabel(HolderMessage.getMessage("instrument.formal.essay.form.label.answer"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		answerLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		answerLabel.setBounds(10, 140, 861, 14);
+		answerLabel.setBounds(10, 140, 861, 16);
 		this.getContentPane().add(answerLabel);
 
 		JScrollPane answerScrollPane = new JScrollPane();
-		answerScrollPane.setBounds(10, 159, 861, 95);
+		answerScrollPane.setBounds(6, 157, 869, 100);
 		this.getContentPane().add(answerScrollPane);
 
 		this.answerTextArea = new JTextArea();
+		this.answerTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.answerTextArea.setFont(this.getContentPane().getFont());
 		this.answerTextArea.setWrapStyleWord(true);
 		this.answerTextArea.setLineWrap(true);
 		answerScrollPane.setViewportView(this.answerTextArea);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 265, 861, 2);
+		separator.setBounds(6, 269, 869, 3);
 		this.getContentPane().add(separator);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(742, 279, 35, 35);
+		this.progressLabel.setBounds(746, 284, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
-		this.commitButton.setBounds(789, 279, 35, 35);
+		this.commitButton.setBounds(793, 284, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -120,7 +124,7 @@ public abstract class EssayActivityInstrumentFormDialog extends InstrumentFormDi
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
 		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
-		this.rejectButton.setBounds(836, 279, 35, 35);
+		this.rejectButton.setBounds(840, 284, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

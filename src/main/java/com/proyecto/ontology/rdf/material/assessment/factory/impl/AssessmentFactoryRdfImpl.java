@@ -33,7 +33,7 @@ public class AssessmentFactoryRdfImpl implements AssessmentFactoryRdf {
 	}
 
 	@Override
-	public Individual loadInstrumentToOntology(OntModel ontology, Assessment entity) {
+	public Individual loadEntityToOntology(OntModel ontology, Assessment entity) {
 		return this.assessmentRdf.createIndividual(ontology, entity);
 	}
 }

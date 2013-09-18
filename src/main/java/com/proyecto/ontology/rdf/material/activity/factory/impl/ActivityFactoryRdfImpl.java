@@ -33,7 +33,7 @@ public class ActivityFactoryRdfImpl implements ActivityFactoryRdf {
 	}
 
 	@Override
-	public Individual loadInstrumentToOntology(OntModel ontology, Activity entity) {
+	public Individual loadEntityToOntology(OntModel ontology, Activity entity) {
 		return this.activityRdf.createIndividual(ontology, entity);
 	}
 }

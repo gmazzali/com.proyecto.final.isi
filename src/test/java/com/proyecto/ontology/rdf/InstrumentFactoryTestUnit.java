@@ -63,12 +63,12 @@ public class InstrumentFactoryTestUnit {
 
 		OntModel ontology = ModelFactory.createOntologyModel();
 
-		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadInstrumentToOntology(ontology, restrictedEssayActivityInstrument);
-		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadInstrumentToOntology(ontology, unrestrictedEssayActivityInstrument);
-		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadInstrumentToOntology(ontology, singleChoiceInstrument);
-		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadInstrumentToOntology(ontology, multipleChoiceInstrument);
-		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadInstrumentToOntology(ontology, completionInstrument);
-		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadInstrumentToOntology(ontology, correspondenceInstrument);
+		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadEntityToOntology(ontology, restrictedEssayActivityInstrument);
+		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadEntityToOntology(ontology, unrestrictedEssayActivityInstrument);
+		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadEntityToOntology(ontology, singleChoiceInstrument);
+		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadEntityToOntology(ontology, multipleChoiceInstrument);
+		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadEntityToOntology(ontology, completionInstrument);
+		HolderApplicationContext.getBean(InstrumentFactoryRdf.class).loadEntityToOntology(ontology, correspondenceInstrument);
 
 		ontology.write(System.out);
 

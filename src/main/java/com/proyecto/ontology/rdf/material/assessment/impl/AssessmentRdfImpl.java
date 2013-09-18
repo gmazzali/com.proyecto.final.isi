@@ -115,7 +115,7 @@ public class AssessmentRdfImpl extends MaterialRdfImpl<Assessment> implements As
 
 		for (Activity activity : entity.getActivities()) {
 			statements.add(ontology.createLiteralStatement(individual, this.haveActivity,
-					this.activityFactoryRdf.loadInstrumentToOntology(ontology, activity)));
+					this.activityFactoryRdf.loadEntityToOntology(ontology, activity)));
 		}
 
 		ontology.add(statements);
