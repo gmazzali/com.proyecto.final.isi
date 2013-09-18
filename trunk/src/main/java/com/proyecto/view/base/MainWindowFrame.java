@@ -24,7 +24,6 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -126,9 +125,11 @@ public class MainWindowFrame extends JFrame {
 	private JButton evaluateButton;
 	private JButton clearResultButton;
 	/**
-	 * El label de progreso.
+	 * Los labels de progreso.
 	 */
-	private JLabel progressLabel;
+	private JLabel assessmentProgressLabel;
+	private JLabel ruleSetProgressLabel;
+	private JLabel evaluateProgressLabel;
 
 	/**
 	 * El valor booleano que nos indica si nos encontramos procesando la ontología o no.
@@ -201,7 +202,7 @@ public class MainWindowFrame extends JFrame {
 		itemMenuReglas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainWindowFrame.this.managerRules();
+				MainWindowFrame.this.managerRuleSets();
 			}
 		});
 		menuReglas.add(itemMenuReglas);
@@ -270,12 +271,13 @@ public class MainWindowFrame extends JFrame {
 		assessmentScrollPane.setViewportView(this.assessmentList);
 
 		this.assessmentManagerButton = new JButton(Resources.CRUD_ICON);
+		this.assessmentManagerButton.setBounds(422, 52, 35, 35);
 		this.assessmentManagerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				MainWindowFrame.this.managerAssessments();
 			}
 		});
-		this.assessmentManagerButton.setBounds(422, 52, 35, 35);
 		this.getContentPane().add(this.assessmentManagerButton);
 
 		JLabel ruleSetListLabel = new JLabel(HolderMessage.getMessage("main.window.list.ruleset.label"));
@@ -293,12 +295,13 @@ public class MainWindowFrame extends JFrame {
 		ruleSetScrollPane.setViewportView(this.ruleSetList);
 
 		this.ruleSetManagerButton = new JButton(Resources.CRUD_ICON);
+		this.ruleSetManagerButton.setBounds(422, 285, 35, 35);
 		this.ruleSetManagerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				MainWindowFrame.this.managerRuleSets();
 			}
 		});
-		this.ruleSetManagerButton.setBounds(422, 285, 35, 35);
 		this.getContentPane().add(this.ruleSetManagerButton);
 
 		JSeparator separator1 = new JSeparator();
@@ -333,17 +336,25 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(this.clearResultButton);
 
 		this.evaluateButton = new JButton(Resources.PROCCESS_ICON);
+		this.evaluateButton.setBounds(483, 450, 35, 35);
 		this.evaluateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		this.evaluateButton.setBounds(483, 450, 35, 35);
 		this.getContentPane().add(this.evaluateButton);
 
-		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(848, 450, 35, 35);
-		this.getContentPane().add(this.progressLabel);
+		this.assessmentProgressLabel = new JLabel();
+		this.assessmentProgressLabel.setBounds(848, 450, 35, 35);
+		this.getContentPane().add(this.assessmentProgressLabel);
+
+		this.ruleSetProgressLabel = new JLabel();
+		this.ruleSetProgressLabel.setBounds(848, 450, 35, 35);
+		this.getContentPane().add(this.ruleSetProgressLabel);
+
+		this.evaluateProgressLabel = new JLabel();
+		this.evaluateProgressLabel.setBounds(848, 450, 35, 35);
+		this.getContentPane().add(this.evaluateProgressLabel);
 
 		JSeparator separator2 = new JSeparator();
 		separator2.setBounds(0, 497, 894, 2);
@@ -384,10 +395,13 @@ public class MainWindowFrame extends JFrame {
 		this.menuBar.setEnabled(enabled);
 
 		this.assessmentList.setEnabled(enabled);
-		this.ruleSetList.setEnabled(enabled);
-
 		this.assessmentManagerButton.setEnabled(enabled);
+
+		this.ruleSetList.setEnabled(enabled);
 		this.ruleSetManagerButton.setEnabled(enabled);
+
+		this.resultTextArea.setEnabled(enabled);
+
 		this.evaluateButton.setEnabled(enabled);
 		this.clearResultButton.setEnabled(enabled);
 	}
@@ -413,12 +427,13 @@ public class MainWindowFrame extends JFrame {
 	}
 
 	/**
-	 * La función que permite administrar las reglas que tenemos dentro del sistema.
+	 * La función que permite administrar los conjuntos de reglas que tenemos dentro del sistema.
 	 */
-	private void managerRules() {
+	private void managerRuleSets() {
 		JDialog dialog = this.ruleSetListDialog.createCrudDialog();
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
+		this.updateRuleSetList();
 	}
 
 	/**
@@ -428,6 +443,7 @@ public class MainWindowFrame extends JFrame {
 		JDialog dialog = this.assessmentListDialog.createCrudDialog();
 		dialog.setLocationRelativeTo(this);
 		dialog.setVisible(true);
+		this.updateAssessmentList();
 	}
 
 	/**
@@ -478,15 +494,12 @@ public class MainWindowFrame extends JFrame {
 	 * La función encargada de actualizar el listado de las evaluaciones que tenemos dentro de la ventana creando un proceso secundario.
 	 */
 	private void updateAssessmentList() {
-		// Ejecutamos las acciones antes de procesar.
-		this.beforeExecuteProccess();
-
 		new Thread() {
 			@Override
 			public void run() {
 				try {
-					// Sumamos 1 la cantidad de procesos.
-					MainWindowFrame.this.taskCount++;
+					// Ejecutamos las acciones antes de procesar.
+					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.assessmentProgressLabel);
 
 					// Cargamos el listado dentro de la tabla.
 					DefaultListModel<Assessment> model = new DefaultListModel<Assessment>();
@@ -503,9 +516,7 @@ public class MainWindowFrame extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				} finally {
-					// Restamos 1 la cantidad de procesos.
-					MainWindowFrame.this.taskCount--;
-					MainWindowFrame.this.afterExecuteProccess();
+					MainWindowFrame.this.afterExecuteProccess(MainWindowFrame.this.assessmentProgressLabel);
 				}
 			}
 		}.start();
@@ -515,15 +526,12 @@ public class MainWindowFrame extends JFrame {
 	 * La función encargada de actualizar el listado de las reglas que tenemos dentro de la ventana.
 	 */
 	private void updateRuleSetList() {
-		// Ejecutamos las acciones antes de procesar.
-		this.beforeExecuteProccess();
-
 		new Thread() {
 			@Override
 			public void run() {
 				try {
-					// Sumamos 1 la cantidad de procesos.
-					MainWindowFrame.this.taskCount++;
+					// Ejecutamos las acciones antes de procesar.
+					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.ruleSetProgressLabel);
 
 					// Cargamos el listado dentro de la tabla.
 					DefaultListModel<RuleSet> model = new DefaultListModel<RuleSet>();
@@ -538,9 +546,7 @@ public class MainWindowFrame extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				} finally {
-					// Restamos 1 la cantidad de procesos.
-					MainWindowFrame.this.taskCount--;
-					MainWindowFrame.this.afterExecuteProccess();
+					MainWindowFrame.this.afterExecuteProccess(MainWindowFrame.this.ruleSetProgressLabel);
 				}
 			}
 		}.start();
@@ -573,22 +579,30 @@ public class MainWindowFrame extends JFrame {
 	}
 
 	/**
-	 * La función antes de procesar las evaluaciones.
+	 * La función antes de procesar.
+	 * 
+	 * @param El
+	 *            label de progreso que vamos a cargar.
 	 */
-	private void beforeExecuteProccess() {
+	private void beforeExecuteProccess(JLabel label) {
+		this.taskCount++;
 		this.setEnabled(false);
 
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+		Resources.PROGRESS_LIST_ICON.setImageObserver(label);
+		label.setIcon(Resources.PROGRESS_LIST_ICON);
 	}
 
-	/*
-	 * La función después de procesar las evaluaciones.
+	/**
+	 * La función después de procesar.
+	 * 
+	 * @param El
+	 *            label de progreso que vamos a descargar.
 	 */
-	private void afterExecuteProccess() {
+	private void afterExecuteProccess(JLabel label) {
+		this.taskCount--;
+		label.setIcon(null);
 		if (this.taskCount <= 0) {
 			this.setEnabled(true);
-			this.progressLabel.setIcon(null);
 		}
 	}
 
