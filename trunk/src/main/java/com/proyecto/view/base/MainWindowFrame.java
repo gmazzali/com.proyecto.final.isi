@@ -4,10 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -27,6 +23,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -135,7 +133,7 @@ public class MainWindowFrame extends JFrame {
 	/**
 	 * El valor booleano que nos indica si nos encontramos procesando la ontología o no.
 	 */
-	private Boolean proccessing = false;
+	private final Boolean proccessing = false;
 
 	/**
 	 * El contador de procesos que corren de fondo.
@@ -267,10 +265,16 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(assessmentScrollPane);
 
 		this.assessmentList = new JList<Assessment>();
+		this.assessmentList.setBorder(new LineBorder(Color.GRAY));
 		this.assessmentList.setModel(new DefaultListModel<Assessment>());
 		assessmentScrollPane.setViewportView(this.assessmentList);
 
 		this.assessmentManagerButton = new JButton(Resources.CRUD_ICON);
+		this.assessmentManagerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		this.assessmentManagerButton.setBounds(422, 52, 35, 35);
 		this.getContentPane().add(this.assessmentManagerButton);
 
@@ -284,10 +288,16 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(ruleSetScrollPane);
 
 		this.ruleSetList = new JList<RuleSet>();
+		this.ruleSetList.setBorder(new LineBorder(Color.GRAY));
 		this.ruleSetList.setModel(new DefaultListModel<RuleSet>());
 		ruleSetScrollPane.setViewportView(this.ruleSetList);
 
 		this.ruleSetManagerButton = new JButton(Resources.CRUD_ICON);
+		this.ruleSetManagerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		this.ruleSetManagerButton.setBounds(422, 285, 35, 35);
 		this.getContentPane().add(this.ruleSetManagerButton);
 
@@ -306,6 +316,7 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(resultScrollPane);
 
 		this.resultTextArea = new JTextArea();
+		this.resultTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.resultTextArea.setWrapStyleWord(true);
 		this.resultTextArea.setLineWrap(true);
 		this.resultTextArea.setEditable(false);
@@ -322,6 +333,11 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(this.clearResultButton);
 
 		this.evaluateButton = new JButton(Resources.PROCCESS_ICON);
+		this.evaluateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		this.evaluateButton.setBounds(483, 450, 35, 35);
 		this.getContentPane().add(this.evaluateButton);
 
@@ -511,11 +527,9 @@ public class MainWindowFrame extends JFrame {
 
 					// Cargamos el listado dentro de la tabla.
 					DefaultListModel<RuleSet> model = new DefaultListModel<RuleSet>();
-					List<RuleSet> ruleSets = MainWindowFrame.this.ruleSetService.findAll();
-					// TODO gmazzali Hacer lo de la carga de los conjuntos por materias.
 
 					// Cargamos el listado de los conjuntos que filtramos.
-					for (RuleSet ruleSet : ruleSets) {
+					for (RuleSet ruleSet : MainWindowFrame.this.ruleSetService.findBySubject(MainWindowFrame.this.accessControl.getSubjectSelected())) {
 						model.addElement(ruleSet);
 					}
 					MainWindowFrame.this.ruleSetList.setModel(model);
@@ -540,19 +554,18 @@ public class MainWindowFrame extends JFrame {
 			@Override
 			public void run() {
 				do {
-					Thread.sleep(200);
-					
-					OutputStream outputStream = System.out;
-					InputStream inputStream = new ByteArrayInputStream(((ByteArrayOutputStream) outputStream).toByteArray());
+					try {
+						Thread.sleep(200);
 
-					byte[] bytes = new byte[inputStream.available()];
-					inputStream.read(bytes);
-					String result = new String(bytes);
+						String result = new String();
 
-					// Cargamos la salida al area de resultado.
-					resultTextArea.setText(resultTextArea.getText() + result);
+						// Cargamos la salida al area de resultado.
+						MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultTextArea.getText() + result);
 
-				} while (proccessing);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} while (MainWindowFrame.this.proccessing);
 			}
 		};
 		updateResults.setDaemon(true);

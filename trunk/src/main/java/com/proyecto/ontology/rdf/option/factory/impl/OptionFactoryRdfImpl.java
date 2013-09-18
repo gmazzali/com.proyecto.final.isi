@@ -48,7 +48,7 @@ public class OptionFactoryRdfImpl implements OptionFactoryRdf {
 	}
 
 	@Override
-	public Individual loadInstrumentToOntology(OntModel ontology, Option option) {
+	public Individual loadEntityToOntology(OntModel ontology, Option option) {
 
 		if (option instanceof TrueOption) {
 			TrueOption entity = (TrueOption) option;

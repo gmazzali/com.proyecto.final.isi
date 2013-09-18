@@ -71,8 +71,8 @@ public class OptionFactoryRdfTestUnit {
 
 		OntModel ontology = ModelFactory.createOntologyModel();
 
-		HolderApplicationContext.getBean(OptionFactoryRdf.class).loadInstrumentToOntology(ontology, distractor1);
-		HolderApplicationContext.getBean(OptionFactoryRdf.class).loadInstrumentToOntology(ontology, trueOption1);
+		HolderApplicationContext.getBean(OptionFactoryRdf.class).loadEntityToOntology(ontology, distractor1);
+		HolderApplicationContext.getBean(OptionFactoryRdf.class).loadEntityToOntology(ontology, trueOption1);
 
 		ontology.write(System.out);
 

@@ -93,7 +93,7 @@ public class ActivityRdfImpl extends MaterialRdfImpl<Activity> implements Activi
 		statements.add(ontology.createLiteralStatement(individual, haveDescription, description));
 		for (Reactive reactive : entity.getReactives()) {
 			statements.add(ontology.createLiteralStatement(individual, haveReactive,
-					this.reactiveFactoryRdf.loadInstrumentToOntology(ontology, reactive)));
+					this.reactiveFactoryRdf.loadEntityToOntology(ontology, reactive)));
 		}
 
 		ontology.add(statements);

@@ -1,5 +1,6 @@
 package com.proyecto.view.material.instrument;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderMessage;
@@ -100,14 +102,15 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.description"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 16, 728, 14);
+		descriptionLabel.setBounds(10, 10, 728, 16);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(10, 33, 728, 92);
+		descriptionScrollPane.setBounds(6, 27, 732, 98);
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.descriptionTextArea.setFont(this.getContentPane().getFont());
 		this.descriptionTextArea.setLineWrap(true);
 		this.descriptionTextArea.setWrapStyleWord(true);
@@ -122,14 +125,15 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel choiceLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.choice.form.label.options"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		choiceLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		choiceLabel.setBounds(10, 137, 728, 14);
+		choiceLabel.setBounds(10, 137, 728, 16);
 		this.getContentPane().add(choiceLabel);
 
 		JScrollPane choiceScrollPane = new JScrollPane();
-		choiceScrollPane.setBounds(10, 153, 728, 122);
+		choiceScrollPane.setBounds(6, 154, 732, 124);
 		this.getContentPane().add(choiceScrollPane);
 
 		this.optionsList = new JList<Option>();
+		this.optionsList.setBorder(new LineBorder(Color.GRAY));
 		this.optionsList.setFont(this.getContentPane().getFont());
 		this.optionsList.setModel(new DefaultListModel<Option>());
 		choiceScrollPane.setViewportView(this.optionsList);
@@ -165,7 +169,7 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		});
 
 		JSeparator separator1 = new JSeparator();
-		separator1.setBounds(10, 287, 728, 2);
+		separator1.setBounds(6, 287, 732, 2);
 		this.getContentPane().add(separator1);
 		this.getContentPane().add(this.trueAnswerRadioButton);
 
@@ -228,10 +232,11 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.noneOptionRadioButton);
 
 		JScrollPane optionScrollPane = new JScrollPane();
-		optionScrollPane.setBounds(10, 403, 728, 62);
+		optionScrollPane.setBounds(6, 403, 732, 66);
 		this.getContentPane().add(optionScrollPane);
 
 		this.optionTextArea = new JTextArea();
+		this.optionTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.optionTextArea.setWrapStyleWord(true);
 		this.optionTextArea.setLineWrap(true);
 		this.optionTextArea.addKeyListener(new KeyAdapter() {

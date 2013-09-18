@@ -88,7 +88,7 @@ public class InstrumentRdfFactoryImpl implements InstrumentFactoryRdf {
 	}
 
 	@Override
-	public Individual loadInstrumentToOntology(OntModel ontology, Instrument instrument) {
+	public Individual loadEntityToOntology(OntModel ontology, Instrument instrument) {
 
 		if (instrument instanceof RestrictedEssayActivityInstrument) {
 			RestrictedEssayActivityInstrument entity = (RestrictedEssayActivityInstrument) instrument;

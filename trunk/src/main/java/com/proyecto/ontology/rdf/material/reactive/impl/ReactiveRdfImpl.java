@@ -91,7 +91,7 @@ public class ReactiveRdfImpl extends MaterialRdfImpl<Reactive> implements Reacti
 		List<Statement> statements = new ArrayList<Statement>();
 		statements.add(ontology.createLiteralStatement(individual, haveDescription, description));
 		statements.add(ontology.createLiteralStatement(individual, haveInstrument,
-				this.instrumentFactoryRdf.loadInstrumentToOntology(ontology, entity.getInstrument())));
+				this.instrumentFactoryRdf.loadEntityToOntology(ontology, entity.getInstrument())));
 
 		ontology.add(statements);
 		

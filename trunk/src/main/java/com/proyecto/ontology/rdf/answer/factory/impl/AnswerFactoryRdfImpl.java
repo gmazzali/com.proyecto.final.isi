@@ -58,7 +58,7 @@ public class AnswerFactoryRdfImpl implements AnswerFactoryRdf {
 	}
 
 	@Override
-	public Individual loadInstrumentToOntology(OntModel ontology, Answer answer) {
+	public Individual loadEntityToOntology(OntModel ontology, Answer answer) {
 
 		if (answer instanceof CompletionAnswer) {
 			CompletionAnswer entity = (CompletionAnswer) answer;

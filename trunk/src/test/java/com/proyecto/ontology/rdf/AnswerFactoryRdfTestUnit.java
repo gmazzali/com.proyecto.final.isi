@@ -71,10 +71,10 @@ public class AnswerFactoryRdfTestUnit {
 
 		OntModel ontology = ModelFactory.createOntologyModel();
 
-		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadInstrumentToOntology(ontology, completionAnswer);
-		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadInstrumentToOntology(ontology, essayActivityAnswer);
-		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadInstrumentToOntology(ontology, relationAnswer);
-		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadInstrumentToOntology(ontology, trueFalseAnswer);
+		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadEntityToOntology(ontology, completionAnswer);
+		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadEntityToOntology(ontology, essayActivityAnswer);
+		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadEntityToOntology(ontology, relationAnswer);
+		HolderApplicationContext.getBean(AnswerFactoryRdf.class).loadEntityToOntology(ontology, trueFalseAnswer);
 
 		ontology.write(System.out);
 

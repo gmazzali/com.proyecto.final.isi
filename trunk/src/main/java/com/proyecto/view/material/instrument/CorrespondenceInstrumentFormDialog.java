@@ -1,5 +1,6 @@
 package com.proyecto.view.material.instrument;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,21 +111,22 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 	 * La función encargada de inicializar la ventana de edición de un instrumento de correspondencia.
 	 */
 	private void init() {
-		this.setBounds(100, 100, 837, 582);
+		this.setBounds(100, 100, 824, 566);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
 		JLabel descriptionLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.description"));
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		descriptionLabel.setBounds(10, 11, 810, 14);
+		descriptionLabel.setBounds(10, 10, 810, 16);
 		this.getContentPane().add(descriptionLabel);
 
 		JScrollPane descriptionScrollPane = new JScrollPane();
-		descriptionScrollPane.setBounds(10, 28, 810, 65);
+		descriptionScrollPane.setBounds(6, 27, 808, 109);
 		this.getContentPane().add(descriptionScrollPane);
 
 		this.descriptionTextArea = new JTextArea();
+		this.descriptionTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.descriptionTextArea.setFont(this.getContentPane().getFont());
 		this.descriptionTextArea.setLineWrap(true);
 		this.descriptionTextArea.setWrapStyleWord(true);
@@ -138,14 +141,15 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel leftSideLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.side.left"));
 		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		leftSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		leftSideLabel.setBounds(10, 105, 400, 14);
+		leftSideLabel.setBounds(10, 148, 392, 16);
 		this.getContentPane().add(leftSideLabel);
 
 		JScrollPane leftSideScrollPane = new JScrollPane();
-		leftSideScrollPane.setBounds(10, 124, 400, 141);
+		leftSideScrollPane.setBounds(6, 165, 400, 120);
 		this.getContentPane().add(leftSideScrollPane);
 
 		this.leftSideList = new JList<RelationAnswer>();
+		this.leftSideList.setBorder(new LineBorder(Color.GRAY));
 		this.leftSideList.setFont(this.getContentPane().getFont());
 		this.leftSideList.setModel(new DefaultListModel<RelationAnswer>());
 		this.leftSideList.addKeyListener(new KeyAdapter() {
@@ -168,11 +172,12 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 				}
 			}
 		});
-		leftSideScrollPane.setViewportView(this.leftSideList);
+		leftSideScrollPane.setColumnHeaderView(this.leftSideList);
 
 		this.leftSideTextField = new JTextField();
+		this.leftSideTextField.setBorder(new LineBorder(Color.GRAY, 2));
 		this.leftSideTextField.setFont(this.getContentPane().getFont());
-		this.leftSideTextField.setBounds(10, 276, 400, 31);
+		this.leftSideTextField.setBounds(8, 292, 396, 31);
 		this.leftSideTextField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -193,16 +198,18 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.leftSideTextField);
 
 		JLabel rightSideLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.side.right"));
+		rightSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		rightSideLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		rightSideLabel.setBounds(422, 105, 400, 14);
+		rightSideLabel.setBounds(417, 148, 392, 16);
 		this.getContentPane().add(rightSideLabel);
 
 		JScrollPane rightSideScrollPane = new JScrollPane();
-		rightSideScrollPane.setBounds(422, 124, 400, 141);
+		rightSideScrollPane.setBounds(414, 165, 400, 120);
 		this.getContentPane().add(rightSideScrollPane);
 
 		this.rightSideList = new JList<RelationAnswer>();
+		this.rightSideList.setBorder(new LineBorder(Color.GRAY));
 		this.rightSideList.setFont(this.getContentPane().getFont());
 		this.rightSideList.setModel(new DefaultListModel<RelationAnswer>());
 		this.rightSideList.addKeyListener(new KeyAdapter() {
@@ -228,8 +235,9 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		rightSideScrollPane.setViewportView(this.rightSideList);
 
 		this.rigthSideTextField = new JTextField();
+		this.rigthSideTextField.setBorder(new LineBorder(Color.GRAY, 2));
 		this.rigthSideTextField.setFont(this.getContentPane().getFont());
-		this.rigthSideTextField.setBounds(420, 276, 400, 31);
+		this.rigthSideTextField.setBounds(416, 292, 396, 31);
 		this.rigthSideTextField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -252,14 +260,15 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		JLabel relationsLabel = new JLabel(HolderMessage.getMessage("instrument.formal.objective.correspondence.form.label.relations"));
 		leftSideLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		relationsLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		relationsLabel.setBounds(10, 325, 763, 14);
+		relationsLabel.setBounds(10, 335, 754, 16);
 		this.getContentPane().add(relationsLabel);
 
 		JScrollPane relationsScrollPane = new JScrollPane();
-		relationsScrollPane.setBounds(10, 345, 763, 139);
+		relationsScrollPane.setBounds(6, 352, 758, 120);
 		this.getContentPane().add(relationsScrollPane);
 
 		this.relationList = new JList<RelationAnswer>();
+		this.relationList.setBorder(new LineBorder(Color.GRAY));
 		this.relationList.setFont(this.getContentPane().getFont());
 		this.relationList.setModel(new DefaultListModel<RelationAnswer>());
 		this.relationList.addKeyListener(new KeyAdapter() {
@@ -275,7 +284,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.createRelationButton = new JButton(Resources.ADD_ELEMENT_ICON);
 		this.createRelationButton.setToolTipText(HolderMessage
 				.getMessage("instrument.formal.objective.correspondence.form.label.button.relation.add"));
-		this.createRelationButton.setBounds(785, 345, 37, 35);
+		this.createRelationButton.setBounds(772, 352, 37, 35);
 		this.createRelationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -287,7 +296,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.removeRelationButton = new JButton(Resources.DELETE_ELEMENT_ICON);
 		this.removeRelationButton.setToolTipText(HolderMessage
 				.getMessage("instrument.formal.objective.correspondence.form.label.button.relation.remove"));
-		this.removeRelationButton.setBounds(785, 392, 35, 35);
+		this.removeRelationButton.setBounds(773, 396, 35, 35);
 		this.removeRelationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -297,17 +306,17 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 		this.getContentPane().add(this.removeRelationButton);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 496, 810, 2);
+		separator.setBounds(6, 484, 807, 2);
 		this.getContentPane().add(separator);
 
 		this.progressLabel = new JLabel();
 		this.progressLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		this.progressLabel.setBounds(691, 510, 35, 35);
+		this.progressLabel.setBounds(680, 498, 35, 35);
 		this.getContentPane().add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
 		this.commitButton.setToolTipText(HolderMessage.getMessage("button.action.commit"));
-		this.commitButton.setBounds(738, 510, 35, 35);
+		this.commitButton.setBounds(727, 498, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -318,7 +327,7 @@ public class CorrespondenceInstrumentFormDialog extends InstrumentFormDialog {
 
 		this.rejectButton = new JButton(Resources.CLOSE_ICON);
 		this.rejectButton.setToolTipText(HolderMessage.getMessage("button.action.reject"));
-		this.rejectButton.setBounds(785, 510, 35, 35);
+		this.rejectButton.setBounds(774, 498, 35, 35);
 		this.rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -57,12 +57,12 @@ public class ReactiveFactoryRdfTestUnit {
 
 		OntModel ontology = ModelFactory.createOntologyModel();
 
-		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadInstrumentToOntology(ontology, reactive1);
-		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadInstrumentToOntology(ontology, reactive2);
-		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadInstrumentToOntology(ontology, reactive3);
-		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadInstrumentToOntology(ontology, reactive4);
-		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadInstrumentToOntology(ontology, reactive5);
-		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadInstrumentToOntology(ontology, reactive6);
+		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadEntityToOntology(ontology, reactive1);
+		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadEntityToOntology(ontology, reactive2);
+		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadEntityToOntology(ontology, reactive3);
+		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadEntityToOntology(ontology, reactive4);
+		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadEntityToOntology(ontology, reactive5);
+		HolderApplicationContext.getBean(ReactiveFactoryRdf.class).loadEntityToOntology(ontology, reactive6);
 
 		ontology.write(System.out);
 

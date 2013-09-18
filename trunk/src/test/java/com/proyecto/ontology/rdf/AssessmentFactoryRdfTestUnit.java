@@ -11,16 +11,17 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.proyecto.CreateExampleMaterial;
 import com.proyecto.model.material.activity.Activity;
+import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.material.reactive.Reactive;
-import com.proyecto.ontology.rdf.material.activity.factory.ActivityFactoryRdf;
+import com.proyecto.ontology.rdf.material.assessment.factory.AssessmentFactoryRdf;
 
 /**
- * La clase de prueba para la factoría de las actividades en la ontología.
+ * La clase de prueba para la factoría de las evaluaciones en la ontología.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ActivityFactoryRdfTestUnit {
+public class AssessmentFactoryRdfTestUnit {
 
 	/**
 	 * Antes de que arranque la ejecución de la clase, cargamos el dao.
@@ -46,7 +47,7 @@ public class ActivityFactoryRdfTestUnit {
 	public void pruebaDeLaFactoriaDeLasActividades() {
 
 		System.out.println("######################################################################");
-		System.out.println("################ FACTORÍA DE ACTIVIDADES EN ONTOLOGÍA ################");
+		System.out.println("############### FACTORÍA DE EVALUACIONES EN ONTOLOGÍAS ###############");
 		System.out.println("######################################################################");
 
 		Reactive reactive1 = CreateExampleMaterial.createReactive(10, CreateExampleMaterial.createInstrumentRestrictedEssayActivity(10));
@@ -58,13 +59,14 @@ public class ActivityFactoryRdfTestUnit {
 		Reactive reactive4 = CreateExampleMaterial.createReactive(40, CreateExampleMaterial.createInstrumentMultipleChoice(40));
 		Reactive reactive5 = CreateExampleMaterial.createReactive(50, CreateExampleMaterial.createInstrumentCompletion(50));
 		Reactive reactive6 = CreateExampleMaterial.createReactive(60, CreateExampleMaterial.createInstrumentCorrespondence(60));
-		Activity activity2 = CreateExampleMaterial.createActivity(10, reactive3, reactive4, reactive5, reactive6);
+		Activity activity2 = CreateExampleMaterial.createActivity(20, reactive3, reactive4, reactive5, reactive6);
 		activity2.setDescription("objective activity");
+
+		Assessment assessment = CreateExampleMaterial.createAssessment(10, activity1, activity2);
 
 		OntModel ontology = ModelFactory.createOntologyModel();
 
-		HolderApplicationContext.getBean(ActivityFactoryRdf.class).loadEntityToOntology(ontology, activity1);
-		HolderApplicationContext.getBean(ActivityFactoryRdf.class).loadEntityToOntology(ontology, activity2);
+		HolderApplicationContext.getBean(AssessmentFactoryRdf.class).loadEntityToOntology(ontology, assessment);
 
 		ontology.write(System.out);
 

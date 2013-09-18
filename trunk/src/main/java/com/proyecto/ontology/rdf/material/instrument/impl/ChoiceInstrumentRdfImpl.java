@@ -86,7 +86,7 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 		List<Statement> statements = new ArrayList<Statement>();
 		for (Option option : entity.getOptions()) {
 			statements.add(ontology.createLiteralStatement(individual, this.haveOption,
-					this.optionFactoryRdf.loadInstrumentToOntology(ontology, option)));
+					this.optionFactoryRdf.loadEntityToOntology(ontology, option)));
 		}
 		ontology.add(statements);
 

@@ -1,5 +1,6 @@
 package com.proyecto.view.material.instrument;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 
@@ -181,13 +183,13 @@ public class InstrumentListDialog extends JDialog {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		this.setBounds(100, 100, 700, 431);
+		this.setBounds(100, 100, 702, 428);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
 		this.levelOneComboBox = new JComboBox<InstrumentType>();
 		this.levelOneComboBox.setEnabled(false);
-		this.levelOneComboBox.setBounds(10, 12, 200, 30);
+		this.levelOneComboBox.setBounds(6, 12, 208, 30);
 		this.levelOneComboBox.addItemListener(new ItemListener() {
 
 			@Override
@@ -199,7 +201,7 @@ public class InstrumentListDialog extends JDialog {
 
 		this.levelTwoComboBox = new JComboBox<InstrumentType>();
 		this.levelTwoComboBox.setEnabled(false);
-		this.levelTwoComboBox.setBounds(222, 12, 200, 30);
+		this.levelTwoComboBox.setBounds(220, 12, 208, 30);
 		this.levelTwoComboBox.addItemListener(new ItemListener() {
 
 			@Override
@@ -211,7 +213,7 @@ public class InstrumentListDialog extends JDialog {
 
 		this.levelThreeComboBox = new JComboBox<InstrumentType>();
 		this.levelThreeComboBox.setEnabled(false);
-		this.levelThreeComboBox.setBounds(432, 12, 206, 30);
+		this.levelThreeComboBox.setBounds(434, 12, 208, 30);
 		this.getContentPane().add(this.levelThreeComboBox);
 
 		this.updateButton = new JButton(Resources.REFRESH_ELEMENT_ICON);
@@ -226,14 +228,15 @@ public class InstrumentListDialog extends JDialog {
 		this.getContentPane().add(this.updateButton);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 54, 675, 2);
+		separator.setBounds(0, 54, 700, 2);
 		this.getContentPane().add(separator);
 
 		JScrollPane instrumentScrollPane = new JScrollPane();
-		instrumentScrollPane.setBounds(10, 68, 629, 326);
+		instrumentScrollPane.setBounds(6, 68, 635, 326);
 		this.getContentPane().add(instrumentScrollPane);
 
 		this.instrumentTable = new JTable();
+		this.instrumentTable.setBorder(new LineBorder(Color.GRAY));
 		this.instrumentTable.setFillsViewportHeight(true);
 		this.instrumentTable.setShowHorizontalLines(true);
 		this.instrumentTable.setModel(new DefaultTableModel());
