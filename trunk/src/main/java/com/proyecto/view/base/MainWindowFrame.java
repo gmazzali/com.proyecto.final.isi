@@ -25,7 +25,6 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -161,7 +160,37 @@ public class MainWindowFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 
-		this.menuBar = new JMenuBar();
+		this.menuBar = new JMenuBar() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void setEnabled(boolean enabled) {
+				for (int i = 0; i < this.getMenuCount(); i++) {
+					JMenu menu = this.getMenu(i);
+					setEnabled(menu, enabled);
+				}
+			};
+
+			/**
+			 * La función que habilita o deshabilita los menues en backtraking.
+			 * 
+			 * @param menu
+			 *            El menu que vamos a habilitar o deshabilitar.
+			 * @param enable
+			 *            El valor booleano que nos define el estado en el que vamos a dejar al menú.
+			 */
+			private void setEnabled(JMenu menu, Boolean enable) {
+				// Habilitamos o deshabilitamos el menu.
+				menu.setEnabled(enable);
+
+				// Habilitamos o deshabilitamos los hijos del menu.
+				for (int i = 0; i < menu.getItemCount(); i++) {
+					JMenu subMenu = this.getMenu(i);
+					setEnabled(subMenu, enable);
+				}
+			}
+		};
 		this.menuBar.setFont(this.getContentPane().getFont());
 		this.menuBar.setBounds(0, 0, 994, 23);
 		this.getContentPane().add(this.menuBar);

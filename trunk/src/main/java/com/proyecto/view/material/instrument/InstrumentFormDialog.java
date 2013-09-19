@@ -38,7 +38,6 @@ public abstract class InstrumentFormDialog extends JDialog {
 		super();
 		this.setModal(true);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 	}
 
 	/**
