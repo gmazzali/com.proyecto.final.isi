@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -90,11 +91,15 @@ public class RuleSetListDialog extends JDialog {
 	 */
 	public RuleSetListDialog() {
 		super();
-		this.setResizable(false);
 		this.init();
 	}
 
+	/**
+	 * La función encargada de inicializar el contenido de la ventana de listado de conjuntos de reglas.
+	 */
 	private void init() {
+		this.setModal(true);
+		this.setResizable(false);
 		this.setBounds(100, 100, 562, 560);
 
 		JPanel contentPanel = new JPanel();
@@ -277,8 +282,9 @@ public class RuleSetListDialog extends JDialog {
 	private void beforeExecuteProccess() {
 		this.setEnabled(false);
 
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
+		gif.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(gif);
 	}
 
 	/*

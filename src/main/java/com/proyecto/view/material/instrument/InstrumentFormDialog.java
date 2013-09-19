@@ -1,5 +1,6 @@
 package com.proyecto.view.material.instrument;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -102,8 +103,9 @@ public abstract class InstrumentFormDialog extends JDialog {
 		this.setEnabled(false);
 
 		if (this.getProgressLabel() != null) {
-			Resources.PROGRESS_LIST_ICON.setImageObserver(this.getProgressLabel());
-			this.getProgressLabel().setIcon(Resources.PROGRESS_LIST_ICON);
+			ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
+			gif.setImageObserver(this.getProgressLabel());
+			this.getProgressLabel().setIcon(gif);
 		}
 	}
 
