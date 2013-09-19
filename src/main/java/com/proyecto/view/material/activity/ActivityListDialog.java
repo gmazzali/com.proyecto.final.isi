@@ -108,7 +108,6 @@ public class ActivityListDialog extends JDialog {
 	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		this.setBounds(100, 100, 690, 402);
 		this.getContentPane().setLayout(new BorderLayout());
