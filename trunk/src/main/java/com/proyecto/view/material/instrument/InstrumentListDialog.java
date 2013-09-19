@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -429,8 +430,9 @@ public class InstrumentListDialog extends JDialog {
 	private void beforeExecuteProccess() {
 		this.setEnabled(false);
 
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
+		gif.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(gif);
 	}
 
 	/*

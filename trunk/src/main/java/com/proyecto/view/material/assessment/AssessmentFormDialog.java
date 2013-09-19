@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -377,8 +378,10 @@ public class AssessmentFormDialog extends JDialog {
 	 */
 	private void beforeProccessAssessment() {
 		this.setEnabled(false);
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+
+		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
+		gif.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(gif);
 	}
 
 	/*

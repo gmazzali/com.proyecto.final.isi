@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -215,8 +216,9 @@ public class RuleListDialog extends JDialog {
 	private void beforeExecuteProccess() {
 		this.setEnabled(false);
 
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
+		gif.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(gif);
 	}
 
 	/*

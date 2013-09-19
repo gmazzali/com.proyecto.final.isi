@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -342,8 +343,10 @@ public class ActivityFormDialog extends JDialog {
 	 */
 	private void beforeProccessActivity() {
 		this.setEnabled(false);
-		Resources.PROGRESS_LIST_ICON.setImageObserver(this.progressLabel);
-		this.progressLabel.setIcon(Resources.PROGRESS_LIST_ICON);
+
+		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
+		gif.setImageObserver(this.progressLabel);
+		this.progressLabel.setIcon(gif);
 	}
 
 	/*

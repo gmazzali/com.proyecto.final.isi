@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -24,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -155,13 +157,13 @@ public class MainWindowFrame extends JFrame {
 	 */
 	private void init() {
 		this.setResizable(false);
-		this.setBounds(100, 100, 898, 569);
+		this.setBounds(100, 100, 1000, 562);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 
 		this.menuBar = new JMenuBar();
 		this.menuBar.setFont(this.getContentPane().getFont());
-		this.menuBar.setBounds(0, 0, 894, 23);
+		this.menuBar.setBounds(0, 0, 994, 23);
 		this.getContentPane().add(this.menuBar);
 
 		JMenu menuSistemas = new JMenu(HolderMessage.getMessage("main.menu.system"));
@@ -262,7 +264,7 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(assessmentListLabel);
 
 		JScrollPane assessmentScrollPane = new JScrollPane();
-		assessmentScrollPane.setBounds(10, 52, 400, 200);
+		assessmentScrollPane.setBounds(6, 52, 400, 200);
 		this.getContentPane().add(assessmentScrollPane);
 
 		this.assessmentList = new JList<Assessment>();
@@ -271,7 +273,7 @@ public class MainWindowFrame extends JFrame {
 		assessmentScrollPane.setViewportView(this.assessmentList);
 
 		this.assessmentManagerButton = new JButton(Resources.CRUD_ICON);
-		this.assessmentManagerButton.setBounds(422, 52, 35, 35);
+		this.assessmentManagerButton.setBounds(412, 52, 35, 35);
 		this.assessmentManagerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -286,7 +288,7 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(ruleSetListLabel);
 
 		JScrollPane ruleSetScrollPane = new JScrollPane();
-		ruleSetScrollPane.setBounds(10, 285, 400, 200);
+		ruleSetScrollPane.setBounds(6, 281, 400, 200);
 		this.getContentPane().add(ruleSetScrollPane);
 
 		this.ruleSetList = new JList<RuleSet>();
@@ -295,7 +297,7 @@ public class MainWindowFrame extends JFrame {
 		ruleSetScrollPane.setViewportView(this.ruleSetList);
 
 		this.ruleSetManagerButton = new JButton(Resources.CRUD_ICON);
-		this.ruleSetManagerButton.setBounds(422, 285, 35, 35);
+		this.ruleSetManagerButton.setBounds(412, 281, 35, 35);
 		this.ruleSetManagerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -306,16 +308,16 @@ public class MainWindowFrame extends JFrame {
 
 		JSeparator separator1 = new JSeparator();
 		separator1.setOrientation(SwingConstants.VERTICAL);
-		separator1.setBounds(469, 23, 2, 476);
+		separator1.setBounds(455, 24, 2, 468);
 		this.getContentPane().add(separator1);
 
 		JLabel resultLabel = new JLabel(HolderMessage.getMessage("main.window.list.result.label"));
 		resultLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		resultLabel.setBounds(483, 35, 400, 16);
+		resultLabel.setBounds(470, 35, 518, 16);
 		this.getContentPane().add(resultLabel);
 
 		JScrollPane resultScrollPane = new JScrollPane();
-		resultScrollPane.setBounds(483, 52, 400, 386);
+		resultScrollPane.setBounds(467, 52, 521, 386);
 		this.getContentPane().add(resultScrollPane);
 
 		this.resultTextArea = new JTextArea();
@@ -326,7 +328,7 @@ public class MainWindowFrame extends JFrame {
 		resultScrollPane.setViewportView(this.resultTextArea);
 
 		this.clearResultButton = new JButton(Resources.ERASE_ICON);
-		this.clearResultButton.setBounds(530, 450, 35, 35);
+		this.clearResultButton.setBounds(514, 446, 35, 35);
 		this.clearResultButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -336,7 +338,7 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(this.clearResultButton);
 
 		this.evaluateButton = new JButton(Resources.PROCCESS_ICON);
-		this.evaluateButton.setBounds(483, 450, 35, 35);
+		this.evaluateButton.setBounds(467, 446, 35, 35);
 		this.evaluateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -345,24 +347,24 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(this.evaluateButton);
 
 		this.assessmentProgressLabel = new JLabel();
-		this.assessmentProgressLabel.setBounds(848, 450, 35, 35);
+		this.assessmentProgressLabel.setBounds(412, 217, 35, 35);
 		this.getContentPane().add(this.assessmentProgressLabel);
 
 		this.ruleSetProgressLabel = new JLabel();
-		this.ruleSetProgressLabel.setBounds(848, 450, 35, 35);
+		this.ruleSetProgressLabel.setBounds(412, 443, 35, 35);
 		this.getContentPane().add(this.ruleSetProgressLabel);
 
 		this.evaluateProgressLabel = new JLabel();
-		this.evaluateProgressLabel.setBounds(848, 450, 35, 35);
+		this.evaluateProgressLabel.setBounds(561, 446, 35, 35);
 		this.getContentPane().add(this.evaluateProgressLabel);
 
 		JSeparator separator2 = new JSeparator();
-		separator2.setBounds(0, 497, 894, 2);
+		separator2.setBounds(0, 490, 994, 2);
 		this.getContentPane().add(separator2);
 
 		JPanel dataPanel = new JPanel();
 		dataPanel.setLayout(null);
-		dataPanel.setBounds(10, 501, 707, 35);
+		dataPanel.setBounds(0, 493, 707, 35);
 		this.getContentPane().add(dataPanel);
 
 		JLabel agentLabel = new JLabel(HolderMessage.getMessage("main.data.agent"));
@@ -588,8 +590,9 @@ public class MainWindowFrame extends JFrame {
 		this.taskCount++;
 		this.setEnabled(false);
 
-		Resources.PROGRESS_LIST_ICON.setImageObserver(label);
-		label.setIcon(Resources.PROGRESS_LIST_ICON);
+		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
+		gif.setImageObserver(label);
+		label.setIcon(gif);
 	}
 
 	/**
@@ -622,6 +625,7 @@ public class MainWindowFrame extends JFrame {
 		this.setTitle(HolderMessage.getMessage("main.window.title"));
 
 		this.updateAgentData();
+
 		this.updateAssessmentList();
 		this.updateRuleSetList();
 
