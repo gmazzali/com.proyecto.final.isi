@@ -34,6 +34,7 @@ import com.proyecto.model.material.activity.type.ActivityType;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.activity.ActivityService;
 import com.proyecto.view.Resources;
+import com.proyecto.view.base.BaseListDialog;
 
 /**
  * La clase que nos permite crear una ventana de listado de actividades para poder administrarlas o seleccionarlas para colocarlas dentro de una
@@ -43,7 +44,7 @@ import com.proyecto.view.Resources;
  * @version 1.0
  */
 @View
-public class ActivityListDialog extends JDialog {
+public class ActivityListDialog extends BaseListDialog<Activity> {
 
 	private static final long serialVersionUID = 2298555004862377049L;
 
@@ -106,9 +107,6 @@ public class ActivityListDialog extends JDialog {
 	 * La función de inicialización de los componentes de la ventana.
 	 */
 	private void init() {
-		this.setModal(true);
-		this.setResizable(false);
-
 		this.setBounds(100, 100, 690, 402);
 		this.getContentPane().setLayout(new BorderLayout());
 		JPanel contentPanel = new JPanel();
@@ -202,71 +200,37 @@ public class ActivityListDialog extends JDialog {
 	 * La función encargada de actualizar el listado de las actividades que tenemos dentro de la ventana.
 	 */
 	private void updateActivities() {
-		// Vaciamos la lista.
-		DefaultListModel<Activity> model = (DefaultListModel<Activity>) ActivityListDialog.this.activityList.getModel();
-		model.clear();
+		this.startFillListProccess();
+	}
 
-		new Thread() {
-			@Override
-			public void run() {
-				// Ejecutamos las acciones antes de procesar.
-				ActivityListDialog.this.beforeExecuteProccess();
+	@Override
+	protected void fillListProccess() throws CheckedException {
+		try {
+			DefaultListModel<Activity> model = new DefaultListModel<Activity>();
 
-				// La volvemos a cargar.
-				new Thread() {
-					@Override
-					public void run() {
-						try {
-							// Cargamos el listado de actividades.
-							ActivityListDialog.this.loadReactiveList();
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(ActivityListDialog.this,
-									HolderMessage.getMessage("activity.manager.load.activities.failed"),
-									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-							e.printStackTrace();
-						} finally {
-							ActivityListDialog.this.afterExecuteProccess();
-						}
-					}
-				}.start();
+			// El listado de las actividades.
+			List<Activity> activities = this.activityService.findBySubject(this.accessControl.getSubjectSelected(), this.activityTypes);
+
+			// Cargamos el listado de las actividades que filtramos.
+			for (Activity activity : activities) {
+				model.addElement(activity);
 			}
-		}.start();
-	}
-
-	/**
-	 * La función encargada de cargar el listado de los reactivos que tenemos dentro del sistema.
-	 * 
-	 * @throws CheckedException
-	 *             En caso de alguna falla cuando recuperamos los reactivos desde la base de datos.
-	 */
-	private void loadReactiveList() throws CheckedException {
-		DefaultListModel<Activity> model = new DefaultListModel<Activity>();
-
-		// El listado de las actividades.
-		List<Activity> activities = this.activityService.findBySubject(this.accessControl.getSubjectSelected(), this.activityTypes);
-
-		// Cargamos el listado de las actividades que filtramos.
-		for (Activity activity : activities) {
-			model.addElement(activity);
+			this.activityList.setModel(model);
+		} catch (Exception e) {
+			throw new CheckedException("activity.manager.load.activities.failed");
 		}
-		this.activityList.setModel(model);
 	}
 
-	/**
-	 * La función antes de procesar las actividades.
-	 */
-	private void beforeExecuteProccess() {
+	@Override
+	protected void beforeProccess() {
 		this.setEnabled(false);
-
 		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 		gif.setImageObserver(this.progressLabel);
 		this.progressLabel.setIcon(gif);
 	}
 
-	/*
-	 * La función después de procesar las actividades.
-	 */
-	private void afterExecuteProccess() {
+	@Override
+	protected void afterProccess() {
 		this.setEnabled(true);
 		this.progressLabel.setIcon(null);
 	}
@@ -300,6 +264,15 @@ public class ActivityListDialog extends JDialog {
 		}
 	}
 
+	@Override
+	protected void deleteProccess(Activity entity) throws CheckedException {
+		try {
+			ActivityListDialog.this.activityService.delete(entity);
+		} catch (CheckedException e) {
+			throw new CheckedException("activity.manager.delete.failed");
+		}
+	}
+
 	/**
 	 * La función encargada de eliminar una actividad seleccionada dentro del listado de las mismas.
 	 */
@@ -310,21 +283,8 @@ public class ActivityListDialog extends JDialog {
 			// Pedimos confirmación de borrado.
 			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("activity.manager.delete.confirm"),
 					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				new Thread() {
-					@Override
-					public void run() {
-						try {
-							ActivityListDialog.this.beforeExecuteProccess();
-							ActivityListDialog.this.activityService.delete(ActivityListDialog.this.activityList.getSelectedValue());
-							ActivityListDialog.this.updateActivities();
-						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(ActivityListDialog.this, HolderMessage.getMessage("activity.manager.delete.failed"),
-									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-						} finally {
-							ActivityListDialog.this.afterExecuteProccess();
-						}
-					}
-				}.start();
+				Activity entity = this.activityList.getSelectedValue();
+				this.startDeleteProccess(entity);
 			}
 		}
 	}

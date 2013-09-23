@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -39,6 +38,7 @@ import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.activity.ActivityService;
 import com.proyecto.service.material.reactive.ReactiveService;
 import com.proyecto.view.Resources;
+import com.proyecto.view.base.BaseFormDialog;
 import com.proyecto.view.material.reactive.ReactiveListDialog;
 
 /**
@@ -48,7 +48,7 @@ import com.proyecto.view.material.reactive.ReactiveListDialog;
  * @version 1.0
  */
 @View
-public class ActivityFormDialog extends JDialog {
+public class ActivityFormDialog extends BaseFormDialog<Activity> {
 
 	private static final long serialVersionUID = -1516446490165543963L;
 
@@ -116,8 +116,6 @@ public class ActivityFormDialog extends JDialog {
 	 */
 	private void init() {
 		this.setBounds(100, 100, 701, 444);
-		this.setModal(true);
-		this.setResizable(false);
 		this.getContentPane().setLayout(null);
 		this.getContentPane().setFont(new Font("Arial", Font.PLAIN, 12));
 
@@ -231,7 +229,7 @@ public class ActivityFormDialog extends JDialog {
 					dialog.setVisible(true);
 
 					// Deshabilitamos la ventana y actualizamos el listado de actividades.
-					ActivityFormDialog.this.beforeProccessActivity();
+					ActivityFormDialog.this.beforeProccess();
 
 					// Actualizamos el listado de reactivos anteriores.
 					ActivityFormDialog.this.updateReactives();
@@ -247,10 +245,13 @@ public class ActivityFormDialog extends JDialog {
 						}
 					}
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ActivityFormDialog.this, HolderMessage.getMessage("activity.form.error.update"),
-							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					if (!this.isInterrupted()) {
+						JOptionPane.showMessageDialog(ActivityFormDialog.this, HolderMessage.getMessage("activity.form.error.update"),
+								HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					}
+					e.printStackTrace();
 				} finally {
-					ActivityFormDialog.this.afterProccessActivity();
+					ActivityFormDialog.this.afterProccess();
 				}
 			}
 		}.start();
@@ -285,7 +286,7 @@ public class ActivityFormDialog extends JDialog {
 			public void run() {
 				try {
 					// Deshabilitamos la ventana y actualizamos el listado de reactivos.
-					ActivityFormDialog.this.beforeProccessActivity();
+					ActivityFormDialog.this.beforeProccess();
 
 					// Vemos si tenemos algo seleccionado de la lista y lo quitamos.
 					if (!ActivityFormDialog.this.reactivesList.getSelectedValuesList().isEmpty()) {
@@ -300,11 +301,13 @@ public class ActivityFormDialog extends JDialog {
 						ActivityFormDialog.this.updateReactives();
 					}
 				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ActivityFormDialog.this, HolderMessage.getMessage("activity.form.error.update"),
-							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					if (!this.isInterrupted()) {
+						JOptionPane.showMessageDialog(ActivityFormDialog.this, HolderMessage.getMessage("activity.form.error.update"),
+								HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+					}
 					e.printStackTrace();
 				} finally {
-					ActivityFormDialog.this.afterProccessActivity();
+					ActivityFormDialog.this.afterProccess();
 				}
 			}
 		}.start();
@@ -314,45 +317,34 @@ public class ActivityFormDialog extends JDialog {
 	 * La función encargada de guardar la actividad dentro de la base de datos.
 	 */
 	private void saveActivity() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					ActivityFormDialog.this.beforeProccessActivity();
-					ActivityFormDialog.this.fromDialogToActivity();
-					try {
-						ActivityFormDialog.this.activityService.saveOrUpdate(ActivityFormDialog.this.activity);
-						ActivityFormDialog.this.dispose();
-					} catch (CheckedException e) {
-						JOptionPane.showMessageDialog(ActivityFormDialog.this, HolderMessage.getMessage("activity.form.error.save"),
-								HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-					}
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ActivityFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				} finally {
-					ActivityFormDialog.this.afterProccessActivity();
-				}
-			}
-		}.start();
+		this.startProccess();
 	}
 
-	/**
-	 * La función antes de procesar la actividad.
-	 */
-	private void beforeProccessActivity() {
-		this.setEnabled(false);
+	@Override
+	protected void proccess() throws CheckedException {
+		try {
+			this.fromDialogToActivity();
+			try {
+				this.activityService.saveOrUpdate(ActivityFormDialog.this.activity);
+				this.dispose();
+			} catch (CheckedException e) {
+				throw new CheckedException("activity.form.error.save");
+			}
+		} catch (CheckedException e) {
+			throw e;
+		}
+	}
 
+	@Override
+	protected void beforeProccess() {
+		this.setEnabled(false);
 		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 		gif.setImageObserver(this.progressLabel);
 		this.progressLabel.setIcon(gif);
 	}
 
-	/*
-	 * La función después de procesar la actividad.
-	 */
-	private void afterProccessActivity() {
+	@Override
+	protected void afterProccess() {
 		this.setEnabled(true);
 		this.progressLabel.setIcon(null);
 	}

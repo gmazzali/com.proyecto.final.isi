@@ -21,7 +21,7 @@ import com.common.util.holder.HolderMessage;
 import com.proyecto.model.agent.Subject;
 import com.proyecto.security.AccessControl;
 import com.proyecto.view.Resources;
-import com.proyecto.view.base.MainWindowFrame;
+import com.proyecto.view.main.MainWindowFrame;
 
 /**
  * La clase que crea la ventana donde van a desplegarse todas las materias a las que se encuentra inscrito el agente que esta logueado en el sistema

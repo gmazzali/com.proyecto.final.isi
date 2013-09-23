@@ -1,19 +1,16 @@
 package com.proyecto.view.material.instrument;
 
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.exception.CheckedException;
-import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.instrument.Instrument;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.instrument.InstrumentService;
 import com.proyecto.view.Resources;
+import com.proyecto.view.base.BaseFormDialog;
 
 /**
  * La super clase de los formularios de edición de instrumentos.
@@ -21,7 +18,7 @@ import com.proyecto.view.Resources;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public abstract class InstrumentFormDialog extends JDialog {
+public abstract class InstrumentFormDialog extends BaseFormDialog<Instrument> {
 
 	private static final long serialVersionUID = 7961668127751162989L;
 
@@ -76,31 +73,25 @@ public abstract class InstrumentFormDialog extends JDialog {
 	 * La función encargada de guardar el instrumento dentro de la base de datos.
 	 */
 	protected void saveInstrument() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					InstrumentFormDialog.this.beforeProccessInstrument();
-					InstrumentFormDialog.this.setSubjectInInstrument();
-					InstrumentFormDialog.this.fromDialogToInstrument();
-					InstrumentFormDialog.this.getInstrumentService().saveOrUpdate(InstrumentFormDialog.this.getInstrument());
-					InstrumentFormDialog.this.dispose();
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(InstrumentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
-				} finally {
-					InstrumentFormDialog.this.afterProccessInstrument();
-				}
-			}
-		}.start();
+		this.startProccess();
 	}
 
-	/**
-	 * La función antes de procesar el instrumento.
-	 */
-	private void beforeProccessInstrument() {
-		this.setEnabled(false);
+	@Override
+	protected void proccess() throws CheckedException {
+		this.setSubjectInInstrument();
+		this.fromDialogToInstrument();
 
+		try {
+			this.getInstrumentService().saveOrUpdate(this.getInstrument());
+			this.dispose();
+		} catch (CheckedException ex) {
+			throw new CheckedException("instrument.form.error.save");
+		}
+	}
+
+	@Override
+	protected void beforeProccess() {
+		this.setEnabled(false);
 		if (this.getProgressLabel() != null) {
 			ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 			gif.setImageObserver(this.getProgressLabel());
@@ -108,12 +99,9 @@ public abstract class InstrumentFormDialog extends JDialog {
 		}
 	}
 
-	/*
-	 * La función después de procesar el instrumento.
-	 */
-	private void afterProccessInstrument() {
+	@Override
+	protected void afterProccess() {
 		this.setEnabled(true);
-
 		if (this.getProgressLabel() != null) {
 			this.getProgressLabel().setIcon(null);
 		}

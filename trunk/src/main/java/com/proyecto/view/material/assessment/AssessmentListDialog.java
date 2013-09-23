@@ -31,6 +31,7 @@ import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.assessment.AssessmentService;
 import com.proyecto.view.Resources;
+import com.proyecto.view.base.BaseListDialog;
 
 /**
  * La clase que crea la ventana del listado de las evaluaciones que tiene asignada la materia que se seleccionó.
@@ -39,7 +40,7 @@ import com.proyecto.view.Resources;
  * @version 1.0
  */
 @View
-public class AssessmentListDialog extends JDialog {
+public class AssessmentListDialog extends BaseListDialog<Assessment> {
 
 	private static final long serialVersionUID = 1077719995099120763L;
 
@@ -198,52 +199,40 @@ public class AssessmentListDialog extends JDialog {
 	 * La función encargada de actualizar el listado de las evaluaciones que tenemos dentro de la ventana.
 	 */
 	private void updateAssessments() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					// Ejecutamos las acciones antes de procesar.
-					AssessmentListDialog.this.beforeExecuteProccess();
-
-					// Vaciamos la lista de evaluaciones.
-					DefaultTableModel tableModel = (DefaultTableModel) AssessmentListDialog.this.assessmentTable.getModel();
-					tableModel.getDataVector().clear();
-
-					// Vaciamos el listado.
-					AssessmentListDialog.this.assessments.clear();
-
-					// Cargamos el listado de las evaluaciones.
-					AssessmentListDialog.this.assessments.addAll(AssessmentListDialog.this.assessmentService
-							.findBySubject(AssessmentListDialog.this.accessControl.getSubjectSelected()));
-
-					// Cargamos el listado dentro de la tabla.
-					AssessmentListDialog.this.loadAssessmentTable();
-				} catch (Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(AssessmentListDialog.this, HolderMessage.getMessage("assessment.manager.load.assessments.failed"),
-							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-				} finally {
-					AssessmentListDialog.this.afterExecuteProccess();
-				}
-			}
-		}.start();
+		this.startFillListProccess();
 	}
 
-	/**
-	 * La función antes de procesar las evaluaciones.
-	 */
-	private void beforeExecuteProccess() {
-		this.setEnabled(false);
+	@Override
+	protected void fillListProccess() throws CheckedException {
+		try {
+			// Vaciamos la lista de evaluaciones.
+			DefaultTableModel tableModel = (DefaultTableModel) this.assessmentTable.getModel();
+			tableModel.getDataVector().clear();
 
+			// Vaciamos el listado.
+			this.assessments.clear();
+
+			// Cargamos el listado de las evaluaciones.
+			this.assessments.addAll(this.assessmentService.findBySubject(this.accessControl.getSubjectSelected()));
+
+			// Cargamos el listado dentro de la tabla.
+			this.loadAssessmentTable();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CheckedException("assessment.manager.load.assessments.failed");
+		}
+	}
+
+	@Override
+	protected void beforeProccess() {
+		this.setEnabled(false);
 		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 		gif.setImageObserver(this.progressLabel);
 		this.progressLabel.setIcon(gif);
 	}
 
-	/*
-	 * La función después de procesar las evaluaciones.
-	 */
-	private void afterExecuteProccess() {
+	@Override
+	protected void afterProccess() {
 		this.setEnabled(true);
 		this.progressLabel.setIcon(null);
 	}
@@ -296,6 +285,15 @@ public class AssessmentListDialog extends JDialog {
 		}
 	}
 
+	@Override
+	protected void deleteProccess(Assessment entity) throws CheckedException {
+		try {
+			AssessmentListDialog.this.assessmentService.delete(entity);
+		} catch (CheckedException e) {
+			throw new CheckedException("assessment.manager.delete.failed");
+		}
+	}
+
 	/**
 	 * La función encargada de eliminar una evaluación seleccionada dentro de la tabla.
 	 */
@@ -305,27 +303,10 @@ public class AssessmentListDialog extends JDialog {
 
 		// Si tenemos algo seleccionado.
 		if (assessmentIndex >= 0) {
-			final Assessment deletedAssessment = this.assessments.get(this.assessmentTable.convertRowIndexToModel(assessmentIndex));
-
 			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("assessment.manager.delete.confirm"),
 					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-
-				new Thread() {
-					@Override
-					public void run() {
-						try {
-							AssessmentListDialog.this.beforeExecuteProccess();
-							AssessmentListDialog.this.assessmentService.delete(deletedAssessment);
-							AssessmentListDialog.this.updateAssessments();
-						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(AssessmentListDialog.this, HolderMessage.getMessage("assessment.manager.delete.failed"),
-									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-						} finally {
-							AssessmentListDialog.this.afterExecuteProccess();
-
-						}
-					}
-				}.start();
+				Assessment entity = this.assessments.get(this.assessmentTable.convertRowIndexToModel(assessmentIndex));
+				this.startDeleteProccess(entity);
 			}
 		}
 	}

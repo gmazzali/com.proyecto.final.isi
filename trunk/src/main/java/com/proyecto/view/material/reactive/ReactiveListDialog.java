@@ -34,6 +34,7 @@ import com.proyecto.model.material.reactive.type.ReactiveType;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.reactive.ReactiveService;
 import com.proyecto.view.Resources;
+import com.proyecto.view.base.BaseListDialog;
 
 /**
  * La clase que crea la ventana donde desplegamos el listado de los reactivos que tenemos dentro del sistema.
@@ -42,7 +43,7 @@ import com.proyecto.view.Resources;
  * @version 1.0
  */
 @View
-public class ReactiveListDialog extends JDialog {
+public class ReactiveListDialog extends BaseListDialog<Reactive> {
 
 	private static final long serialVersionUID = 6091009153558216022L;
 
@@ -105,9 +106,6 @@ public class ReactiveListDialog extends JDialog {
 	 * La función encargada de inicializar los componentes de la ventana.
 	 */
 	private void init() {
-		this.setModal(true);
-		this.setResizable(false);
-
 		this.setBounds(100, 100, 687, 405);
 		this.getContentPane().setLayout(new BorderLayout());
 		JPanel contentPanel = new JPanel();
@@ -198,73 +196,40 @@ public class ReactiveListDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de actualizar el listado de los reactivos que tenemos dentro de la ventana.
+	 * La función que actualiza el listado de reactivos que tenemos dentro del sistema.
 	 */
 	private void updateReactives() {
-		// Vaciamos la lista.
-		DefaultListModel<Reactive> model = (DefaultListModel<Reactive>) ReactiveListDialog.this.reactiveList.getModel();
-		model.clear();
+		this.startFillListProccess();
+	}
 
-		new Thread() {
-			@Override
-			public void run() {
-				// Ejecutamos las acciones antes de procesar.
-				ReactiveListDialog.this.beforeExecuteProccess();
+	@Override
+	protected void fillListProccess() throws CheckedException {
+		try {
+			// Cargamos el listado de reactivos.
+			DefaultListModel<Reactive> model = new DefaultListModel<Reactive>();
 
-				// La volvemos a cargar.
-				new Thread() {
-					@Override
-					public void run() {
-						try {
-							// Cargamos el listado de reactivos.
-							ReactiveListDialog.this.loadReactiveList();
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(ReactiveListDialog.this,
-									HolderMessage.getMessage("reactive.manager.load.reactives.failed"),
-									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-						} finally {
-							ReactiveListDialog.this.afterExecuteProccess();
-						}
-					}
-				}.start();
+			List<Reactive> reactives = this.reactiveService.findBySubject(this.accessControl.getSubjectSelected(), this.reactiveTypes);
+
+			// Cargamos el listado de los reactivos que filtramos.
+			for (Reactive r : reactives) {
+				model.addElement(r);
 			}
-		}.start();
-	}
-
-	/**
-	 * La función encargada de cargar el listado de los reactivos que tenemos dentro del sistema.
-	 * 
-	 * @throws CheckedException
-	 *             En caso de alguna falla cuando recuperamos los reactivos desde la base de datos.
-	 */
-	private void loadReactiveList() throws CheckedException {
-		DefaultListModel<Reactive> model = new DefaultListModel<Reactive>();
-
-		// El listado de los reactivos.
-		List<Reactive> reactives = this.reactiveService.findBySubject(this.accessControl.getSubjectSelected(), this.reactiveTypes);
-
-		// Cargamos el listado de los reactivos que filtramos.
-		for (Reactive r : reactives) {
-			model.addElement(r);
+			this.reactiveList.setModel(model);
+		} catch (Exception e) {
+			throw new CheckedException("reactive.manager.load.reactives.failed");
 		}
-		this.reactiveList.setModel(model);
 	}
 
-	/**
-	 * La función antes de procesar los reactivos.
-	 */
-	private void beforeExecuteProccess() {
+	@Override
+	protected void beforeProccess() {
 		this.setEnabled(false);
-
 		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 		gif.setImageObserver(this.progressLabel);
 		this.progressLabel.setIcon(gif);
 	}
 
-	/*
-	 * La función después de procesar los reactivos.
-	 */
-	private void afterExecuteProccess() {
+	@Override
+	protected void afterProccess() {
 		this.setEnabled(true);
 		this.progressLabel.setIcon(null);
 	}
@@ -298,6 +263,15 @@ public class ReactiveListDialog extends JDialog {
 		}
 	}
 
+	@Override
+	protected void deleteProccess(Reactive entity) throws CheckedException {
+		try {
+			this.reactiveService.delete(entity);
+		} catch (CheckedException e) {
+			throw new CheckedException("reactive.manager.delete.failed");
+		}
+	}
+
 	/**
 	 * La función encargada de eliminar un reactivo seleccionado dentro del listado de los mismos.
 	 */
@@ -308,21 +282,8 @@ public class ReactiveListDialog extends JDialog {
 			// Pedimos confirmación de borrado.
 			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("reactive.manager.delete.confirm"),
 					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				new Thread() {
-					@Override
-					public void run() {
-						try {
-							ReactiveListDialog.this.beforeExecuteProccess();
-							ReactiveListDialog.this.reactiveService.delete(ReactiveListDialog.this.reactiveList.getSelectedValue());
-							ReactiveListDialog.this.updateReactives();
-						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(ReactiveListDialog.this, HolderMessage.getMessage("reactive.manager.delete.failed"),
-									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-						} finally {
-							ReactiveListDialog.this.afterExecuteProccess();
-						}
-					}
-				}.start();
+				Reactive entity = this.reactiveList.getSelectedValue();
+				this.startDeleteProccess(entity);
 			}
 		}
 	}
