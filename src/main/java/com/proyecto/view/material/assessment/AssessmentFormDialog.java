@@ -11,7 +11,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -39,6 +38,7 @@ import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.activity.ActivityService;
 import com.proyecto.service.material.assessment.AssessmentService;
 import com.proyecto.view.Resources;
+import com.proyecto.view.base.BaseFormDialog;
 import com.proyecto.view.material.activity.ActivityListDialog;
 import com.toedter.calendar.JDateChooser;
 
@@ -49,7 +49,7 @@ import com.toedter.calendar.JDateChooser;
  * @version 1.0
  */
 @View
-public class AssessmentFormDialog extends JDialog {
+public class AssessmentFormDialog extends BaseFormDialog<Assessment> {
 
 	private static final long serialVersionUID = -5386008246325856550L;
 
@@ -266,7 +266,7 @@ public class AssessmentFormDialog extends JDialog {
 					dialog.setVisible(true);
 
 					// Deshabilitamos la ventana y actualizamos el listado de actividades.
-					AssessmentFormDialog.this.beforeProccessAssessment();
+					AssessmentFormDialog.this.beforeProccess();
 
 					// Actualizamos el listado de actividades anteriores.
 					AssessmentFormDialog.this.updateActivities();
@@ -287,7 +287,7 @@ public class AssessmentFormDialog extends JDialog {
 							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				} finally {
-					AssessmentFormDialog.this.afterProccessAssessment();
+					AssessmentFormDialog.this.afterProccess();
 				}
 			}
 		}.start();
@@ -322,7 +322,7 @@ public class AssessmentFormDialog extends JDialog {
 			public void run() {
 				try {
 					// Deshabilitamos la ventana y actualizamos el listado de actividades.
-					AssessmentFormDialog.this.beforeProccessAssessment();
+					AssessmentFormDialog.this.beforeProccess();
 
 					// Vemos si tenemos algo seleccionado de la lista y lo quitamos.
 					if (!AssessmentFormDialog.this.activitiesList.getSelectedValuesList().isEmpty()) {
@@ -339,7 +339,7 @@ public class AssessmentFormDialog extends JDialog {
 							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				} finally {
-					AssessmentFormDialog.this.afterProccessAssessment();
+					AssessmentFormDialog.this.afterProccess();
 				}
 			}
 		}.start();
@@ -349,45 +349,30 @@ public class AssessmentFormDialog extends JDialog {
 	 * La función encargada de guardar la evaluación dentro de la base de datos.
 	 */
 	private void saveAssessment() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					AssessmentFormDialog.this.beforeProccessAssessment();
-					AssessmentFormDialog.this.fromDialogToAssessment();
-
-					try {
-						AssessmentFormDialog.this.assessmentService.saveOrUpdate(AssessmentFormDialog.this.assessment);
-						AssessmentFormDialog.this.dispose();
-					} catch (CheckedException e) {
-						JOptionPane.showMessageDialog(AssessmentFormDialog.this, HolderMessage.getMessage("assessment.form.error.save"),
-								HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-					}
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(AssessmentFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
-				} finally {
-					AssessmentFormDialog.this.afterProccessAssessment();
-				}
-			}
-		}.start();
+		this.startProccess();
 	}
 
-	/**
-	 * La función antes de procesar la evaluación.
-	 */
-	private void beforeProccessAssessment() {
-		this.setEnabled(false);
+	@Override
+	protected void proccess() throws CheckedException {
+		this.fromDialogToAssessment();
+		try {
+			this.assessmentService.saveOrUpdate(this.assessment);
+			this.dispose();
+		} catch (CheckedException e) {
+			throw new CheckedException("assessment.form.error.save");
+		}
+	}
 
+	@Override
+	protected void beforeProccess() {
+		this.setEnabled(false);
 		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 		gif.setImageObserver(this.progressLabel);
 		this.progressLabel.setIcon(gif);
 	}
 
-	/*
-	 * La función después de procesar la evaluación.
-	 */
-	private void afterProccessAssessment() {
+	@Override
+	protected void afterProccess() {
 		this.setEnabled(true);
 		this.progressLabel.setIcon(null);
 	}

@@ -61,6 +61,7 @@ import com.proyecto.service.material.instrument.RestrictedEssayActivityInstrumen
 import com.proyecto.service.material.instrument.SingleChoiceInstrumentService;
 import com.proyecto.service.material.instrument.UnrestrictedEssayActivityInstrumentService;
 import com.proyecto.view.Resources;
+import com.proyecto.view.base.BaseListDialog;
 
 /**
  * La ventana que permite desplegar un listado de instrumento que tenemos dentro del sistema para administrarlos o seleccionar uno para su inclusión a
@@ -70,7 +71,7 @@ import com.proyecto.view.Resources;
  * @version 1.0
  */
 @View
-public class InstrumentListDialog extends JDialog {
+public class InstrumentListDialog extends BaseListDialog<Instrument> {
 
 	private static final long serialVersionUID = -3837565156703793373L;
 
@@ -398,46 +399,36 @@ public class InstrumentListDialog extends JDialog {
 	 * La función encargada de actualizar el listado de los instrumentos que tenemos dentro de la ventana.
 	 */
 	private void updateInstruments() {
-		// Ejecutamos las acciones antes de procesar.
-		InstrumentListDialog.this.beforeExecuteProccess();
-
-		// Vaciamos la lista de instrumentos.
-		DefaultTableModel tableModel = (DefaultTableModel) InstrumentListDialog.this.instrumentTable.getModel();
-		tableModel.getDataVector().clear();
-
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					// Actualizamos la clase de los instrumentos que vamos a cargar.
-					InstrumentListDialog.this.updateInstrumentClass();
-					// Volvemos a cargar el listado de instrumentos y la tabla de los mismos.
-					InstrumentListDialog.this.updateInstrumentsList();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(InstrumentListDialog.this, HolderMessage.getMessage("instrument.manager.load.instruments.failed"),
-							HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-				} finally {
-					InstrumentListDialog.this.afterExecuteProccess();
-				}
-			}
-		}.start();
+		this.startFillListProccess();
 	}
 
-	/**
-	 * La función antes de procesar los instrumentos.
-	 */
-	private void beforeExecuteProccess() {
-		this.setEnabled(false);
+	@Override
+	protected void fillListProccess() throws CheckedException {
+		// Vaciamos la lista de instrumentos.
+		DefaultTableModel tableModel = (DefaultTableModel) this.instrumentTable.getModel();
+		tableModel.getDataVector().clear();
 
+		try {
+			// Actualizamos la clase de los instrumentos que vamos a cargar.
+			this.updateInstrumentClass();
+
+			// Volvemos a cargar el listado de instrumentos y la tabla de los mismos.
+			this.updateInstrumentsList();
+		} catch (Exception e) {
+			throw new CheckedException("instrument.manager.load.instruments.failed");
+		}
+	}
+
+	@Override
+	protected void beforeProccess() {
+		this.setEnabled(false);
 		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 		gif.setImageObserver(this.progressLabel);
 		this.progressLabel.setIcon(gif);
 	}
 
-	/*
-	 * La función después de procesar los instrumentos.
-	 */
-	private void afterExecuteProccess() {
+	@Override
+	protected void afterProccess() {
 		this.setEnabled(true);
 		this.progressLabel.setIcon(null);
 	}
@@ -600,28 +591,21 @@ public class InstrumentListDialog extends JDialog {
 
 		// Si tenemos algo seleccionado.
 		if (instrumentIndex >= 0) {
-			final Instrument deleteInstrument = this.instruments.get(this.instrumentTable.convertRowIndexToModel(instrumentIndex));
-			final InstrumentService<Instrument> instrumentService = this.getInstrumentService(deleteInstrument.getClass());
-
 			if (JOptionPane.showConfirmDialog(this, HolderMessage.getMessage("instrument.manager.delete.confirm"),
 					HolderMessage.getMessage("dialog.message.confirm.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-
-				new Thread() {
-					@Override
-					public void run() {
-						try {
-							InstrumentListDialog.this.beforeExecuteProccess();
-							instrumentService.delete(deleteInstrument);
-							InstrumentListDialog.this.updateInstruments();
-						} catch (CheckedException e) {
-							JOptionPane.showMessageDialog(InstrumentListDialog.this, HolderMessage.getMessage("instrument.manager.delete.failed"),
-									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
-						} finally {
-							InstrumentListDialog.this.afterExecuteProccess();
-						}
-					}
-				}.start();
+				Instrument entity = this.instruments.get(this.instrumentTable.convertRowIndexToModel(instrumentIndex));
+				this.startDeleteProccess(entity);
 			}
+		}
+	}
+
+	@Override
+	protected void deleteProccess(Instrument entity) throws CheckedException {
+		try {
+			InstrumentService<Instrument> instrumentService = this.getInstrumentService(entity.getClass());
+			instrumentService.delete(entity);
+		} catch (CheckedException e) {
+			throw new CheckedException("instrument.manager.delete.failed");
 		}
 	}
 

@@ -11,9 +11,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -40,6 +38,7 @@ import com.proyecto.model.material.reactive.type.impl.ReactiveTypeImpl;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.reactive.ReactiveService;
 import com.proyecto.view.Resources;
+import com.proyecto.view.base.BaseFormDialog;
 import com.proyecto.view.material.instrument.InstrumentListDialog;
 
 /**
@@ -49,7 +48,7 @@ import com.proyecto.view.material.instrument.InstrumentListDialog;
  * @version 1.0
  */
 @View
-public class ReactiveFormDialog extends JDialog {
+public class ReactiveFormDialog extends BaseFormDialog<Reactive> {
 
 	private static final long serialVersionUID = -3007425576330803557L;
 
@@ -115,9 +114,6 @@ public class ReactiveFormDialog extends JDialog {
 	 * La función encargada de inicializar el contenido de la ventana.
 	 */
 	private void init() {
-		this.setModal(true);
-		this.setResizable(false);
-
 		JPanel contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(null);
@@ -329,42 +325,37 @@ public class ReactiveFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de guardar el reactivo dentro de la base de datos.
+	 * La función encargada de arrancar el proceso en segundo plano.
 	 */
-	private void saveReactive() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					ReactiveFormDialog.this.beforeProccessReactive();
-					ReactiveFormDialog.this.fromDialogToReactive();
-					ReactiveFormDialog.this.reactiveService.saveOrUpdate(ReactiveFormDialog.this.reactive);
-					ReactiveFormDialog.this.dispose();
-				} catch (CheckedException e) {
-					JOptionPane.showMessageDialog(ReactiveFormDialog.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
-				} finally {
-					ReactiveFormDialog.this.afterProccessReactive();
-				}
-			}
-		}.start();
+	protected void saveReactive() {
+		this.startProccess();
 	}
 
-	/**
-	 * La función antes de procesar el reactivo.
-	 */
-	private void beforeProccessReactive() {
-		this.setEnabled(false);
+	@Override
+	protected void proccess() throws CheckedException {
+		try {
+			this.fromDialogToReactive();
+			try {
+				this.reactiveService.saveOrUpdate(this.reactive);
+				this.dispose();
+			} catch (CheckedException e) {
+				throw new CheckedException("reactive.form.error.save");
+			}
+		} catch (CheckedException e) {
+			throw e;
+		}
+	}
 
+	@Override
+	protected void beforeProccess() {
+		this.setEnabled(false);
 		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 		gif.setImageObserver(this.progressLabel);
 		this.progressLabel.setIcon(gif);
 	}
 
-	/*
-	 * La función después de procesar el reactivo.
-	 */
-	private void afterProccessReactive() {
+	@Override
+	protected void afterProccess() {
 		this.setEnabled(true);
 		this.progressLabel.setIcon(null);
 	}

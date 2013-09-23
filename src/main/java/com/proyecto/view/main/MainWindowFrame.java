@@ -1,4 +1,4 @@
-package com.proyecto.view.base;
+package com.proyecto.view.main;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -168,7 +169,7 @@ public class MainWindowFrame extends JFrame {
 			public void setEnabled(boolean enabled) {
 				for (int i = 0; i < this.getMenuCount(); i++) {
 					JMenu menu = this.getMenu(i);
-					setEnabled(menu, enabled);
+					this.setEnabled(menu, enabled);
 				}
 			};
 
@@ -187,7 +188,7 @@ public class MainWindowFrame extends JFrame {
 				// Habilitamos o deshabilitamos los hijos del menu.
 				for (int i = 0; i < menu.getItemCount(); i++) {
 					JMenu subMenu = this.getMenu(i);
-					setEnabled(subMenu, enable);
+					this.setEnabled(subMenu, enable);
 				}
 			}
 		};
