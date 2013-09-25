@@ -44,7 +44,7 @@ public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> imple
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String relationAnswerClassName = Constants.NAMESPACE + TrueFalseAnswer.class.getSimpleName();
+			String relationAnswerClassName = Constants.Ontology.NAMESPACE + TrueFalseAnswer.class.getSimpleName();
 			this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
 
 			if (this.relationAnswerClass == null) {
@@ -56,9 +56,9 @@ public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> imple
 
 		// Creamos las relaciones.
 		if (this.haveValue == null) {
-			this.haveValue = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+			this.haveValue = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
 			if (this.haveValue == null) {
-				this.haveValue = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+				this.haveValue = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
 			}
 		}
 

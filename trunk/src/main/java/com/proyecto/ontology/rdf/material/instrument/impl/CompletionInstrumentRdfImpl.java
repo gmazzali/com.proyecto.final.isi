@@ -52,7 +52,7 @@ public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfI
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String completionInstrumentClassName = Constants.NAMESPACE + CompletionInstrument.class.getSimpleName();
+			String completionInstrumentClassName = Constants.Ontology.NAMESPACE + CompletionInstrument.class.getSimpleName();
 			this.completionInstrumentClass = ontology.getOntClass(completionInstrumentClassName);
 
 			if (this.completionInstrumentClass == null) {
@@ -64,9 +64,9 @@ public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfI
 
 		// Creamos las relaciones.
 		if (this.haveComplete == null) {
-			this.haveComplete = ontology.getObjectProperty(Constants.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
+			this.haveComplete = ontology.getObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
 			if (this.haveComplete == null) {
-				this.haveComplete = ontology.createObjectProperty(Constants.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
+				this.haveComplete = ontology.createObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
 				this.haveComplete.addDomain(this.completionInstrumentClass);
 				this.haveComplete.addRange(this.completionAnswerRdf.initClass(ontology));
 			}

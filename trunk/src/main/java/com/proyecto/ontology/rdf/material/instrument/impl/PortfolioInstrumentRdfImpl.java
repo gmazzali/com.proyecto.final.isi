@@ -33,7 +33,7 @@ public class PortfolioInstrumentRdfImpl extends CompositeInstrumentRdfImpl<Portf
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String portfolioInstrumentClassName = Constants.NAMESPACE + PortfolioInstrument.class.getSimpleName();
+			String portfolioInstrumentClassName = Constants.Ontology.NAMESPACE + PortfolioInstrument.class.getSimpleName();
 			this.portfolioInstrumentClass = ontology.getOntClass(portfolioInstrumentClassName);
 
 			if (this.portfolioInstrumentClass == null) {

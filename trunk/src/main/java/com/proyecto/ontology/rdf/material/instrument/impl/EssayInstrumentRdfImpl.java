@@ -33,7 +33,7 @@ public class EssayInstrumentRdfImpl extends SimpleInstrumentRdfImpl<EssayInstrum
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String essayInstrumentClassName = Constants.NAMESPACE + EssayInstrument.class.getSimpleName();
+			String essayInstrumentClassName = Constants.Ontology.NAMESPACE + EssayInstrument.class.getSimpleName();
 			this.essayInstrumentClass = ontology.getOntClass(essayInstrumentClassName);
 
 			if (this.essayInstrumentClass == null) {

@@ -33,7 +33,7 @@ public class SingleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Singl
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String singleChoiceInstrumentClassName = Constants.NAMESPACE + SingleChoiceInstrument.class.getSimpleName();
+			String singleChoiceInstrumentClassName = Constants.Ontology.NAMESPACE + SingleChoiceInstrument.class.getSimpleName();
 			this.singleChoiceInstrumentClass = ontology.getOntClass(singleChoiceInstrumentClassName);
 
 			if (this.singleChoiceInstrumentClass == null) {

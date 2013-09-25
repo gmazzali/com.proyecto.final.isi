@@ -34,7 +34,7 @@ public abstract class SemiFormalInstrumentRdfImpl<I extends SemiFormalInstrument
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String semiformalInstrumentClassName = Constants.NAMESPACE + SemiFormalInstrument.class.getSimpleName();
+			String semiformalInstrumentClassName = Constants.Ontology.NAMESPACE + SemiFormalInstrument.class.getSimpleName();
 			this.semiformalInstrumentClass = ontology.getOntClass(semiformalInstrumentClassName);
 
 			if (this.semiformalInstrumentClass == null) {

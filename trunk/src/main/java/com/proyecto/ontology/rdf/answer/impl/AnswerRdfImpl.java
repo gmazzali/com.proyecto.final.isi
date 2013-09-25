@@ -33,7 +33,7 @@ public class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implemen
 		// Creamos la clase solo si es nula.
 		if (this.answerClass == null) {
 
-			String answerClassName = Constants.NAMESPACE + Answer.class.getSimpleName();
+			String answerClassName = Constants.Ontology.NAMESPACE + Answer.class.getSimpleName();
 			this.answerClass = ontology.getOntClass(answerClassName);
 
 			if (this.answerClass == null) {

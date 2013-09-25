@@ -55,7 +55,7 @@ public class AssessmentRdfImpl extends MaterialRdfImpl<Assessment> implements As
 		// Creamos la clase si es nula.
 		if (this.assessmentClass == null) {
 
-			String assessmentClassName = Constants.NAMESPACE + Assessment.class.getSimpleName();
+			String assessmentClassName = Constants.Ontology.NAMESPACE + Assessment.class.getSimpleName();
 			this.assessmentClass = ontology.getOntClass(assessmentClassName);
 
 			if (this.assessmentClass == null) {
@@ -65,30 +65,30 @@ public class AssessmentRdfImpl extends MaterialRdfImpl<Assessment> implements As
 
 		// Creamos las relaciones.
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
+			this.haveDescription = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
 			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
+				this.haveDescription = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
 			}
 		}
 
 		if (this.haveDate == null) {
-			this.haveDate = ontology.getDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_DATE);
+			this.haveDate = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_DATE);
 			if (this.haveDate == null) {
-				this.haveDate = ontology.createDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_DATE);
+				this.haveDate = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_DATE);
 			}
 		}
 
 		if (this.haveMoment == null) {
-			this.haveMoment = ontology.getDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_MOMENT);
+			this.haveMoment = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_MOMENT);
 			if (this.haveMoment == null) {
-				this.haveMoment = ontology.createDatatypeProperty(Constants.PROPERTY_ASSESSMENT_HAVE_MOMENT);
+				this.haveMoment = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_MOMENT);
 			}
 		}
 
 		if (this.haveActivity == null) {
-			this.haveActivity = ontology.getObjectProperty(Constants.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
+			this.haveActivity = ontology.getObjectProperty(Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
 			if (this.haveActivity == null) {
-				this.haveActivity = ontology.createObjectProperty(Constants.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
+				this.haveActivity = ontology.createObjectProperty(Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
 				this.haveActivity.addDomain(this.assessmentClass);
 				this.haveActivity.addRange(this.activityFactoryRdf.topClassHierachy(ontology));
 			}

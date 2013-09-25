@@ -35,7 +35,7 @@ public abstract class CompositeInstrumentRdfImpl<I extends CompositeInstrument> 
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String compositeInstrumentClassName = Constants.NAMESPACE + CompositeInstrument.class.getSimpleName();
+			String compositeInstrumentClassName = Constants.Ontology.NAMESPACE + CompositeInstrument.class.getSimpleName();
 			this.compositeInstrumentClass = ontology.getOntClass(compositeInstrumentClassName);
 
 			if (this.compositeInstrumentClass == null) {

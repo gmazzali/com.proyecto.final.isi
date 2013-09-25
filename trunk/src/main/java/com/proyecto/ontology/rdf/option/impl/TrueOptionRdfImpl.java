@@ -33,7 +33,7 @@ public class TrueOptionRdfImpl extends OptionRdfImpl<TrueOption> implements True
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String trueOptionClassName = Constants.NAMESPACE + TrueOption.class.getSimpleName();
+			String trueOptionClassName = Constants.Ontology.NAMESPACE + TrueOption.class.getSimpleName();
 			this.trueOptionClass = ontology.getOntClass(trueOptionClassName);
 
 			if (this.trueOptionClass == null) {

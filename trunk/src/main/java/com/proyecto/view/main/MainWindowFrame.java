@@ -376,6 +376,7 @@ public class MainWindowFrame extends JFrame {
 		this.evaluateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				MainWindowFrame.this.evaluateAssessment();
 			}
 		});
 		this.getContentPane().add(this.evaluateButton);
@@ -691,6 +692,22 @@ public class MainWindowFrame extends JFrame {
 		label.setIcon(null);
 		if (this.taskCount <= 0) {
 			this.setEnabled(true);
+		}
+	}
+
+	/**
+	 * La función encargada de validar una evaluación con el conjunto de reglas seleccionada.
+	 */
+	protected void evaluateAssessment() {
+		// Si tenemos algo seleccionado.
+		if (this.assessmentList.getSelectedValue() != null && this.ruleSetList.getSelectedValue() != null) {
+			// Obtenemos los elementos.
+			Assessment assessment = this.assessmentList.getSelectedValue();
+			RuleSet ruleSet = this.ruleSetList.getSelectedValue();
+
+			// Iniciamos el proceso de evaluación y lo arrancamos.
+			this.validateAssessmentTask.initValidateTask(assessment, ruleSet);
+			this.validateAssessmentTask.startTask(resultStringBuffer);
 		}
 	}
 

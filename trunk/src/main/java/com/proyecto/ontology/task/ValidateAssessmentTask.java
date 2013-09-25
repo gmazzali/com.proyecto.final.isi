@@ -17,15 +17,18 @@ public interface ValidateAssessmentTask extends Serializable {
 	/**
 	 * La función encargada de cargar dentro del proceso la evaluación y el conjunto de reglas que tenemos para evaluar la evaluación.
 	 * 
-	 * @param assessement
+	 * @param assessment
 	 *            La evaluación que va a someterse a su validación.
 	 * @param ruleSet
 	 *            El conjunto de reglas que vamos a usar para validar la evaluación.
 	 */
-	public void initValidateTask(Assessment assessement, RuleSet ruleSet);
+	public void initValidateTask(Assessment assessment, RuleSet ruleSet);
 
 	/**
 	 * La función encargada de comenzar la ejecución de la validación de una evaluación.
+	 * 
+	 * @param stringBuffer
+	 *            El buffer donde vamos a cargar los mensajes de salida de la ejecución de la validación de la evaluación.
 	 */
-	public void startTask();
+	public void startTask(final StringBuffer stringBuffer);
 }

@@ -34,7 +34,7 @@ public class RestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstr
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String restrictedEssayActivityInstrumentClassName = Constants.NAMESPACE + RestrictedEssayActivityInstrument.class.getSimpleName();
+			String restrictedEssayActivityInstrumentClassName = Constants.Ontology.NAMESPACE + RestrictedEssayActivityInstrument.class.getSimpleName();
 			this.restrictedEssayActivityInstrumentClass = ontology.getOntClass(restrictedEssayActivityInstrumentClassName);
 
 			if (this.restrictedEssayActivityInstrumentClass == null) {
