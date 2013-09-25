@@ -285,7 +285,9 @@ public abstract class ChoiceInstrumentFormDialog extends InstrumentFormDialog {
 		this.descriptionTextArea.setEnabled(enabled);
 
 		this.optionsList.setEnabled(enabled);
-		this.optionTextArea.setEnabled(enabled);
+
+		Boolean isOptionSelected = this.allOptionRadioButton.isSelected() || this.noneOptionRadioButton.isSelected();
+		this.optionTextArea.setEnabled(enabled && !isOptionSelected);
 
 		this.trueAnswerRadioButton.setEnabled(enabled);
 		this.falseAnswerRadioButton.setEnabled(enabled);
