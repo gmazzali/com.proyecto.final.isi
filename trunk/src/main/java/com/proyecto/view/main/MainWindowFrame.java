@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -27,6 +30,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
@@ -34,6 +39,7 @@ import com.common.util.holder.HolderApplicationContext;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.rule.RuleSet;
+import com.proyecto.ontology.task.ValidateAssessmentTask;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.assessment.AssessmentService;
 import com.proyecto.service.rule.RuleSetService;
@@ -56,6 +62,8 @@ public class MainWindowFrame extends JFrame {
 
 	private static final long serialVersionUID = -7170869916954032109L;
 
+	private static final Logger logger = LoggerFactory.getLogger(MainWindowFrame.class);
+
 	/**
 	 * El control de acceso.
 	 */
@@ -76,6 +84,12 @@ public class MainWindowFrame extends JFrame {
 
 	@Autowired
 	private InstrumentListDialog instrumentListDialog;
+
+	/**
+	 * El proceso de validación de las evaluaciones.
+	 */
+	@Autowired
+	private ValidateAssessmentTask validateAssessmentTask;
 
 	/**
 	 * La ventana de selección de materias.
@@ -116,9 +130,10 @@ public class MainWindowFrame extends JFrame {
 	private JList<Assessment> assessmentList;
 	private JList<RuleSet> ruleSetList;
 	/**
-	 * El area donde vamos a cargar el resultado de la validación de la evaluación.
+	 * El area donde vamos a cargar el resultado de la validación de la evaluación y el buffer donde se va a cargar el resultado.
 	 */
 	private JTextArea resultTextArea;
+	private final StringBuffer resultStringBuffer = new StringBuffer();
 	/**
 	 * Los botones de acciones.
 	 */
@@ -134,14 +149,16 @@ public class MainWindowFrame extends JFrame {
 	private JLabel evaluateProgressLabel;
 
 	/**
-	 * El valor booleano que nos indica si nos encontramos procesando la ontología o no.
-	 */
-	private final Boolean proccessing = false;
-
-	/**
 	 * El contador de procesos que corren de fondo.
 	 */
 	private Integer taskCount = 0;
+
+	/**
+	 * Los procesos en segundo plano.
+	 */
+	private Thread updateAssessmentsTask;
+	private Thread updateRuleSetTask;
+	private Thread updateResultsTask;
 
 	/**
 	 * Constructor de la ventana principal.
@@ -149,7 +166,6 @@ public class MainWindowFrame extends JFrame {
 	public MainWindowFrame() {
 		super();
 		this.init();
-		this.updateResultTextArea();
 	}
 
 	/**
@@ -160,6 +176,12 @@ public class MainWindowFrame extends JFrame {
 		this.setBounds(100, 100, 1000, 562);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				MainWindowFrame.this.stopBackgroundTask();
+			}
+		});
 
 		this.menuBar = new JMenuBar() {
 
@@ -169,28 +191,9 @@ public class MainWindowFrame extends JFrame {
 			public void setEnabled(boolean enabled) {
 				for (int i = 0; i < this.getMenuCount(); i++) {
 					JMenu menu = this.getMenu(i);
-					this.setEnabled(menu, enabled);
+					menu.setEnabled(enabled);
 				}
 			};
-
-			/**
-			 * La función que habilita o deshabilita los menues en backtraking.
-			 * 
-			 * @param menu
-			 *            El menu que vamos a habilitar o deshabilitar.
-			 * @param enable
-			 *            El valor booleano que nos define el estado en el que vamos a dejar al menú.
-			 */
-			private void setEnabled(JMenu menu, Boolean enable) {
-				// Habilitamos o deshabilitamos el menu.
-				menu.setEnabled(enable);
-
-				// Habilitamos o deshabilitamos los hijos del menu.
-				for (int i = 0; i < menu.getItemCount(); i++) {
-					JMenu subMenu = this.getMenu(i);
-					this.setEnabled(subMenu, enable);
-				}
-			}
 		};
 		this.menuBar.setFont(this.getContentPane().getFont());
 		this.menuBar.setBounds(0, 0, 994, 23);
@@ -204,6 +207,7 @@ public class MainWindowFrame extends JFrame {
 		JMenuItem itemMenuCambioMateria = new JMenuItem(HolderMessage.getMessage("main.menu.system.subject.change"));
 		itemMenuCambioMateria.setHorizontalAlignment(SwingConstants.LEFT);
 		itemMenuCambioMateria.setFont(this.menuBar.getFont());
+		itemMenuCambioMateria.setMnemonic(KeyEvent.VK_F3);
 		itemMenuCambioMateria.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -526,7 +530,31 @@ public class MainWindowFrame extends JFrame {
 	 * La función encargada de actualizar el listado de las evaluaciones que tenemos dentro de la ventana creando un proceso secundario.
 	 */
 	private void updateAssessmentList() {
-		new Thread() {
+		this.initUpdateAssessmentTask();
+		this.updateAssessmentsTask.start();
+	}
+
+	/**
+	 * La función encargada de actualizar el listado de las reglas que tenemos dentro de la ventana.
+	 */
+	private void updateRuleSetList() {
+		this.initUpdateRuleSetTask();
+		this.updateRuleSetTask.start();
+	}
+
+	/**
+	 * La función encargada de actualizar el contenido del area de resultado de evaluación de acuerdo a una entrada de datos.
+	 */
+	private void updateResultTextArea() {
+		this.initUpdateResultTask();
+		this.updateResultsTask.start();
+	}
+
+	/**
+	 * La función encargada de inicializar el proceso de actualización de las evaluaciones.
+	 */
+	private void initUpdateAssessmentTask() {
+		this.updateAssessmentsTask = new Thread() {
 			@Override
 			public void run() {
 				try {
@@ -544,21 +572,24 @@ public class MainWindowFrame extends JFrame {
 					}
 					MainWindowFrame.this.assessmentList.setModel(model);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(MainWindowFrame.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
+					if (!this.isInterrupted()) {
+						JOptionPane.showMessageDialog(MainWindowFrame.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+								JOptionPane.ERROR_MESSAGE);
+					}
 					e.printStackTrace();
 				} finally {
 					MainWindowFrame.this.afterExecuteProccess(MainWindowFrame.this.assessmentProgressLabel);
 				}
 			}
-		}.start();
+		};
+		this.updateAssessmentsTask.setDaemon(true);
 	}
 
 	/**
-	 * La función encargada de actualizar el listado de las reglas que tenemos dentro de la ventana.
+	 * La función encargada de inicializar el proceso de actualización del conjunto de reglas.
 	 */
-	private void updateRuleSetList() {
-		new Thread() {
+	private void initUpdateRuleSetTask() {
+		this.updateRuleSetTask = new Thread() {
 			@Override
 			public void run() {
 				try {
@@ -574,40 +605,64 @@ public class MainWindowFrame extends JFrame {
 					}
 					MainWindowFrame.this.ruleSetList.setModel(model);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(MainWindowFrame.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
-							JOptionPane.ERROR_MESSAGE);
+					if (!this.isInterrupted()) {
+						JOptionPane.showMessageDialog(MainWindowFrame.this, e.getMessage(), HolderMessage.getMessage("dialog.message.error.title"),
+								JOptionPane.ERROR_MESSAGE);
+					}
 					e.printStackTrace();
 				} finally {
 					MainWindowFrame.this.afterExecuteProccess(MainWindowFrame.this.ruleSetProgressLabel);
 				}
 			}
-		}.start();
+		};
+		this.updateRuleSetTask.setDaemon(true);
 	}
 
 	/**
-	 * La función encargada de actualizar el contenido del area de resultado de evaluación de acuerdo a una entrada de datos.
+	 * La función encargada de inicializar el proceso de actualización del panel de resultado de evaluación.
 	 */
-	private void updateResultTextArea() {
-		Thread updateResults = new Thread() {
+	private void initUpdateResultTask() {
+		this.updateResultsTask = new Thread() {
 			@Override
 			public void run() {
-				do {
+				while (true) {
 					try {
-						Thread.sleep(200);
-
 						String result = new String();
+
+						Integer size = MainWindowFrame.this.resultStringBuffer.length();
+						for (int i = 0; i < size; i++) {
+							result += MainWindowFrame.this.resultStringBuffer.charAt(0);
+							MainWindowFrame.this.resultStringBuffer.deleteCharAt(0);
+						}
+
+						MainWindowFrame.logger.debug(result);
 
 						// Cargamos la salida al area de resultado.
 						MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultTextArea.getText() + result);
 
+						Thread.sleep(500);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				} while (MainWindowFrame.this.proccessing);
+				}
 			}
 		};
-		updateResults.setDaemon(true);
-		updateResults.start();
+		this.updateResultsTask.setDaemon(true);
+	}
+
+	/**
+	 * La función encargada de detener los proceso en segundo plano que tenemos dentro de esta ventana.
+	 */
+	private void stopBackgroundTask() {
+		if (this.updateAssessmentsTask != null) {
+			this.updateAssessmentsTask.interrupt();
+		}
+		if (this.updateRuleSetTask != null) {
+			this.updateRuleSetTask.interrupt();
+		}
+		if (this.updateResultsTask != null) {
+			this.updateResultsTask.interrupt();
+		}
 	}
 
 	/**
@@ -658,6 +713,8 @@ public class MainWindowFrame extends JFrame {
 
 		this.updateAssessmentList();
 		this.updateRuleSetList();
+
+		this.updateResultTextArea();
 
 		return this;
 	}
