@@ -34,7 +34,7 @@ public abstract class FormalInstrumentRdfImpl<I extends FormalInstrument> extend
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String formalInstrumentClassName = Constants.NAMESPACE + FormalInstrument.class.getSimpleName();
+			String formalInstrumentClassName = Constants.Ontology.NAMESPACE + FormalInstrument.class.getSimpleName();
 			this.formalInstrumentClass = ontology.getOntClass(formalInstrumentClassName);
 
 			if (this.formalInstrumentClass == null) {

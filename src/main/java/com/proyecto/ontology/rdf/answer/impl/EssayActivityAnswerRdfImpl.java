@@ -44,7 +44,7 @@ public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswe
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String essayActivityAnswerClassName = Constants.NAMESPACE + EssayActivityAnswer.class.getSimpleName();
+			String essayActivityAnswerClassName = Constants.Ontology.NAMESPACE + EssayActivityAnswer.class.getSimpleName();
 			this.essayActivityAnswerClass = ontology.getOntClass(essayActivityAnswerClassName);
 
 			if (this.essayActivityAnswerClass == null) {
@@ -56,9 +56,9 @@ public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswe
 
 		// Creamos las relaciones.
 		if (this.haveAnswer == null) {
-			this.haveAnswer = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
+			this.haveAnswer = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
 			if (this.haveAnswer == null) {
-				this.haveAnswer = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
+				this.haveAnswer = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
 			}
 		}
 

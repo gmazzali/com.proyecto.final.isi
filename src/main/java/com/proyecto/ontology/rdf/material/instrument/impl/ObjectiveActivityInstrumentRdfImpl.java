@@ -35,7 +35,7 @@ public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActi
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String objectiveActivityInstrumentClassName = Constants.NAMESPACE + ObjectiveActivityInstrument.class.getSimpleName();
+			String objectiveActivityInstrumentClassName = Constants.Ontology.NAMESPACE + ObjectiveActivityInstrument.class.getSimpleName();
 			this.objectiveActivityInstrumentClass = ontology.getOntClass(objectiveActivityInstrumentClassName);
 
 			if (this.objectiveActivityInstrumentClass == null) {

@@ -45,7 +45,7 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String completionAnswerClassName = Constants.NAMESPACE + CompletionAnswer.class.getSimpleName();
+			String completionAnswerClassName = Constants.Ontology.NAMESPACE + CompletionAnswer.class.getSimpleName();
 			this.completionAnswerClass = ontology.getOntClass(completionAnswerClassName);
 
 			if (completionAnswerClass == null) {
@@ -57,15 +57,15 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 		
 		// Creamos las relaciones si son nulas.
 		if (this.haveIndex == null) {
-			this.haveIndex = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+			this.haveIndex = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
 			if (this.haveIndex == null) {
-				this.haveIndex = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+				this.haveIndex = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
 			}
 		}
 		if (this.havePhrase == null) {
-			this.havePhrase = ontology.getDatatypeProperty(Constants.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+			this.havePhrase = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
 			if (this.havePhrase == null) {
-				this.havePhrase = ontology.createDatatypeProperty(Constants.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+				this.havePhrase = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
 			}
 		}
 

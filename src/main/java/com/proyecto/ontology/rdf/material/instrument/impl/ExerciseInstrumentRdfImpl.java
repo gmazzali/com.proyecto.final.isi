@@ -33,7 +33,7 @@ public class ExerciseInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ExerciseI
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String exerciseInstrumentClassName = Constants.NAMESPACE + ExerciseInstrument.class.getSimpleName();
+			String exerciseInstrumentClassName = Constants.Ontology.NAMESPACE + ExerciseInstrument.class.getSimpleName();
 			this.exerciseInstrumentClass = ontology.getOntClass(exerciseInstrumentClassName);
 
 			if (this.exerciseInstrumentClass == null) {

@@ -53,7 +53,7 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String correspondenceInstrumentClassName = Constants.NAMESPACE + CorrespondenceInstrument.class.getSimpleName();
+			String correspondenceInstrumentClassName = Constants.Ontology.NAMESPACE + CorrespondenceInstrument.class.getSimpleName();
 			this.correspondenceInstrumentClass = ontology.getOntClass(correspondenceInstrumentClassName);
 
 			if (this.correspondenceInstrumentClass == null) {
@@ -65,9 +65,9 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 
 		// Creamos las relaciones.
 		if (this.haveRelation == null) {
-			this.haveRelation = ontology.getObjectProperty(Constants.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
+			this.haveRelation = ontology.getObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
 			if (this.haveRelation == null) {
-				this.haveRelation = ontology.createObjectProperty(Constants.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
+				this.haveRelation = ontology.createObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
 				this.haveRelation.addDomain(this.correspondenceInstrumentClass);
 				this.haveRelation.addRange(this.relationAnswerRdf.initClass(ontology));
 			}

@@ -53,7 +53,7 @@ public class ActivityRdfImpl extends MaterialRdfImpl<Activity> implements Activi
 		// Creamos la clase si es nula.
 		if (this.activityClass == null) {
 
-			String activityClassName = Constants.NAMESPACE + Activity.class.getSimpleName();
+			String activityClassName = Constants.Ontology.NAMESPACE + Activity.class.getSimpleName();
 			this.activityClass = ontology.getOntClass(activityClassName);
 
 			if (this.activityClass == null) {
@@ -63,16 +63,16 @@ public class ActivityRdfImpl extends MaterialRdfImpl<Activity> implements Activi
 
 		// Creamos las relaciones.
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(Constants.PROPERTY_ACTIVITY_HAVE_DESCRIPTION);
+			this.haveDescription = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ACTIVITY_HAVE_DESCRIPTION);
 			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(Constants.PROPERTY_ACTIVITY_HAVE_DESCRIPTION);
+				this.haveDescription = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ACTIVITY_HAVE_DESCRIPTION);
 			}
 		}
 
 		if (this.haveReactive == null) {
-			this.haveReactive = ontology.getObjectProperty(Constants.PROPERTY_ACTIVITY_HAVE_REACTIVE);
+			this.haveReactive = ontology.getObjectProperty(Constants.Ontology.PROPERTY_ACTIVITY_HAVE_REACTIVE);
 			if (this.haveReactive == null) {
-				this.haveReactive = ontology.createObjectProperty(Constants.PROPERTY_ACTIVITY_HAVE_REACTIVE);
+				this.haveReactive = ontology.createObjectProperty(Constants.Ontology.PROPERTY_ACTIVITY_HAVE_REACTIVE);
 				this.haveReactive.addDomain(this.activityClass);
 				this.haveReactive.addRange(this.reactiveFactoryRdf.topClassHierachy(ontology));
 			}

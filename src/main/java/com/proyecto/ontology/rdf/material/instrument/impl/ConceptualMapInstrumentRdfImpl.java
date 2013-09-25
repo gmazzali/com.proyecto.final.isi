@@ -34,7 +34,7 @@ public class ConceptualMapInstrumentRdfImpl extends SimpleInstrumentRdfImpl<Conc
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String conceptualMapInstrumentClassName = Constants.NAMESPACE + ConceptualMapInstrument.class.getSimpleName();
+			String conceptualMapInstrumentClassName = Constants.Ontology.NAMESPACE + ConceptualMapInstrument.class.getSimpleName();
 			this.conceptualMapInstrumentClass = ontology.getOntClass(conceptualMapInstrumentClassName);
 
 			if (this.conceptualMapInstrumentClass == null) {

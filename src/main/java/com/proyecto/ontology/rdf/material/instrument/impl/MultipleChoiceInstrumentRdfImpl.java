@@ -34,7 +34,7 @@ public class MultipleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Mul
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String multipleChoiceInstrumentClassName = Constants.NAMESPACE + MultipleChoiceInstrument.class.getSimpleName();
+			String multipleChoiceInstrumentClassName = Constants.Ontology.NAMESPACE + MultipleChoiceInstrument.class.getSimpleName();
 			this.multipleChoiceInstrumentClass = ontology.getOntClass(multipleChoiceInstrumentClassName);
 
 			if (this.multipleChoiceInstrumentClass == null) {

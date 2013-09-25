@@ -44,7 +44,7 @@ public class InstrumentRdfImpl<I extends Instrument> extends MaterialRdfImpl<I> 
 		// Creamos la clase si es nula.
 		if (this.instrumentClass == null) {
 
-			String instrumentClassName = Constants.NAMESPACE + Instrument.class.getSimpleName();
+			String instrumentClassName = Constants.Ontology.NAMESPACE + Instrument.class.getSimpleName();
 			this.instrumentClass = ontology.getOntClass(instrumentClassName);
 
 			if (this.instrumentClass == null) {
@@ -54,9 +54,9 @@ public class InstrumentRdfImpl<I extends Instrument> extends MaterialRdfImpl<I> 
 
 		// Creamos las relaciones.
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(Constants.PROPERTY_INSTRUMENT_HAVE_DESCRIPTION);
+			this.haveDescription = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_INSTRUMENT_HAVE_DESCRIPTION);
 			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(Constants.PROPERTY_INSTRUMENT_HAVE_DESCRIPTION);
+				this.haveDescription = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_INSTRUMENT_HAVE_DESCRIPTION);
 			}
 		}
 

@@ -54,7 +54,7 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 			OntClass superClass = super.initClass(ontology);
 
 			// Creamos u obtenemos la clase hija.
-			String choiceInstrumentClassName = Constants.NAMESPACE + ChoiceInstrument.class.getSimpleName();
+			String choiceInstrumentClassName = Constants.Ontology.NAMESPACE + ChoiceInstrument.class.getSimpleName();
 			this.choiceInstrumentClass = ontology.getOntClass(choiceInstrumentClassName);
 
 			if (this.choiceInstrumentClass == null) {
@@ -66,9 +66,9 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 
 		// Cargamos las relaciones.
 		if (this.haveOption == null) {
-			this.haveOption = ontology.getObjectProperty(Constants.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
+			this.haveOption = ontology.getObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
 			if (this.haveOption == null) {
-				this.haveOption = ontology.createObjectProperty(Constants.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
+				this.haveOption = ontology.createObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
 				this.haveOption.addDomain(this.choiceInstrumentClass);
 				this.haveOption.addRange(this.optionFactoryRdf.topClassHierachy(ontology));
 			}
