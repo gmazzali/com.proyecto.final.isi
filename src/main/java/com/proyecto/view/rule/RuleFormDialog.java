@@ -30,7 +30,7 @@ import com.proyecto.util.Validator;
 import com.proyecto.view.Resources;
 
 /**
- * La clase que despliega el formulario para edición de reglas dentro del sistema.
+ * La clase que despliega el formulario para ediciï¿½n de reglas dentro del sistema.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -63,7 +63,7 @@ public class RuleFormDialog extends JDialog {
 	private JTextArea ruleTextArea;
 	private JTextArea descriptionTextArea;
 	/**
-	 * Los botones de acción.
+	 * Los botones de acciï¿½n.
 	 */
 	private JButton btnNewButton;
 	private JButton button;
@@ -77,7 +77,7 @@ public class RuleFormDialog extends JDialog {
 	private JLabel progressLabel;
 
 	/**
-	 * El constructor de una ventana de edición de reglas.
+	 * El constructor de una ventana de ediciï¿½n de reglas.
 	 */
 	public RuleFormDialog() {
 		super();
@@ -85,7 +85,7 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de inicializar la ventana de edición de reglas.
+	 * La funciï¿½n encargada de inicializar la ventana de ediciï¿½n de reglas.
 	 */
 	private void init() {
 		this.setModal(true);
@@ -134,10 +134,8 @@ public class RuleFormDialog extends JDialog {
 		this.btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
-				String contentRule = RuleFormDialog.this.ruleTextArea.getText();
-				RuleFormDialog.this.ruleTextArea.setText(contentRule + "=>");
-
+				int pos = ruleTextArea.getCaretPosition();
+				RuleFormDialog.this.ruleTextArea.insert("=>", pos);
 			}
 		});
 		contentPanel.add(this.btnNewButton);
@@ -147,8 +145,8 @@ public class RuleFormDialog extends JDialog {
 		this.button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String contentRule = RuleFormDialog.this.ruleTextArea.getText();
-				RuleFormDialog.this.ruleTextArea.setText(contentRule + "|");
+				int pos = ruleTextArea.getCaretPosition();
+				RuleFormDialog.this.ruleTextArea.insert("|", pos);
 			}
 		});
 		contentPanel.add(this.button);
@@ -158,8 +156,8 @@ public class RuleFormDialog extends JDialog {
 		this.button_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String contentRule = RuleFormDialog.this.ruleTextArea.getText();
-				RuleFormDialog.this.ruleTextArea.setText(contentRule + "?");
+				int pos = ruleTextArea.getCaretPosition();
+				RuleFormDialog.this.ruleTextArea.insert("?", pos);
 			}
 		});
 		contentPanel.add(this.button_1);
@@ -169,8 +167,8 @@ public class RuleFormDialog extends JDialog {
 		this.button_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String contentRule = RuleFormDialog.this.ruleTextArea.getText();
-				RuleFormDialog.this.ruleTextArea.setText(contentRule + "=");
+				int pos = ruleTextArea.getCaretPosition();
+				RuleFormDialog.this.ruleTextArea.insert("=", pos);
 			}
 		});
 		contentPanel.add(this.button_2);
@@ -218,7 +216,7 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de guardar la regla dentro de la base de datos.
+	 * La funciï¿½n encargada de guardar la regla dentro de la base de datos.
 	 */
 	private void saveRule() {
 		new Thread() {
@@ -246,7 +244,7 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función antes de procesar.
+	 * La funciï¿½n antes de procesar.
 	 */
 	private void beforeExecuteProccess() {
 		this.setEnabled(false);
@@ -257,7 +255,7 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/*
-	 * La función después de procesar.
+	 * La funciï¿½n despuï¿½s de procesar.
 	 */
 	private void afterExecuteProccess() {
 		this.setEnabled(true);
@@ -265,13 +263,13 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función que toma los datos de la ventana y los carga a la regla.
+	 * La funciï¿½n que toma los datos de la ventana y los carga a la regla.
 	 * 
 	 * @throws CheckedException
-	 *             En caso de que algún campo de la regla este fuera de parámetro.
+	 *             En caso de que algï¿½n campo de la regla este fuera de parï¿½metro.
 	 */
 	private void fromDialogToRule() throws CheckedException {
-		// La descripción de la regla.
+		// La descripciï¿½n de la regla.
 		if (Validator.descriptionValidator(this.descriptionTextArea.getText())) {
 			this.rule.setDescription(this.descriptionTextArea.getText().trim());
 		} else {
@@ -286,7 +284,7 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función que toma los datos de la regla y los carga a la ventana.
+	 * La funciï¿½n que toma los datos de la regla y los carga a la ventana.
 	 */
 	private void fromRuleToDialog() {
 		this.descriptionTextArea.setText(this.rule.getDescription());
@@ -294,7 +292,7 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función encargada de vaciar los campos de una regla.
+	 * La funciï¿½n encargada de vaciar los campos de una regla.
 	 */
 	private void emptyField() {
 		this.descriptionTextArea.setText("");
@@ -302,7 +300,7 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función que carga la ventana para dar de alta una nueva regla.
+	 * La funciï¿½n que carga la ventana para dar de alta una nueva regla.
 	 * 
 	 * @return La ventana cargada con los datos para dar de alta una nueva regla.
 	 */
@@ -316,7 +314,7 @@ public class RuleFormDialog extends JDialog {
 	}
 
 	/**
-	 * La función que carga la ventana para modificar una regla que ya tenemos dentro de la base de datos.
+	 * La funciï¿½n que carga la ventana para modificar una regla que ya tenemos dentro de la base de datos.
 	 * 
 	 * @param rule
 	 *            La regla que queremos editar.
