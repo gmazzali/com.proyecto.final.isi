@@ -66,7 +66,7 @@ public class Resources {
 	/**
 	 * El icono para una pantalla de CRUD.
 	 */
-	public static final ImageIcon CRUD_ICON = Resources.createStaticImage("remove_rule_32.png", Resources.width, Resources.height);
+	public static final ImageIcon CRUD_ICON = Resources.createStaticImage("crud_32.png", Resources.width, Resources.height);
 
 	/**
 	 * El icono para procesado.
