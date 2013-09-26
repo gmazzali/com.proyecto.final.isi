@@ -1,10 +1,20 @@
 package com.proyecto.ontology.task.impl;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import uk.ac.manchester.cs.owl.owlapi.OWLClassAssertionImpl;
+
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
 import com.common.util.holder.HolderMessage;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -80,11 +90,18 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 				stringBuffer.append(Constants.SEPARATOR_LINE);
 				stringBuffer.append("\n");
 
-				// TODO gmazzali Hacer lo de la ejecución de la validación de la evaluación y el conjunto de reglas dentro de la ontología.
-
-				for (int i = 0; i < 20; i++) {
-					stringBuffer.append("SALIDA!!! \n");
+				try {
+					ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+					
+					OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+					OWLOntology owlOntology = manager.loadOntologyFromOntologyDocument(in);
+					
+					PelletReasoner reasoner = (PelletReasoner) PelletReasonerFactory.getInstance().createReasoner(owlOntology);
+				} catch (OWLOntologyCreationException e) {
+					e.printStackTrace();
 				}
+
+				// TODO gmazzali Hacer lo de la ejecución de la validación de la evaluación y el conjunto de reglas dentro de la ontología.
 			};
 		}.start();
 	}
