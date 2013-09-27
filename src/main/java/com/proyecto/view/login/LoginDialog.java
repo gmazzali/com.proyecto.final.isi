@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.Locale;
 
 import javax.swing.JButton;
@@ -94,6 +96,12 @@ public class LoginDialog extends JDialog {
 
 		this.userNameTextField = new JTextField();
 		this.userNameTextField.setBounds(10, 34, 324, 25);
+		this.userNameTextField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				userNameTextField.selectAll();
+			}
+		});
 		contentPanel.add(this.userNameTextField);
 
 		JLabel userPassLabel = new JLabel(HolderMessage.getMessage("login.form.label.password"));
@@ -104,13 +112,19 @@ public class LoginDialog extends JDialog {
 
 		this.userPassField = new JPasswordField();
 		this.userPassField.setBounds(10, 88, 324, 25);
+		this.userPassField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				userPassField.selectAll();
+			}
+		});
 		contentPanel.add(this.userPassField);
 
 		JButton commitButton = new JButton(Resources.COMMIT_ICON);
 		commitButton.setBounds(255, 124, 35, 35);
 		commitButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				LoginDialog.this.loggin();
 			}
 		});
