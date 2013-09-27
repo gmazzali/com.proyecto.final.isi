@@ -29,6 +29,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.text.DefaultCaret;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -356,9 +357,9 @@ public class MainWindowFrame extends JFrame {
 
 		this.resultTextArea = new JTextArea();
 		this.resultTextArea.setBorder(new LineBorder(Color.GRAY));
-		this.resultTextArea.setWrapStyleWord(true);
-		this.resultTextArea.setLineWrap(true);
 		this.resultTextArea.setEditable(false);
+		DefaultCaret caret = (DefaultCaret) this.resultTextArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		resultScrollPane.setViewportView(this.resultTextArea);
 
 		this.clearResultButton = new JButton(Resources.ERASE_ICON);
@@ -626,8 +627,8 @@ public class MainWindowFrame extends JFrame {
 		this.updateResultsTask = new Thread() {
 			@Override
 			public void run() {
-				while (true) {
-					try {
+				try {
+					while (true) {
 						String result = new String();
 
 						Integer size = MainWindowFrame.this.resultStringBuffer.length();
@@ -642,9 +643,9 @@ public class MainWindowFrame extends JFrame {
 						MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultTextArea.getText() + result);
 
 						Thread.sleep(500);
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		};
@@ -707,7 +708,7 @@ public class MainWindowFrame extends JFrame {
 
 			// Iniciamos el proceso de evaluación y lo arrancamos.
 			this.validateAssessmentTask.initValidateTask(assessment, ruleSet);
-			this.validateAssessmentTask.startTask(resultStringBuffer);
+			this.validateAssessmentTask.startTask(this.resultStringBuffer);
 		}
 	}
 

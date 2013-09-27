@@ -404,10 +404,6 @@ public class InstrumentListDialog extends BaseListDialog<Instrument> {
 
 	@Override
 	protected void fillListProccess() throws CheckedException {
-		// Vaciamos la lista de instrumentos.
-		DefaultTableModel tableModel = (DefaultTableModel) this.instrumentTable.getModel();
-		tableModel.getDataVector().clear();
-
 		try {
 			// Actualizamos la clase de los instrumentos que vamos a cargar.
 			this.updateInstrumentClass();
@@ -496,6 +492,9 @@ public class InstrumentListDialog extends BaseListDialog<Instrument> {
 	private void loadInstrumentTable() {
 		// Recuperamos el modelo de la tabla.
 		DefaultTableModel tableModel = (DefaultTableModel) this.instrumentTable.getModel();
+
+		// Vaciamos la lista de instrumentos.
+		tableModel.getDataVector().clear();
 
 		// Volvemos a cargar el modelo.
 		for (Instrument instrument : this.instruments) {
@@ -643,8 +642,9 @@ public class InstrumentListDialog extends BaseListDialog<Instrument> {
 
 		this.selectedInstrument = null;
 		this.isSelectDialog = false;
-
 		this.instrumentTypes = null;
+
+		this.initTableModel();
 		this.updateLevelOneComboBox();
 
 		return this;
@@ -662,8 +662,9 @@ public class InstrumentListDialog extends BaseListDialog<Instrument> {
 
 		this.selectedInstrument = null;
 		this.isSelectDialog = true;
-
 		this.instrumentTypes = instrumentTypes;
+
+		this.initTableModel();
 		this.updateLevelOneComboBox();
 
 		return this;
