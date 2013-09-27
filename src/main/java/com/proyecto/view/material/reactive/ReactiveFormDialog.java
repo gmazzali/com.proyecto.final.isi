@@ -248,6 +248,7 @@ public class ReactiveFormDialog extends BaseFormDialog<Reactive> {
 			}
 		}
 		this.assessementTypeComboBox.setSelectedIndex(-1);
+		this.assessementTypeComboBox.setEnabled(true);
 	}
 
 	/**
@@ -449,8 +450,8 @@ public class ReactiveFormDialog extends BaseFormDialog<Reactive> {
 		this.instrument = null;
 
 		this.emptyFields();
-		this.fromReactiveToDialog();
 		this.reloadReactiveTypeInComboBox();
+		this.fromReactiveToDialog();
 
 		return this;
 	}

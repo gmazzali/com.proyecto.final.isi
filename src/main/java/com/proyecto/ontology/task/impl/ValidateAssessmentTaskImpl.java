@@ -4,14 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import uk.ac.manchester.cs.owl.owlapi.OWLClassAssertionImpl;
 
 import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
@@ -62,6 +58,7 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 	@Override
 	public void startTask(final StringBuffer stringBuffer) {
 		new Thread() {
+			@Override
 			public void run() {
 				// Comenzamos la carga de la ontología a la salida.
 				stringBuffer.append(Constants.SEPARATOR_LINE);
@@ -74,15 +71,14 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 				// Creamos la ontología y la cargamos con la evaluación.
 				OntModel ontology = ModelFactory.createOntologyModel(OntModelSpec.DAML_MEM_RDFS_INF);
 				ontology.setNsPrefix("NS", Constants.Ontology.NAMESPACE);
-				assessmentFactoryRdf.loadEntityToOntology(ontology, assessment);
+				ValidateAssessmentTaskImpl.this.assessmentFactoryRdf.loadEntityToOntology(ontology, ValidateAssessmentTaskImpl.this.assessment);
 
 				// Cargamos la ontología a la salida.
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				ontology.write(out);
-				stringBuffer.append(out.toByteArray());
+				stringBuffer.append(out.toString());
 
 				// Finalizamos la carga de la ontología.
-				stringBuffer.append("\n");
 				stringBuffer.append(Constants.SEPARATOR_LINE);
 				stringBuffer.append("\n");
 				stringBuffer.append(HolderMessage.getMessage("ontology.phase.assessment.finish"));
@@ -92,11 +88,11 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 
 				try {
 					ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-					
+
 					OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 					OWLOntology owlOntology = manager.loadOntologyFromOntologyDocument(in);
-					
-					PelletReasoner reasoner = (PelletReasoner) PelletReasonerFactory.getInstance().createReasoner(owlOntology);
+
+					PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner(owlOntology);
 				} catch (OWLOntologyCreationException e) {
 					e.printStackTrace();
 				}
