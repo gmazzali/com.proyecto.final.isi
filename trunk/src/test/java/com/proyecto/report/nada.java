@@ -39,7 +39,6 @@ import com.proyecto.model.material.instrument.MultipleChoiceInstrument;
 import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.model.material.instrument.SingleChoiceInstrument;
 import com.proyecto.model.material.instrument.UnrestrictedEssayActivityInstrument;
-import com.proyecto.model.material.instrument.type.impl.InstrumentTypeImpl;
 import com.proyecto.model.material.reactive.Reactive;
 import com.proyecto.model.option.Option;
 
@@ -51,9 +50,10 @@ public class nada extends JFrame {
 	private JEditorPane editor;
 	SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd-MM-yyyy");
 	final Document assessmentPDF = new Document(PageSize.A4);
-	int contReactive = 1;
+	int contReactive = 65;
 	int contActivity = 1;
-	private int constNumberItem = 65;
+	private int constNumberItemSimple = 97;
+	private int constNumberItemMultiple = 97;
 	private static Font fontSubject = new Font(FontFamily.HELVETICA, 10, Font.BOLD, new BaseColor(255, 0, 0));
 	private static Font fontAssessment = new Font(FontFamily.HELVETICA, 18, Font.UNDERLINE, new BaseColor(0, 0, 255));
 	private static Font fontActivity = new Font(FontFamily.HELVETICA, 10, Font.UNDERLINE, new BaseColor(100, 15, 0));
@@ -100,9 +100,8 @@ public class nada extends JFrame {
 				int opcion = seleccionar_archivo.showSaveDialog(null);
 				if (opcion == seleccionar_archivo.APPROVE_OPTION) {
 					try {
+						//Donde se va a guardar el pdf y la apertura del mismo
 						OutputStream texto_salida = new FileOutputStream(seleccionar_archivo.getSelectedFile() + ".pdf");
-
-						// PDF
 						PdfWriter.getInstance(assessmentPDF, texto_salida);
 						assessmentPDF.open();
 						
@@ -120,6 +119,8 @@ public class nada extends JFrame {
 						assessmentPDF.add(dateTime);
 						assessmentPDF.add(subject);
 						assessmentPDF.add(assessment);
+						addEmptyLine(1);
+						
 						
 						//Conjunto de Actividades
 						 for (Activity activity : assessmentTest.getActivities()) {
@@ -130,7 +131,7 @@ public class nada extends JFrame {
 						 addEmptyLine(2);
 						
 						 }
-
+						
 						assessmentPDF.close();
 		
 						texto_salida.close();
@@ -140,11 +141,12 @@ public class nada extends JFrame {
 				}
 
 			}
+		
 			
 			private void printReactives(Activity activityAssessment) {
 				
 				for (Reactive reactive : activityAssessment.getReactives()) {
-					 Paragraph reactiveActivity = new Paragraph("Ractivo: "+ contReactive++ +":"+ reactive.getDescription(), fontReactive);
+					 Paragraph reactiveActivity = new Paragraph((char)contReactive++ +" - "+ reactive.getDescription(), fontReactive);
 					 try {
 						assessmentPDF.add(reactiveActivity);
 						printInstrument(reactive);
@@ -154,8 +156,9 @@ public class nada extends JFrame {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+						
 				}
+				 contReactive = 65;
 				
 			}
 			
@@ -171,27 +174,30 @@ public class nada extends JFrame {
 			  }
 
 			private void printInstrument(Reactive reactive) {
-				constNumberItem = 65;
-				Paragraph instrumentReactive = new Paragraph("Instrumento: "+reactive.getInstrument().getDescription(), fontInstrument);
 				try {
-					assessmentPDF.add(instrumentReactive);
 					
 					if(reactive.getInstrument().getClass().equals(SingleChoiceInstrument.class))
 					{
+						constNumberItemSimple = 97;
+						Paragraph instrumentReactive = new Paragraph(reactive.getInstrument().getDescription(), fontInstrument);
+						assessmentPDF.add(instrumentReactive);
 						 SingleChoiceInstrument singleChoiceInstrument = (SingleChoiceInstrument) reactive.getInstrument();
 						 for (Option option : singleChoiceInstrument.getOptions()) 
 						 {
-							 Paragraph optionInstrument = new Paragraph((char)constNumberItem++ +" - " + option.getDescription(), fontInstrumentOption);
+							 Paragraph optionInstrument = new Paragraph((char)constNumberItemSimple++ +" - " + option.getDescription(), fontInstrumentOption);
 							 assessmentPDF.add(optionInstrument);		 
 						 }		
 					}
 					else if(reactive.getInstrument().getClass().equals(MultipleChoiceInstrument.class))
 					{
-						constNumberItem = 65;
+						constNumberItemMultiple = 97;
+						Paragraph instrumentReactive = new Paragraph(reactive.getInstrument().getDescription(), fontInstrument);
+						assessmentPDF.add(instrumentReactive);
+						
 						MultipleChoiceInstrument multipleChoiceInstrument = (MultipleChoiceInstrument) reactive.getInstrument();
 						 for (Option option : multipleChoiceInstrument.getOptions()) 
 						 {
-							 Paragraph optionInstrument = new Paragraph((char)constNumberItem++ +" - " + option.getDescription(), fontInstrumentOption);
+							 Paragraph optionInstrument = new Paragraph((char)constNumberItemMultiple++ +" - " + option.getDescription(), fontInstrumentOption);
 							 assessmentPDF.add(optionInstrument);		 
 						 }		 
 					}
@@ -237,6 +243,7 @@ public class nada extends JFrame {
 						   table.addCell(c2);					  
 						  
 					   }
+					   addEmptyLine(1);
 					   assessmentPDF.add(table);
 					}
 					else if(reactive.getInstrument().getClass().equals(RestrictedEssayActivityInstrument.class))
@@ -271,12 +278,8 @@ public class nada extends JFrame {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
-
 	}
 	
-	
-
 	public static void main(String[] args) {
 		new nada();
 
