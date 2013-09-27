@@ -113,17 +113,27 @@ public class SelectSubjectDialog extends JDialog {
 	 */
 	private void loadSubjects() {
 		this.subjectComboBox.removeAllItems();
-		for (Subject s : this.accessControl.getAgentLogged().getSubjects()) {
-			this.subjectComboBox.addItem(s);
+		if (this.accessControl.getAgentLogged() != null) {
+			for (Subject s : this.accessControl.getAgentLogged().getSubjects()) {
+				this.subjectComboBox.addItem(s);
+			}
+			this.subjectComboBox.setSelectedIndex(-1);
 		}
-		this.subjectComboBox.setSelectedIndex(-1);
 	}
 
 	/**
 	 * La función encargada se tomar la materia seleccionada y arrancar la aplicación.
 	 */
 	private void selectSubject() {
-		if (this.subjectComboBox.getSelectedItem() != null) {
+		// Si no hay ningún agente logueado.
+		if (this.accessControl.getAgentLogged() == null) {
+			// Abrimos la ventana de control de evaluaciones sin niguna materia seleccionada.
+			JFrame frame = this.mainWindowFrame.createFrame();
+			frame.setLocationRelativeTo(this);
+			frame.setVisible(true);
+		} else 
+			// Si hay un agente logueado y se seleccionó una materia.
+			if (this.subjectComboBox.getSelectedItem() != null) {
 			Subject subject = (Subject) this.subjectComboBox.getSelectedItem();
 			this.accessControl.setSubjectSelected(subject);
 			this.dispose();
