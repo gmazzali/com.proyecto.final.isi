@@ -8,6 +8,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,18 +68,18 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	private CompletionAnswer editingAnswer;
 
 	/**
-	 * La descripción del instrumento.
+	 * La descripciï¿½n del instrumento.
 	 */
 	private JTextArea descriptionTextArea;
 
 	/**
-	 * El conjunto de las palabras que tenemos para agregar a los lugares faltantes de la descripción del instrumento.
+	 * El conjunto de las palabras que tenemos para agregar a los lugares faltantes de la descripciï¿½n del instrumento.
 	 */
 	private JList<CompletionAnswer> completeList;
 	private JTextField indexTextField;
 	private JTextField phraseTextField;
 	/**
-	 * Los botones de acción.
+	 * Los botones de acciï¿½n.
 	 */
 	private JButton commitButton;
 	private JButton rejectButton;
@@ -87,7 +89,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	private JLabel progressLabel;
 
 	/**
-	 * El constructor por omisión de la ventana.
+	 * El constructor por omisiï¿½n de la ventana.
 	 */
 	public CompletionInstrumentFormDialog() {
 		super();
@@ -95,7 +97,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	}
 
 	/**
-	 * La función que inicializa la ventana.
+	 * La funciï¿½n que inicializa la ventana.
 	 */
 	private void init() {
 		this.setBounds(100, 100, 872, 303);
@@ -147,6 +149,14 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 				} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
 					CompletionInstrumentFormDialog.this.deleteCompletePhrase();
 				}
+			}
+		});
+		
+		this.completeList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2)
+					CompletionInstrumentFormDialog.this.modifyCompletePhrase();
 			}
 		});
 		completeScrollPane.setViewportView(this.completeList);
@@ -223,7 +233,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	}
 
 	/**
-	 * La función encargada de agregar una frase a la lista de frases para completar.
+	 * La funciï¿½n encargada de agregar una frase a la lista de frases para completar.
 	 */
 	private void addCompletePhrase() throws NumberFormatException {
 		// Los datos que vamos a utilizar.
@@ -256,7 +266,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	}
 
 	/**
-	 * La función encargada de vaciar los campos correspondientes a las frases para completar.
+	 * La funciï¿½n encargada de vaciar los campos correspondientes a las frases para completar.
 	 */
 	private void emptyCompletePhrase() {
 		this.indexTextField.setText("");
@@ -267,7 +277,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	}
 
 	/**
-	 * La función encargada de remover la frase y cargarla dentro del campo para editarla.
+	 * La funciï¿½n encargada de remover la frase y cargarla dentro del campo para editarla.
 	 */
 	private void modifyCompletePhrase() {
 		Integer index = this.completeList.getSelectedIndex();
@@ -287,7 +297,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 	}
 
 	/**
-	 * La función encargada de quitar una frase del lado seleccionado.
+	 * La funciï¿½n encargada de quitar una frase del lado seleccionado.
 	 */
 	private void deleteCompletePhrase() {
 		Integer index = this.completeList.getSelectedIndex();
@@ -313,7 +323,7 @@ public class CompletionInstrumentFormDialog extends InstrumentFormDialog {
 
 	@Override
 	protected void fromDialogToInstrument() throws CheckedException {
-		// Agregamos la descripción.
+		// Agregamos la descripciï¿½n.
 		if (this.descriptionTextArea.getText().trim().isEmpty()) {
 			throw new CheckedException("instrument.formal.objective.completion.form.error.description");
 		} else {
