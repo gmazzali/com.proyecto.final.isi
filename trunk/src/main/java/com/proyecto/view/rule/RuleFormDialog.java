@@ -276,11 +276,7 @@ public class RuleFormDialog extends JDialog {
 			throw new CheckedException("rule.form.error.description");
 		}
 		// La regla en si misma.
-		if (Validator.ruleValidator(this.ruleTextArea.getText())) {
-			this.rule.setRule(this.ruleTextArea.getText().trim());
-		} else {
-			throw new CheckedException("rule.form.error.rule");
-		}
+		this.rule.setRule(this.ruleTextArea.getText().trim());
 	}
 
 	/**
