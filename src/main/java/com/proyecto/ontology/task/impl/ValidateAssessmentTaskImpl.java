@@ -50,6 +50,11 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 	 */
 	private RuleSet ruleSet;
 
+	/**
+	 * El proceso de validación de la evaluación.
+	 */
+	private Thread validateThread;
+
 	@Override
 	public void initValidateTask(Assessment assessment, RuleSet ruleSet) {
 		this.assessment = assessment;
@@ -57,8 +62,17 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 	}
 
 	@Override
+	public void join() {
+		try {
+			this.validateThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void startTask(final StringBuffer stringBuffer) {
-		new Thread() {
+		this.validateThread = new Thread() {
 			@Override
 			public void run() {
 				// Comenzamos la carga de la ontología a la salida.
@@ -89,10 +103,10 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 
 				try {
 					ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-					
+
 					OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 					OWLOntology owlOntology = manager.loadOntologyFromOntologyDocument(in);
-					
+
 					for (OWLNamedIndividual individual : owlOntology.getIndividualsInSignature()) {
 						System.out.println(individual.getIRI());
 					}
@@ -103,6 +117,7 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 
 				// TODO gmazzali Hacer lo de la ejecución de la validación de la evaluación y el conjunto de reglas dentro de la ontología.
 			};
-		}.start();
+		};
+		this.validateThread.start();
 	}
 }
