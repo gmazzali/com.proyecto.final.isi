@@ -69,6 +69,11 @@ public class Resources {
 	public static final ImageIcon CRUD_ICON = Resources.createStaticImage("crud_32.png", Resources.width, Resources.height);
 
 	/**
+	 * El icono para imprimir un archivo PDF.
+	 */
+	public static final ImageIcon REPORT_PDF_ICON = Resources.createStaticImage("file_pdf_32.png", Resources.width, Resources.height);
+
+	/**
 	 * El icono para procesado.
 	 */
 	public static final ImageIcon PROCCESS_ICON = Resources.createStaticImage("proccess_32.png", Resources.width, Resources.height);

@@ -317,6 +317,16 @@ public class MainWindowFrame extends JFrame {
 		});
 		this.getContentPane().add(this.assessmentManagerButton);
 
+		JButton printAssessmentButton = new JButton(Resources.REPORT_PDF_ICON);
+		printAssessmentButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO mromitti Hacer lo de la carga de la evaluación al servicio de creación del PDF.
+			}
+		});
+		printAssessmentButton.setBounds(412, 99, 35, 35);
+		this.getContentPane().add(printAssessmentButton);
+
 		JLabel ruleSetListLabel = new JLabel(HolderMessage.getMessage("main.window.list.ruleset.label"));
 		ruleSetListLabel.setFont(new Font("Arial", Font.BOLD, 11));
 		ruleSetListLabel.setBounds(10, 264, 400, 16);
