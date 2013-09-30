@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -88,10 +89,13 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 
 				try {
 					ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-
+					
 					OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 					OWLOntology owlOntology = manager.loadOntologyFromOntologyDocument(in);
-
+					
+					for (OWLNamedIndividual individual : owlOntology.getIndividualsInSignature()) {
+						System.out.println(individual.getIRI());
+					}
 					PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner(owlOntology);
 				} catch (OWLOntologyCreationException e) {
 					e.printStackTrace();
