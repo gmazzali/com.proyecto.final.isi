@@ -66,6 +66,7 @@ public class ValidateAssessmentTaskTestUnit {
 
 		StringBuffer output = new StringBuffer();
 		task.startTask(output);
+		task.join();
 
 		System.out.println(output.toString());
 	}

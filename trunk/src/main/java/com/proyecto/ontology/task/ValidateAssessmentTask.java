@@ -31,4 +31,9 @@ public interface ValidateAssessmentTask extends Serializable {
 	 *            El buffer donde vamos a cargar los mensajes de salida de la ejecución de la validación de la evaluación.
 	 */
 	public void startTask(final StringBuffer stringBuffer);
+
+	/**
+	 * La función que espera a que finalice el proceso de validación de la evaluación.
+	 */
+	public void join();
 }
