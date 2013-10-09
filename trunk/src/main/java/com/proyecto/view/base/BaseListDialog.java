@@ -51,17 +51,17 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 	}
 
 	/**
-	 * La función que vamos a ejecutar antes de comenzar con el proceso en segundo plano.
+	 * La funciï¿½n que vamos a ejecutar antes de comenzar con el proceso en segundo plano.
 	 */
 	protected abstract void afterProccess();
 
 	/**
-	 * La función que vamos a ejecutar después de terminar con el proceso en segundo plano o después que el mismo se detuvo.
+	 * La funciï¿½n que vamos a ejecutar despuï¿½s de terminar con el proceso en segundo plano o despuï¿½s que el mismo se detuvo.
 	 */
 	protected abstract void beforeProccess();
 
 	/**
-	 * La función que arranca el proceso de llenado de la lista en segundo plano.
+	 * La funciï¿½n que arranca el proceso de llenado de la lista en segundo plano.
 	 */
 	protected final void startFillListProccess() {
 		this.initFillListThread();
@@ -69,7 +69,7 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 	}
 
 	/**
-	 * La función que para el proceso de llenado de la lista en segundo plano.
+	 * La funciï¿½n que para el proceso de llenado de la lista en segundo plano.
 	 */
 	protected final void stopFillListProccess() {
 		if (this.fillListThread != null) {
@@ -79,7 +79,7 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 	}
 
 	/**
-	 * La función encargada de inicializar el proceso de llenado de entidades dentro de la lista de la ventana.
+	 * La funciï¿½n encargada de inicializar el proceso de llenado de entidades dentro de la lista de la ventana.
 	 */
 	protected void initFillListThread() {
 		this.stopFillListProccess();
@@ -105,7 +105,7 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 	}
 
 	/**
-	 * La función que define el proceso de carga de la lista que vamos a ejecutar en segundo plano dentro de este dialogo.
+	 * La funciï¿½n que define el proceso de carga de la lista que vamos a ejecutar en segundo plano dentro de este dialogo.
 	 * 
 	 * @throws CheckedException
 	 *             En caso de que ocurra un problema al momento de ejecutar la tarea.
@@ -113,7 +113,7 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 	protected abstract void fillListProccess() throws CheckedException;
 
 	/**
-	 * La función que arranca el proceso de borrado de una entidad en segundo plano.
+	 * La funciï¿½n que arranca el proceso de borrado de una entidad en segundo plano.
 	 * 
 	 * @param entity
 	 *            La entidad que vamos a borrar.
@@ -124,7 +124,7 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 	}
 
 	/**
-	 * La función que para el proceso de borrado de la entidad en segundo plano.
+	 * La funciï¿½n que para el proceso de borrado de la entidad en segundo plano.
 	 */
 	protected final void stopDeleteProccess() {
 		if (this.deleteThread != null) {
@@ -134,7 +134,7 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 	}
 
 	/**
-	 * La función encargada de inicializar el proceso de borrado de una entidad dentro de la lista de la ventana.
+	 * La funciï¿½n encargada de inicializar el proceso de borrado de una entidad dentro de la lista de la ventana.
 	 * 
 	 * @param entity
 	 *            La entidad que vamos a borrar.
@@ -143,7 +143,7 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 		this.stopFillListProccess();
 
 		// Creamos el proceso de llenado.
-		this.fillListThread = new Thread() {
+		this.deleteThread = new Thread() {
 			@Override
 			public void run() {
 				try {
@@ -164,7 +164,7 @@ public abstract class BaseListDialog<E extends Persistence<?>> extends JDialog {
 	}
 
 	/**
-	 * La función que define el proceso de borrado de entidades que vamos a ejecutar en segundo plano dentro de este dialogo.
+	 * La funciï¿½n que define el proceso de borrado de entidades que vamos a ejecutar en segundo plano dentro de este dialogo.
 	 * 
 	 * @param entity
 	 *            La entidad que vamos a borrar.
