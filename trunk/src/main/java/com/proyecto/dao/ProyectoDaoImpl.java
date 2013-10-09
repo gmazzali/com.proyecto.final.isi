@@ -23,6 +23,8 @@ import com.common.util.model.Persistence;
 public abstract class ProyectoDaoImpl<E extends Persistence<PK>, PK extends Serializable> extends HibernateGenericDaoImpl<E, PK> implements
 		ProyectoDao<E, PK> {
 
+	private static final long serialVersionUID = 1153841497390062522L;
+
 	@Override
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {

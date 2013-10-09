@@ -14,4 +14,6 @@ import com.proyecto.model.material.instrument.ChoiceInstrument;
  */
 public abstract class ChoiceInstrumentDaoImpl<E extends ChoiceInstrument> extends ObjectiveActivityInstrumentDaoImpl<E> implements
 		ChoiceInstrumentDao<E> {
+
+	private static final long serialVersionUID = 8385922760331662286L;
 }

@@ -14,4 +14,6 @@ import com.proyecto.model.material.instrument.ObjectiveActivityInstrument;
  */
 public abstract class ObjectiveActivityInstrumentDaoImpl<E extends ObjectiveActivityInstrument> extends FormalInstrumentDaoImpl<E> implements
 		ObjectiveActivityInstrumentDao<E> {
+
+	private static final long serialVersionUID = 1131338469778963465L;
 }

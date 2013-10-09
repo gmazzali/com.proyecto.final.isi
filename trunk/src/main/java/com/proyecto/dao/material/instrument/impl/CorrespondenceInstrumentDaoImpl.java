@@ -14,4 +14,6 @@ import com.proyecto.model.material.instrument.CorrespondenceInstrument;
 @Dao
 public class CorrespondenceInstrumentDaoImpl extends ObjectiveActivityInstrumentDaoImpl<CorrespondenceInstrument> implements
 		CorrespondenceInstrumentDao {
+
+	private static final long serialVersionUID = -4018479378326155859L;
 }

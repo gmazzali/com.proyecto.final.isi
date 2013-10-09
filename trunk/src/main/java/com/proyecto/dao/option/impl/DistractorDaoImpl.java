@@ -12,4 +12,6 @@ import com.proyecto.model.option.Distractor;
  */
 @Dao
 public class DistractorDaoImpl extends OptionDaoImpl<Distractor> implements DistractorDao {
+
+	private static final long serialVersionUID = -8775560227395824779L;
 }

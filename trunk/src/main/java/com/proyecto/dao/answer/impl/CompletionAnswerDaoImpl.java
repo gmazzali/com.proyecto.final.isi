@@ -12,4 +12,6 @@ import com.proyecto.model.answer.CompletionAnswer;
  */
 @Dao
 public class CompletionAnswerDaoImpl extends AnswerDaoImpl<CompletionAnswer> implements CompletionAnswerDao {
+
+	private static final long serialVersionUID = 1045283177820144720L;
 }

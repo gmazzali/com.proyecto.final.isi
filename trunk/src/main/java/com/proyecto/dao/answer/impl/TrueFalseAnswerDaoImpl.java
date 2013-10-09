@@ -12,4 +12,6 @@ import com.proyecto.model.answer.TrueFalseAnswer;
  */
 @Dao
 public class TrueFalseAnswerDaoImpl extends AnswerDaoImpl<TrueFalseAnswer> implements TrueFalseAnswerDao {
+
+	private static final long serialVersionUID = 6319513278911011316L;
 }

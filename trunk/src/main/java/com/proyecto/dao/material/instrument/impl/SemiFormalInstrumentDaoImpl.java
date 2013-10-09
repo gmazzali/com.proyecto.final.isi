@@ -13,4 +13,6 @@ import com.proyecto.model.material.instrument.SemiFormalInstrument;
  *            La clase de instrumento semiformal que vamos a manipular dentro del DAO.
  */
 public abstract class SemiFormalInstrumentDaoImpl<E extends SemiFormalInstrument> extends InstrumentDaoImpl<E> implements SemiFormalInstrumentDao<E> {
+
+	private static final long serialVersionUID = 2849550883824580085L;
 }

@@ -14,4 +14,6 @@ import com.proyecto.model.material.instrument.EssayActivityInstrument;
  */
 public abstract class EssayActivityInstrumentDaoImpl<E extends EssayActivityInstrument> extends FormalInstrumentDaoImpl<E> implements
 		EssayActivityInstrumentDao<E> {
+
+	private static final long serialVersionUID = 7854589170502768156L;
 }

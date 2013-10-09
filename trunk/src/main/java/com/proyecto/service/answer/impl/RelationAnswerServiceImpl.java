@@ -9,7 +9,7 @@ import com.proyecto.model.answer.RelationAnswer;
 import com.proyecto.service.answer.RelationAnswerService;
 
 /**
- * La clase que implementa la interfaz que define los servicios para las respuestas relacionales de los instrumentos del sistema.
+ * La clase que implementa la interfaz que define los servicios para las respuestas de los instrumentos de relación del sistema.
  * 
  * @author Guillermo Mazzali
  * @version 1.0

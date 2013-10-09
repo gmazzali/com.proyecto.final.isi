@@ -13,4 +13,6 @@ import com.proyecto.model.material.assessment.Assessment;
  */
 @Dao
 public class AssessmentDaoImpl extends MaterialDaoImpl<Assessment, Integer> implements AssessmentDao {
+
+	private static final long serialVersionUID = -777015730466035843L;
 }

@@ -13,4 +13,6 @@ import com.proyecto.model.material.activity.Activity;
  */
 @Dao
 public class ActivityDaoImpl extends MaterialDaoImpl<Activity, Integer> implements ActivityDao {
+
+	private static final long serialVersionUID = 2963374124968729559L;
 }

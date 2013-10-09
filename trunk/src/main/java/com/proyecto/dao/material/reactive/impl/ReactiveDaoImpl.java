@@ -13,4 +13,6 @@ import com.proyecto.model.material.reactive.Reactive;
  */
 @Dao
 public class ReactiveDaoImpl extends MaterialDaoImpl<Reactive, Integer> implements ReactiveDao {
+
+	private static final long serialVersionUID = -7673533963308144657L;
 }

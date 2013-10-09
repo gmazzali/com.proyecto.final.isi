@@ -12,4 +12,6 @@ import com.proyecto.model.material.instrument.PortfolioInstrument;
  */
 @Dao
 public class PortfolioInstrumentDaoImpl extends CompositeInstrumentDaoImpl<PortfolioInstrument> implements PortfolioInstrumentDao {
+
+	private static final long serialVersionUID = -65936273693168254L;
 }

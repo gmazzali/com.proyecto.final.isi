@@ -12,4 +12,6 @@ import com.proyecto.model.option.TrueOption;
  */
 @Dao
 public class TrueOptionDaoImpl extends OptionDaoImpl<TrueOption> implements TrueOptionDao {
+
+	private static final long serialVersionUID = 3392839526463789376L;
 }

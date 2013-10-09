@@ -12,4 +12,6 @@ import com.proyecto.model.material.instrument.CompletionInstrument;
  */
 @Dao
 public class CompletionInstrumentDaoImpl extends ObjectiveActivityInstrumentDaoImpl<CompletionInstrument> implements CompletionInstrumentDao {
+
+	private static final long serialVersionUID = -3772130630835036873L;
 }

@@ -12,4 +12,6 @@ import com.proyecto.model.material.instrument.SingleChoiceInstrument;
  */
 @Dao
 public class SingleChoiceInstrumentDaoImpl extends ChoiceInstrumentDaoImpl<SingleChoiceInstrument> implements SingleChoiceInstrumentDao {
+
+	private static final long serialVersionUID = -1811510766582540535L;
 }

@@ -12,4 +12,6 @@ import com.proyecto.model.material.instrument.MultipleChoiceInstrument;
  */
 @Dao
 public class MultipleChoiceInstrumentDaoImpl extends ChoiceInstrumentDaoImpl<MultipleChoiceInstrument> implements MultipleChoiceInstrumentDao {
+
+	private static final long serialVersionUID = -3850024648319679879L;
 }
