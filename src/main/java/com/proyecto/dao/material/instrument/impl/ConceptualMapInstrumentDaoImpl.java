@@ -13,4 +13,6 @@ import com.proyecto.model.material.instrument.ConceptualMapInstrument;
  */
 @Dao
 public class ConceptualMapInstrumentDaoImpl extends SimpleInstrumentDaoImpl<ConceptualMapInstrument> implements ConceptualMapInstrumentDao {
+
+	private static final long serialVersionUID = 6960119919803436839L;
 }

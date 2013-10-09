@@ -12,4 +12,6 @@ import com.proyecto.model.material.instrument.ExerciseInstrument;
  */
 @Dao
 public class ExerciseInstrumentDaoImpl extends SimpleInstrumentDaoImpl<ExerciseInstrument> implements ExerciseInstrumentDao {
+
+	private static final long serialVersionUID = 4932752052812736094L;
 }

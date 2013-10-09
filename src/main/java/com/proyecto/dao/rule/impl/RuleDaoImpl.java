@@ -13,4 +13,6 @@ import com.proyecto.model.rule.Rule;
  */
 @Dao
 public class RuleDaoImpl extends ProyectoDaoImpl<Rule, Integer> implements RuleDao {
+
+	private static final long serialVersionUID = -3881017577577364592L;
 }

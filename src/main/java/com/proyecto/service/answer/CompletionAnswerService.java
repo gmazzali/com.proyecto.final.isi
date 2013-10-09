@@ -4,7 +4,7 @@ import com.proyecto.dao.answer.CompletionAnswerDao;
 import com.proyecto.model.answer.CompletionAnswer;
 
 /**
- * La interfaz que define los servicios para las respuestas para completar de los instrumentos del sistema.
+ * La interfaz que define los servicios para las respuestas de los instrumentos de completar del sistema.
  * 
  * @author Guillermo Mazzali
  * @version 1.0

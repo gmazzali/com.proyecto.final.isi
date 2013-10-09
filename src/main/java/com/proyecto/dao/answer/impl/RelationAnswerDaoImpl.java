@@ -12,4 +12,6 @@ import com.proyecto.model.answer.RelationAnswer;
  */
 @Dao
 public class RelationAnswerDaoImpl extends AnswerDaoImpl<RelationAnswer> implements RelationAnswerDao {
+
+	private static final long serialVersionUID = 3899843491265356037L;
 }

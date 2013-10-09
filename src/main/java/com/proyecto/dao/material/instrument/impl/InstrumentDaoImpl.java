@@ -14,4 +14,6 @@ import com.proyecto.model.material.instrument.Instrument;
  *            La clase de instrumento que vamos a manipular dentro del DAO.
  */
 public abstract class InstrumentDaoImpl<E extends Instrument> extends MaterialDaoImpl<E, Integer> implements InstrumentDao<E> {
+
+	private static final long serialVersionUID = 7075892586868301998L;
 }

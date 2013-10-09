@@ -13,4 +13,6 @@ import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
 @Dao
 public class RestrictedEssayActivityInstrumentDaoImpl extends EssayActivityInstrumentDaoImpl<RestrictedEssayActivityInstrument> implements
 		RestrictedEssayActivityInstrumentDao {
+
+	private static final long serialVersionUID = -3689005349311397891L;
 }

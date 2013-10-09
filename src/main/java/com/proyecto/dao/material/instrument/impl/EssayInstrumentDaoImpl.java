@@ -12,4 +12,6 @@ import com.proyecto.model.material.instrument.EssayInstrument;
  */
 @Dao
 public class EssayInstrumentDaoImpl extends SimpleInstrumentDaoImpl<EssayInstrument> implements EssayInstrumentDao {
+
+	private static final long serialVersionUID = 1769320604964327302L;
 }

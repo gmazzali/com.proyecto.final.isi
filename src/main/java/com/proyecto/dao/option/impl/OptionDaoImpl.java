@@ -14,4 +14,6 @@ import com.proyecto.model.option.Option;
  *            La clase que vamos a utilizar como opción.
  */
 public abstract class OptionDaoImpl<E extends Option> extends ProyectoDaoImpl<E, Integer> implements OptionDao<E> {
+
+	private static final long serialVersionUID = -8853165592451122931L;
 }

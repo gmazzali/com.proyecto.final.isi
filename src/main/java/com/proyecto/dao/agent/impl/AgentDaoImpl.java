@@ -13,4 +13,6 @@ import com.proyecto.model.agent.Agent;
  */
 @Dao
 public class AgentDaoImpl extends ProyectoDaoImpl<Agent, Integer> implements AgentDao {
+
+	private static final long serialVersionUID = 2698663283837160878L;
 }

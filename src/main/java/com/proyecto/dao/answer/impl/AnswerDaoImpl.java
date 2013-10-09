@@ -14,4 +14,6 @@ import com.proyecto.model.answer.Answer;
  *            La clase que vamos a utilizar como respuestas.
  */
 public abstract class AnswerDaoImpl<E extends Answer> extends ProyectoDaoImpl<E, Integer> implements AnswerDao<E> {
+
+	private static final long serialVersionUID = 1820775275137022317L;
 }

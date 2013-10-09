@@ -14,4 +14,6 @@ import com.proyecto.model.material.instrument.CompositeInstrument;
  */
 public abstract class CompositeInstrumentDaoImpl<E extends CompositeInstrument> extends SemiFormalInstrumentDaoImpl<E> implements
 		CompositeInstrumentDao<E> {
+
+	private static final long serialVersionUID = -4486638142332475456L;
 }
