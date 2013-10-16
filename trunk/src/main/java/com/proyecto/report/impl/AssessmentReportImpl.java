@@ -16,7 +16,7 @@ import com.proyecto.report.AssessmentReport;
 public class AssessmentReportImpl implements AssessmentReport {
 
 	@Override
-	public File createAssessmentReport(String path, Assessment assessment) {
+	public File createAssessmentReport(String path, Assessment assessment) throws Exception {
 		// TODO mromitti Hacer el método de carga de una evaluación dentro de un reporte PDF.
 		return null;
 	}

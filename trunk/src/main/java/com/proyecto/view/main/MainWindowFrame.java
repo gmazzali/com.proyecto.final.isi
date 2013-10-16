@@ -7,12 +7,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -28,8 +30,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.DefaultCaret;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +44,8 @@ import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.rule.RuleSet;
 import com.proyecto.ontology.task.ValidateAssessmentTask;
+import com.proyecto.report.AssessmentReport;
+import com.proyecto.report.Printer;
 import com.proyecto.security.AccessControl;
 import com.proyecto.service.material.assessment.AssessmentService;
 import com.proyecto.service.rule.RuleSetService;
@@ -70,6 +75,15 @@ public class MainWindowFrame extends JFrame {
 	 */
 	@Autowired
 	private AccessControl accessControl;
+
+	/**
+	 * El servicio de creación de reportes de las evaluaciones y su apertura.
+	 */
+	@Autowired
+	private AssessmentReport assessmentReport;
+
+	@Autowired
+	private Printer printer;
 
 	/**
 	 * Las ventanas de administración de materiales.
@@ -148,6 +162,10 @@ public class MainWindowFrame extends JFrame {
 	private JLabel assessmentProgressLabel;
 	private JLabel ruleSetProgressLabel;
 	private JLabel evaluateProgressLabel;
+	/**
+	 * La ventana de guardado del archivo de reporte.
+	 */
+	private JFileChooser assessmentReportFileChosser;
 
 	/**
 	 * El contador de procesos que corren de fondo.
@@ -160,6 +178,7 @@ public class MainWindowFrame extends JFrame {
 	private Thread updateAssessmentsTask;
 	private Thread updateRuleSetTask;
 	private Thread updateResultsTask;
+	private Thread createAssessmentReportTask;
 
 	/**
 	 * Constructor de la ventana principal.
@@ -436,6 +455,11 @@ public class MainWindowFrame extends JFrame {
 		this.subjectNameLabel.setForeground(Color.BLUE);
 		this.subjectNameLabel.setFont(new Font("Arial", Font.PLAIN, 10));
 		dataPanel.add(this.subjectNameLabel);
+
+		this.assessmentReportFileChosser = new JFileChooser();
+		this.assessmentReportFileChosser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		this.assessmentReportFileChosser.setCurrentDirectory(null);
+		this.assessmentReportFileChosser.setFileFilter(new FileNameExtensionFilter("Reporte", "pdf"));
 	}
 
 	@Override
@@ -662,6 +686,47 @@ public class MainWindowFrame extends JFrame {
 		this.updateResultsTask.setDaemon(true);
 	}
 
+	private void createAssessmentReport() {
+		// Si tenemos algo seleccionado.
+		if (this.assessmentList.getSelectedValue() != null) {
+			// Obtenemos la evaluación y preguntamos el path de guardado.
+			final Assessment assessment = this.assessmentList.getSelectedValue();
+
+			// Si se acepto, se cambia el path del archivo de reporte.
+			if (this.assessmentReportFileChosser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+				this.createAssessmentReportTask = new Thread() {
+					@Override
+					public void run() {
+						try {
+							MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.assessmentProgressLabel);
+
+							// Obtenemos el path de ubicación.
+							String path = MainWindowFrame.this.assessmentReportFileChosser.getSelectedFile().getAbsolutePath() + ".pdf";
+
+							// Creamos el reporte.
+							File report = MainWindowFrame.this.assessmentReport.createAssessmentReport(path, assessment);
+
+							// Una vez creado el reporte, lo abrimos.
+							if (!this.isInterrupted()) {
+								MainWindowFrame.this.printer.openFile(report);
+							}
+						} catch (Exception e) {
+							if (!this.isInterrupted()) {
+								JOptionPane.showMessageDialog(MainWindowFrame.this, e.getMessage(),
+										HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+							}
+							e.printStackTrace();
+						} finally {
+							MainWindowFrame.this.afterExecuteProccess(MainWindowFrame.this.assessmentProgressLabel);
+						}
+					}
+				};
+				this.createAssessmentReportTask.setDaemon(true);
+				this.createAssessmentReportTask.start();
+			}
+		}
+	}
+
 	/**
 	 * La función encargada de detener los proceso en segundo plano que tenemos dentro de esta ventana.
 	 */
@@ -674,6 +739,9 @@ public class MainWindowFrame extends JFrame {
 		}
 		if (this.updateResultsTask != null) {
 			this.updateResultsTask.interrupt();
+		}
+		if (this.createAssessmentReportTask != null) {
+			this.createAssessmentReportTask.interrupt();
 		}
 	}
 

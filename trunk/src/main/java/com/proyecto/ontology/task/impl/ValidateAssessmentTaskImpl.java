@@ -101,6 +101,8 @@ public class ValidateAssessmentTaskImpl implements ValidateAssessmentTask {
 				stringBuffer.append(Constants.SEPARATOR_LINE);
 				stringBuffer.append("\n");
 
+				
+				
 				try {
 					ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
 
