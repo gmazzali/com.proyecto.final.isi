@@ -20,6 +20,8 @@ public interface AssessmentReport {
 	 * @param assessment
 	 *            La evaluación que vamos a almacenar dentro de ese reporte.
 	 * @return El archivo que creamos con la evaluación que recibimos.
+	 * @throws Exception
+	 *             En caso de una falla durante la creación del reporte de la evaluación.
 	 */
-	public File createAssessmentReport(String path, Assessment assessment);
+	public File createAssessmentReport(String path, Assessment assessment) throws Exception;
 }
