@@ -9,9 +9,9 @@ package com.proyecto.util;
 public class Constants {
 
 	/**
-	 * La linea de separación de la salida en pantalla.
+	 * La línea de separación de la salida en pantalla.
 	 */
-	public static final String SEPARATOR_LINE = "######################################################";
+	public static final String SEPARATOR_LINE = "############################################################";
 
 	/**
 	 * La clase que contiene las constantes propias de la ontología.
@@ -29,55 +29,53 @@ public class Constants {
 		/**
 		 * Las propiedades de las evaluaciones.
 		 */
-		public static final String PROPERTY_ASSESSMENT_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "assessment_have_description";
-		public static final String PROPERTY_ASSESSMENT_HAVE_MOMENT = Constants.Ontology.NAMESPACE + "assessment_have_moment";
-		public static final String PROPERTY_ASSESSMENT_HAVE_DATE = Constants.Ontology.NAMESPACE + "assessment_have_date";
-		public static final String PROPERTY_ASSESSMENT_HAVE_ACTIVITY = Constants.Ontology.NAMESPACE + "assessment_have_activity";
+		public static final String PROPERTY_ASSESSMENT_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "assessmentHasDescription";
+		public static final String PROPERTY_ASSESSMENT_HAVE_MOMENT = Constants.Ontology.NAMESPACE + "assessmentHasMoment";
+		public static final String PROPERTY_ASSESSMENT_HAVE_DATE = Constants.Ontology.NAMESPACE + "assessmentHasDate";
+		public static final String PROPERTY_ASSESSMENT_HAVE_ACTIVITY = Constants.Ontology.NAMESPACE + "assessmentHasActivity";
 
 		/**
 		 * Las propiedades de las actividades.
 		 */
-		public static final String PROPERTY_ACTIVITY_BELONG_TO_ASSESSMENT = Constants.Ontology.NAMESPACE + "activity_belong_to_assessment";
-		public static final String PROPERTY_ACTIVITY_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "activity_have_description";
-		public static final String PROPERTY_ACTIVITY_HAVE_REACTIVE = Constants.Ontology.NAMESPACE + "activity_have_reactives";
+		public static final String PROPERTY_ACTIVITY_BELONG_TO_ASSESSMENT = Constants.Ontology.NAMESPACE + "activityBelongToAssessment";
+		public static final String PROPERTY_ACTIVITY_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "activityHasDescription";
+		public static final String PROPERTY_ACTIVITY_HAVE_REACTIVE = Constants.Ontology.NAMESPACE + "activityHasReactives";
 
 		/**
 		 * Las propiedades de los reactivos.
 		 */
-		public static final String PROPERTY_REACTIVE_BELONG_TO_ACTIVITY = Constants.Ontology.NAMESPACE + "reactive_belong_to_activity";
-		public static final String PROPERTY_REACTIVE_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "reactive_have_description";
-		public static final String PROPERTY_REACTIVE_HAVE_INSTRUMENT = Constants.Ontology.NAMESPACE + "reactive_have_instrument";
+		public static final String PROPERTY_REACTIVE_BELONG_TO_ACTIVITY = Constants.Ontology.NAMESPACE + "reactiveBelongToActivity";
+		public static final String PROPERTY_REACTIVE_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "reactiveHasDescription";
+		public static final String PROPERTY_REACTIVE_HAVE_INSTRUMENT = Constants.Ontology.NAMESPACE + "reactiveHasInstrument";
 
 		/**
 		 * Las propiedades de los instrumentos.
 		 */
-		public static final String PROPERTY_INSTRUMENT_BELONG_TO_REACTIVE = Constants.Ontology.NAMESPACE + "instrument_belong_to_reactive";
-		public static final String PROPERTY_INSTRUMENT_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "instrument_have_description";
+		public static final String PROPERTY_INSTRUMENT_BELONG_TO_REACTIVE = Constants.Ontology.NAMESPACE + "instrumentBelongToReactive";
+		public static final String PROPERTY_INSTRUMENT_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "instrumentHasDescription";
 
-		public static final String PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER = Constants.Ontology.NAMESPACE + "essay_instrument_have_answer";
-		public static final String PROPERTY_ANSWER_ESSAY_BELONG_TO_INSTRUMENT = Constants.Ontology.NAMESPACE
-				+ "essay_answer_belong_to_essay_instrument";
-		public static final String PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "essay_answer_have_description";
+		public static final String PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER = Constants.Ontology.NAMESPACE + "essayInstrumentHasAnswer";
+		public static final String PROPERTY_ANSWER_ESSAY_BELONG_TO_INSTRUMENT = Constants.Ontology.NAMESPACE + "essayAnswerBelongToEssayInstrument";
+		public static final String PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "essayAnswerHasDescription";
 
-		public static final String PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION = Constants.Ontology.NAMESPACE + "choice_instrument_have_option";
-		public static final String PROPERTY_OPTION_BELONG_TO_INSTRUMENT = Constants.Ontology.NAMESPACE + "option_belong_to_choice_instrument";
-		public static final String PROPERTY_OPTION_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "option_have_description";
-		public static final String PROPERTY_OPTION_HAVE_ANSWER = Constants.Ontology.NAMESPACE + "option_have_answer";
-		public static final String PROPERTY_ANSWER_TRUEFALSE_BELONG_TO_OPTION = Constants.Ontology.NAMESPACE + "truefalse_answer_belong_to_option";
-		public static final String PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE = Constants.Ontology.NAMESPACE + "truefalse_answer_have_value";
+		public static final String PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION = Constants.Ontology.NAMESPACE + "choiceInstrumentHas_option";
+		public static final String PROPERTY_OPTION_BELONG_TO_INSTRUMENT = Constants.Ontology.NAMESPACE + "optionBelongToChoiceInstrument";
+		public static final String PROPERTY_OPTION_HAVE_DESCRIPTION = Constants.Ontology.NAMESPACE + "optionHasDescription";
+		public static final String PROPERTY_OPTION_HAVE_ANSWER = Constants.Ontology.NAMESPACE + "optionHasAnswer";
+		public static final String PROPERTY_ANSWER_TRUEFALSE_BELONG_TO_OPTION = Constants.Ontology.NAMESPACE + "truefalseAnswerBelongToOption";
+		public static final String PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE = Constants.Ontology.NAMESPACE + "truefalseAnswerHasValue";
 
 		public static final String PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION = Constants.Ontology.NAMESPACE
-				+ "correspondence_instrument_have_relation";
+				+ "correspondenceInstrumentHasRelation";
 		public static final String PROPERTY_ANSWER_RELATION_BELONG_TO_INSTRUMENT = Constants.Ontology.NAMESPACE
-				+ "relation_answer_belong_to_correspondence_instrument";
-		public static final String PROPERTY_ANSWER_RELATION_LEFT_SIDE = Constants.Ontology.NAMESPACE + "relation_answer_have_left_side";
-		public static final String PROPERTY_ANSWER_RELATION_RIGHT_SIDE = Constants.Ontology.NAMESPACE + "relation_answer_have_right_side";
+				+ "relationAnswerBelongToCorrespondenceInstrument";
+		public static final String PROPERTY_ANSWER_RELATION_LEFT_SIDE = Constants.Ontology.NAMESPACE + "relationAnswerHasLeftSide";
+		public static final String PROPERTY_ANSWER_RELATION_RIGHT_SIDE = Constants.Ontology.NAMESPACE + "relationAnswerHasRightSide";
 
-		public static final String PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE = Constants.Ontology.NAMESPACE
-				+ "completion_instrument_have_complete";
+		public static final String PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE = Constants.Ontology.NAMESPACE + "completionInstrumentHasComplete";
 		public static final String PROPERTY_ANSWER_COMPLETE_BELONG_TO_INSTRUMENT = Constants.Ontology.NAMESPACE
-				+ "complete_answer_belong_to_completion_instrument";
-		public static final String PROPERTY_ANSWER_COMPLETE_HAVE_INDEX = Constants.Ontology.NAMESPACE + "complete_answer_have_index";
-		public static final String PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE = Constants.Ontology.NAMESPACE + "complete_answer_have_phrase";
+				+ "completeAnswerBelongToCompletionInstrument";
+		public static final String PROPERTY_ANSWER_COMPLETE_HAVE_INDEX = Constants.Ontology.NAMESPACE + "completeAnswerHasIndex";
+		public static final String PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE = Constants.Ontology.NAMESPACE + "completeAnswerHasPhrase";
 	}
 }

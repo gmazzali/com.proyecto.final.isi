@@ -1,0 +1,25 @@
+package com.proyecto.report;
+
+import java.io.File;
+
+import com.proyecto.model.material.assessment.Assessment;
+
+/**
+ * La interfaz que define el comportamiento para crear un reporte con la evaluación.
+ * 
+ * @author Guillermo Mazzali
+ * @version 1.0
+ */
+public interface AssessmentReport {
+
+	/**
+	 * La función encargada de crear el reporte y guardarlo dentro de un archivo dentro del sistema.
+	 * 
+	 * @param path
+	 *            El path donde vamos a almacenar el archivo del reporte.
+	 * @param assessment
+	 *            La evaluación que vamos a almacenar dentro de ese reporte.
+	 * @return El archivo que creamos con la evaluación que recibimos.
+	 */
+	public File createAssessmentReport(String path, Assessment assessment);
+}
