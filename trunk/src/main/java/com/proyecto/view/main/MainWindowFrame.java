@@ -638,6 +638,9 @@ public class MainWindowFrame extends JFrame {
 			// Obtenemos los elementos.
 			final Assessment assessment = this.assessmentList.getSelectedValue();
 			final RuleSet ruleSet = this.ruleSetList.getSelectedValue();
+			
+			// Borramos el contenido del área de resultado.
+			this.clearResults();
 
 			this.evaluateAssessmentTask = new Thread() {
 				@Override
@@ -650,22 +653,23 @@ public class MainWindowFrame extends JFrame {
 
 						@Override
 						public void run() {
-							try {
-								Integer size = 0;
-								String result = "";
-								do {
-									result = "";
-									size = MainWindowFrame.this.resultStringBuffer.length();
-									result += MainWindowFrame.this.resultStringBuffer.substring(0, size);
-									MainWindowFrame.this.resultStringBuffer.delete(0, size);
+							Integer size = null;
+							String result = null;
 
-									// Cargamos la salida al area de resultado.
-									MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultTextArea.getText() + result);
+							while (!this.isInterrupted()) {
+								result = "";
+								size = MainWindowFrame.this.resultStringBuffer.length();
+								result += MainWindowFrame.this.resultStringBuffer.substring(0, size);
+								MainWindowFrame.this.resultStringBuffer.delete(0, size);
+
+								// Cargamos la salida al area de resultado.
+								MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultTextArea.getText() + result);
+
+								try {
 									Thread.sleep(100);
-								} while (!this.isInterrupted() || size > 0);
-
-							} catch (Exception e) {
-								e.printStackTrace();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
 						}
 					};
@@ -675,6 +679,9 @@ public class MainWindowFrame extends JFrame {
 						// Arrancamos el proceso de evaluación.
 						MainWindowFrame.this.validateAssessment.initValidateTask(assessment, ruleSet);
 						MainWindowFrame.this.validateAssessment.executeTask(MainWindowFrame.this.resultStringBuffer);
+
+						// Esperamos 2 segundos para que el proceso de actualización del área de resultado termine bien.
+						Thread.sleep(2000);
 
 					} catch (Exception e) {
 						if (!this.isInterrupted()) {
