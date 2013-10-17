@@ -12,7 +12,7 @@ import com.proyecto.model.rule.RuleSet;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public interface ValidateAssessmentTask extends Serializable {
+public interface ValidateAssessment extends Serializable {
 
 	/**
 	 * La función encargada de cargar dentro del proceso la evaluación y el conjunto de reglas que tenemos para evaluar la evaluación.
@@ -30,10 +30,5 @@ public interface ValidateAssessmentTask extends Serializable {
 	 * @param stringBuffer
 	 *            El buffer donde vamos a cargar los mensajes de salida de la ejecución de la validación de la evaluación.
 	 */
-	public void startTask(final StringBuffer stringBuffer);
-
-	/**
-	 * La función que espera a que finalice el proceso de validación de la evaluación.
-	 */
-	public void join();
+	public void executeTask(final StringBuffer stringBuffer);
 }
