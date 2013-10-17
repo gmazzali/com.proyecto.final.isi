@@ -61,13 +61,11 @@ public class ValidateAssessmentTaskTestUnit {
 		Assessment assessment = CreateExampleMaterial.createAssessment(10, activity1, activity2);
 
 		// Cargamos la evaluación en el validador y lo ejecutamos.
-		ValidateAssessmentTask task = HolderApplicationContext.getBean(ValidateAssessmentTask.class);
+		ValidateAssessment task = HolderApplicationContext.getBean(ValidateAssessment.class);
 		task.initValidateTask(assessment, null);
 
 		StringBuffer output = new StringBuffer();
-		task.startTask(output);
-		task.join();
-
+		task.executeTask(output);
 		System.out.println(output.toString());
 	}
 }

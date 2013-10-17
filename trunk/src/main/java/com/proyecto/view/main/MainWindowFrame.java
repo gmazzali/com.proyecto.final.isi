@@ -31,11 +31,9 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.DefaultCaret;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.text.DefaultCaret;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.View;
@@ -43,7 +41,7 @@ import com.common.util.holder.HolderApplicationContext;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.rule.RuleSet;
-import com.proyecto.ontology.task.ValidateAssessmentTask;
+import com.proyecto.ontology.task.ValidateAssessment;
 import com.proyecto.report.AssessmentReport;
 import com.proyecto.report.Printer;
 import com.proyecto.security.AccessControl;
@@ -67,8 +65,6 @@ import com.proyecto.view.rule.RuleSetListDialog;
 public class MainWindowFrame extends JFrame {
 
 	private static final long serialVersionUID = -7170869916954032109L;
-
-	private static final Logger logger = LoggerFactory.getLogger(MainWindowFrame.class);
 
 	/**
 	 * El control de acceso.
@@ -104,7 +100,7 @@ public class MainWindowFrame extends JFrame {
 	 * El proceso de validación de las evaluaciones.
 	 */
 	@Autowired
-	private ValidateAssessmentTask validateAssessmentTask;
+	private ValidateAssessment validateAssessment;
 
 	/**
 	 * La ventana de selección de materias.
@@ -177,8 +173,8 @@ public class MainWindowFrame extends JFrame {
 	 */
 	private Thread updateAssessmentsTask;
 	private Thread updateRuleSetTask;
-	private Thread updateResultsTask;
 	private Thread createAssessmentReportTask;
+	private Thread evaluateAssessmentTask;
 
 	/**
 	 * Constructor de la ventana principal.
@@ -340,7 +336,7 @@ public class MainWindowFrame extends JFrame {
 		printAssessmentButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO mromitti Hacer lo de la carga de la evaluación al servicio de creación del PDF.
+				MainWindowFrame.this.createAssessmentReport();
 			}
 		});
 		printAssessmentButton.setBounds(412, 99, 35, 35);
@@ -406,7 +402,7 @@ public class MainWindowFrame extends JFrame {
 		this.evaluateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainWindowFrame.this.evaluateAssessment();
+				MainWindowFrame.this.evaluateAssessmentTask();
 			}
 		});
 		this.getContentPane().add(this.evaluateButton);
@@ -563,39 +559,15 @@ public class MainWindowFrame extends JFrame {
 	}
 
 	/**
-	 * La función encargada de actualizar el listado de las evaluaciones que tenemos dentro de la ventana creando un proceso secundario.
+	 * La función encargada de inicializar el proceso de actualización de las evaluaciones y ejecutarlo.
 	 */
 	private void updateAssessmentList() {
-		this.initUpdateAssessmentTask();
-		this.updateAssessmentsTask.start();
-	}
-
-	/**
-	 * La función encargada de actualizar el listado de las reglas que tenemos dentro de la ventana.
-	 */
-	private void updateRuleSetList() {
-		this.initUpdateRuleSetTask();
-		this.updateRuleSetTask.start();
-	}
-
-	/**
-	 * La función encargada de actualizar el contenido del area de resultado de evaluación de acuerdo a una entrada de datos.
-	 */
-	private void updateResultTextArea() {
-		this.initUpdateResultTask();
-		this.updateResultsTask.start();
-	}
-
-	/**
-	 * La función encargada de inicializar el proceso de actualización de las evaluaciones.
-	 */
-	private void initUpdateAssessmentTask() {
 		this.updateAssessmentsTask = new Thread() {
 			@Override
 			public void run() {
 				try {
 					// Ejecutamos las acciones antes de procesar.
-					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.assessmentProgressLabel);
+					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.assessmentProgressLabel, false);
 
 					// Cargamos el listado dentro de la tabla.
 					DefaultListModel<Assessment> model = new DefaultListModel<Assessment>();
@@ -619,18 +591,19 @@ public class MainWindowFrame extends JFrame {
 			}
 		};
 		this.updateAssessmentsTask.setDaemon(true);
+		this.updateAssessmentsTask.start();
 	}
 
 	/**
-	 * La función encargada de inicializar el proceso de actualización del conjunto de reglas.
+	 * La función encargada de inicializar el proceso de actualización del conjunto de reglas y ejecutarlo.
 	 */
-	private void initUpdateRuleSetTask() {
+	private void updateRuleSetList() {
 		this.updateRuleSetTask = new Thread() {
 			@Override
 			public void run() {
 				try {
 					// Ejecutamos las acciones antes de procesar.
-					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.ruleSetProgressLabel);
+					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.ruleSetProgressLabel, false);
 
 					// Cargamos el listado dentro de la tabla.
 					DefaultListModel<RuleSet> model = new DefaultListModel<RuleSet>();
@@ -652,38 +625,73 @@ public class MainWindowFrame extends JFrame {
 			}
 		};
 		this.updateRuleSetTask.setDaemon(true);
+		this.updateRuleSetTask.start();
 	}
 
 	/**
 	 * La función encargada de inicializar el proceso de actualización del panel de resultado de evaluación.
 	 */
-	private void initUpdateResultTask() {
-		this.updateResultsTask = new Thread() {
-			@Override
-			public void run() {
-				try {
-					while (true) {
-						String result = new String();
+	private void evaluateAssessmentTask() {
+		// Si tenemos algo seleccionado.
+		if (this.assessmentList.getSelectedValue() != null && this.ruleSetList.getSelectedValue() != null) {
 
-						Integer size = MainWindowFrame.this.resultStringBuffer.length();
-						for (int i = 0; i < size; i++) {
-							result += MainWindowFrame.this.resultStringBuffer.charAt(0);
-							MainWindowFrame.this.resultStringBuffer.deleteCharAt(0);
+			// Obtenemos los elementos.
+			final Assessment assessment = this.assessmentList.getSelectedValue();
+			final RuleSet ruleSet = this.ruleSetList.getSelectedValue();
+
+			this.evaluateAssessmentTask = new Thread() {
+				@Override
+				public void run() {
+					// Ejecutamos las acciones antes de procesar.
+					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.evaluateProgressLabel, false);
+
+					// arrancamos el proceso que va a actualizar el area de resultado.
+					Thread updateResultArea = new Thread() {
+
+						@Override
+						public void run() {
+							try {
+								Integer size = 0;
+								String result = "";
+								do {
+									result = "";
+									size = MainWindowFrame.this.resultStringBuffer.length();
+									result += MainWindowFrame.this.resultStringBuffer.substring(0, size);
+									MainWindowFrame.this.resultStringBuffer.delete(0, size);
+
+									// Cargamos la salida al area de resultado.
+									MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultTextArea.getText() + result);
+									Thread.sleep(100);
+								} while (!this.isInterrupted() || size > 0);
+
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
+					};
+					updateResultArea.start();
 
-						MainWindowFrame.logger.debug(result);
+					try {
+						// Arrancamos el proceso de evaluación.
+						MainWindowFrame.this.validateAssessment.initValidateTask(assessment, ruleSet);
+						MainWindowFrame.this.validateAssessment.executeTask(MainWindowFrame.this.resultStringBuffer);
 
-						// Cargamos la salida al area de resultado.
-						MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultTextArea.getText() + result);
-
-						Thread.sleep(500);
+					} catch (Exception e) {
+						if (!this.isInterrupted()) {
+							JOptionPane.showMessageDialog(MainWindowFrame.this, e.getMessage(),
+									HolderMessage.getMessage("dialog.message.error.title"), JOptionPane.ERROR_MESSAGE);
+						}
+						e.printStackTrace();
+					} finally {
+						// Una vez terminado, cortamos el proceso de actualización.
+						updateResultArea.interrupt();
+						MainWindowFrame.this.afterExecuteProccess(MainWindowFrame.this.evaluateProgressLabel);
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
-			}
-		};
-		this.updateResultsTask.setDaemon(true);
+			};
+			this.evaluateAssessmentTask.setDaemon(true);
+			this.evaluateAssessmentTask.start();
+		}
 	}
 
 	private void createAssessmentReport() {
@@ -698,7 +706,8 @@ public class MainWindowFrame extends JFrame {
 					@Override
 					public void run() {
 						try {
-							MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.assessmentProgressLabel);
+							// Ejecutamos las acciones antes de procesar.
+							MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.assessmentProgressLabel, false);
 
 							// Obtenemos el path de ubicación.
 							String path = MainWindowFrame.this.assessmentReportFileChosser.getSelectedFile().getAbsolutePath() + ".pdf";
@@ -737,8 +746,8 @@ public class MainWindowFrame extends JFrame {
 		if (this.updateRuleSetTask != null) {
 			this.updateRuleSetTask.interrupt();
 		}
-		if (this.updateResultsTask != null) {
-			this.updateResultsTask.interrupt();
+		if (this.evaluateAssessmentTask != null) {
+			this.evaluateAssessmentTask.interrupt();
 		}
 		if (this.createAssessmentReportTask != null) {
 			this.createAssessmentReportTask.interrupt();
@@ -751,9 +760,11 @@ public class MainWindowFrame extends JFrame {
 	 * @param El
 	 *            label de progreso que vamos a cargar.
 	 */
-	private void beforeExecuteProccess(JLabel label) {
+	private synchronized void beforeExecuteProccess(JLabel label, Boolean enabled) {
 		this.taskCount++;
-		this.setEnabled(false);
+		if (enabled) {
+			this.setEnabled(false);
+		}
 
 		ImageIcon gif = new ImageIcon(Resources.PROGRESS_LIST_ICON.getImage());
 		gif.setImageObserver(label);
@@ -766,27 +777,11 @@ public class MainWindowFrame extends JFrame {
 	 * @param El
 	 *            label de progreso que vamos a descargar.
 	 */
-	private void afterExecuteProccess(JLabel label) {
+	private synchronized void afterExecuteProccess(JLabel label) {
 		this.taskCount--;
 		label.setIcon(null);
 		if (this.taskCount <= 0) {
 			this.setEnabled(true);
-		}
-	}
-
-	/**
-	 * La función encargada de validar una evaluación con el conjunto de reglas seleccionada.
-	 */
-	protected void evaluateAssessment() {
-		// Si tenemos algo seleccionado.
-		if (this.assessmentList.getSelectedValue() != null && this.ruleSetList.getSelectedValue() != null) {
-			// Obtenemos los elementos.
-			Assessment assessment = this.assessmentList.getSelectedValue();
-			RuleSet ruleSet = this.ruleSetList.getSelectedValue();
-
-			// Iniciamos el proceso de evaluación y lo arrancamos.
-			this.validateAssessmentTask.initValidateTask(assessment, ruleSet);
-			this.validateAssessmentTask.startTask(this.resultStringBuffer);
 		}
 	}
 
@@ -806,11 +801,8 @@ public class MainWindowFrame extends JFrame {
 		this.setTitle(HolderMessage.getMessage("main.window.title"));
 
 		this.updateAgentData();
-
 		this.updateAssessmentList();
 		this.updateRuleSetList();
-
-		this.updateResultTextArea();
 
 		return this;
 	}
