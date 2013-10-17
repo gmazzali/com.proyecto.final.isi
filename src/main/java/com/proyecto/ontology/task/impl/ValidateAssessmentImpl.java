@@ -1,6 +1,7 @@
 package com.proyecto.ontology.task.impl;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			stringBuffer.append("\n");
 			stringBuffer.append(Constants.SEPARATOR_LINE);
 			stringBuffer.append("\n");
-			
+
 			// Comenzamos la carga de la ontología a la salida.
 			stringBuffer.append(Constants.SEPARATOR_LINE);
 			stringBuffer.append("\n");
@@ -84,6 +85,8 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			ontology.write(out);
 			stringBuffer.append(out.toString());
+			
+			this.saveOntology(ontology);
 
 			// Finalizamos la carga de la ontología.
 			stringBuffer.append(Constants.SEPARATOR_LINE);
@@ -92,7 +95,7 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			stringBuffer.append("\n");
 			stringBuffer.append(Constants.SEPARATOR_LINE);
 			stringBuffer.append("\n");
-			
+
 			// TODO gmazzali Hacer lo de la ejecución de la validación de la evaluación y el conjunto de reglas dentro de la ontología.
 			// Cargamos las reglas solo si las mismas no son nulas.
 			if (this.ruleSet != null && !this.ruleSet.getRules().isEmpty()) {
@@ -131,6 +134,24 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			stringBuffer.append("\n");
 			stringBuffer.append(Constants.SEPARATOR_LINE);
 			stringBuffer.append("\n");
+		}
+	}
+
+	/**
+	 * La función encargada de guardar dentro de un archivo temporal la ontología creada.
+	 * 
+	 * @param ontology
+	 *            La ontología que vamos a almacenar dentro del archivo.
+	 */
+	private void saveOntology(OntModel ontology) {
+		// Guardamos temporalmente la ontología dentro de un archivo.
+		try {
+			String path = System.getProperty("proyecto.configuration.dir") + "\\ontology.rdf";
+			FileOutputStream salida = new FileOutputStream(path);
+			ontology.write(salida);
+			salida.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

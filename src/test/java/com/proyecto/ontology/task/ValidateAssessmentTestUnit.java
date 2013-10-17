@@ -16,7 +16,7 @@ import com.proyecto.model.material.reactive.Reactive;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ValidateAssessmentTaskTestUnit {
+public class ValidateAssessmentTestUnit {
 
 	/**
 	 * Antes de que arranque la ejecución de la clase, cargamos el dao.
