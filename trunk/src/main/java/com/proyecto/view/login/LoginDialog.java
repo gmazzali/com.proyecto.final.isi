@@ -183,7 +183,6 @@ public class LoginDialog extends JDialog {
 		try {
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
 			String[] files = { "/com/proyecto/spring/general-application-context.xml" };
-			HolderMessage.setLocale(new Locale("EN", "us"));
 			HolderApplicationContext.initApplicationContext(files);
 
 			LoginDialog dialog = HolderApplicationContext.getContext().getBean(LoginDialog.class);
