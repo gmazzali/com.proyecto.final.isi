@@ -1,4 +1,4 @@
-package com.proyecto.ontology.rdf.option.factory.impl;
+package com.proyecto.ontology.factory.option.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,10 +10,10 @@ import com.proyecto.annotation.RdfService;
 import com.proyecto.model.option.Distractor;
 import com.proyecto.model.option.Option;
 import com.proyecto.model.option.TrueOption;
+import com.proyecto.ontology.factory.option.OptionFactoryRdf;
 import com.proyecto.ontology.rdf.option.DistractorRdf;
 import com.proyecto.ontology.rdf.option.OptionRdf;
 import com.proyecto.ontology.rdf.option.TrueOptionRdf;
-import com.proyecto.ontology.rdf.option.factory.OptionFactoryRdf;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de la manipulación de las opciones dentro de una ontología.

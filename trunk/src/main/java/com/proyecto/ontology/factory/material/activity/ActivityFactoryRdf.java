@@ -1,7 +1,7 @@
-package com.proyecto.ontology.rdf.material.activity.factory;
+package com.proyecto.ontology.factory.material.activity;
 
 import com.proyecto.model.material.activity.Activity;
-import com.proyecto.ontology.rdf.FactoryRdf;
+import com.proyecto.ontology.factory.FactoryRdf;
 
 /**
  * La interfaz que define el comportamiento de la manipulación de las actividades dentro de una ontología.

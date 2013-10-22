@@ -1,7 +1,7 @@
-package com.proyecto.ontology.rdf.option.factory;
+package com.proyecto.ontology.factory.option;
 
 import com.proyecto.model.option.Option;
-import com.proyecto.ontology.rdf.FactoryRdf;
+import com.proyecto.ontology.factory.FactoryRdf;
 
 /**
  * La interfaz que define el comportamiento de la manipulación de las opciones dentro de una ontología.

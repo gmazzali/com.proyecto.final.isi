@@ -14,7 +14,7 @@ import com.proyecto.CreateExampleMaterial;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.material.reactive.Reactive;
-import com.proyecto.ontology.rdf.material.assessment.factory.AssessmentFactoryRdf;
+import com.proyecto.ontology.factory.material.assessment.AssessmentFactoryRdf;
 
 /**
  * La clase de prueba para la factoría de las evaluaciones en la ontología.

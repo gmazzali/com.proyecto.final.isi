@@ -1,4 +1,4 @@
-package com.proyecto.ontology.rdf;
+package com.proyecto.ontology.factory;
 
 import java.io.Serializable;
 

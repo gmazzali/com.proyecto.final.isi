@@ -1,4 +1,4 @@
-package com.proyecto.ontology.rdf.material.assessment.factory.impl;
+package com.proyecto.ontology.factory.material.assessment.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -7,8 +7,8 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.assessment.Assessment;
+import com.proyecto.ontology.factory.material.assessment.AssessmentFactoryRdf;
 import com.proyecto.ontology.rdf.material.assessment.AssessmentRdf;
-import com.proyecto.ontology.rdf.material.assessment.factory.AssessmentFactoryRdf;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de la manipulación de las evaluaciones dentro de una ontología.

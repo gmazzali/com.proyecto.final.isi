@@ -1,4 +1,4 @@
-package com.proyecto.ontology.rdf.answer.factory.impl;
+package com.proyecto.ontology.factory.answer.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,12 +12,12 @@ import com.proyecto.model.answer.CompletionAnswer;
 import com.proyecto.model.answer.EssayActivityAnswer;
 import com.proyecto.model.answer.RelationAnswer;
 import com.proyecto.model.answer.TrueFalseAnswer;
+import com.proyecto.ontology.factory.answer.AnswerFactoryRdf;
 import com.proyecto.ontology.rdf.answer.AnswerRdf;
 import com.proyecto.ontology.rdf.answer.CompletionAnswerRdf;
 import com.proyecto.ontology.rdf.answer.EssayActivityAnswerRdf;
 import com.proyecto.ontology.rdf.answer.RelationAnswerRdf;
 import com.proyecto.ontology.rdf.answer.TrueFalseAnswerRdf;
-import com.proyecto.ontology.rdf.answer.factory.AnswerFactoryRdf;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de la manipulación de las respuestas dentro de una ontología.

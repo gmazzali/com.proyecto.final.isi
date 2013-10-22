@@ -14,7 +14,7 @@ import com.proyecto.model.answer.CompletionAnswer;
 import com.proyecto.model.answer.EssayActivityAnswer;
 import com.proyecto.model.answer.RelationAnswer;
 import com.proyecto.model.answer.TrueFalseAnswer;
-import com.proyecto.ontology.rdf.answer.factory.AnswerFactoryRdf;
+import com.proyecto.ontology.factory.answer.AnswerFactoryRdf;
 
 /**
  * La clase de prueba para la factoría de las respuestas en la ontología.

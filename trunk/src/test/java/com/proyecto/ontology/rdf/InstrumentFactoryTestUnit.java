@@ -17,7 +17,7 @@ import com.proyecto.model.material.instrument.MultipleChoiceInstrument;
 import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.model.material.instrument.SingleChoiceInstrument;
 import com.proyecto.model.material.instrument.UnrestrictedEssayActivityInstrument;
-import com.proyecto.ontology.rdf.material.instrument.factory.InstrumentFactoryRdf;
+import com.proyecto.ontology.factory.material.instrument.InstrumentFactoryRdf;
 
 /**
  * La clase de prueba para la factoría de los instrumentos en la ontología.

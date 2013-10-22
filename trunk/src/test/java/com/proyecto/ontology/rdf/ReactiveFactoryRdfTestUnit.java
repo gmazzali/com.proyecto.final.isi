@@ -12,7 +12,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.proyecto.Constants;
 import com.proyecto.CreateExampleMaterial;
 import com.proyecto.model.material.reactive.Reactive;
-import com.proyecto.ontology.rdf.material.reactive.factory.ReactiveFactoryRdf;
+import com.proyecto.ontology.factory.material.reactive.ReactiveFactoryRdf;
 
 /**
  * La clase de prueba para la factoría de los reactivos en la ontología.
