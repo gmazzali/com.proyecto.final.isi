@@ -12,8 +12,8 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.model.material.instrument.ChoiceInstrument;
 import com.proyecto.model.option.Option;
+import com.proyecto.ontology.factory.option.OptionFactoryRdf;
 import com.proyecto.ontology.rdf.material.instrument.ChoiceInstrumentRdf;
-import com.proyecto.ontology.rdf.option.factory.OptionFactoryRdf;
 import com.proyecto.util.Constants;
 
 /**

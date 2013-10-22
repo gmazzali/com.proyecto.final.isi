@@ -15,8 +15,8 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.reactive.Reactive;
+import com.proyecto.ontology.factory.material.instrument.InstrumentFactoryRdf;
 import com.proyecto.ontology.rdf.material.MaterialRdfImpl;
-import com.proyecto.ontology.rdf.material.instrument.factory.InstrumentFactoryRdf;
 import com.proyecto.ontology.rdf.material.reactive.ReactiveRdf;
 import com.proyecto.util.Constants;
 

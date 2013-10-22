@@ -13,7 +13,7 @@ import com.proyecto.Constants;
 import com.proyecto.model.answer.TrueFalseAnswer;
 import com.proyecto.model.option.Distractor;
 import com.proyecto.model.option.TrueOption;
-import com.proyecto.ontology.rdf.option.factory.OptionFactoryRdf;
+import com.proyecto.ontology.factory.option.OptionFactoryRdf;
 
 /**
  * La clase de prueba para la factoría de las opciones en la ontología.

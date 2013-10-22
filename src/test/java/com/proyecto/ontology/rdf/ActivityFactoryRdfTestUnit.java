@@ -13,7 +13,7 @@ import com.proyecto.Constants;
 import com.proyecto.CreateExampleMaterial;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.reactive.Reactive;
-import com.proyecto.ontology.rdf.material.activity.factory.ActivityFactoryRdf;
+import com.proyecto.ontology.factory.material.activity.ActivityFactoryRdf;
 
 /**
  * La clase de prueba para la factoría de las actividades en la ontología.

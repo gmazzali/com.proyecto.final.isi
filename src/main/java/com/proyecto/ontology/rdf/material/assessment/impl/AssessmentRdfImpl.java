@@ -16,8 +16,8 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.assessment.Assessment;
+import com.proyecto.ontology.factory.material.activity.ActivityFactoryRdf;
 import com.proyecto.ontology.rdf.material.MaterialRdfImpl;
-import com.proyecto.ontology.rdf.material.activity.factory.ActivityFactoryRdf;
 import com.proyecto.ontology.rdf.material.assessment.AssessmentRdf;
 import com.proyecto.util.Constants;
 

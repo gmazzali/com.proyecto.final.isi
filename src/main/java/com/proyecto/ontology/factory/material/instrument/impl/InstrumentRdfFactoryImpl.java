@@ -1,4 +1,4 @@
-package com.proyecto.ontology.rdf.material.instrument.factory.impl;
+package com.proyecto.ontology.factory.material.instrument.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +18,7 @@ import com.proyecto.model.material.instrument.PortfolioInstrument;
 import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.model.material.instrument.SingleChoiceInstrument;
 import com.proyecto.model.material.instrument.UnrestrictedEssayActivityInstrument;
+import com.proyecto.ontology.factory.material.instrument.InstrumentFactoryRdf;
 import com.proyecto.ontology.rdf.material.instrument.CompletionInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.ConceptualMapInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.CorrespondenceInstrumentRdf;
@@ -29,7 +30,6 @@ import com.proyecto.ontology.rdf.material.instrument.PortfolioInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.RestrictedEssayActivityInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.SingleChoiceInstrumentRdf;
 import com.proyecto.ontology.rdf.material.instrument.UnrestrictedEssayActivityInstrumentRdf;
-import com.proyecto.ontology.rdf.material.instrument.factory.InstrumentFactoryRdf;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de la manipulación de los instrumentos dentro de una ontología.

@@ -1,4 +1,4 @@
-package com.proyecto.ontology.rdf.material.reactive.factory.impl;
+package com.proyecto.ontology.factory.material.reactive.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -7,8 +7,8 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.reactive.Reactive;
+import com.proyecto.ontology.factory.material.reactive.ReactiveFactoryRdf;
 import com.proyecto.ontology.rdf.material.reactive.ReactiveRdf;
-import com.proyecto.ontology.rdf.material.reactive.factory.ReactiveFactoryRdf;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de la manipulación de los reactivos dentro de una ontología.

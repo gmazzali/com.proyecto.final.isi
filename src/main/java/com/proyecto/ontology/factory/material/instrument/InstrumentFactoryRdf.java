@@ -1,7 +1,7 @@
-package com.proyecto.ontology.rdf.material.instrument.factory;
+package com.proyecto.ontology.factory.material.instrument;
 
 import com.proyecto.model.material.instrument.Instrument;
-import com.proyecto.ontology.rdf.FactoryRdf;
+import com.proyecto.ontology.factory.FactoryRdf;
 
 /**
  * La interfaz que define el comportamiento de la manipulación de los instrumentos dentro de una ontología.

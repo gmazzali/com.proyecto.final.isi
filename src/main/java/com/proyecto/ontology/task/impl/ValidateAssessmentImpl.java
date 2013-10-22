@@ -22,7 +22,7 @@ import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.model.rule.RuleSet;
-import com.proyecto.ontology.rdf.material.assessment.factory.AssessmentFactoryRdf;
+import com.proyecto.ontology.factory.material.assessment.AssessmentFactoryRdf;
 import com.proyecto.ontology.task.ValidateAssessment;
 import com.proyecto.service.rule.RuleService;
 import com.proyecto.util.Constants;
