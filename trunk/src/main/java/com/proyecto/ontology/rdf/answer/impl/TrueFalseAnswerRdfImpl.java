@@ -25,7 +25,7 @@ import com.proyecto.util.Constants;
 public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> implements TrueFalseAnswerRdf {
 
 	private static final long serialVersionUID = -161154895220919711L;
-	
+
 	/**
 	 * La clase de respuesta booleana.
 	 */
@@ -38,27 +38,23 @@ public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> imple
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String relationAnswerClassName = this.namespace + TrueFalseAnswer.class.getSimpleName();
 		if (this.relationAnswerClass == null) {
-			
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String relationAnswerClassName = Constants.Ontology.NAMESPACE + TrueFalseAnswer.class.getSimpleName();
 			this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
-
 			if (this.relationAnswerClass == null) {
 				this.relationAnswerClass = ontology.createClass(relationAnswerClassName);
 			}
-
+			// Cargamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.relationAnswerClass);
 		}
 
 		// Creamos las relaciones.
+		String value = this.namespace + Constants.Ontology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE;
 		if (this.haveValue == null) {
-			this.haveValue = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+			this.haveValue = ontology.getDatatypeProperty(value);
 			if (this.haveValue == null) {
-				this.haveValue = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+				this.haveValue = ontology.createDatatypeProperty(value);
 			}
 		}
 

@@ -6,7 +6,6 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.PortfolioInstrument;
 import com.proyecto.ontology.rdf.material.instrument.PortfolioInstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La interfaz que define el comportamiento de los instrumentos semiformales compuesto de portfolio dentro de la ontología.
@@ -18,7 +17,7 @@ import com.proyecto.util.Constants;
 public class PortfolioInstrumentRdfImpl extends CompositeInstrumentRdfImpl<PortfolioInstrument> implements PortfolioInstrumentRdf {
 
 	private static final long serialVersionUID = -1461483353780944367L;
-	
+
 	/**
 	 * La clase de un instrumento semiformal compuesto de portfolio.
 	 */
@@ -27,19 +26,15 @@ public class PortfolioInstrumentRdfImpl extends CompositeInstrumentRdfImpl<Portf
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String portfolioInstrumentClassName = this.namespace + PortfolioInstrument.class.getSimpleName();
 		if (this.portfolioInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String portfolioInstrumentClassName = Constants.Ontology.NAMESPACE + PortfolioInstrument.class.getSimpleName();
 			this.portfolioInstrumentClass = ontology.getOntClass(portfolioInstrumentClassName);
-
 			if (this.portfolioInstrumentClass == null) {
 				this.portfolioInstrumentClass = ontology.createClass(portfolioInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.portfolioInstrumentClass);
 		}
 
@@ -48,9 +43,6 @@ public class PortfolioInstrumentRdfImpl extends CompositeInstrumentRdfImpl<Portf
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, PortfolioInstrument entity) {
-		// Cargamos el padre.
-		individual = super.loadEntityData(ontology, individual, entity);
-
-		return individual;
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

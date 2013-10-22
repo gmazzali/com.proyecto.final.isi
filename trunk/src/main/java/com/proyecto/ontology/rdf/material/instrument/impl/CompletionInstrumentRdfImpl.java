@@ -27,7 +27,7 @@ import com.proyecto.util.Constants;
 public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfImpl<CompletionInstrument> implements CompletionInstrumentRdf {
 
 	private static final long serialVersionUID = 9078655177679015093L;
-	
+
 	/**
 	 * El servicio de ontología para las respuestas de completar.
 	 */
@@ -46,27 +46,24 @@ public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfI
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String completionInstrumentClassName = this.namespace + CompletionInstrument.class.getSimpleName();
 		if (this.completionInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String completionInstrumentClassName = Constants.Ontology.NAMESPACE + CompletionInstrument.class.getSimpleName();
 			this.completionInstrumentClass = ontology.getOntClass(completionInstrumentClassName);
-
 			if (this.completionInstrumentClass == null) {
 				this.completionInstrumentClass = ontology.createClass(completionInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.completionInstrumentClass);
 		}
 
 		// Creamos las relaciones.
+		String complete = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE;
 		if (this.haveComplete == null) {
-			this.haveComplete = ontology.getObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
+			this.haveComplete = ontology.getObjectProperty(complete);
 			if (this.haveComplete == null) {
-				this.haveComplete = ontology.createObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
+				this.haveComplete = ontology.createObjectProperty(complete);
 				this.haveComplete.addDomain(this.completionInstrumentClass);
 				this.haveComplete.addRange(this.completionAnswerRdf.initClass(ontology));
 			}
@@ -83,8 +80,7 @@ public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfI
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
 		for (CompletionAnswer answer : entity.getAnswers()) {
-			statements
-					.add(ontology.createLiteralStatement(individual, this.haveComplete, this.completionAnswerRdf.createIndividual(ontology, answer)));
+			statements.add(ontology.createLiteralStatement(individual, this.haveComplete, this.completionAnswerRdf.createIndividual(ontology, answer)));
 		}
 		ontology.add(statements);
 

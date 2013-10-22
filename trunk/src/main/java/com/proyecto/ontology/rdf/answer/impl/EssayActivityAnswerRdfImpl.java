@@ -25,7 +25,7 @@ import com.proyecto.util.Constants;
 public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswer> implements EssayActivityAnswerRdf {
 
 	private static final long serialVersionUID = -4349189368946092487L;
-	
+
 	/**
 	 * La clase de repuesta de ensayo.
 	 */
@@ -38,27 +38,24 @@ public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswe
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String essayActivityAnswerClassName = this.namespace + EssayActivityAnswer.class.getSimpleName();
 		if (this.essayActivityAnswerClass == null) {
-			
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String essayActivityAnswerClassName = Constants.Ontology.NAMESPACE + EssayActivityAnswer.class.getSimpleName();
 			this.essayActivityAnswerClass = ontology.getOntClass(essayActivityAnswerClassName);
-
 			if (this.essayActivityAnswerClass == null) {
 				this.essayActivityAnswerClass = ontology.createClass(essayActivityAnswerClassName);
 			}
 
+			// Cargamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.essayActivityAnswerClass);
 		}
 
 		// Creamos las relaciones.
+		String answer = this.namespace + Constants.Ontology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION;
 		if (this.haveAnswer == null) {
-			this.haveAnswer = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
+			this.haveAnswer = ontology.getDatatypeProperty(answer);
 			if (this.haveAnswer == null) {
-				this.haveAnswer = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
+				this.haveAnswer = ontology.createDatatypeProperty(answer);
 			}
 		}
 

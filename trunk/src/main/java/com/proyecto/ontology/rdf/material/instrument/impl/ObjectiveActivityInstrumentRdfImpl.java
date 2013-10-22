@@ -5,7 +5,6 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.ObjectiveActivityInstrument;
 import com.proyecto.ontology.rdf.material.instrument.ObjectiveActivityInstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos dentro de la ontología.
@@ -20,7 +19,7 @@ public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActi
 		ObjectiveActivityInstrumentRdf<I> {
 
 	private static final long serialVersionUID = 6932122018155450815L;
-	
+
 	/**
 	 * La clase del instrumento formal de ensayo.
 	 */
@@ -29,19 +28,15 @@ public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActi
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String objectiveActivityInstrumentClassName = this.namespace + ObjectiveActivityInstrument.class.getSimpleName();
 		if (this.objectiveActivityInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String objectiveActivityInstrumentClassName = Constants.Ontology.NAMESPACE + ObjectiveActivityInstrument.class.getSimpleName();
 			this.objectiveActivityInstrumentClass = ontology.getOntClass(objectiveActivityInstrumentClassName);
-
 			if (this.objectiveActivityInstrumentClass == null) {
 				this.objectiveActivityInstrumentClass = ontology.createClass(objectiveActivityInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.objectiveActivityInstrumentClass);
 		}
 

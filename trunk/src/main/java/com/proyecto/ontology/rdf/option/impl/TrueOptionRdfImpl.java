@@ -6,7 +6,6 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.option.TrueOption;
 import com.proyecto.ontology.rdf.option.TrueOptionRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de las opciones verdaderas dentro de la ontología.
@@ -27,19 +26,15 @@ public class TrueOptionRdfImpl extends OptionRdfImpl<TrueOption> implements True
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
+			String trueOptionClassName = this.namespace + TrueOption.class.getSimpleName();
 		if (this.trueOptionClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String trueOptionClassName = Constants.Ontology.NAMESPACE + TrueOption.class.getSimpleName();
 			this.trueOptionClass = ontology.getOntClass(trueOptionClassName);
-
 			if (this.trueOptionClass == null) {
 				this.trueOptionClass = ontology.createClass(trueOptionClassName);
 			}
 
+			// Cargamos el padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.trueOptionClass);
 		}
 		return this.trueOptionClass;

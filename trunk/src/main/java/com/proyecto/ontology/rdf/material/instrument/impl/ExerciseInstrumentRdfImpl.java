@@ -6,7 +6,6 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.ExerciseInstrument;
 import com.proyecto.ontology.rdf.material.instrument.ExerciseInstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos semiformales simples de ejercicios dentro de la ontología.
@@ -18,7 +17,7 @@ import com.proyecto.util.Constants;
 public class ExerciseInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ExerciseInstrument> implements ExerciseInstrumentRdf {
 
 	private static final long serialVersionUID = -38293121719559319L;
-	
+
 	/**
 	 * La clase de un instrumento semiformal simple de ejercicios.
 	 */
@@ -27,19 +26,15 @@ public class ExerciseInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ExerciseI
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String exerciseInstrumentClassName = this.namespace + ExerciseInstrument.class.getSimpleName();
 		if (this.exerciseInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String exerciseInstrumentClassName = Constants.Ontology.NAMESPACE + ExerciseInstrument.class.getSimpleName();
 			this.exerciseInstrumentClass = ontology.getOntClass(exerciseInstrumentClassName);
-
 			if (this.exerciseInstrumentClass == null) {
 				this.exerciseInstrumentClass = ontology.createClass(exerciseInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.exerciseInstrumentClass);
 		}
 

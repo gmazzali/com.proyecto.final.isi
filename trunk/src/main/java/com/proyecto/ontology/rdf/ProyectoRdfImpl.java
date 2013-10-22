@@ -1,5 +1,7 @@
 package com.proyecto.ontology.rdf;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.common.util.model.Persistence;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
@@ -17,6 +19,12 @@ import com.hp.hpl.jena.ontology.OntModel;
 public abstract class ProyectoRdfImpl<E extends Persistence<?>> implements ProyectoRdf<E> {
 
 	private static final long serialVersionUID = -1430642317860912928L;
+
+	/**
+	 * El nombre de la ontología.
+	 */
+	@Value("${ontology.namespace}")
+	protected String namespace;
 	
 
 	@Override
