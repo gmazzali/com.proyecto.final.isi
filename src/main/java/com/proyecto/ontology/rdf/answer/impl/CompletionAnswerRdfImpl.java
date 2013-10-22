@@ -25,7 +25,7 @@ import com.proyecto.util.Constants;
 public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> implements CompletionAnswerRdf {
 
 	private static final long serialVersionUID = -405924855045939575L;
-	
+
 	/**
 	 * La clase de respuesta para completar.
 	 */
@@ -39,33 +39,32 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
+		String completionAnswerClassName = this.namespace + CompletionAnswer.class.getSimpleName();
 		if (this.completionAnswerClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String completionAnswerClassName = Constants.Ontology.NAMESPACE + CompletionAnswer.class.getSimpleName();
 			this.completionAnswerClass = ontology.getOntClass(completionAnswerClassName);
-
 			if (completionAnswerClass == null) {
 				this.completionAnswerClass = ontology.createClass(completionAnswerClassName);
 			}
 
+			// Cargamos el padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.completionAnswerClass);
 		}
-		
+
 		// Creamos las relaciones si son nulas.
+		String index = this.namespace + Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX;
 		if (this.haveIndex == null) {
-			this.haveIndex = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+			this.haveIndex = ontology.getDatatypeProperty(index);
 			if (this.haveIndex == null) {
-				this.haveIndex = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+				this.haveIndex = ontology.createDatatypeProperty(index);
 			}
 		}
+
+		String phrase = this.namespace + Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE;
 		if (this.havePhrase == null) {
-			this.havePhrase = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+			this.havePhrase = ontology.getDatatypeProperty(phrase);
 			if (this.havePhrase == null) {
-				this.havePhrase = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+				this.havePhrase = ontology.createDatatypeProperty(phrase);
 			}
 		}
 

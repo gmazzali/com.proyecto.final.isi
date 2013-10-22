@@ -6,7 +6,6 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
 import com.proyecto.ontology.rdf.material.instrument.RestrictedEssayActivityInstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales de ensayos restringidos dentro de la ontología.
@@ -19,7 +18,7 @@ public class RestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstr
 		RestrictedEssayActivityInstrumentRdf {
 
 	private static final long serialVersionUID = 1748741402462060611L;
-	
+
 	/**
 	 * La clase del instrumento formal de ensayo restringido.
 	 */
@@ -28,19 +27,15 @@ public class RestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstr
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String restrictedEssayActivityInstrumentClassName = this.namespace + RestrictedEssayActivityInstrument.class.getSimpleName();
 		if (this.restrictedEssayActivityInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String restrictedEssayActivityInstrumentClassName = Constants.Ontology.NAMESPACE + RestrictedEssayActivityInstrument.class.getSimpleName();
 			this.restrictedEssayActivityInstrumentClass = ontology.getOntClass(restrictedEssayActivityInstrumentClassName);
-
 			if (this.restrictedEssayActivityInstrumentClass == null) {
 				this.restrictedEssayActivityInstrumentClass = ontology.createClass(restrictedEssayActivityInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.restrictedEssayActivityInstrumentClass);
 		}
 

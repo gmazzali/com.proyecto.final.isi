@@ -6,7 +6,6 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.MultipleChoiceInstrument;
 import com.proyecto.ontology.rdf.material.instrument.MultipleChoiceInstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos de selección multiple dentro de la
@@ -19,7 +18,7 @@ import com.proyecto.util.Constants;
 public class MultipleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<MultipleChoiceInstrument> implements MultipleChoiceInstrumentRdf {
 
 	private static final long serialVersionUID = -9028203786061709849L;
-	
+
 	/**
 	 * La clase del instrumento formal objetivo de selección multiple.
 	 */
@@ -28,19 +27,15 @@ public class MultipleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Mul
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String multipleChoiceInstrumentClassName = this.namespace + MultipleChoiceInstrument.class.getSimpleName();
 		if (this.multipleChoiceInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String multipleChoiceInstrumentClassName = Constants.Ontology.NAMESPACE + MultipleChoiceInstrument.class.getSimpleName();
 			this.multipleChoiceInstrumentClass = ontology.getOntClass(multipleChoiceInstrumentClassName);
-
 			if (this.multipleChoiceInstrumentClass == null) {
 				this.multipleChoiceInstrumentClass = ontology.createClass(multipleChoiceInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.multipleChoiceInstrumentClass);
 		}
 

@@ -48,27 +48,24 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String choiceInstrumentClassName = this.namespace + ChoiceInstrument.class.getSimpleName();
 		if (this.choiceInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String choiceInstrumentClassName = Constants.Ontology.NAMESPACE + ChoiceInstrument.class.getSimpleName();
 			this.choiceInstrumentClass = ontology.getOntClass(choiceInstrumentClassName);
-
 			if (this.choiceInstrumentClass == null) {
 				this.choiceInstrumentClass = ontology.createClass(choiceInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.choiceInstrumentClass);
 		}
 
 		// Cargamos las relaciones.
+		String option = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION;
 		if (this.haveOption == null) {
-			this.haveOption = ontology.getObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
+			this.haveOption = ontology.getObjectProperty(option);
 			if (this.haveOption == null) {
-				this.haveOption = ontology.createObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
+				this.haveOption = ontology.createObjectProperty(option);
 				this.haveOption.addDomain(this.choiceInstrumentClass);
 				this.haveOption.addRange(this.optionFactoryRdf.topClassHierachy(ontology));
 			}
@@ -85,8 +82,7 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
 		for (Option option : entity.getOptions()) {
-			statements.add(ontology.createLiteralStatement(individual, this.haveOption,
-					this.optionFactoryRdf.loadEntityToOntology(ontology, option)));
+			statements.add(ontology.createLiteralStatement(individual, this.haveOption, this.optionFactoryRdf.loadEntityToOntology(ontology, option)));
 		}
 		ontology.add(statements);
 

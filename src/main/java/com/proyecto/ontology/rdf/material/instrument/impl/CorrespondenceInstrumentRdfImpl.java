@@ -47,27 +47,24 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String correspondenceInstrumentClassName = this.namespace + CorrespondenceInstrument.class.getSimpleName();
 		if (this.correspondenceInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String correspondenceInstrumentClassName = Constants.Ontology.NAMESPACE + CorrespondenceInstrument.class.getSimpleName();
 			this.correspondenceInstrumentClass = ontology.getOntClass(correspondenceInstrumentClassName);
-
 			if (this.correspondenceInstrumentClass == null) {
 				this.correspondenceInstrumentClass = ontology.createClass(correspondenceInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.correspondenceInstrumentClass);
 		}
 
 		// Creamos las relaciones.
+		String relations = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION;
 		if (this.haveRelation == null) {
-			this.haveRelation = ontology.getObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
+			this.haveRelation = ontology.getObjectProperty(relations);
 			if (this.haveRelation == null) {
-				this.haveRelation = ontology.createObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
+				this.haveRelation = ontology.createObjectProperty(relations);
 				this.haveRelation.addDomain(this.correspondenceInstrumentClass);
 				this.haveRelation.addRange(this.relationAnswerRdf.initClass(ontology));
 			}

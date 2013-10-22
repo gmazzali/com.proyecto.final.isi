@@ -19,4 +19,15 @@ public interface RuleService extends ProyectoService<Rule, Integer> {
 	 *            El dao para el servicio de las reglas.
 	 */
 	public void setRuleDao(RuleDao ruleDao);
+
+	/**
+	 * La función encargada de convertir una regla del proyecto en una regla para poder utilizarse en la ontología creada con JENA.
+	 * 
+	 * @param rule
+	 *            La regla que tenemos dentro del proyecto.
+	 * @return La regla creada para usarla dentro de una ontología en JENA.
+	 * @throws Exception
+	 *             En caso de una falla en el parseo de la regla.
+	 */
+	public com.hp.hpl.jena.reasoner.rulesys.Rule parseRule(Rule rule) throws Exception;
 }

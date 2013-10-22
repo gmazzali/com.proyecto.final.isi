@@ -28,7 +28,7 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 		EssayActivityInstrumentRdf<I> {
 
 	private static final long serialVersionUID = 2092146643897883340L;
-	
+
 	/**
 	 * El servicio de las respuestas de ensayos.
 	 */
@@ -47,27 +47,24 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String essayActivityInstrumentClassName = this.namespace + EssayActivityInstrument.class.getSimpleName();
 		if (this.essayActivityInstrumentClass == null) {
-
-			// Creamos u obtenemos la clase superior.
-			OntClass superClass = super.initClass(ontology);
-
-			// Creamos u obtenemos la clase hija.
-			String essayActivityInstrumentClassName = Constants.Ontology.NAMESPACE + EssayActivityInstrument.class.getSimpleName();
 			this.essayActivityInstrumentClass = ontology.getOntClass(essayActivityInstrumentClassName);
-
 			if (this.essayActivityInstrumentClass == null) {
 				this.essayActivityInstrumentClass = ontology.createClass(essayActivityInstrumentClassName);
 			}
 
+			// Creamos la clase padre.
+			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.essayActivityInstrumentClass);
 		}
 
 		// Creamos las relaciones.
+		String answer = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER;
 		if (this.haveAnswer == null) {
-			this.haveAnswer = ontology.getObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
+			this.haveAnswer = ontology.getObjectProperty(answer);
 			if (this.haveAnswer == null) {
-				this.haveAnswer = ontology.createObjectProperty(Constants.Ontology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
+				this.haveAnswer = ontology.createObjectProperty(answer);
 				this.haveAnswer.setDomain(this.essayActivityInstrumentClass);
 				this.haveAnswer.setRange(this.essayActivityAnswerRdf.initClass(ontology));
 			}

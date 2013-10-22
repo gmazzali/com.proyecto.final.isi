@@ -29,7 +29,7 @@ import com.proyecto.util.Constants;
 @RdfService
 public class ReactiveRdfImpl extends MaterialRdfImpl<Reactive> implements ReactiveRdf {
 
-	private static final long serialVersionUID = -5963204658677767957L;	
+	private static final long serialVersionUID = -5963204658677767957L;
 
 	/**
 	 * La factoría de instrumentos.
@@ -50,28 +50,28 @@ public class ReactiveRdfImpl extends MaterialRdfImpl<Reactive> implements Reacti
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
+		String reactiveClassName = this.namespace + Reactive.class.getSimpleName();
 		if (this.reactiveClass == null) {
-
-			String reactiveClassName = Constants.Ontology.NAMESPACE + Reactive.class.getSimpleName();
 			this.reactiveClass = ontology.getOntClass(reactiveClassName);
-
 			if (this.reactiveClass == null) {
 				this.reactiveClass = ontology.createClass(reactiveClassName);
 			}
 		}
 
 		// Creamos las relaciones.
+		String description = this.namespace + Constants.Ontology.PROPERTY_REACTIVE_HAVE_DESCRIPTION;
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(Constants.Ontology.PROPERTY_REACTIVE_HAVE_DESCRIPTION);
+			this.haveDescription = ontology.getDatatypeProperty(description);
 			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(Constants.Ontology.PROPERTY_REACTIVE_HAVE_DESCRIPTION);
+				this.haveDescription = ontology.createDatatypeProperty(description);
 			}
 		}
 
+		String instrument = this.namespace + Constants.Ontology.PROPERTY_REACTIVE_HAVE_INSTRUMENT;
 		if (this.haveInstrument == null) {
-			this.haveInstrument = ontology.getObjectProperty(Constants.Ontology.PROPERTY_REACTIVE_HAVE_INSTRUMENT);
+			this.haveInstrument = ontology.getObjectProperty(instrument);
 			if (this.haveInstrument == null) {
-				this.haveInstrument = ontology.createObjectProperty(Constants.Ontology.PROPERTY_REACTIVE_HAVE_INSTRUMENT);
+				this.haveInstrument = ontology.createObjectProperty(instrument);
 				this.haveInstrument.addDomain(this.reactiveClass);
 				this.haveInstrument.addRange(this.instrumentFactoryRdf.topClassHierachy(ontology));
 			}
@@ -94,7 +94,7 @@ public class ReactiveRdfImpl extends MaterialRdfImpl<Reactive> implements Reacti
 				this.instrumentFactoryRdf.loadEntityToOntology(ontology, entity.getInstrument())));
 
 		ontology.add(statements);
-		
+
 		return individual;
 	}
 }

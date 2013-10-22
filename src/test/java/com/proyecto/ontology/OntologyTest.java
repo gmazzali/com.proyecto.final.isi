@@ -15,8 +15,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  * @version 1.0
  */
 public class OntologyTest {
-
-	private static final String NS = "http://www.test.com/#";
+	
+	protected static final String NS = "http://www.test.com/#";
 
 	public static void main(String[] args) {
 

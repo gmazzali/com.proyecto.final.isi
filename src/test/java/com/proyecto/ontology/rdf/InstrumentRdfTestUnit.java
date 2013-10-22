@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.common.util.holder.HolderApplicationContext;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.proyecto.Constants;
 import com.proyecto.CreateExampleMaterial;
 import com.proyecto.model.material.instrument.CompletionInstrument;
 import com.proyecto.model.material.instrument.CorrespondenceInstrument;
@@ -67,6 +68,7 @@ public class InstrumentRdfTestUnit {
 		CorrespondenceInstrument correspondenceInstrument = CreateExampleMaterial.createInstrumentCorrespondence(60);
 
 		OntModel ontology = ModelFactory.createOntologyModel();
+		ontology.setNsPrefix(Constants.PREFIX, Constants.NS);
 
 		HolderApplicationContext.getBean(RestrictedEssayActivityInstrumentRdf.class).createIndividual(ontology, restrictedEssayActivityInstrument);
 
@@ -81,12 +83,12 @@ public class InstrumentRdfTestUnit {
 
 		HolderApplicationContext.getBean(CorrespondenceInstrumentRdf.class).createIndividual(ontology, correspondenceInstrument);
 
-		ontology.write(System.out);
+		ontology.write(System.out, Constants.MODE);
 
 		try {
 			String archivo = System.getProperty("proyecto.configuration.dir") + "/ontology.rdf";
 			FileOutputStream salida = new FileOutputStream(archivo);
-			ontology.write(salida);
+			ontology.write(salida, Constants.MODE);
 			salida.close();
 		} catch (Exception e) {
 			e.printStackTrace();

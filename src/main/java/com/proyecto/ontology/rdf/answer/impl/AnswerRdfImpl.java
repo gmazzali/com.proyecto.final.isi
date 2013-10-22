@@ -7,7 +7,6 @@ import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.Answer;
 import com.proyecto.ontology.rdf.ProyectoRdfImpl;
 import com.proyecto.ontology.rdf.answer.AnswerRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define comportamiento de las respuestas dentro de la ontología.
@@ -31,11 +30,9 @@ public class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implemen
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
+			String answerClassName = this.namespace + Answer.class.getSimpleName();
 		if (this.answerClass == null) {
-
-			String answerClassName = Constants.Ontology.NAMESPACE + Answer.class.getSimpleName();
 			this.answerClass = ontology.getOntClass(answerClassName);
-
 			if (this.answerClass == null) {
 				this.answerClass = ontology.createClass(answerClassName);
 			}
