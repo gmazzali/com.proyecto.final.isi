@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -99,7 +98,7 @@ public class LoginDialog extends JDialog {
 		this.userNameTextField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				userNameTextField.selectAll();
+				LoginDialog.this.userNameTextField.selectAll();
 			}
 		});
 		contentPanel.add(this.userNameTextField);
@@ -115,7 +114,7 @@ public class LoginDialog extends JDialog {
 		this.userPassField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				userPassField.selectAll();
+				LoginDialog.this.userPassField.selectAll();
 			}
 		});
 		contentPanel.add(this.userPassField);
