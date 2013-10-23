@@ -32,7 +32,6 @@ import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-import javax.swing.text.DefaultCaret;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -383,8 +382,8 @@ public class MainWindowFrame extends JFrame {
 		this.resultTextArea = new JTextArea();
 		this.resultTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.resultTextArea.setEditable(false);
-		DefaultCaret caret = (DefaultCaret) this.resultTextArea.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		// DefaultCaret caret = (DefaultCaret) this.resultTextArea.getCaret();
+		// caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		resultScrollPane.setViewportView(this.resultTextArea);
 
 		this.clearResultButton = new JButton(Resources.ERASE_ICON);
@@ -638,7 +637,7 @@ public class MainWindowFrame extends JFrame {
 			// Obtenemos los elementos.
 			final Assessment assessment = this.assessmentList.getSelectedValue();
 			final RuleSet ruleSet = this.ruleSetList.getSelectedValue();
-			
+
 			// Borramos el contenido del área de resultado.
 			this.clearResults();
 

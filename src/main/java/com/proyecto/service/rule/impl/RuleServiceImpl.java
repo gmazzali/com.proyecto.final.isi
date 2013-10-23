@@ -69,10 +69,10 @@ public class RuleServiceImpl extends ProyectoServiceImpl<Rule, Integer> implemen
 		entity.setActive(false);
 		this.update(entity);
 	}
-	
+
 	@Override
-	public com.hp.hpl.jena.reasoner.rulesys.Rule parseRule(Rule rule)throws Exception {
-		String nuevaRegla = rule.getDescription();
+	public com.hp.hpl.jena.reasoner.rulesys.Rule parseRule(Rule rule) throws Exception {
+		String nuevaRegla = rule.getRule();
 		com.hp.hpl.jena.reasoner.rulesys.Rule r = com.hp.hpl.jena.reasoner.rulesys.Rule.parseRule(nuevaRegla);
 		return r;
 	}

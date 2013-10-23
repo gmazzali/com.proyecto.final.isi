@@ -13,6 +13,7 @@ import com.common.util.holder.HolderMessage;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.InfModel;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ValidityReport;
@@ -97,13 +98,13 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
 
 			// Creamos la ontología y la cargamos con la evaluación.
-			OntModel ontology = ModelFactory.createOntologyModel(OntModelSpec.DAML_MEM_RDFS_INF);
-			ontology.setNsPrefix(namespacePrefix, namespace);
+			OntModel ontology = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM_RULE_INF);
+			ontology.setNsPrefix(this.namespacePrefix, this.namespace);
 			ValidateAssessmentImpl.this.assessmentFactoryRdf.loadEntityToOntology(ontology, ValidateAssessmentImpl.this.assessment);
 
 			// Cargamos la ontología a la salida.
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ontology.write(out, printMode);
+			ontology.write(out, this.printMode);
 			stringBuffer.append(out.toString());
 
 			// Guardamos la ontología dentro de un archivo.
@@ -133,7 +134,7 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	 * @param ontology
 	 *            La ontología que vamos a almacenar dentro del archivo.
 	 */
-	private void saveOntology(OntModel ontology) {
+	private void saveOntology(Model ontology) {
 		// Guardamos temporalmente la ontología dentro de un archivo.
 		try {
 			String path = System.getProperty("proyecto.configuration.dir") + "\\ontology.rdf";
@@ -162,7 +163,7 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 
 		try {
 			// TODO gmazzali Hacer lo de la ejecución de la validación de la evaluación y el conjunto de reglas dentro de la ontología.
-			// Parseamos la regla.
+			// Convertimos la regla.
 			com.hp.hpl.jena.reasoner.rulesys.Rule jenaRule = this.ruleService.parseRule(rule);
 			List<com.hp.hpl.jena.reasoner.rulesys.Rule> rules = new ArrayList<com.hp.hpl.jena.reasoner.rulesys.Rule>();
 			rules.add(jenaRule);
@@ -172,7 +173,10 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			InfModel infOntology = ModelFactory.createInfModel(reasoner, ontology);
 
 			// Validamos el modelo.
+			infOntology.prepare();
+			this.saveOntology(infOntology);
 			ValidityReport reports = infOntology.validate();
+			infOntology.write(System.out, "TTL");
 			if (reports.isValid()) {
 				stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.rule.pass") + "\n");
 			} else {

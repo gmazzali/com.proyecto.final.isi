@@ -27,7 +27,7 @@ public interface RuleService extends ProyectoService<Rule, Integer> {
 	 *            La regla que tenemos dentro del proyecto.
 	 * @return La regla creada para usarla dentro de una ontología en JENA.
 	 * @throws Exception
-	 *             En caso de una falla en el parseo de la regla.
+	 *             En caso de una falla en la conversión de la regla.
 	 */
 	public com.hp.hpl.jena.reasoner.rulesys.Rule parseRule(Rule rule) throws Exception;
 }
