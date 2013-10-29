@@ -140,12 +140,13 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	 */
 	private void evaluateRule(StringBuffer stringBuffer, OntModel ontology, Rule rule) {
 		// Comenzamos con la evaluación de la regla.
-		stringBuffer.append("\n" + rule.getDescription() + "\n");
-		stringBuffer.append("\n");
+		stringBuffer.append("\n" + rule.getDescription() + ":\n");
+		stringBuffer.append(Constants.UNDERLINE + "\n");
+		stringBuffer.append(rule.getRule() + "\n");
+		stringBuffer.append(Constants.UNDERLINE + "\n");
 
 		try {
-			// TODO gmazzali Hacer lo de la ejecución de la validación de la evaluación y el conjunto de reglas dentro de la ontología.
-			// Convertimos la regla.
+			// Convertimos la regla a partir del String.
 			com.hp.hpl.jena.reasoner.rulesys.Rule jenaRule = this.ruleService.parseRule(rule);
 			List<com.hp.hpl.jena.reasoner.rulesys.Rule> rules = new ArrayList<com.hp.hpl.jena.reasoner.rulesys.Rule>();
 			rules.add(jenaRule);
@@ -156,11 +157,18 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 
 			// Guardamos el modelo inferido.
 			this.saveInfOntology(infOntology);
+			infOntology.write(System.out, "TTL");
+
+			// Comparamos los modelos para su evaluación.
+			// TODO gmazzali Hacer lo de la ejecución de la validación de la evaluación y el conjunto de reglas dentro de la ontología.
+			if (ontology.difference(infOntology).isEmpty()) {
+				// TODO gmazzali Hacer lo que corresponda cuando los modelos sean iguales.
+			} else {
+				// TODO gmazzali Hacer lo que corresponda cuando los modelos sean diferentes.
+			}
 
 			// Validamos el modelo.
-			infOntology.prepare();
 			ValidityReport reports = infOntology.validate();
-			infOntology.write(System.out, "TTL");
 			if (reports.isValid()) {
 				stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.rule.pass") + "\n");
 			} else {
