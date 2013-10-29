@@ -129,24 +129,6 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	}
 
 	/**
-	 * La función encargada de guardar dentro de un archivo temporal la ontología creada.
-	 * 
-	 * @param ontology
-	 *            La ontología que vamos a almacenar dentro del archivo.
-	 */
-	private void saveOntology(Model ontology) {
-		// Guardamos temporalmente la ontología dentro de un archivo.
-		try {
-			String path = System.getProperty("proyecto.configuration.dir") + "\\ontology.rdf";
-			FileOutputStream salida = new FileOutputStream(path);
-			ontology.write(salida);
-			salida.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * La función encargada de tomar una regla y poder validarla dentro de la ontología que recibimos.
 	 * 
 	 * @param stringBuffer
@@ -172,9 +154,11 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			Reasoner reasoner = new GenericRuleReasoner(rules);
 			InfModel infOntology = ModelFactory.createInfModel(reasoner, ontology);
 
+			// Guardamos el modelo inferido.
+			this.saveInfOntology(infOntology);
+
 			// Validamos el modelo.
 			infOntology.prepare();
-			this.saveOntology(infOntology);
 			ValidityReport reports = infOntology.validate();
 			infOntology.write(System.out, "TTL");
 			if (reports.isValid()) {
@@ -189,6 +173,46 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			}
 		} catch (Exception e) {
 			stringBuffer.append("\n" + HolderMessage.getMessage("evaluate.ontology.parse.failed") + "\n");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * La función encargada de guardar el modelo de inferencia de la ontología.
+	 * 
+	 * @param ontology
+	 *            El model que vamos a almacenar.
+	 */
+	private void saveOntology(InfModel ontology) {
+		this.save(ontology, "ontology.rdf");
+	}
+
+	/**
+	 * La función encargada de guardar el modelo de inferencia de la ontología.
+	 * 
+	 * @param ontology
+	 *            El model que vamos a almacenar.
+	 */
+	private void saveInfOntology(InfModel ontology) {
+		this.save(ontology, "inf_ontology.rdf");
+	}
+
+	/**
+	 * La función encargada de guardar dentro de un archivo temporal la ontología creada.
+	 * 
+	 * @param ontology
+	 *            La ontología que vamos a almacenar dentro del archivo.
+	 * @param name
+	 *            El nombre del archivo que vamos a guardar.
+	 */
+	private void save(Model ontology, String name) {
+		// Guardamos temporalmente la ontología dentro de un archivo.
+		try {
+			String path = System.getProperty("proyecto.configuration.dir") + "\\" + name;
+			FileOutputStream salida = new FileOutputStream(path);
+			ontology.write(salida);
+			salida.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
