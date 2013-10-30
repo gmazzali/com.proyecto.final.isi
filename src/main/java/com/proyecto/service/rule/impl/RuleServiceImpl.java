@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.util.annotations.Service;
 import com.common.util.exception.CheckedException;
+import com.common.util.holder.HolderMessage;
 import com.common.util.model.query.filter.Filter;
+import com.hp.hpl.jena.reasoner.rulesys.ClauseEntry;
 import com.proyecto.dao.rule.RuleDao;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.model.rule.RuleSet;
 import com.proyecto.service.ProyectoServiceImpl;
 import com.proyecto.service.rule.RuleService;
+import com.proyecto.util.Constants;
 
 /**
  * La clase que nos permite implementar la interfaz de los servicios de las reglas que tenemos dentro del sistema.
@@ -75,5 +78,36 @@ public class RuleServiceImpl extends ProyectoServiceImpl<Rule, Integer> implemen
 		String nuevaRegla = rule.getRule();
 		com.hp.hpl.jena.reasoner.rulesys.Rule r = com.hp.hpl.jena.reasoner.rulesys.Rule.parseRule(nuevaRegla);
 		return r;
+	}
+
+	@Override
+	public String convertRuleToString(Rule rule) {
+		// La salida.
+		StringBuffer output = new StringBuffer();
+		try {
+			// Imprimimos el nombre de la regla.
+			output.append(rule.getDescription() + ":\n");
+			output.append(Constants.UNDERLINE + "\n");
+
+			// Obtenemos la regla.
+			com.hp.hpl.jena.reasoner.rulesys.Rule jenaRule = this.parseRule(rule);
+
+			// Imprimimos las partes de la misma.
+			for (ClauseEntry entry : jenaRule.getBody()) {
+				output.append("(" + entry.toString() + ")");
+				output.append("\n");
+			}
+
+			output.append(":-\n");
+
+			for (ClauseEntry entry : jenaRule.getHead()) {
+				output.append("(" + entry.toString() + ")");
+				output.append("\n");
+			}
+		} catch (Exception e) {
+			output.append("\n" + HolderMessage.getMessage("evaluate.ontology.parse.failed") + "\n");
+			e.printStackTrace();
+		}
+		return output.toString();
 	}
 }

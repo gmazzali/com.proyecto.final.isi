@@ -140,9 +140,7 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	 */
 	private void evaluateRule(StringBuffer stringBuffer, OntModel ontology, Rule rule) {
 		// Comenzamos con la evaluación de la regla.
-		stringBuffer.append("\n" + rule.getDescription() + ":\n");
-		stringBuffer.append(Constants.UNDERLINE + "\n");
-		stringBuffer.append(rule.getRule() + "\n");
+		stringBuffer.append("\n" + this.ruleService.convertRuleToString(rule) + "\n");
 		stringBuffer.append(Constants.UNDERLINE + "\n");
 
 		try {
@@ -150,6 +148,8 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			com.hp.hpl.jena.reasoner.rulesys.Rule jenaRule = this.ruleService.parseRule(rule);
 			List<com.hp.hpl.jena.reasoner.rulesys.Rule> rules = new ArrayList<com.hp.hpl.jena.reasoner.rulesys.Rule>();
 			rules.add(jenaRule);
+
+			// Imprimimos la regla.
 
 			// Creamos el modelo de inferencia.
 			Reasoner reasoner = new GenericRuleReasoner(rules);
