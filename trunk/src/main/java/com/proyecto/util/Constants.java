@@ -19,7 +19,7 @@ public class Constants {
 	 * La línea de separación de la salida en pantalla.
 	 */
 	public static final String SEPARATOR_LINE = "############################################################";
-	public static final String UNDERLINE = "------------------------------------------------------------";
+	public static final String UNDERLINE = "---------------------------------------------------------------------------------------------------------";
 
 	/**
 	 * La clase que contiene las constantes propias de la ontología.
@@ -100,51 +100,51 @@ public class Constants {
 			ELEMENTS = new HashMap<String, Set<String>>();
 
 			Set<String> relaciones = new HashSet<String>();
-			relaciones.add(PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
-			relaciones.add(PROPERTY_ASSESSMENT_HAVE_MOMENT);
-			relaciones.add(PROPERTY_ASSESSMENT_HAVE_DATE);
-			relaciones.add(PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
-			ELEMENTS.put(HolderMessage.getMessage("ontology.relations.assessment"), relaciones);
+			relaciones.add(Ontology.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION);
+			relaciones.add(Ontology.PROPERTY_ASSESSMENT_HAVE_MOMENT);
+			relaciones.add(Ontology.PROPERTY_ASSESSMENT_HAVE_DATE);
+			relaciones.add(Ontology.PROPERTY_ASSESSMENT_HAVE_ACTIVITY);
+			Ontology.ELEMENTS.put(HolderMessage.getMessage("ontology.relations.assessment"), relaciones);
 
 			relaciones = new HashSet<String>();
-			relaciones.add(PROPERTY_ACTIVITY_BELONG_TO_ASSESSMENT);
-			relaciones.add(PROPERTY_ACTIVITY_HAVE_DESCRIPTION);
-			relaciones.add(PROPERTY_ACTIVITY_HAVE_REACTIVE);
-			ELEMENTS.put(HolderMessage.getMessage("ontology.relations.activity"), relaciones);
+			relaciones.add(Ontology.PROPERTY_ACTIVITY_BELONG_TO_ASSESSMENT);
+			relaciones.add(Ontology.PROPERTY_ACTIVITY_HAVE_DESCRIPTION);
+			relaciones.add(Ontology.PROPERTY_ACTIVITY_HAVE_REACTIVE);
+			Ontology.ELEMENTS.put(HolderMessage.getMessage("ontology.relations.activity"), relaciones);
 
 			relaciones = new HashSet<String>();
-			relaciones.add(PROPERTY_REACTIVE_BELONG_TO_ACTIVITY);
-			relaciones.add(PROPERTY_REACTIVE_HAVE_DESCRIPTION);
-			relaciones.add(PROPERTY_REACTIVE_HAVE_INSTRUMENT);
-			ELEMENTS.put(HolderMessage.getMessage("ontology.relations.reactive"), relaciones);
+			relaciones.add(Ontology.PROPERTY_REACTIVE_BELONG_TO_ACTIVITY);
+			relaciones.add(Ontology.PROPERTY_REACTIVE_HAVE_DESCRIPTION);
+			relaciones.add(Ontology.PROPERTY_REACTIVE_HAVE_INSTRUMENT);
+			Ontology.ELEMENTS.put(HolderMessage.getMessage("ontology.relations.reactive"), relaciones);
 
 			relaciones = new HashSet<String>();
-			relaciones.add(PROPERTY_INSTRUMENT_BELONG_TO_REACTIVE);
-			relaciones.add(PROPERTY_INSTRUMENT_HAVE_DESCRIPTION);
-			relaciones.add(PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
-			relaciones.add(PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
-			relaciones.add(PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
-			relaciones.add(PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
-			ELEMENTS.put(HolderMessage.getMessage("ontology.relations.instrument"), relaciones);
+			relaciones.add(Ontology.PROPERTY_INSTRUMENT_BELONG_TO_REACTIVE);
+			relaciones.add(Ontology.PROPERTY_INSTRUMENT_HAVE_DESCRIPTION);
+			relaciones.add(Ontology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER);
+			relaciones.add(Ontology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION);
+			relaciones.add(Ontology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION);
+			relaciones.add(Ontology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE);
+			Ontology.ELEMENTS.put(HolderMessage.getMessage("ontology.relations.instrument"), relaciones);
 
 			relaciones = new HashSet<String>();
-			relaciones.add(PROPERTY_OPTION_BELONG_TO_INSTRUMENT);
-			relaciones.add(PROPERTY_OPTION_HAVE_DESCRIPTION);
-			relaciones.add(PROPERTY_OPTION_HAVE_ANSWER);
-			ELEMENTS.put(HolderMessage.getMessage("ontology.relations.option"), relaciones);
+			relaciones.add(Ontology.PROPERTY_OPTION_BELONG_TO_INSTRUMENT);
+			relaciones.add(Ontology.PROPERTY_OPTION_HAVE_DESCRIPTION);
+			relaciones.add(Ontology.PROPERTY_OPTION_HAVE_ANSWER);
+			Ontology.ELEMENTS.put(HolderMessage.getMessage("ontology.relations.option"), relaciones);
 
 			relaciones = new HashSet<String>();
-			relaciones.add(PROPERTY_ANSWER_ESSAY_BELONG_TO_INSTRUMENT);
-			relaciones.add(PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
-			relaciones.add(PROPERTY_ANSWER_TRUEFALSE_BELONG_TO_OPTION);
-			relaciones.add(PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
-			relaciones.add(PROPERTY_ANSWER_RELATION_BELONG_TO_INSTRUMENT);
-			relaciones.add(PROPERTY_ANSWER_RELATION_LEFT_SIDE);
-			relaciones.add(PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
-			relaciones.add(PROPERTY_ANSWER_COMPLETE_BELONG_TO_INSTRUMENT);
-			relaciones.add(PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
-			relaciones.add(PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
-			ELEMENTS.put(HolderMessage.getMessage("ontology.relations.answer"), relaciones);
+			relaciones.add(Ontology.PROPERTY_ANSWER_ESSAY_BELONG_TO_INSTRUMENT);
+			relaciones.add(Ontology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION);
+			relaciones.add(Ontology.PROPERTY_ANSWER_TRUEFALSE_BELONG_TO_OPTION);
+			relaciones.add(Ontology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE);
+			relaciones.add(Ontology.PROPERTY_ANSWER_RELATION_BELONG_TO_INSTRUMENT);
+			relaciones.add(Ontology.PROPERTY_ANSWER_RELATION_LEFT_SIDE);
+			relaciones.add(Ontology.PROPERTY_ANSWER_RELATION_RIGHT_SIDE);
+			relaciones.add(Ontology.PROPERTY_ANSWER_COMPLETE_BELONG_TO_INSTRUMENT);
+			relaciones.add(Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX);
+			relaciones.add(Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE);
+			Ontology.ELEMENTS.put(HolderMessage.getMessage("ontology.relations.answer"), relaciones);
 		}
 	}
 }
