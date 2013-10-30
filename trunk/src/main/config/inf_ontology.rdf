@@ -1,0 +1,1102 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:NS="http://www.assessments.com/#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" > 
+  <rdf:Description rdf:about="http://www.assessments.com/#optionHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#optionHasDescription"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#float">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#double">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#unsignedLong">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#backwardCompatibleWith">
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#backwardCompatibleWith"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#reactiveHasInstrument">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:range rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Reactive"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#reactiveHasInstrument"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#unsignedByte">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#hexBinary">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Restriction">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Literal">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#time">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#DatatypeProperty">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#gYearMonth">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#equivalentClass">
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#equivalentClass"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#assessmentHasMoment">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#assessmentHasMoment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueFalseAnswer">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#TrueFalseAnswer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#TrueFalseAnswer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Datatype">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#rest">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+    <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#isDefinedBy">
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#byte">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#disjointWith">
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#ChoiceInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#gMonthDay">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#domain">
+    <rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#TransitiveProperty">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#int">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#FunctionalProperty">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Option">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#unsignedShort">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Reactive_1">
+    <NS:reactiveHasInstrument rdf:resource="http://www.assessments.com/#SingleChoiceInstrument_1"/>
+    <NS:reactiveHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactivo 1</NS:reactiveHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#Reactive"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:sameAs rdf:resource="http://www.assessments.com/#Reactive_1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Activity">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Activity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#Activity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#SingleChoiceInstrument_1">
+    <NS:choiceInstrumentHasOption rdf:resource="http://www.assessments.com/#TrueOption_3"/>
+    <NS:instrumentHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Seleccion simple 1</NS:instrumentHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#SingleChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdf:type rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <owl:sameAs rdf:resource="http://www.assessments.com/#SingleChoiceInstrument_1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subClassOf">
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Activity_1">
+    <NS:activityHasReactives rdf:resource="http://www.assessments.com/#Reactive_1"/>
+    <NS:activityHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Actividad 1</NS:activityHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#Activity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:sameAs rdf:resource="http://www.assessments.com/#Activity_1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#FormalInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Answer">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#unsignedInt">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Reactive">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Reactive"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#Reactive"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#short">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Resource">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#intersectionOf">
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#intersectionOf"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#SymmetricProperty">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#anyURI">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#base64Binary">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#versionInfo">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#instrumentHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#instrumentHasDescription"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#assessmentHasActivity">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:range rdf:resource="http://www.assessments.com/#Activity"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Assessment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#assessmentHasActivity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#activityHasReactives">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:range rdf:resource="http://www.assessments.com/#Reactive"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Activity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#activityHasReactives"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#choiceInstrumentHasOption">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:range rdf:resource="http://www.assessments.com/#Option"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#choiceInstrumentHasOption"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Instrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#sameAs">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#sameAs"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#integer">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#positiveInteger">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#List">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#first">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#first"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#long">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueFalseAnswer_3">
+    <NS:truefalseAnswerHasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</NS:truefalseAnswerHasValue>
+    <rdf:type rdf:resource="http://www.assessments.com/#TrueFalseAnswer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.assessments.com/#Answer"/>
+    <owl:sameAs rdf:resource="http://www.assessments.com/#TrueFalseAnswer_3"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#SingleChoiceInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#SingleChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#SingleChoiceInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Property">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Property"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2002/07/owl#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#incompatibleWith">
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#incompatibleWith"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#nonPositiveInteger">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#onProperty">
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#onProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueOption">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#TrueOption"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#TrueOption"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#decimal">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Container">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#seeAlso">
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#object">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#object"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueOption_3">
+    <NS:optionHasAnswer rdf:resource="http://www.assessments.com/#TrueFalseAnswer_3"/>
+    <NS:optionHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Todas las anteriores</NS:optionHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#TrueOption"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:sameAs rdf:resource="http://www.assessments.com/#TrueOption_3"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#string">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#optionHasAnswer">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:range rdf:resource="http://www.assessments.com/#TrueFalseAnswer"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#optionHasAnswer"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:range rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#assessmentHasDate">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#assessmentHasDate"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#OntologyProperty">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Instrument">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#assessmentHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#assessmentHasDescription"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Assessment_1">
+    <NS:assessmentHasActivity rdf:resource="http://www.assessments.com/#Activity_1"/>
+    <NS:assessmentHasMoment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Diagnóstica</NS:assessmentHasMoment>
+    <NS:assessmentHasDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2013-09-25 00:00:00.0</NS:assessmentHasDate>
+    <NS:assessmentHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pepito 1</NS:assessmentHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#Assessment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <owl:sameAs rdf:resource="http://www.assessments.com/#Assessment_1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Ontology">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#gMonth">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#AnnotationProperty">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#range">
+    <rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#differentFrom">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#differentFrom"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subPropertyOf">
+    <rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#ObjectiveActivityInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#ObjectiveActivityInstrument"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#oneOf">
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#oneOf"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#gYear">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Assessment">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Assessment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.assessments.com/#Assessment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#InverseFunctionalProperty">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#negativeInteger">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#truefalseAnswerHasValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#truefalseAnswerHasValue"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Nothing">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#dateTime">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#duration">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#priorVersion">
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#priorVersion"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#gDay">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#activityHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#activityHasDescription"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#imports">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#OntologyProperty"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#imports"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#date">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#reactiveHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.assessments.com/#reactiveHasDescription"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#boolean">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:disjointWith rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+</rdf:RDF>
