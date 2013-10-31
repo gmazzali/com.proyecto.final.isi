@@ -102,41 +102,47 @@ public class ValidateAssessmentTestUnit {
 
 		// Creamos una regla que falle.
 		Rule rule = new Rule();
-//		rule.setId(1);
-//		rule.setDescription("Regla que falla por multiple choice");
-//		rule.setRule("[(?v rb:validation on()), (?x rdf:type http://www.assessments.com/#MultipleChoiceInstrument) -> (?x rb:violation error('error', 'Error de multiple choice', ?x))]");
-//		set.addRule(rule);
-//
-//		rule = new Rule();
-//		rule.setId(2);
-//		rule.setDescription("Regla que falla por simple choice");
-//		rule.setRule("[(?v rb:validation on()), (?x rdf:type http://www.assessments.com/#SingleChoiceInstrument) -> (?x rb:violation error('error', 'Error de simple choice', ?x))]");
-//		set.addRule(rule);
-//
-//		rule = new Rule();
-//		rule.setId(3);
-//		rule.setDescription("Regla que falla por correspondencia");
-//		rule.setRule("[(?v rb:validation on()), (?x rdf:type http://www.assessments.com/#CorrespondenceInstrument) -> (?x rb:violation error('error', 'Error de correspondencia', ?x))]");
-//		set.addRule(rule);
-//
-//		rule = new Rule();
-//		rule.setId(4);
-//		rule.setDescription("Regla que no falla por portfolio");
-//		rule.setRule("[(?v rb:validation on()), (?x rdf:type http://www.assessments.com/#PortfolioInstrument) -> (?x rb:violation error('error', 'Error de portfolio', ?x))]");
-//		set.addRule(rule);
-
-		rule = new Rule();
-		rule.setId(5);
-		rule.setDescription("Regla compleja de conteo de reactivos en actividad");
-//		rule.setRule("[(?v rb:validation on()), (?a rdf:type http://www.assessments.com/#Activity), (?a http://www.assessments.com/#activityHasReactives ?l), listLength(?l, ?len), lessThan(?len, 1) -> (?x rb:violation error('error', 'Error de conteo de reactivos en actividad', ?a))]");
-		rule.setRule("[(?v rb:validation on()), (?a rdf:type http://www.assessments.com/#Activity), (?a http://www.assessments.com/#activityHasReactives ?l) -> print('Salida de la evaluación', ?a, ?l)]");
+		rule.setId(1);
+		rule.setDescription("Regla que falla por multiple choice");
+		rule.setRule("[(?v rb:validation on()), (?x rdf:type http://www.assessments.com/#MultipleChoiceInstrument) -> (?x rb:violation error('error', 'Error de multiple choice', ?x))]");
 		set.addRule(rule);
 
 		rule = new Rule();
-		rule.setId(6);
-		rule.setDescription("Regla que no parsea");
-		rule.setRule("regla sin parseo");
+		rule.setId(2);
+		rule.setDescription("Regla que falla por simple choice");
+		rule.setRule("[(?v rb:validation on()), (?x rdf:type http://www.assessments.com/#SingleChoiceInstrument) -> (?x rb:violation error('error', 'Error de simple choice', ?x))]");
 		set.addRule(rule);
+
+		rule = new Rule();
+		rule.setId(3);
+		rule.setDescription("Regla que falla por correspondencia");
+		rule.setRule("[(?v rb:validation on()), (?x rdf:type http://www.assessments.com/#CorrespondenceInstrument) -> (?x rb:violation error('error', 'Error de correspondencia', ?x))]");
+		set.addRule(rule);
+
+		rule = new Rule();
+		rule.setId(4);
+		rule.setDescription("Regla que no falla por portfolio");
+		rule.setRule("[(?v rb:validation on()), (?x rdf:type http://www.assessments.com/#PortfolioInstrument) -> (?x rb:violation error('error', 'Error de portfolio', ?x))]");
+		set.addRule(rule);
+
+		// rule = new Rule();
+		// rule.setId(5);
+		// rule.setDescription("Regla compleja de conteo de reactivos en actividad");
+		// rule.setRule("[(?v rb:validation on()), (?a rdf:type http://www.assessments.com/#Activity), (?a http://www.assessments.com/#activityHasReactives ?l), listLength(?l, ?len), lessThan(?len, 1) -> (?x rb:violation error('error', 'Error de conteo de reactivos en actividad', ?a))]");
+		// rule.setRule("[(?v rb:validation on()), (?a rdf:type http://www.assessments.com/#Activity), (?a http://www.assessments.com/#activityHasReactives ?l) -> print('Salida de la evaluación', ?a, ?l)]");
+		// set.addRule(rule);
+		//
+		// rule = new Rule();
+		// rule.setId(6);
+		// rule.setDescription("Regla compleja de conteo de actividades en evaluaciones");
+		// rule.setRule("[(?v rb:validation on()), (?a rdf:type http://www.assessments.com/#Assessment), (?a http://www.assessments.com/#assessmentHasActivities ?l), listLength(?l, ?len) -> print('Salida de la evaluación', ?a, ?l, ?len)]");
+		// set.addRule(rule);
+		//
+		// rule = new Rule();
+		// rule.setId(7);
+		// rule.setDescription("Regla que no parsea");
+		// rule.setRule("regla sin parseo");
+		// set.addRule(rule);
 
 		// Cargamos la evaluación en el validador y lo ejecutamos.
 		ValidateAssessment task = HolderApplicationContext.getBean(ValidateAssessment.class);
