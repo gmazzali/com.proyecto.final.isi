@@ -12,6 +12,7 @@ import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.activity.Activity;
@@ -115,9 +116,13 @@ public class AssessmentRdfImpl extends MaterialRdfImpl<Assessment> implements As
 		statements.add(ontology.createLiteralStatement(individual, this.haveDate, date));
 		statements.add(ontology.createLiteralStatement(individual, this.haveMoment, moment));
 
-		for (Activity activity : entity.getActivities()) {
-			statements.add(ontology.createLiteralStatement(individual, this.haveActivity,
-					this.activityFactoryRdf.loadEntityToOntology(ontology, activity)));
+		if (entity.getActivities() != null && !entity.getActivities().isEmpty()) {
+			RDFNode[] activitiesNodes = new RDFNode[entity.getActivities().size()];
+			int index = 0;
+			for (Activity activity : entity.getActivities()) {
+				activitiesNodes[index++] = this.activityFactoryRdf.loadEntityToOntology(ontology, activity);
+			}
+			statements.add(ontology.createLiteralStatement(individual, this.haveActivity, ontology.createList(activitiesNodes)));
 		}
 
 		ontology.add(statements);
