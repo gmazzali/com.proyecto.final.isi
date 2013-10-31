@@ -30,13 +30,4 @@ public interface RuleService extends ProyectoService<Rule, Integer> {
 	 *             En caso de una falla en la conversión de la regla.
 	 */
 	public com.hp.hpl.jena.reasoner.rulesys.Rule parseRule(Rule rule) throws Exception;
-
-	/**
-	 * La función encargada de convertir una regla en una cadena de caracteres.
-	 * 
-	 * @param rule
-	 *            La regla que queremos convertir en una cadena de caracteres.
-	 * @return La cadena de caracteres que corresponden a la regla, en caso de que la regla sea inválida, se retorna una cadena vacía.
-	 */
-	String convertRuleToString(Rule rule);
 }

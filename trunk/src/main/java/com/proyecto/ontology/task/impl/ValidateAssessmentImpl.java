@@ -15,10 +15,13 @@ import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.InfModel;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ValidityReport;
 import com.hp.hpl.jena.reasoner.ValidityReport.Report;
 import com.hp.hpl.jena.reasoner.rulesys.GenericRuleReasoner;
+import com.hp.hpl.jena.vocabulary.ReasonerVocabulary;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.rule.Rule;
@@ -40,6 +43,11 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	private static final long serialVersionUID = -322789772715142375L;
 
 	/**
+	 * El valor que indica si va a imprimirse la ontología dentro de la salida.
+	 */
+	@Value("${ontology.print}")
+	private Boolean printOntology;
+	/**
 	 * El modo en el que se va a imprimir la salida de la ontología.
 	 */
 	@Value("${ontology.print.mode}")
@@ -54,6 +62,21 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	 */
 	@Value("${ontology.namespace.prefix}")
 	private String namespacePrefix;
+	/**
+	 * El valor de debug para el razonador.
+	 */
+	@Value("${ontology.reasoner.trace}")
+	private Boolean reasonerTrace;
+	/**
+	 * El valor booleano que nos indica si va a detallarse el error al momento de validar la regla.
+	 */
+	@Value("${ontology.reasoner.fail.detail}")
+	private Boolean detailFailedValidation;
+	/**
+	 * El valor que indica si va a guardarse la ontología dentro de un archivo.
+	 */
+	@Value("${ontology.save}")
+	private Boolean saveOntology;
 
 	/**
 	 * El servicio para la ontología de las evaluaciones.
@@ -90,41 +113,56 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			// Comenzamos con la evaluación.
 			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
 			stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.begin") + "\n");
-			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
+			stringBuffer.append(Constants.SEPARATOR_LINE + "\n\n");
 
 			// Comenzamos la carga de la ontología a la salida.
 			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
 			stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.load.begin") + "\n");
-			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
+			stringBuffer.append(Constants.SEPARATOR_LINE + "\n\n");
 
 			// Creamos la ontología y la cargamos con la evaluación.
 			OntModel ontology = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM_RULE_INF);
 			ontology.setNsPrefix(this.namespacePrefix, this.namespace);
 			ValidateAssessmentImpl.this.assessmentFactoryRdf.loadEntityToOntology(ontology, ValidateAssessmentImpl.this.assessment);
 
-			// Cargamos la ontología a la salida.
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ontology.write(out, this.printMode);
-			stringBuffer.append(out.toString());
+			// Si queremos cargar la ontología a la salida, la cargamos.
+			if (this.printOntology) {
+				ByteArrayOutputStream out = new ByteArrayOutputStream();
+				ontology.write(out, this.printMode);
+				stringBuffer.append(out.toString() + "\n");
+			}
 
 			// Guardamos la ontología dentro de un archivo.
-			this.saveOntology(ontology);
+			if (this.saveOntology) {
+				this.saveOntology(ontology);
+			}
 
 			// Finalizamos la carga de la ontología.
 			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
 			stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.load.finish") + "\n");
-			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
+			stringBuffer.append(Constants.SEPARATOR_LINE + "\n\n");
 
 			// Cargamos las reglas solo si las mismas no son nulas.
-			if (this.ruleSet != null && !this.ruleSet.getRules().isEmpty()) {
+			if(this.ruleSet != null && !this.ruleSet.getRules().isEmpty()) {
+				// Agregamos los mensajes de carga de reglas.
+				stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
+				stringBuffer.append(HolderMessage.getMessage("evaluate.rules.begin") + "\n");
+				stringBuffer.append(Constants.SEPARATOR_LINE + "\n\n");
+				
+				// Evaluamos cada una de las reglas del conjunto.
 				for (Rule rule : this.ruleSet.getRules()) {
 					this.evaluateRule(stringBuffer, ontology, rule);
 				}
+
+				// Agregamos los mensajes de finalización de reglas.
+				stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
+				stringBuffer.append(HolderMessage.getMessage("evaluate.rules.finish") + "\n");
+				stringBuffer.append(Constants.SEPARATOR_LINE + "\n\n");
 			}
 			// Cuando terminamos de validar la evaluación.
 			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
 			stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.finish") + "\n");
-			stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
+			stringBuffer.append(Constants.SEPARATOR_LINE + "\n\n");
 		}
 	}
 
@@ -139,70 +177,67 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	 *            La regla en si misma para validarse.
 	 */
 	private void evaluateRule(StringBuffer stringBuffer, OntModel ontology, Rule rule) {
-		// Comenzamos con la evaluación de la regla.
-		stringBuffer.append("\n" + this.ruleService.convertRuleToString(rule) + "\n");
-		stringBuffer.append(Constants.UNDERLINE + "\n");
-
 		try {
+			// Comenzamos con la evaluación de la regla.
+			stringBuffer.append(Constants.UNDERLINE + "\n");
+			stringBuffer.append(rule.getDescription() + ":\n");
+			stringBuffer.append(rule.getRule() + "\n\n");
+			stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.rule.title") + ": ");
+
 			// Convertimos la regla a partir del String.
 			com.hp.hpl.jena.reasoner.rulesys.Rule jenaRule = this.ruleService.parseRule(rule);
 			List<com.hp.hpl.jena.reasoner.rulesys.Rule> rules = new ArrayList<com.hp.hpl.jena.reasoner.rulesys.Rule>();
 			rules.add(jenaRule);
 
-			// Imprimimos la regla.
-
-			// Creamos el modelo de inferencia.
+			// Creamos el razonador.
 			Reasoner reasoner = new GenericRuleReasoner(rules);
+			reasoner.setParameter(ReasonerVocabulary.PROPtraceOn, reasonerTrace.booleanValue());
+
+			// Creamos el modelo de inferencia y activamos la validación dentro de esta.
 			InfModel infOntology = ModelFactory.createInfModel(reasoner, ontology);
+			this.activateValidation(infOntology);
 
-			// Guardamos el modelo inferido.
-			this.saveInfOntology(infOntology);
-			infOntology.write(System.out, "TTL");
-
-			// Comparamos los modelos para su evaluación.
-			// TODO gmazzali Hacer lo de la ejecución de la validación de la evaluación y el conjunto de reglas dentro de la ontología.
-			if (ontology.difference(infOntology).isEmpty()) {
-				// TODO gmazzali Hacer lo que corresponda cuando los modelos sean iguales.
-			} else {
-				// TODO gmazzali Hacer lo que corresponda cuando los modelos sean diferentes.
-			}
+			// Preparamos el modelo.
+			infOntology.prepare();
 
 			// Validamos el modelo.
 			ValidityReport reports = infOntology.validate();
 			if (reports.isValid()) {
 				stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.rule.pass") + "\n");
 			} else {
-				// Mostramos todos los errores que nos surgieron.
-				Iterator<Report> iterableReport = reports.getReports();
-				while (iterableReport.hasNext()) {
-					Report report = iterableReport.next();
-					stringBuffer.append(report.getDescription() + "\n");
+				stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.rule.failed") + "\n");
+
+				// Mostramos todos los errores que nos surgieron si es necesario.
+				if (this.detailFailedValidation) {
+					Iterator<Report> iterableReport = reports.getReports();
+					while (iterableReport.hasNext()) {
+						Report report = iterableReport.next();
+						stringBuffer.append(report.getDescription() + "\n");
+					}
 				}
 			}
 		} catch (Exception e) {
-			stringBuffer.append("\n" + HolderMessage.getMessage("evaluate.ontology.parse.failed") + "\n");
+			stringBuffer.append(HolderMessage.getMessage("evaluate.ontology.parse.failed") + "\n");
 			e.printStackTrace();
+		} finally {
+			stringBuffer.append("\n");
 		}
 	}
 
 	/**
-	 * La función encargada de guardar el modelo de inferencia de la ontología.
+	 * La función encargada de activar la validación dentro del modelo mediante la inclusión de una tripleta especifica.
 	 * 
-	 * @param ontology
-	 *            El model que vamos a almacenar.
+	 * @param infOntology
+	 *            El modelo sobre el que va a activarse la validación.
 	 */
-	private void saveOntology(InfModel ontology) {
-		this.save(ontology, "ontology.rdf");
-	}
+	private void activateValidation(InfModel infOntology) {
+		// Creamos los elementos de la tripleta.
+		Resource subject = infOntology.createResource("_:x");
+		Property predicate = infOntology.createProperty("rb:validation");
+		String object = "on()";
 
-	/**
-	 * La función encargada de guardar el modelo de inferencia de la ontología.
-	 * 
-	 * @param ontology
-	 *            El model que vamos a almacenar.
-	 */
-	private void saveInfOntology(InfModel ontology) {
-		this.save(ontology, "inf_ontology.rdf");
+		// Agregamos la tripleta.
+		infOntology.add(infOntology.createStatement(subject, predicate, object));
 	}
 
 	/**
@@ -210,13 +245,11 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	 * 
 	 * @param ontology
 	 *            La ontología que vamos a almacenar dentro del archivo.
-	 * @param name
-	 *            El nombre del archivo que vamos a guardar.
 	 */
-	private void save(Model ontology, String name) {
-		// Guardamos temporalmente la ontología dentro de un archivo.
+	private void saveOntology(Model ontology) {
 		try {
-			String path = System.getProperty("proyecto.configuration.dir") + "\\" + name;
+			// Guardamos temporalmente la ontología dentro de un archivo.
+			String path = System.getProperty("proyecto.configuration.dir") + "\\ontology.rdf";
 			FileOutputStream salida = new FileOutputStream(path);
 			ontology.write(salida);
 			salida.close();
