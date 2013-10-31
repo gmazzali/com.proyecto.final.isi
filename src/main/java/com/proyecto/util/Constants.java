@@ -18,8 +18,8 @@ public class Constants {
 	/**
 	 * La línea de separación de la salida en pantalla.
 	 */
-	public static final String SEPARATOR_LINE = "############################################################";
-	public static final String UNDERLINE = "---------------------------------------------------------------------------------------------------------";
+	public static final String SEPARATOR_LINE = "###################################################################";
+	public static final String UNDERLINE = 		"-------------------------------------------------------------------";
 
 	/**
 	 * La clase que contiene las constantes propias de la ontología.
