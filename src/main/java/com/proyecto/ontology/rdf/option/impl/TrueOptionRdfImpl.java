@@ -17,7 +17,7 @@ import com.proyecto.ontology.rdf.option.TrueOptionRdf;
 public class TrueOptionRdfImpl extends OptionRdfImpl<TrueOption> implements TrueOptionRdf {
 
 	private static final long serialVersionUID = -1333807761651940671L;
-	
+
 	/**
 	 * La clase de una opción verdadera.
 	 */
@@ -26,17 +26,16 @@ public class TrueOptionRdfImpl extends OptionRdfImpl<TrueOption> implements True
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
-			String trueOptionClassName = this.namespace + TrueOption.class.getSimpleName();
+		String trueOptionClassName = this.namespace + TrueOption.class.getSimpleName();
+		this.trueOptionClass = ontology.getOntClass(trueOptionClassName);
 		if (this.trueOptionClass == null) {
-			this.trueOptionClass = ontology.getOntClass(trueOptionClassName);
-			if (this.trueOptionClass == null) {
-				this.trueOptionClass = ontology.createClass(trueOptionClassName);
-			}
+			this.trueOptionClass = ontology.createClass(trueOptionClassName);
 
 			// Cargamos el padre.
 			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.trueOptionClass);
 		}
+
 		return this.trueOptionClass;
 	}
 

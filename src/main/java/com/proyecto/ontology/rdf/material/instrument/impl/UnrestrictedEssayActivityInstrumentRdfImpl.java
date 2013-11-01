@@ -28,11 +28,9 @@ public class UnrestrictedEssayActivityInstrumentRdfImpl extends EssayActivityIns
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String unrestrictedEssayActivityInstrumentClassName = this.namespace + UnrestrictedEssayActivityInstrument.class.getSimpleName();
+		this.unrestrictedEssayActivityInstrumentClass = ontology.getOntClass(unrestrictedEssayActivityInstrumentClassName);
 		if (this.unrestrictedEssayActivityInstrumentClass == null) {
-			this.unrestrictedEssayActivityInstrumentClass = ontology.getOntClass(unrestrictedEssayActivityInstrumentClassName);
-			if (this.unrestrictedEssayActivityInstrumentClass == null) {
-				this.unrestrictedEssayActivityInstrumentClass = ontology.createClass(unrestrictedEssayActivityInstrumentClassName);
-			}
+			this.unrestrictedEssayActivityInstrumentClass = ontology.createClass(unrestrictedEssayActivityInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -44,9 +42,6 @@ public class UnrestrictedEssayActivityInstrumentRdfImpl extends EssayActivityIns
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, UnrestrictedEssayActivityInstrument entity) {
-		// Cargamos el padre.
-		individual = super.loadEntityData(ontology, individual, entity);
-
-		return individual;
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

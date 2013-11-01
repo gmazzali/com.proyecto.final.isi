@@ -28,11 +28,9 @@ public abstract class FormalInstrumentRdfImpl<I extends FormalInstrument> extend
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String formalInstrumentClassName = this.namespace + FormalInstrument.class.getSimpleName();
+		this.formalInstrumentClass = ontology.getOntClass(formalInstrumentClassName);
 		if (this.formalInstrumentClass == null) {
-			this.formalInstrumentClass = ontology.getOntClass(formalInstrumentClassName);
-			if (this.formalInstrumentClass == null) {
-				this.formalInstrumentClass = ontology.createClass(formalInstrumentClassName);
-			}
+			this.formalInstrumentClass = ontology.createClass(formalInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -44,9 +42,6 @@ public abstract class FormalInstrumentRdfImpl<I extends FormalInstrument> extend
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, I entity) {
-		// Cargamos el padre.
-		individual = super.loadEntityData(ontology, individual, entity);
-
-		return individual;
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

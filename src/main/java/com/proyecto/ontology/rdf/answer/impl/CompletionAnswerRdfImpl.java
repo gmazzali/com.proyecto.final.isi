@@ -40,11 +40,9 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
 		String completionAnswerClassName = this.namespace + CompletionAnswer.class.getSimpleName();
+		this.completionAnswerClass = ontology.getOntClass(completionAnswerClassName);
 		if (this.completionAnswerClass == null) {
-			this.completionAnswerClass = ontology.getOntClass(completionAnswerClassName);
-			if (completionAnswerClass == null) {
-				this.completionAnswerClass = ontology.createClass(completionAnswerClassName);
-			}
+			this.completionAnswerClass = ontology.createClass(completionAnswerClassName);
 
 			// Cargamos el padre.
 			OntClass superClass = super.initClass(ontology);
@@ -53,19 +51,15 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 
 		// Creamos las relaciones si son nulas.
 		String index = this.namespace + Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX;
+		this.haveIndex = ontology.getDatatypeProperty(index);
 		if (this.haveIndex == null) {
-			this.haveIndex = ontology.getDatatypeProperty(index);
-			if (this.haveIndex == null) {
-				this.haveIndex = ontology.createDatatypeProperty(index);
-			}
+			this.haveIndex = ontology.createDatatypeProperty(index);
 		}
 
 		String phrase = this.namespace + Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE;
+		this.havePhrase = ontology.getDatatypeProperty(phrase);
 		if (this.havePhrase == null) {
-			this.havePhrase = ontology.getDatatypeProperty(phrase);
-			if (this.havePhrase == null) {
-				this.havePhrase = ontology.createDatatypeProperty(phrase);
-			}
+			this.havePhrase = ontology.createDatatypeProperty(phrase);
 		}
 
 		return this.completionAnswerClass;

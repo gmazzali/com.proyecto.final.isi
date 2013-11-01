@@ -27,16 +27,15 @@ public class DistractorRdfImpl extends OptionRdfImpl<Distractor> implements Dist
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String distractorOptionClassName = this.namespace + Distractor.class.getSimpleName();
+		this.distractorOptionClass = ontology.getOntClass(distractorOptionClassName);
 		if (this.distractorOptionClass == null) {
-			this.distractorOptionClass = ontology.getOntClass(distractorOptionClassName);
-			if (this.distractorOptionClass == null) {
-				this.distractorOptionClass = ontology.createClass(distractorOptionClassName);
-			}
+			this.distractorOptionClass = ontology.createClass(distractorOptionClassName);
 
 			// Cargamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.distractorOptionClass);
 		}
+
 		return this.distractorOptionClass;
 	}
 

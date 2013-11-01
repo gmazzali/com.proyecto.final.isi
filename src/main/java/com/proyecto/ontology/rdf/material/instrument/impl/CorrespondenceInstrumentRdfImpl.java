@@ -9,6 +9,7 @@ import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.RelationAnswer;
@@ -48,11 +49,9 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String correspondenceInstrumentClassName = this.namespace + CorrespondenceInstrument.class.getSimpleName();
+		this.correspondenceInstrumentClass = ontology.getOntClass(correspondenceInstrumentClassName);
 		if (this.correspondenceInstrumentClass == null) {
-			this.correspondenceInstrumentClass = ontology.getOntClass(correspondenceInstrumentClassName);
-			if (this.correspondenceInstrumentClass == null) {
-				this.correspondenceInstrumentClass = ontology.createClass(correspondenceInstrumentClassName);
-			}
+			this.correspondenceInstrumentClass = ontology.createClass(correspondenceInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -61,13 +60,11 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 
 		// Creamos las relaciones.
 		String relations = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION;
+		this.haveRelation = ontology.getObjectProperty(relations);
 		if (this.haveRelation == null) {
-			this.haveRelation = ontology.getObjectProperty(relations);
-			if (this.haveRelation == null) {
-				this.haveRelation = ontology.createObjectProperty(relations);
-				this.haveRelation.addDomain(this.correspondenceInstrumentClass);
-				this.haveRelation.addRange(this.relationAnswerRdf.initClass(ontology));
-			}
+			this.haveRelation = ontology.createObjectProperty(relations);
+			this.haveRelation.addDomain(this.correspondenceInstrumentClass);
+			this.haveRelation.addRange(this.relationAnswerRdf.initClass(ontology));
 		}
 
 		return this.correspondenceInstrumentClass;
@@ -81,8 +78,13 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
 
-		for (RelationAnswer answer : entity.getRelations()) {
-			statements.add(ontology.createLiteralStatement(individual, this.haveRelation, this.relationAnswerRdf.createIndividual(ontology, answer)));
+		if (entity.getRelations() != null && !entity.getRelations().isEmpty()) {
+			RDFNode[] completesNodes = new RDFNode[entity.getRelations().size()];
+			int index = 0;
+			for (RelationAnswer answer : entity.getRelations()) {
+				completesNodes[index++] = this.relationAnswerRdf.createIndividual(ontology, answer);
+			}
+			statements.add(ontology.createLiteralStatement(individual, this.haveRelation, ontology.createList(completesNodes)));
 		}
 
 		ontology.add(statements);

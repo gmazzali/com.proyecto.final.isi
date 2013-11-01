@@ -48,11 +48,9 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String essayActivityInstrumentClassName = this.namespace + EssayActivityInstrument.class.getSimpleName();
+		this.essayActivityInstrumentClass = ontology.getOntClass(essayActivityInstrumentClassName);
 		if (this.essayActivityInstrumentClass == null) {
-			this.essayActivityInstrumentClass = ontology.getOntClass(essayActivityInstrumentClassName);
-			if (this.essayActivityInstrumentClass == null) {
-				this.essayActivityInstrumentClass = ontology.createClass(essayActivityInstrumentClassName);
-			}
+			this.essayActivityInstrumentClass = ontology.createClass(essayActivityInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -61,13 +59,11 @@ public abstract class EssayActivityInstrumentRdfImpl<I extends EssayActivityInst
 
 		// Creamos las relaciones.
 		String answer = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_ESSAY_HAVE_ANSWER;
+		this.haveAnswer = ontology.getObjectProperty(answer);
 		if (this.haveAnswer == null) {
-			this.haveAnswer = ontology.getObjectProperty(answer);
-			if (this.haveAnswer == null) {
-				this.haveAnswer = ontology.createObjectProperty(answer);
-				this.haveAnswer.setDomain(this.essayActivityInstrumentClass);
-				this.haveAnswer.setRange(this.essayActivityAnswerRdf.initClass(ontology));
-			}
+			this.haveAnswer = ontology.createObjectProperty(answer);
+			this.haveAnswer.setDomain(this.essayActivityInstrumentClass);
+			this.haveAnswer.setRange(this.essayActivityAnswerRdf.initClass(ontology));
 		}
 
 		return this.essayActivityInstrumentClass;

@@ -27,11 +27,9 @@ public class ExerciseInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ExerciseI
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String exerciseInstrumentClassName = this.namespace + ExerciseInstrument.class.getSimpleName();
+		this.exerciseInstrumentClass = ontology.getOntClass(exerciseInstrumentClassName);
 		if (this.exerciseInstrumentClass == null) {
-			this.exerciseInstrumentClass = ontology.getOntClass(exerciseInstrumentClassName);
-			if (this.exerciseInstrumentClass == null) {
-				this.exerciseInstrumentClass = ontology.createClass(exerciseInstrumentClassName);
-			}
+			this.exerciseInstrumentClass = ontology.createClass(exerciseInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -43,9 +41,6 @@ public class ExerciseInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ExerciseI
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, ExerciseInstrument entity) {
-		// Cargamos el padre.
-		individual = super.loadEntityData(ontology, individual, entity);
-
-		return individual;
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

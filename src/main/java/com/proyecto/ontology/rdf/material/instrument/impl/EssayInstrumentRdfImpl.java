@@ -27,11 +27,9 @@ public class EssayInstrumentRdfImpl extends SimpleInstrumentRdfImpl<EssayInstrum
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String essayInstrumentClassName = this.namespace + EssayInstrument.class.getSimpleName();
+		this.essayInstrumentClass = ontology.getOntClass(essayInstrumentClassName);
 		if (this.essayInstrumentClass == null) {
-			this.essayInstrumentClass = ontology.getOntClass(essayInstrumentClassName);
-			if (this.essayInstrumentClass == null) {
-				this.essayInstrumentClass = ontology.createClass(essayInstrumentClassName);
-			}
+			this.essayInstrumentClass = ontology.createClass(essayInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -43,7 +41,6 @@ public class EssayInstrumentRdfImpl extends SimpleInstrumentRdfImpl<EssayInstrum
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, EssayInstrument entity) {
-		// Cargamos el padre.
 		return super.loadEntityData(ontology, individual, entity);
 	}
 }

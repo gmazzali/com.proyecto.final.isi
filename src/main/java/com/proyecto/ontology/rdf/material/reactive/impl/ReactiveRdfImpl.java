@@ -51,30 +51,24 @@ public class ReactiveRdfImpl extends MaterialRdfImpl<Reactive> implements Reacti
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String reactiveClassName = this.namespace + Reactive.class.getSimpleName();
+		this.reactiveClass = ontology.getOntClass(reactiveClassName);
 		if (this.reactiveClass == null) {
-			this.reactiveClass = ontology.getOntClass(reactiveClassName);
-			if (this.reactiveClass == null) {
-				this.reactiveClass = ontology.createClass(reactiveClassName);
-			}
+			this.reactiveClass = ontology.createClass(reactiveClassName);
 		}
 
 		// Creamos las relaciones.
 		String description = this.namespace + Constants.Ontology.PROPERTY_REACTIVE_HAVE_DESCRIPTION;
+		this.haveDescription = ontology.getDatatypeProperty(description);
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(description);
-			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(description);
-			}
+			this.haveDescription = ontology.createDatatypeProperty(description);
 		}
 
 		String instrument = this.namespace + Constants.Ontology.PROPERTY_REACTIVE_HAVE_INSTRUMENT;
+		this.haveInstrument = ontology.getObjectProperty(instrument);
 		if (this.haveInstrument == null) {
-			this.haveInstrument = ontology.getObjectProperty(instrument);
-			if (this.haveInstrument == null) {
-				this.haveInstrument = ontology.createObjectProperty(instrument);
-				this.haveInstrument.addDomain(this.reactiveClass);
-				this.haveInstrument.addRange(this.instrumentFactoryRdf.topClassHierachy(ontology));
-			}
+			this.haveInstrument = ontology.createObjectProperty(instrument);
+			this.haveInstrument.addDomain(this.reactiveClass);
+			this.haveInstrument.addRange(this.instrumentFactoryRdf.topClassHierachy(ontology));
 		}
 
 		return this.reactiveClass;
@@ -89,8 +83,8 @@ public class ReactiveRdfImpl extends MaterialRdfImpl<Reactive> implements Reacti
 
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
-		statements.add(ontology.createLiteralStatement(individual, haveDescription, description));
-		statements.add(ontology.createLiteralStatement(individual, haveInstrument,
+		statements.add(ontology.createLiteralStatement(individual, this.haveDescription, description));
+		statements.add(ontology.createLiteralStatement(individual, this.haveInstrument,
 				this.instrumentFactoryRdf.loadEntityToOntology(ontology, entity.getInstrument())));
 
 		ontology.add(statements);

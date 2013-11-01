@@ -27,11 +27,9 @@ public class PortfolioInstrumentRdfImpl extends CompositeInstrumentRdfImpl<Portf
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String portfolioInstrumentClassName = this.namespace + PortfolioInstrument.class.getSimpleName();
+		this.portfolioInstrumentClass = ontology.getOntClass(portfolioInstrumentClassName);
 		if (this.portfolioInstrumentClass == null) {
-			this.portfolioInstrumentClass = ontology.getOntClass(portfolioInstrumentClassName);
-			if (this.portfolioInstrumentClass == null) {
-				this.portfolioInstrumentClass = ontology.createClass(portfolioInstrumentClassName);
-			}
+			this.portfolioInstrumentClass = ontology.createClass(portfolioInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);

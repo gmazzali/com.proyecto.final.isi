@@ -54,30 +54,24 @@ public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implemen
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String optionClassName = this.namespace + Option.class.getSimpleName();
+		this.optionClass = ontology.getOntClass(optionClassName);
 		if (this.optionClass == null) {
-			this.optionClass = ontology.getOntClass(optionClassName);
-			if (this.optionClass == null) {
-				this.optionClass = ontology.createClass(optionClassName);
-			}
+			this.optionClass = ontology.createClass(optionClassName);
 		}
 
 		// Creamos las relaciones.
 		String description = this.namespace + Constants.Ontology.PROPERTY_OPTION_HAVE_DESCRIPTION;
+		this.haveDescription = ontology.getDatatypeProperty(description);
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(description);
-			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(description);
-			}
+			this.haveDescription = ontology.createDatatypeProperty(description);
 		}
 
 		String answer = this.namespace + Constants.Ontology.PROPERTY_OPTION_HAVE_ANSWER;
+		this.haveAnswer = ontology.getObjectProperty(answer);
 		if (this.haveAnswer == null) {
-			this.haveAnswer = ontology.getObjectProperty(answer);
-			if (this.haveAnswer == null) {
-				this.haveAnswer = ontology.createObjectProperty(answer);
-				this.haveAnswer.setDomain(this.optionClass);
-				this.haveAnswer.setRange(this.trueFalseAnswerRdf.initClass(ontology));
-			}
+			this.haveAnswer = ontology.createObjectProperty(answer);
+			this.haveAnswer.setDomain(this.optionClass);
+			this.haveAnswer.setRange(this.trueFalseAnswerRdf.initClass(ontology));
 		}
 
 		return this.optionClass;

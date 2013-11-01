@@ -32,7 +32,7 @@
       <http://www.assessments.com/#assessmentHasActivities>
               (<http://www.assessments.com/#Activity_10> <http://www.assessments.com/#Activity_20>) ;
       <http://www.assessments.com/#assessmentHasDate>
-              "Thu Oct 31 17:30:32 GMT-03:00 2013"^^xsd:date ;
+              "Thu Oct 31 20:29:00 ART 2013"^^xsd:date ;
       <http://www.assessments.com/#assessmentHasDescription>
               "assessment"^^xsd:string ;
       <http://www.assessments.com/#assessmentHasMoment>
@@ -57,14 +57,14 @@
       a       owl:Class ;
       rdfs:subClassOf <http://www.assessments.com/#Answer> .
 
-<http://www.assessments.com/#RestrictedEssayActivityInstrument>
-      a       owl:Class ;
-      rdfs:subClassOf <http://www.assessments.com/#EssayActivityInstrument> .
-
 <http://www.assessments.com/#TrueFalseAnswer_41>
       a       <http://www.assessments.com/#TrueFalseAnswer> ;
       <http://www.assessments.com/#truefalseAnswerHasValue>
               "true"^^xsd:boolean .
+
+<http://www.assessments.com/#RestrictedEssayActivityInstrument>
+      a       owl:Class ;
+      rdfs:subClassOf <http://www.assessments.com/#EssayActivityInstrument> .
 
 <http://www.assessments.com/#essayInstrumentHasAnswer>
       a       owl:ObjectProperty ;
@@ -96,7 +96,7 @@
 <http://www.assessments.com/#MultipleChoiceInstrument_40>
       a       <http://www.assessments.com/#MultipleChoiceInstrument> ;
       <http://www.assessments.com/#choiceInstrumentHasOption>
-              <http://www.assessments.com/#TrueOption_40> , <http://www.assessments.com/#Distractor_41> ;
+              (<http://www.assessments.com/#TrueOption_40> <http://www.assessments.com/#Distractor_41>) ;
       <http://www.assessments.com/#instrumentHasDescription>
               "multiple choice instrument"^^xsd:string .
 
@@ -105,7 +105,7 @@
       <http://www.assessments.com/#activityHasDescription>
               "objective activity"^^xsd:string ;
       <http://www.assessments.com/#activityHasReactives>
-              <http://www.assessments.com/#Reactive_50> , <http://www.assessments.com/#Reactive_60> , <http://www.assessments.com/#Reactive_30> , <http://www.assessments.com/#Reactive_40> .
+              (<http://www.assessments.com/#Reactive_30> <http://www.assessments.com/#Reactive_40> <http://www.assessments.com/#Reactive_50> <http://www.assessments.com/#Reactive_60>) .
 
 <http://www.assessments.com/#optionHasAnswer>
       a       owl:ObjectProperty ;
@@ -121,7 +121,7 @@
       <http://www.assessments.com/#activityHasDescription>
               "essay activity"^^xsd:string ;
       <http://www.assessments.com/#activityHasReactives>
-              <http://www.assessments.com/#Reactive_10> , <http://www.assessments.com/#Reactive_20> .
+              (<http://www.assessments.com/#Reactive_10> <http://www.assessments.com/#Reactive_20>) .
 
 <http://www.assessments.com/#Reactive_30>
       a       <http://www.assessments.com/#Reactive> ;
@@ -129,6 +129,9 @@
               "reactive"^^xsd:string ;
       <http://www.assessments.com/#reactiveHasInstrument>
               <http://www.assessments.com/#SingleChoiceInstrument_30> .
+
+<http://www.assessments.com/#assessmentHasDate>
+      a       owl:DatatypeProperty .
 
 <http://www.assessments.com/#CorrespondenceInstrument>
       a       owl:Class ;
@@ -140,9 +143,6 @@
               "reactive"^^xsd:string ;
       <http://www.assessments.com/#reactiveHasInstrument>
               <http://www.assessments.com/#RestrictedEssayActivityInstrument_10> .
-
-<http://www.assessments.com/#assessmentHasDate>
-      a       owl:DatatypeProperty .
 
 <http://www.assessments.com/#correspondenceInstrumentHasRelation>
       a       owl:ObjectProperty ;
@@ -242,7 +242,7 @@
 <http://www.assessments.com/#CompletionInstrument_50>
       a       <http://www.assessments.com/#CompletionInstrument> ;
       <http://www.assessments.com/#completionInstrumentHasComplete>
-              <http://www.assessments.com/#CompletionAnswer_51> , <http://www.assessments.com/#CompletionAnswer_50> ;
+              (<http://www.assessments.com/#CompletionAnswer_50> <http://www.assessments.com/#CompletionAnswer_51>) ;
       <http://www.assessments.com/#instrumentHasDescription>
               "completion instrument"^^xsd:string .
 
@@ -275,7 +275,7 @@
 <http://www.assessments.com/#CorrespondenceInstrument_60>
       a       <http://www.assessments.com/#CorrespondenceInstrument> ;
       <http://www.assessments.com/#correspondenceInstrumentHasRelation>
-              <http://www.assessments.com/#RelationAnswer_60> , <http://www.assessments.com/#RelationAnswer_61> , <http://www.assessments.com/#RelationAnswer_62> ;
+              (<http://www.assessments.com/#RelationAnswer_60> <http://www.assessments.com/#RelationAnswer_61> <http://www.assessments.com/#RelationAnswer_62>) ;
       <http://www.assessments.com/#instrumentHasDescription>
               "correspondence instrument"^^xsd:string .
 
@@ -327,7 +327,7 @@
 <http://www.assessments.com/#SingleChoiceInstrument_30>
       a       <http://www.assessments.com/#SingleChoiceInstrument> ;
       <http://www.assessments.com/#choiceInstrumentHasOption>
-              <http://www.assessments.com/#Distractor_31> , <http://www.assessments.com/#TrueOption_30> ;
+              (<http://www.assessments.com/#TrueOption_30> <http://www.assessments.com/#Distractor_31>) ;
       <http://www.assessments.com/#instrumentHasDescription>
               "single choice instrument"^^xsd:string .
 

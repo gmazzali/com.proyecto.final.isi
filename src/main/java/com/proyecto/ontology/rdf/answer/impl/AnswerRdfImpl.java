@@ -30,12 +30,10 @@ public class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implemen
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
-			String answerClassName = this.namespace + Answer.class.getSimpleName();
+		String answerClassName = this.namespace + Answer.class.getSimpleName();
+		this.answerClass = ontology.getOntClass(answerClassName);
 		if (this.answerClass == null) {
-			this.answerClass = ontology.getOntClass(answerClassName);
-			if (this.answerClass == null) {
-				this.answerClass = ontology.createClass(answerClassName);
-			}
+			this.answerClass = ontology.createClass(answerClassName);
 		}
 		return this.answerClass;
 	}

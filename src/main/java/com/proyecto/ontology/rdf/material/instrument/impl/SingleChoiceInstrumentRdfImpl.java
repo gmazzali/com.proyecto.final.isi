@@ -27,11 +27,9 @@ public class SingleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Singl
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String singleChoiceInstrumentClassName = this.namespace + SingleChoiceInstrument.class.getSimpleName();
+		this.singleChoiceInstrumentClass = ontology.getOntClass(singleChoiceInstrumentClassName);
 		if (this.singleChoiceInstrumentClass == null) {
-			this.singleChoiceInstrumentClass = ontology.getOntClass(singleChoiceInstrumentClassName);
-			if (this.singleChoiceInstrumentClass == null) {
-				this.singleChoiceInstrumentClass = ontology.createClass(singleChoiceInstrumentClassName);
-			}
+			this.singleChoiceInstrumentClass = ontology.createClass(singleChoiceInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -43,9 +41,6 @@ public class SingleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Singl
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, SingleChoiceInstrument entity) {
-		// Cargamos el padre.
-		individual = super.loadEntityData(ontology, individual, entity);
-
-		return individual;
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

@@ -55,46 +55,36 @@ public class AssessmentRdfImpl extends MaterialRdfImpl<Assessment> implements As
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String assessmentClassName = this.namespace + Assessment.class.getSimpleName();
+		this.assessmentClass = ontology.getOntClass(assessmentClassName);
 		if (this.assessmentClass == null) {
-			this.assessmentClass = ontology.getOntClass(assessmentClassName);
-			if (this.assessmentClass == null) {
-				this.assessmentClass = ontology.createClass(assessmentClassName);
-			}
+			this.assessmentClass = ontology.createClass(assessmentClassName);
 		}
 
 		// Creamos las relaciones.
 		String description = this.namespace + Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_DESCRIPTION;
+		this.haveDescription = ontology.getDatatypeProperty(description);
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(description);
-			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(description);
-			}
+			this.haveDescription = ontology.createDatatypeProperty(description);
 		}
 
 		String date = this.namespace + Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_DATE;
+		this.haveDate = ontology.getDatatypeProperty(date);
 		if (this.haveDate == null) {
-			this.haveDate = ontology.getDatatypeProperty(date);
-			if (this.haveDate == null) {
-				this.haveDate = ontology.createDatatypeProperty(date);
-			}
+			this.haveDate = ontology.createDatatypeProperty(date);
 		}
 
 		String moment = this.namespace + Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_MOMENT;
+		this.haveMoment = ontology.getDatatypeProperty(moment);
 		if (this.haveMoment == null) {
-			this.haveMoment = ontology.getDatatypeProperty(moment);
-			if (this.haveMoment == null) {
-				this.haveMoment = ontology.createDatatypeProperty(moment);
-			}
+			this.haveMoment = ontology.createDatatypeProperty(moment);
 		}
 
 		String activity = this.namespace + Constants.Ontology.PROPERTY_ASSESSMENT_HAVE_ACTIVITY;
+		this.haveActivity = ontology.getObjectProperty(activity);
 		if (this.haveActivity == null) {
-			this.haveActivity = ontology.getObjectProperty(activity);
-			if (this.haveActivity == null) {
-				this.haveActivity = ontology.createObjectProperty(activity);
-				this.haveActivity.addDomain(this.assessmentClass);
-				this.haveActivity.addRange(this.activityFactoryRdf.topClassHierachy(ontology));
-			}
+			this.haveActivity = ontology.createObjectProperty(activity);
+			this.haveActivity.addDomain(this.assessmentClass);
+			this.haveActivity.addRange(this.activityFactoryRdf.topClassHierachy(ontology));
 		}
 
 		return this.assessmentClass;
