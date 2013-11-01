@@ -9,6 +9,7 @@ import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.model.material.instrument.ChoiceInstrument;
 import com.proyecto.model.option.Option;
@@ -49,11 +50,9 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String choiceInstrumentClassName = this.namespace + ChoiceInstrument.class.getSimpleName();
+		this.choiceInstrumentClass = ontology.getOntClass(choiceInstrumentClassName);
 		if (this.choiceInstrumentClass == null) {
-			this.choiceInstrumentClass = ontology.getOntClass(choiceInstrumentClassName);
-			if (this.choiceInstrumentClass == null) {
-				this.choiceInstrumentClass = ontology.createClass(choiceInstrumentClassName);
-			}
+			this.choiceInstrumentClass = ontology.createClass(choiceInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -62,13 +61,11 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 
 		// Cargamos las relaciones.
 		String option = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION;
+		this.haveOption = ontology.getObjectProperty(option);
 		if (this.haveOption == null) {
-			this.haveOption = ontology.getObjectProperty(option);
-			if (this.haveOption == null) {
-				this.haveOption = ontology.createObjectProperty(option);
-				this.haveOption.addDomain(this.choiceInstrumentClass);
-				this.haveOption.addRange(this.optionFactoryRdf.topClassHierachy(ontology));
-			}
+			this.haveOption = ontology.createObjectProperty(option);
+			this.haveOption.addDomain(this.choiceInstrumentClass);
+			this.haveOption.addRange(this.optionFactoryRdf.topClassHierachy(ontology));
 		}
 
 		return this.choiceInstrumentClass;
@@ -81,9 +78,16 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 
 		// Creamos las carga de los datos.
 		List<Statement> statements = new ArrayList<Statement>();
-		for (Option option : entity.getOptions()) {
-			statements.add(ontology.createLiteralStatement(individual, this.haveOption, this.optionFactoryRdf.loadEntityToOntology(ontology, option)));
+
+		if (entity.getOptions() != null && !entity.getOptions().isEmpty()) {
+			RDFNode[] optionsNodes = new RDFNode[entity.getOptions().size()];
+			int index = 0;
+			for (Option option : entity.getOptions()) {
+				optionsNodes[index++] = this.optionFactoryRdf.loadEntityToOntology(ontology, option);
+			}
+			statements.add(ontology.createLiteralStatement(individual, this.haveOption, ontology.createList(optionsNodes)));
 		}
+
 		ontology.add(statements);
 
 		return individual;

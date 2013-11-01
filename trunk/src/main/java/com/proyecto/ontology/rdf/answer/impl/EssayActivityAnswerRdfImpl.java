@@ -39,11 +39,9 @@ public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswe
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String essayActivityAnswerClassName = this.namespace + EssayActivityAnswer.class.getSimpleName();
+		this.essayActivityAnswerClass = ontology.getOntClass(essayActivityAnswerClassName);
 		if (this.essayActivityAnswerClass == null) {
-			this.essayActivityAnswerClass = ontology.getOntClass(essayActivityAnswerClassName);
-			if (this.essayActivityAnswerClass == null) {
-				this.essayActivityAnswerClass = ontology.createClass(essayActivityAnswerClassName);
-			}
+			this.essayActivityAnswerClass = ontology.createClass(essayActivityAnswerClassName);
 
 			// Cargamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -52,14 +50,12 @@ public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswe
 
 		// Creamos las relaciones.
 		String answer = this.namespace + Constants.Ontology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION;
+		this.haveAnswer = ontology.getDatatypeProperty(answer);
 		if (this.haveAnswer == null) {
-			this.haveAnswer = ontology.getDatatypeProperty(answer);
-			if (this.haveAnswer == null) {
-				this.haveAnswer = ontology.createDatatypeProperty(answer);
-			}
+			this.haveAnswer = ontology.createDatatypeProperty(answer);
 		}
 
-		return essayActivityAnswerClass;
+		return this.essayActivityAnswerClass;
 	}
 
 	@Override

@@ -29,11 +29,9 @@ public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActi
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String objectiveActivityInstrumentClassName = this.namespace + ObjectiveActivityInstrument.class.getSimpleName();
+		this.objectiveActivityInstrumentClass = ontology.getOntClass(objectiveActivityInstrumentClassName);
 		if (this.objectiveActivityInstrumentClass == null) {
-			this.objectiveActivityInstrumentClass = ontology.getOntClass(objectiveActivityInstrumentClassName);
-			if (this.objectiveActivityInstrumentClass == null) {
-				this.objectiveActivityInstrumentClass = ontology.createClass(objectiveActivityInstrumentClassName);
-			}
+			this.objectiveActivityInstrumentClass = ontology.createClass(objectiveActivityInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -45,9 +43,6 @@ public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActi
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, I entity) {
-		// Cargamos el padre.
-		individual = super.loadEntityData(ontology, individual, entity);
-
-		return individual;
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

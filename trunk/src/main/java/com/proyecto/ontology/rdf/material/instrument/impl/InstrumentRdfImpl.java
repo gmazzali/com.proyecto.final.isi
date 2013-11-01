@@ -42,21 +42,17 @@ public class InstrumentRdfImpl<I extends Instrument> extends MaterialRdfImpl<I> 
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-			String instrumentClassName = this.namespace + Instrument.class.getSimpleName();
+		String instrumentClassName = this.namespace + Instrument.class.getSimpleName();
+		this.instrumentClass = ontology.getOntClass(instrumentClassName);
 		if (this.instrumentClass == null) {
-			this.instrumentClass = ontology.getOntClass(instrumentClassName);
-			if (this.instrumentClass == null) {
-				this.instrumentClass = ontology.createClass(instrumentClassName);
-			}
+			this.instrumentClass = ontology.createClass(instrumentClassName);
 		}
 
 		// Creamos las relaciones.
 		String description = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_HAVE_DESCRIPTION;
+		this.haveDescription = ontology.getDatatypeProperty(description);
 		if (this.haveDescription == null) {
-			this.haveDescription = ontology.getDatatypeProperty(description);
-			if (this.haveDescription == null) {
-				this.haveDescription = ontology.createDatatypeProperty(description);
-			}
+			this.haveDescription = ontology.createDatatypeProperty(description);
 		}
 
 		return this.instrumentClass;

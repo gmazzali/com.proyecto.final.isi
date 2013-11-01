@@ -40,35 +40,29 @@ public class RelationAnswerRdfImpl extends AnswerRdfImpl<RelationAnswer> impleme
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String relationAnswerClassName = this.namespace + RelationAnswer.class.getSimpleName();
+		this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
 		if (this.relationAnswerClass == null) {
-			this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
-			if (this.relationAnswerClass == null) {
-				this.relationAnswerClass = ontology.createClass(relationAnswerClassName);
-			}
+			this.relationAnswerClass = ontology.createClass(relationAnswerClassName);
 
 			// Cargamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.relationAnswerClass);
 		}
 
-		// Creamos las realaciones.
+		// Creamos las relaciones.
 		String leftSide = this.namespace + Constants.Ontology.PROPERTY_ANSWER_RELATION_LEFT_SIDE;
+		this.haveLeftSide = ontology.getDatatypeProperty(leftSide);
 		if (this.haveLeftSide == null) {
-			this.haveLeftSide = ontology.getDatatypeProperty(leftSide);
-			if (this.haveLeftSide == null) {
-				this.haveLeftSide = ontology.createDatatypeProperty(leftSide);
-			}
+			this.haveLeftSide = ontology.createDatatypeProperty(leftSide);
 		}
 
 		String rightSide = this.namespace + Constants.Ontology.PROPERTY_ANSWER_RELATION_RIGHT_SIDE;
+		this.haveRightSide = ontology.getDatatypeProperty(rightSide);
 		if (this.haveRightSide == null) {
-			this.haveRightSide = ontology.getDatatypeProperty(rightSide);
-			if (this.haveRightSide == null) {
-				this.haveRightSide = ontology.createDatatypeProperty(rightSide);
-			}
+			this.haveRightSide = ontology.createDatatypeProperty(rightSide);
 		}
 
-		return relationAnswerClass;
+		return this.relationAnswerClass;
 	}
 
 	@Override

@@ -28,11 +28,9 @@ public class MultipleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Mul
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String multipleChoiceInstrumentClassName = this.namespace + MultipleChoiceInstrument.class.getSimpleName();
+		this.multipleChoiceInstrumentClass = ontology.getOntClass(multipleChoiceInstrumentClassName);
 		if (this.multipleChoiceInstrumentClass == null) {
-			this.multipleChoiceInstrumentClass = ontology.getOntClass(multipleChoiceInstrumentClassName);
-			if (this.multipleChoiceInstrumentClass == null) {
-				this.multipleChoiceInstrumentClass = ontology.createClass(multipleChoiceInstrumentClassName);
-			}
+			this.multipleChoiceInstrumentClass = ontology.createClass(multipleChoiceInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -44,9 +42,6 @@ public class MultipleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Mul
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, MultipleChoiceInstrument entity) {
-		// Cargamos el padre.
-		individual = super.loadEntityData(ontology, individual, entity);
-
-		return individual;
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

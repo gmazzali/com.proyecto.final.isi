@@ -39,11 +39,10 @@ public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> imple
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String relationAnswerClassName = this.namespace + TrueFalseAnswer.class.getSimpleName();
+		this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
 		if (this.relationAnswerClass == null) {
-			this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
-			if (this.relationAnswerClass == null) {
-				this.relationAnswerClass = ontology.createClass(relationAnswerClassName);
-			}
+			this.relationAnswerClass = ontology.createClass(relationAnswerClassName);
+
 			// Cargamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
 			superClass.addSubClass(this.relationAnswerClass);
@@ -51,11 +50,9 @@ public class TrueFalseAnswerRdfImpl extends AnswerRdfImpl<TrueFalseAnswer> imple
 
 		// Creamos las relaciones.
 		String value = this.namespace + Constants.Ontology.PROPERTY_ANSWER_TRUEFALSE_HAVE_VALUE;
+		this.haveValue = ontology.getDatatypeProperty(value);
 		if (this.haveValue == null) {
-			this.haveValue = ontology.getDatatypeProperty(value);
-			if (this.haveValue == null) {
-				this.haveValue = ontology.createDatatypeProperty(value);
-			}
+			this.haveValue = ontology.createDatatypeProperty(value);
 		}
 
 		return this.relationAnswerClass;

@@ -28,11 +28,9 @@ public abstract class SemiFormalInstrumentRdfImpl<I extends SemiFormalInstrument
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
 		String semiformalInstrumentClassName = this.namespace + SemiFormalInstrument.class.getSimpleName();
+		this.semiformalInstrumentClass = ontology.getOntClass(semiformalInstrumentClassName);
 		if (this.semiformalInstrumentClass == null) {
-			this.semiformalInstrumentClass = ontology.getOntClass(semiformalInstrumentClassName);
-			if (this.semiformalInstrumentClass == null) {
-				this.semiformalInstrumentClass = ontology.createClass(semiformalInstrumentClassName);
-			}
+			this.semiformalInstrumentClass = ontology.createClass(semiformalInstrumentClassName);
 
 			// Creamos la clase padre.
 			OntClass superClass = super.initClass(ontology);
@@ -44,9 +42,6 @@ public abstract class SemiFormalInstrumentRdfImpl<I extends SemiFormalInstrument
 
 	@Override
 	public Individual loadEntityData(OntModel ontology, Individual individual, I entity) {
-		// Cargamos el padre.
-		individual = super.loadEntityData(ontology, individual, entity);
-
-		return individual;
+		return super.loadEntityData(ontology, individual, entity);
 	}
 }

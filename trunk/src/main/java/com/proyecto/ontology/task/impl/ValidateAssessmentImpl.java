@@ -15,8 +15,6 @@ import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.InfModel;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ValidityReport;
 import com.hp.hpl.jena.reasoner.ValidityReport.Report;
@@ -123,6 +121,8 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			// Creamos la ontología y la cargamos con la evaluación.
 			OntModel ontology = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM_RULE_INF);
 			ontology.setNsPrefix(this.namespacePrefix, this.namespace);
+			ontology.removeAll();
+
 			ValidateAssessmentImpl.this.assessmentFactoryRdf.loadEntityToOntology(ontology, ValidateAssessmentImpl.this.assessment);
 
 			// Si queremos cargar la ontología a la salida, la cargamos.
@@ -143,12 +143,12 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 			stringBuffer.append(Constants.SEPARATOR_LINE + "\n\n");
 
 			// Cargamos las reglas solo si las mismas no son nulas.
-			if(this.ruleSet != null && !this.ruleSet.getRules().isEmpty()) {
+			if (this.ruleSet != null && !this.ruleSet.getRules().isEmpty()) {
 				// Agregamos los mensajes de carga de reglas.
 				stringBuffer.append(Constants.SEPARATOR_LINE + "\n");
 				stringBuffer.append(HolderMessage.getMessage("evaluate.rules.begin") + "\n");
 				stringBuffer.append(Constants.SEPARATOR_LINE + "\n\n");
-				
+
 				// Evaluamos cada una de las reglas del conjunto.
 				for (Rule rule : this.ruleSet.getRules()) {
 					this.evaluateRule(stringBuffer, ontology, rule);
@@ -191,13 +191,10 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 
 			// Creamos el razonador.
 			Reasoner reasoner = new GenericRuleReasoner(rules);
-			reasoner.setParameter(ReasonerVocabulary.PROPtraceOn, reasonerTrace.booleanValue());
+			reasoner.setParameter(ReasonerVocabulary.PROPtraceOn, this.reasonerTrace.booleanValue());
 
-			// Creamos el modelo de inferencia y activamos la validación dentro de esta.
+			// Creamos el modelo de inferencia y preparamos las inferencia dentro de la misma.
 			InfModel infOntology = ModelFactory.createInfModel(reasoner, ontology);
-			this.activateValidation(infOntology);
-
-			// Preparamos el modelo.
 			infOntology.prepare();
 
 			// Validamos el modelo.
@@ -222,22 +219,6 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 		} finally {
 			stringBuffer.append("\n");
 		}
-	}
-
-	/**
-	 * La función encargada de activar la validación dentro del modelo mediante la inclusión de una tripleta especifica.
-	 * 
-	 * @param infOntology
-	 *            El modelo sobre el que va a activarse la validación.
-	 */
-	private void activateValidation(InfModel infOntology) {
-		// Creamos los elementos de la tripleta.
-		Resource subject = infOntology.createResource("_:x");
-		Property predicate = infOntology.createProperty("rb:validation");
-		String object = "on()";
-
-		// Agregamos la tripleta.
-		infOntology.add(infOntology.createStatement(subject, predicate, object));
 	}
 
 	/**

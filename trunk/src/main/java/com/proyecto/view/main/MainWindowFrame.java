@@ -188,8 +188,9 @@ public class MainWindowFrame extends JFrame {
 	 */
 	private void init() {
 		this.setResizable(false);
-		this.setBounds(100, 100, 1000, 562);
+		this.setBounds(100, 100, 1004, 562);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 		this.addWindowListener(new WindowAdapter() {
 			@Override
@@ -210,8 +211,8 @@ public class MainWindowFrame extends JFrame {
 				}
 			};
 		};
-		this.menuBar.setFont(this.getContentPane().getFont());
-		this.menuBar.setBounds(0, 0, 994, 23);
+		this.menuBar.setFont(this.getFont());
+		this.menuBar.setBounds(0, 0, 998, 23);
 		this.getContentPane().add(this.menuBar);
 
 		JMenu menuSistemas = new JMenu(HolderMessage.getMessage("main.menu.system"));
@@ -309,20 +310,22 @@ public class MainWindowFrame extends JFrame {
 
 		JLabel assessmentListLabel = new JLabel(HolderMessage.getMessage("main.window.list.assessment.label"));
 		assessmentListLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		assessmentListLabel.setBounds(10, 35, 400, 16);
+		assessmentListLabel.setBounds(10, 35, 336, 16);
 		this.getContentPane().add(assessmentListLabel);
 
 		JScrollPane assessmentScrollPane = new JScrollPane();
-		assessmentScrollPane.setBounds(6, 52, 400, 200);
+		assessmentScrollPane.setFont(this.getFont());
+		assessmentScrollPane.setBounds(6, 52, 340, 200);
 		this.getContentPane().add(assessmentScrollPane);
 
 		this.assessmentList = new JList<Assessment>();
+		this.assessmentList.setFont(assessmentScrollPane.getFont());
 		this.assessmentList.setBorder(new LineBorder(Color.GRAY));
 		this.assessmentList.setModel(new DefaultListModel<Assessment>());
 		assessmentScrollPane.setViewportView(this.assessmentList);
 
 		this.assessmentManagerButton = new JButton(Resources.CRUD_ICON);
-		this.assessmentManagerButton.setBounds(412, 52, 35, 35);
+		this.assessmentManagerButton.setBounds(351, 52, 35, 35);
 		this.assessmentManagerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -338,25 +341,27 @@ public class MainWindowFrame extends JFrame {
 				MainWindowFrame.this.createAssessmentReport();
 			}
 		});
-		printAssessmentButton.setBounds(412, 99, 35, 35);
+		printAssessmentButton.setBounds(351, 99, 35, 35);
 		this.getContentPane().add(printAssessmentButton);
 
 		JLabel ruleSetListLabel = new JLabel(HolderMessage.getMessage("main.window.list.ruleset.label"));
 		ruleSetListLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleSetListLabel.setBounds(10, 264, 400, 16);
+		ruleSetListLabel.setBounds(10, 264, 336, 16);
 		this.getContentPane().add(ruleSetListLabel);
 
 		JScrollPane ruleSetScrollPane = new JScrollPane();
-		ruleSetScrollPane.setBounds(6, 281, 400, 200);
+		ruleSetScrollPane.setFont(this.getFont());
+		ruleSetScrollPane.setBounds(6, 281, 340, 200);
 		this.getContentPane().add(ruleSetScrollPane);
 
 		this.ruleSetList = new JList<RuleSet>();
+		this.ruleSetList.setFont(ruleSetScrollPane.getFont());
 		this.ruleSetList.setBorder(new LineBorder(Color.GRAY));
 		this.ruleSetList.setModel(new DefaultListModel<RuleSet>());
 		ruleSetScrollPane.setViewportView(this.ruleSetList);
 
 		this.ruleSetManagerButton = new JButton(Resources.CRUD_ICON);
-		this.ruleSetManagerButton.setBounds(412, 281, 35, 35);
+		this.ruleSetManagerButton.setBounds(351, 281, 35, 35);
 		this.ruleSetManagerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -367,27 +372,29 @@ public class MainWindowFrame extends JFrame {
 
 		JSeparator separator1 = new JSeparator();
 		separator1.setOrientation(SwingConstants.VERTICAL);
-		separator1.setBounds(455, 24, 2, 468);
+		separator1.setBounds(394, 23, 2, 468);
 		this.getContentPane().add(separator1);
 
 		JLabel resultLabel = new JLabel(HolderMessage.getMessage("main.window.list.result.label"));
 		resultLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		resultLabel.setBounds(470, 35, 518, 16);
+		resultLabel.setBounds(407, 35, 581, 16);
 		this.getContentPane().add(resultLabel);
 
 		JScrollPane resultScrollPane = new JScrollPane();
-		resultScrollPane.setBounds(467, 52, 521, 386);
+		resultScrollPane.setFont(this.getFont());
+		resultScrollPane.setBounds(405, 52, 587, 386);
 		this.getContentPane().add(resultScrollPane);
 
 		this.resultTextArea = new JTextArea();
+		this.resultTextArea.setLineWrap(true);
+		this.resultTextArea.setWrapStyleWord(true);
+		this.resultTextArea.setFont(resultScrollPane.getFont());
 		this.resultTextArea.setBorder(new LineBorder(Color.GRAY));
 		this.resultTextArea.setEditable(false);
-		// DefaultCaret caret = (DefaultCaret) this.resultTextArea.getCaret();
-		// caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		resultScrollPane.setViewportView(this.resultTextArea);
 
 		this.clearResultButton = new JButton(Resources.ERASE_ICON);
-		this.clearResultButton.setBounds(514, 446, 35, 35);
+		this.clearResultButton.setBounds(455, 446, 35, 35);
 		this.clearResultButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -397,7 +404,7 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(this.clearResultButton);
 
 		this.evaluateButton = new JButton(Resources.PROCCESS_ICON);
-		this.evaluateButton.setBounds(467, 446, 35, 35);
+		this.evaluateButton.setBounds(408, 446, 35, 35);
 		this.evaluateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -415,7 +422,7 @@ public class MainWindowFrame extends JFrame {
 		this.getContentPane().add(this.ruleSetProgressLabel);
 
 		this.evaluateProgressLabel = new JLabel();
-		this.evaluateProgressLabel.setBounds(561, 446, 35, 35);
+		this.evaluateProgressLabel.setBounds(502, 446, 35, 35);
 		this.getContentPane().add(this.evaluateProgressLabel);
 
 		JSeparator separator2 = new JSeparator();
@@ -646,6 +653,7 @@ public class MainWindowFrame extends JFrame {
 				public void run() {
 					// Ejecutamos las acciones antes de procesar.
 					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.evaluateProgressLabel, false);
+					MainWindowFrame.this.evaluateButton.setEnabled(false);
 
 					// arrancamos el proceso que va a actualizar el area de resultado.
 					Thread updateResultArea = new Thread() {
@@ -672,12 +680,13 @@ public class MainWindowFrame extends JFrame {
 							}
 						}
 					};
-					updateResultArea.start();
+					// updateResultArea.start();
 
 					try {
 						// Arrancamos el proceso de evaluación.
 						MainWindowFrame.this.validateAssessment.initValidateTask(assessment, ruleSet);
 						MainWindowFrame.this.validateAssessment.executeTask(MainWindowFrame.this.resultStringBuffer);
+						MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultStringBuffer.toString());
 
 						// Esperamos 2 segundos para que el proceso de actualización del área de resultado termine bien.
 						Thread.sleep(2000);
@@ -692,6 +701,7 @@ public class MainWindowFrame extends JFrame {
 						// Una vez terminado, cortamos el proceso de actualización.
 						updateResultArea.interrupt();
 						MainWindowFrame.this.afterExecuteProccess(MainWindowFrame.this.evaluateProgressLabel);
+						MainWindowFrame.this.evaluateButton.setEnabled(true);
 					}
 				}
 			};
