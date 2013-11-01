@@ -137,8 +137,8 @@ public class AssessmentReportImpl implements AssessmentReport {
 		this.assessmentPDF.add(dateTimeParagraph);
 
 		if (assessment.getSubject() != null) {
-			String subject = HolderMessage.getMessage("pdf.title.subject") + assessment.getSubject().getName();
-			Paragraph subjectParagraph = new Paragraph(subject, this.fontSubject);
+			String subjectString = HolderMessage.getMessage("pdf.title.subject") + ": " + assessment.getSubject().getName();
+			Paragraph subjectParagraph = new Paragraph(subjectString, this.fontSubject);
 			subjectParagraph.setAlignment(Element.ALIGN_LEFT);
 			this.assessmentPDF.add(subjectParagraph);
 		}
