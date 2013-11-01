@@ -660,6 +660,7 @@ public class MainWindowFrame extends JFrame {
 						MainWindowFrame.this.validateAssessment.initValidateTask(assessment, ruleSet);
 						MainWindowFrame.this.validateAssessment.executeTask(MainWindowFrame.this.resultStringBuffer);
 						MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultStringBuffer.toString());
+						MainWindowFrame.this.resultStringBuffer.delete(0, MainWindowFrame.this.resultStringBuffer.length());
 
 						// Esperamos 2 segundos para que el proceso de actualización del área de resultado termine bien.
 						Thread.sleep(2000);
