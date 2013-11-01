@@ -101,6 +101,7 @@ public class RuleSetListDialog extends JDialog {
 		this.setModal(true);
 		this.setResizable(false);
 		this.setBounds(100, 100, 562, 560);
+		this.setFont(new Font("Arial", Font.PLAIN, 12));
 
 		JPanel contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,10 +115,12 @@ public class RuleSetListDialog extends JDialog {
 		contentPanel.add(ruleSetLabel);
 
 		JScrollPane ruleSetScrollPane = new JScrollPane();
+		ruleSetScrollPane.setFont(this.getFont());
 		ruleSetScrollPane.setBounds(6, 27, 503, 278);
 		contentPanel.add(ruleSetScrollPane);
 
 		this.ruleSetList = new JList<RuleSet>();
+		this.ruleSetList.setFont(ruleSetScrollPane.getFont());
 		this.ruleSetList.setBorder(new LineBorder(Color.GRAY));
 		this.ruleSetList.setModel(new DefaultListModel<RuleSet>());
 		this.ruleSetList.addListSelectionListener(new ListSelectionListener() {
@@ -135,14 +138,15 @@ public class RuleSetListDialog extends JDialog {
 		contentPanel.add(ruleLabel);
 
 		JScrollPane ruleScrollPane = new JScrollPane();
+		ruleScrollPane.setFont(this.getFont());
 		ruleScrollPane.setBounds(6, 334, 503, 191);
 		contentPanel.add(ruleScrollPane);
 
 		this.ruleList = new JList<Rule>();
+		this.ruleList.setFont(ruleScrollPane.getFont());
 		this.ruleList.setBorder(new LineBorder(Color.GRAY));
 		this.ruleList.setModel(new DefaultListModel<Rule>());
 		this.ruleList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		this.ruleList.setFont(new Font("Arial", Font.BOLD, 11));
 		ruleScrollPane.setViewportView(this.ruleList);
 
 		this.newButton = new JButton(Resources.ADD_ELEMENT_ICON);

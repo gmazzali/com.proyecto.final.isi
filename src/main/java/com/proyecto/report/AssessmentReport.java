@@ -1,6 +1,7 @@
 package com.proyecto.report;
 
 import java.io.File;
+import java.io.Serializable;
 
 import com.proyecto.model.material.assessment.Assessment;
 
@@ -10,7 +11,7 @@ import com.proyecto.model.material.assessment.Assessment;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public interface AssessmentReport {
+public interface AssessmentReport extends Serializable {
 
 	/**
 	 * La función encargada de crear el reporte y guardarlo dentro de un archivo dentro del sistema.

@@ -655,33 +655,6 @@ public class MainWindowFrame extends JFrame {
 					MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.evaluateProgressLabel, false);
 					MainWindowFrame.this.evaluateButton.setEnabled(false);
 
-					// arrancamos el proceso que va a actualizar el area de resultado.
-					Thread updateResultArea = new Thread() {
-
-						@Override
-						public void run() {
-							Integer size = null;
-							String result = null;
-
-							while (!this.isInterrupted()) {
-								result = "";
-								size = MainWindowFrame.this.resultStringBuffer.length();
-								result += MainWindowFrame.this.resultStringBuffer.substring(0, size);
-								MainWindowFrame.this.resultStringBuffer.delete(0, size);
-
-								// Cargamos la salida al area de resultado.
-								MainWindowFrame.this.resultTextArea.setText(MainWindowFrame.this.resultTextArea.getText() + result);
-
-								try {
-									Thread.sleep(100);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						}
-					};
-					// updateResultArea.start();
-
 					try {
 						// Arrancamos el proceso de evaluación.
 						MainWindowFrame.this.validateAssessment.initValidateTask(assessment, ruleSet);
@@ -698,8 +671,6 @@ public class MainWindowFrame extends JFrame {
 						}
 						e.printStackTrace();
 					} finally {
-						// Una vez terminado, cortamos el proceso de actualización.
-						updateResultArea.interrupt();
 						MainWindowFrame.this.afterExecuteProccess(MainWindowFrame.this.evaluateProgressLabel);
 						MainWindowFrame.this.evaluateButton.setEnabled(true);
 					}
