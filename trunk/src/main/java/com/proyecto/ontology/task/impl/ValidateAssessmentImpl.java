@@ -230,7 +230,7 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	private void saveOntology(Model ontology) {
 		try {
 			// Guardamos temporalmente la ontología dentro de un archivo.
-			String path = System.getProperty("proyecto.configuration.dir") + "\\ontology.rdf";
+			String path = System.getProperty("proyecto.configuration.dir") + "\\ontology\\ontology.rdf";
 			FileOutputStream salida = new FileOutputStream(path);
 			ontology.write(salida);
 			salida.close();
