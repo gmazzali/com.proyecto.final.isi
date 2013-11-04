@@ -94,7 +94,7 @@ public class RuleListDialog extends JDialog {
 	public void init() {
 		this.setModal(true);
 		this.setResizable(false);
-		this.setBounds(100, 100, 541, 400);
+		this.setBounds(100, 100, 541, 403);
 
 		JPanel contentPanel = new JPanel();
 		contentPanel.setFont(new Font("Arial", Font.PLAIN, 12));
