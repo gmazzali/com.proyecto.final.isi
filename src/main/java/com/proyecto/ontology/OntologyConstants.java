@@ -1,9 +1,9 @@
 package com.proyecto.ontology;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.common.util.holder.HolderMessage;
 
@@ -152,17 +152,104 @@ public class OntologyConstants {
 	}
 
 	/**
+	 * El conjunto de las propiedades propias de la ontología.
+	 */
+	public static List<String> ONTOLOGY_PROPERTIES;
+	/**
+	 * El conjunto de las funciones propias de JENA.
+	 */
+	public static List<String> JENA_BUILTIN;
+	/**
 	 * El conjunto de los nombre de las clases de la ontología.
 	 */
-	public static Set<String> CLASES;
+	public static List<String> CLASES;
 	/**
 	 * El mapa de las relaciones en base al nombre de los elementos. Dentro tenemos el nombre del elemento y todas las relaciones de este.
 	 */
-	public static Map<String, Set<String>> PROPERTIES;
+	public static Map<String, List<String>> PROPERTIES;
 
 	static {
+		// Cargamos las propiedades de la ontología.
+		OntologyConstants.ONTOLOGY_PROPERTIES = new ArrayList<String>();
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("rdf:type");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("rdfs:subClassOf");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("rdfs:subPropertyOf");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("rdfs:domain");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("rdfs:range");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:intersectionOf");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:unionOf");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:disjointWith");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:sameAs");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:differentFrom");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:distinctMembers");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:distinctMembers");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:Thing");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:equivalentProperty");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:inverseOf");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:FunctionalProperty");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:InverseFunctionalProperty");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:SymmeticProperty");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:TransitiveProperty");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:someValuesFrom");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:allValuesFrom");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:minCardinality");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:maxCardinality");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:cardinality");
+		OntologyConstants.ONTOLOGY_PROPERTIES.add("owl:hasValue");
+
+		// Cargamos las funciones propias de JENA.
+		OntologyConstants.JENA_BUILTIN = new ArrayList<String>();
+		OntologyConstants.JENA_BUILTIN.add("isLiteral(?x)");
+		OntologyConstants.JENA_BUILTIN.add("notLiteral(?x)");
+		OntologyConstants.JENA_BUILTIN.add("isFunctor(?x)");
+		OntologyConstants.JENA_BUILTIN.add("notFunctor(?x)");
+		OntologyConstants.JENA_BUILTIN.add("isBNode(?x)");
+		OntologyConstants.JENA_BUILTIN.add("notBNode(?x)");
+		OntologyConstants.JENA_BUILTIN.add("bound(?x...)");
+		OntologyConstants.JENA_BUILTIN.add("unbound(?x..)");
+		OntologyConstants.JENA_BUILTIN.add("equal(?x, ?y)");
+		OntologyConstants.JENA_BUILTIN.add("notEqual(?x, ?y)");
+		OntologyConstants.JENA_BUILTIN.add("lessThan(?x, ?y)");
+		OntologyConstants.JENA_BUILTIN.add("greaterThan(?x, ?y)");
+		OntologyConstants.JENA_BUILTIN.add("le(?x, ?y)");
+		OntologyConstants.JENA_BUILTIN.add("ge(?x, ?y)");
+		OntologyConstants.JENA_BUILTIN.add("sum(?a, ?b, ?c)");
+		OntologyConstants.JENA_BUILTIN.add("addOne(?a, ?c)");
+		OntologyConstants.JENA_BUILTIN.add("difference(?a, ?b, ?c)");
+		OntologyConstants.JENA_BUILTIN.add("min(?a, ?b, ?c)");
+		OntologyConstants.JENA_BUILTIN.add("max(?a, ?b, ?c)");
+		OntologyConstants.JENA_BUILTIN.add("product(?a, ?b, ?c)");
+		OntologyConstants.JENA_BUILTIN.add("quotient(?a, ?b, ?c)");
+		OntologyConstants.JENA_BUILTIN.add("strConcat(?a1, .. ?an, ?t)");
+		OntologyConstants.JENA_BUILTIN.add("uriConcat(?a1, .. ?an, ?t)");
+		OntologyConstants.JENA_BUILTIN.add("regex(?t, ?p)");
+		OntologyConstants.JENA_BUILTIN.add("regex(?t, ?p, ?m1, .. ?mn)");
+		OntologyConstants.JENA_BUILTIN.add("now(?x)");
+		OntologyConstants.JENA_BUILTIN.add("makeTemp(?x)");
+		OntologyConstants.JENA_BUILTIN.add("makeInstance(?x, ?p, ?v)");
+		OntologyConstants.JENA_BUILTIN.add("makeInstance(?x, ?p, ?t, ?v)");
+		OntologyConstants.JENA_BUILTIN.add("makeSkolem(?x, ?v1, ... ?vn)");
+		OntologyConstants.JENA_BUILTIN.add("noValue(?x, ?p)");
+		OntologyConstants.JENA_BUILTIN.add("noValue(?x ?p ?v)");
+		OntologyConstants.JENA_BUILTIN.add("remove(n, ...)");
+		OntologyConstants.JENA_BUILTIN.add("drop(n, ...)");
+		OntologyConstants.JENA_BUILTIN.add("isDType(?l, ?t)");
+		OntologyConstants.JENA_BUILTIN.add("notDType(?l, ?t)");
+		OntologyConstants.JENA_BUILTIN.add("print(?x, ...)");
+		OntologyConstants.JENA_BUILTIN.add("listContains(?l, ?x)");
+		OntologyConstants.JENA_BUILTIN.add("listNotContains(?l, ?x)");
+		OntologyConstants.JENA_BUILTIN.add("listEntry(?list, ?index, ?val)");
+		OntologyConstants.JENA_BUILTIN.add("listLength(?l, ?len)");
+		OntologyConstants.JENA_BUILTIN.add("listEqual(?la, ?lb)");
+		OntologyConstants.JENA_BUILTIN.add("listNotEqual(?la, ?lb)");
+		OntologyConstants.JENA_BUILTIN.add("listMapAsObject(?s, ?p ?l)");
+		OntologyConstants.JENA_BUILTIN.add("listMapAsSubject(?l, ?p, ?o)");
+		OntologyConstants.JENA_BUILTIN.add("table(?p)");
+		OntologyConstants.JENA_BUILTIN.add("tableAll()");
+		OntologyConstants.JENA_BUILTIN.add("hide(p)");
+
 		// Cargamos las clases.
-		OntologyConstants.CLASES = new HashSet<String>();
+		OntologyConstants.CLASES = new ArrayList<String>();
 		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ASSESSMENT);
 		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ACTIVITY);
 		OntologyConstants.CLASES.add(OntologyConstants.ClassName.REACTIVE);
@@ -197,28 +284,28 @@ public class OntologyConstants {
 		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ANSWER_RELATION);
 
 		// Cargamos las relaciones.
-		PROPERTIES = new HashMap<String, Set<String>>();
+		OntologyConstants.PROPERTIES = new HashMap<String, List<String>>();
 
-		Set<String> relaciones = new HashSet<String>();
+		List<String> relaciones = new ArrayList<String>();
 		relaciones.add(OntologyConstants.PropertyName.ASSESSMENT_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.ASSESSMENT_HAS_MOMENT);
 		relaciones.add(OntologyConstants.PropertyName.ASSESSMENT_HAS_DATE);
 		relaciones.add(OntologyConstants.PropertyName.ASSESSMENT_HAS_ACTIVITY);
 		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.ASSESSMENT, relaciones);
 
-		relaciones = new HashSet<String>();
+		relaciones = new ArrayList<String>();
 		relaciones.add(OntologyConstants.PropertyName.ACTIVITY_BELONG_TO_ASSESSMENT);
 		relaciones.add(OntologyConstants.PropertyName.ACTIVITY_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.ACTIVITY_HAS_REACTIVE);
 		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.ACTIVITY, relaciones);
 
-		relaciones = new HashSet<String>();
+		relaciones = new ArrayList<String>();
 		relaciones.add(OntologyConstants.PropertyName.REACTIVE_BELONG_TO_ACTIVITY);
 		relaciones.add(OntologyConstants.PropertyName.REACTIVE_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.REACTIVE_HAS_INSTRUMENT);
 		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.REACTIVE, relaciones);
 
-		relaciones = new HashSet<String>();
+		relaciones = new ArrayList<String>();
 		relaciones.add(OntologyConstants.PropertyName.INSTRUMENT_BELONG_TO_REACTIVE);
 		relaciones.add(OntologyConstants.PropertyName.INSTRUMENT_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.INSTRUMENT_ESSAY_HAS_ANSWER);
@@ -227,13 +314,13 @@ public class OntologyConstants {
 		relaciones.add(OntologyConstants.PropertyName.INSTRUMENT_COMPLETION_HAS_COMPLETE);
 		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.INSTRUMENT, relaciones);
 
-		relaciones = new HashSet<String>();
+		relaciones = new ArrayList<String>();
 		relaciones.add(OntologyConstants.PropertyName.OPTION_BELONG_TO_INSTRUMENT);
 		relaciones.add(OntologyConstants.PropertyName.OPTION_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.OPTION_HAS_ANSWER);
 		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.OPTION, relaciones);
 
-		relaciones = new HashSet<String>();
+		relaciones = new ArrayList<String>();
 		relaciones.add(OntologyConstants.PropertyName.ANSWER_ESSAY_BELONG_TO_INSTRUMENT);
 		relaciones.add(OntologyConstants.PropertyName.ANSWER_ESSAY_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.ANSWER_TRUEFALSE_BELONG_TO_OPTION);
