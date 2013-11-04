@@ -62,6 +62,26 @@ public class Resources {
 	 * El icono para quitar una regla a un conjunto.
 	 */
 	public static final ImageIcon REMOVE_RULE_ICON = Resources.createStaticImage("remove_rule_32.png", Resources.width, Resources.height);
+	/**
+	 * El icono de agregar el nombre de una clase a una regla.
+	 */
+	public static final ImageIcon CLASS_TO_RULE_ICON = Resources.createStaticImage("class_name_32.png", Resources.width, Resources.height);
+	/**
+	 * El icono de agregar el nombre de una propiedad a una regla.
+	 */
+	public static final ImageIcon PROPERTY_TO_RULE_ICON = Resources.createStaticImage("property_name_32.png", Resources.width, Resources.height);
+	/**
+	 * El icono de agregar un par de parentesis a una regla.
+	 */
+	public static final ImageIcon PARENTESIS_TO_RULE_ICON = Resources.createStaticImage("parentesis_32.png", Resources.width, Resources.height);
+	/**
+	 * El icono de agregar un par de corchetes a una regla.
+	 */
+	public static final ImageIcon CORCHETES_TO_RULE_ICON = Resources.createStaticImage("corchetes_32.png", Resources.width, Resources.height);
+	/**
+	 * El icono de agregar el componentes que permite definir un error a una regla.
+	 */
+	public static final ImageIcon ERROR_TO_RULE_ICON = Resources.createStaticImage("error_32.png", Resources.width, Resources.height);
 
 	/**
 	 * El icono para una pantalla de CRUD.

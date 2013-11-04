@@ -3,19 +3,55 @@ package com.proyecto.view.rule;
 import java.awt.EventQueue;
 import java.awt.Font;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
+import org.springframework.beans.factory.annotation.Value;
+
+import com.common.util.annotations.View;
+import com.common.util.holder.HolderMessage;
+import com.proyecto.ontology.OntologyConstants;
+
+/**
+ * La ventana que nos permite seleccionar un nombre de una propiedad que tengamos dentro de la ontología para la creación de las reglas.
+ * 
+ * @author Guillermo Mazzali
+ * @version 1.0
+ */
+@View
 public class PropertyNameSelectDialog extends JDialog {
 
 	private static final long serialVersionUID = -2312760597467093929L;
-	private JList<String> classNameJList;
-	private JList<String> propertyNameJList;
 
 	/**
-	 * Create the dialog.
+	 * El nombre de la ontología.
+	 */
+	@Value("${ontology.namespace}")
+	private String namespace;
+	/**
+	 * El prefijo del nombre de la ontología.
+	 */
+	@Value("${ontology.namespace.prefix}")
+	private String namespacePrefix;
+
+	/**
+	 * La lista de los nombre de las clases.
+	 */
+	private JList<String> classNameJList;
+	/**
+	 * La lista de los nombre de las propiedades.
+	 */
+	private JList<String> propertyNameJList;
+	/**
+	 * El nombre de la propiedad seleccionada.
+	 */
+	private String propertySelected;
+
+	/**
+	 * Constructor del dialogo de selección.
 	 */
 	public PropertyNameSelectDialog() {
 		super();
@@ -39,6 +75,7 @@ public class PropertyNameSelectDialog extends JDialog {
 
 		this.classNameJList = new JList<String>();
 		this.classNameJList.setFont(classNameScrollPane.getFont());
+		this.classNameJList.setModel(new DefaultListModel<String>());
 		classNameScrollPane.setViewportView(this.classNameJList);
 
 		JScrollPane propertyNameScrollPane = new JScrollPane();
@@ -48,7 +85,78 @@ public class PropertyNameSelectDialog extends JDialog {
 
 		this.propertyNameJList = new JList<String>();
 		this.propertyNameJList.setFont(propertyNameScrollPane.getFont());
+		this.propertyNameJList.setModel(new DefaultListModel<String>());
 		propertyNameScrollPane.setViewportView(this.propertyNameJList);
+	}
+
+	/**
+	 * La función que carga todos los nombres de las clases dentro de la lista.
+	 */
+	private void initClassNameList() {
+		DefaultListModel<String> classModel = new DefaultListModel<String>();
+
+		for (String className : OntologyConstants.PROPERTIES.keySet()) {
+			classModel.addElement(className);
+		}
+
+		this.classNameJList.setModel(classModel);
+	}
+
+	/**
+	 * La función que carga todos los nombres de las propiedades dentro de la lista.
+	 */
+	private void initPropertyNameList() {
+		Integer index = classNameJList.getSelectedIndex();
+
+		if (index != -1) {
+			DefaultListModel<String> classModel = this.classNameJList.getModel();
+			DefaultListModel<String> propertyModel = new DefaultListModel<String>();
+			String className = classModel.get(index);
+
+			for (String propertyName : OntologyConstants.PROPERTIES.get(className)) {
+				propertyModel.addElement(propertyName);
+			}
+
+			this.propertyNameJList.setModel(propertyModel);
+		}
+	}
+
+	/**
+	 * La función encargada de seleccionar el nombre de una propiedad dentro de la lista y cerrar la ventana.
+	 */
+	private void selectPropertyName() {
+		// Si tenemos algún nombre de una propiedad seleccionada.
+		Integer index = propertyNameJList.getSelectedIndex();
+		if (index != -1) {
+			// Tomamos la propiedad seleccionada.
+			DefaultListModel<String> classModel = this.propertyNameJList.getModel();
+			this.propertySelected = classModel.get(index);
+			// Cerramos la ventana.
+			this.dispose();
+		}
+	}
+
+	/**
+	 * La función encargada de retornar el nombre de la propiedad seleccionada.
+	 * 
+	 * @return El nombre de la propiedad seleccionada.
+	 */
+	public String getPropertySelected() {
+		return this.propertySelected != null ? this.namespace + this.propertySelected : null;
+	}
+
+	/**
+	 * La función encargada de cargar la ventana para seleccionar el nombre de una clase.
+	 * 
+	 * @return La ventana lista para seleccionar el nombre de una clase
+	 */
+	public PropertyNameSelectDialog createSelectDialog() {
+		this.setTitle(HolderMessage.getMessage("rule.select.property.title"));
+
+		this.initClassNameList();
+		this.propertySelected = null;
+
+		return this;
 	}
 
 	/**

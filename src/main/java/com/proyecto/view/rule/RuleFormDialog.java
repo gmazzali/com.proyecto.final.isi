@@ -45,6 +45,16 @@ public class RuleFormDialog extends JDialog {
 	 */
 	@Autowired
 	private AccessControl accessControl;
+	/**
+	 * El panel de selección de nombre de clase.
+	 */
+	@Autowired
+	private ClassNameSelectDialog classNameSelectDialog;
+	/**
+	 * El panel de selección de nombre de propiedad.
+	 */
+	@Autowired
+	private PropertyNameSelectDialog propertyNameSelectDialog;
 
 	/**
 	 * El servicio que vamos a ocupar.
@@ -137,36 +147,56 @@ public class RuleFormDialog extends JDialog {
 		ruleScrollPane.setViewportView(this.ruleTextArea);
 		this.ruleTextArea.setBorder(new LineBorder(Color.LIGHT_GRAY));
 
-		this.classNameButton = new JButton("[ ]");
-		this.classNameButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.classNameButton = new JButton(Resources.CLASS_TO_RULE_ICON);
 		this.classNameButton.setBounds(596, 166, 35, 35);
 		this.classNameButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int pos = RuleFormDialog.this.ruleTextArea.getCaretPosition();
-				RuleFormDialog.this.ruleTextArea.insert("=>", pos);
+			public void actionPerformed(ActionEvent event) {
+				addClassNameToRule();
 			}
 		});
 		contentPanel.add(this.classNameButton);
 
-		this.propertyNameButton = new JButton("[ ]");
-		this.propertyNameButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.propertyNameButton = new JButton(Resources.PROPERTY_TO_RULE_ICON);
 		this.propertyNameButton.setBounds(643, 166, 35, 35);
+		this.propertyNameButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				addPropertyNameToRule();
+			}
+		});
 		contentPanel.add(this.propertyNameButton);
 
-		this.parentesisButton = new JButton("[ ]");
+		this.parentesisButton = new JButton(Resources.PARENTESIS_TO_RULE_ICON);
 		this.parentesisButton.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.parentesisButton.setBounds(596, 213, 35, 35);
+		this.parentesisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				addStringToRule("()");
+			}
+		});
 		contentPanel.add(this.parentesisButton);
 
-		this.corchetesButton = new JButton("[ ]");
+		this.corchetesButton = new JButton(Resources.CORCHETES_TO_RULE_ICON);
 		this.corchetesButton.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.corchetesButton.setBounds(643, 213, 35, 35);
+		this.corchetesButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				addStringToRule("[]");
+			}
+		});
 		contentPanel.add(this.corchetesButton);
 
-		this.errorButton = new JButton("[ ]");
-		this.errorButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.errorButton = new JButton(Resources.ERROR_TO_RULE_ICON);
 		this.errorButton.setBounds(596, 260, 82, 35);
+		this.errorButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				addErrorValidationToRule();
+			}
+		});
 		contentPanel.add(this.errorButton);
 
 		JSeparator separator = new JSeparator();
@@ -211,6 +241,54 @@ public class RuleFormDialog extends JDialog {
 
 		this.commitButton.setEnabled(enabled);
 		this.cancelButton.setEnabled(enabled);
+	}
+	
+	/**
+	 * La función encargada de cargar el nombre de una clase dentro del campo de la regla.
+	 */
+	private void addClassNameToRule() {
+		// Abrimos la ventana de selección de nombre de clase.
+		ClassNameSelectDialog dialog = this.classNameSelectDialog.createSelectDialog();
+		dialog.setLocationRelativeTo(this.classNameButton);
+		dialog.setVisible(true);
+		
+		// Tomamos el valor devuelto.
+		if(dialog.getClassSelected() != null) {
+			this.addStringToRule(dialog.getClassSelected());
+		}
+	}
+	
+	/**
+	 * La función encargada de cargar el nombre de una propiedad dentro del campo de la regla.
+	 */
+	private void addPropertyNameToRule() {
+		// Abrimos la ventana de selección de nombre de la propiedad.
+		PropertyNameSelectDialog dialog = this.propertyNameSelectDialog.createSelectDialog();
+		dialog.setLocationRelativeTo(this.propertyNameButton);
+		dialog.setVisible(true);
+		
+		// Tomamos el valor devuelto.
+		if(dialog.getPropertySelected() != null) {
+			this.addStringToRule(dialog.getPropertySelected());
+		}
+	}
+
+	/**
+	 * La función encargada de cargar el consecuente que describe un error para la aplicación de una regla.
+	 */
+	private void addErrorValidationToRule() {
+		addStringToRule("(?x rb:violation error('summary', 'description', args))");		
+	}
+
+	/**
+	 * La función encargada de cargar una cadenas de caracteres dentro del campo de reglas, en la posición donde se encuentra el cursor.
+	 * 
+	 * @param string
+	 *            La cadena que queremos agregar a la regla.
+	 */
+	private void addStringToRule(String string) {
+		int pos = this.ruleTextArea.getCaretPosition();
+		this.ruleTextArea.insert(string, pos);
 	}
 
 	/**
