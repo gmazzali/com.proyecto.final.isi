@@ -24,7 +24,6 @@ import com.common.util.annotations.View;
 import com.common.util.exception.CheckedException;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.model.rule.Rule;
-import com.proyecto.security.AccessControl;
 import com.proyecto.service.rule.RuleService;
 import com.proyecto.util.Validator;
 import com.proyecto.view.Resources;
@@ -40,11 +39,6 @@ public class RuleFormDialog extends JDialog {
 
 	private static final long serialVersionUID = 1250114119899890805L;
 
-	/**
-	 * El control de acceso.
-	 */
-	@Autowired
-	private AccessControl accessControl;
 	/**
 	 * El panel de selección de nombre de clase.
 	 */
@@ -168,7 +162,6 @@ public class RuleFormDialog extends JDialog {
 		contentPanel.add(this.propertyNameButton);
 
 		this.parentesisButton = new JButton(Resources.PARENTESIS_TO_RULE_ICON);
-		this.parentesisButton.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.parentesisButton.setBounds(596, 213, 35, 35);
 		this.parentesisButton.addActionListener(new ActionListener() {
 			@Override
@@ -179,7 +172,6 @@ public class RuleFormDialog extends JDialog {
 		contentPanel.add(this.parentesisButton);
 
 		this.corchetesButton = new JButton(Resources.CORCHETES_TO_RULE_ICON);
-		this.corchetesButton.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.corchetesButton.setBounds(643, 213, 35, 35);
 		this.corchetesButton.addActionListener(new ActionListener() {
 			@Override
@@ -242,7 +234,7 @@ public class RuleFormDialog extends JDialog {
 		this.commitButton.setEnabled(enabled);
 		this.cancelButton.setEnabled(enabled);
 	}
-	
+
 	/**
 	 * La función encargada de cargar el nombre de una clase dentro del campo de la regla.
 	 */
@@ -251,13 +243,13 @@ public class RuleFormDialog extends JDialog {
 		ClassNameSelectDialog dialog = this.classNameSelectDialog.createSelectDialog();
 		dialog.setLocationRelativeTo(this.classNameButton);
 		dialog.setVisible(true);
-		
+
 		// Tomamos el valor devuelto.
-		if(dialog.getClassSelected() != null) {
+		if (dialog.getClassSelected() != null) {
 			this.addStringToRule(dialog.getClassSelected());
 		}
 	}
-	
+
 	/**
 	 * La función encargada de cargar el nombre de una propiedad dentro del campo de la regla.
 	 */
@@ -266,9 +258,9 @@ public class RuleFormDialog extends JDialog {
 		PropertyNameSelectDialog dialog = this.propertyNameSelectDialog.createSelectDialog();
 		dialog.setLocationRelativeTo(this.propertyNameButton);
 		dialog.setVisible(true);
-		
+
 		// Tomamos el valor devuelto.
-		if(dialog.getPropertySelected() != null) {
+		if (dialog.getPropertySelected() != null) {
 			this.addStringToRule(dialog.getPropertySelected());
 		}
 	}
@@ -277,7 +269,7 @@ public class RuleFormDialog extends JDialog {
 	 * La función encargada de cargar el consecuente que describe un error para la aplicación de una regla.
 	 */
 	private void addErrorValidationToRule() {
-		addStringToRule("(?x rb:violation error('summary', 'description', args))");		
+		addStringToRule("(?x rb:violation error('summary', 'description', args))");
 	}
 
 	/**
@@ -352,7 +344,11 @@ public class RuleFormDialog extends JDialog {
 			throw new CheckedException("rule.form.error.description");
 		}
 		// La regla en si misma.
-		this.rule.setRule(this.ruleTextArea.getText().trim());
+		if (Validator.ruleValidator(this.ruleTextArea.getText().trim())) {
+			this.rule.setRule(this.ruleTextArea.getText().trim());
+		} else {
+			throw new CheckedException("rule.form.error.rule");
+		}
 	}
 
 	/**
