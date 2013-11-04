@@ -152,31 +152,71 @@ public class OntologyConstants {
 	}
 
 	/**
+	 * El conjunto de los nombre de las clases de la ontología.
+	 */
+	public static Set<String> CLASES;
+	/**
 	 * El mapa de las relaciones en base al nombre de los elementos. Dentro tenemos el nombre del elemento y todas las relaciones de este.
 	 */
-	public static final Map<String, Set<String>> ELEMENTS;
+	public static Map<String, Set<String>> PROPERTIES;
 
 	static {
-		ELEMENTS = new HashMap<String, Set<String>>();
+		// Cargamos las clases.
+		OntologyConstants.CLASES = new HashSet<String>();
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ASSESSMENT);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ACTIVITY);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.REACTIVE);
+
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_ESSAY);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_ESSAY_RESTRICTED);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_ESSAY_UNRESTRICTED);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_CHOICE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_CHOICE_MULTIPLE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_CHOICE_SINGLE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_COMPLETION);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_CORRESPONDENCE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_SIMPLE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_SIMPLE_CONCEPTUAL_MAP);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_SIMPLE_ESSAY);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_SIMPLE_EXERCISE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_COMPOSITE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_COMPOSITE_PORTFOLIO);
+
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.OPTION);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.OPTION_TRUE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.OPTION_DISTRACTOR);
+
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ANSWER);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ANSWER_TRUEFALSE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ANSWER_COMPLETE);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ANSWER_TEXT);
+		OntologyConstants.CLASES.add(OntologyConstants.ClassName.ANSWER_RELATION);
+
+		// Cargamos las relaciones.
+		PROPERTIES = new HashMap<String, Set<String>>();
 
 		Set<String> relaciones = new HashSet<String>();
 		relaciones.add(OntologyConstants.PropertyName.ASSESSMENT_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.ASSESSMENT_HAS_MOMENT);
 		relaciones.add(OntologyConstants.PropertyName.ASSESSMENT_HAS_DATE);
 		relaciones.add(OntologyConstants.PropertyName.ASSESSMENT_HAS_ACTIVITY);
-		OntologyConstants.ELEMENTS.put(OntologyConstants.ClassName.ASSESSMENT, relaciones);
+		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.ASSESSMENT, relaciones);
 
 		relaciones = new HashSet<String>();
 		relaciones.add(OntologyConstants.PropertyName.ACTIVITY_BELONG_TO_ASSESSMENT);
 		relaciones.add(OntologyConstants.PropertyName.ACTIVITY_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.ACTIVITY_HAS_REACTIVE);
-		OntologyConstants.ELEMENTS.put(OntologyConstants.ClassName.ACTIVITY, relaciones);
+		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.ACTIVITY, relaciones);
 
 		relaciones = new HashSet<String>();
 		relaciones.add(OntologyConstants.PropertyName.REACTIVE_BELONG_TO_ACTIVITY);
 		relaciones.add(OntologyConstants.PropertyName.REACTIVE_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.REACTIVE_HAS_INSTRUMENT);
-		OntologyConstants.ELEMENTS.put(OntologyConstants.ClassName.REACTIVE, relaciones);
+		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.REACTIVE, relaciones);
 
 		relaciones = new HashSet<String>();
 		relaciones.add(OntologyConstants.PropertyName.INSTRUMENT_BELONG_TO_REACTIVE);
@@ -185,13 +225,13 @@ public class OntologyConstants {
 		relaciones.add(OntologyConstants.PropertyName.INSTRUMENT_CHOICE_HAS_OPTION);
 		relaciones.add(OntologyConstants.PropertyName.INSTRUMENT_CORRESPONDENCE_HAS_RELATION);
 		relaciones.add(OntologyConstants.PropertyName.INSTRUMENT_COMPLETION_HAS_COMPLETE);
-		OntologyConstants.ELEMENTS.put(OntologyConstants.ClassName.INSTRUMENT, relaciones);
+		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.INSTRUMENT, relaciones);
 
 		relaciones = new HashSet<String>();
 		relaciones.add(OntologyConstants.PropertyName.OPTION_BELONG_TO_INSTRUMENT);
 		relaciones.add(OntologyConstants.PropertyName.OPTION_HAS_DESCRIPTION);
 		relaciones.add(OntologyConstants.PropertyName.OPTION_HAS_ANSWER);
-		OntologyConstants.ELEMENTS.put(OntologyConstants.ClassName.OPTION, relaciones);
+		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.OPTION, relaciones);
 
 		relaciones = new HashSet<String>();
 		relaciones.add(OntologyConstants.PropertyName.ANSWER_ESSAY_BELONG_TO_INSTRUMENT);
@@ -204,6 +244,6 @@ public class OntologyConstants {
 		relaciones.add(OntologyConstants.PropertyName.ANSWER_COMPLETE_BELONG_TO_INSTRUMENT);
 		relaciones.add(OntologyConstants.PropertyName.ANSWER_COMPLETE_HAS_INDEX);
 		relaciones.add(OntologyConstants.PropertyName.ANSWER_COMPLETE_HAS_PHRASE);
-		OntologyConstants.ELEMENTS.put(OntologyConstants.ClassName.ANSWER, relaciones);
+		OntologyConstants.PROPERTIES.put(OntologyConstants.ClassName.ANSWER, relaciones);
 	}
 }
