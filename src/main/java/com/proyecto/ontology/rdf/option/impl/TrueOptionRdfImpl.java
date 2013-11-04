@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.option.TrueOption;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.option.TrueOptionRdf;
 
 /**
@@ -26,15 +27,15 @@ public class TrueOptionRdfImpl extends OptionRdfImpl<TrueOption> implements True
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
-		String trueOptionClassName = this.namespace + TrueOption.class.getSimpleName();
+		String trueOptionClassName = this.namespace + OntologyConstants.ClassName.OPTION_TRUE;
 		this.trueOptionClass = ontology.getOntClass(trueOptionClassName);
 		if (this.trueOptionClass == null) {
 			this.trueOptionClass = ontology.createClass(trueOptionClassName);
-
-			// Cargamos el padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.trueOptionClass);
 		}
+
+		// Cargamos el padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.trueOptionClass);
 
 		return this.trueOptionClass;
 	}

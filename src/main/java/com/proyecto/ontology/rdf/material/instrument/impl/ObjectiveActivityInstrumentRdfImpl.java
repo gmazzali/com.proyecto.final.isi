@@ -4,6 +4,7 @@ import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.ObjectiveActivityInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.ObjectiveActivityInstrumentRdf;
 
 /**
@@ -28,15 +29,15 @@ public abstract class ObjectiveActivityInstrumentRdfImpl<I extends ObjectiveActi
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String objectiveActivityInstrumentClassName = this.namespace + ObjectiveActivityInstrument.class.getSimpleName();
+		String objectiveActivityInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE;
 		this.objectiveActivityInstrumentClass = ontology.getOntClass(objectiveActivityInstrumentClassName);
 		if (this.objectiveActivityInstrumentClass == null) {
 			this.objectiveActivityInstrumentClass = ontology.createClass(objectiveActivityInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.objectiveActivityInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.objectiveActivityInstrumentClass);
 
 		return this.objectiveActivityInstrumentClass;
 	}

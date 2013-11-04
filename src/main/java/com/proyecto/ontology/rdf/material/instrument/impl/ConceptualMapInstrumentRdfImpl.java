@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.ConceptualMapInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.ConceptualMapInstrumentRdf;
 
 /**
@@ -27,15 +28,15 @@ public class ConceptualMapInstrumentRdfImpl extends SimpleInstrumentRdfImpl<Conc
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String conceptualMapInstrumentClassName = this.namespace + ConceptualMapInstrument.class.getSimpleName();
+		String conceptualMapInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_SIMPLE_CONCEPTUAL_MAP;
 		this.conceptualMapInstrumentClass = ontology.getOntClass(conceptualMapInstrumentClassName);
 		if (this.conceptualMapInstrumentClass == null) {
 			this.conceptualMapInstrumentClass = ontology.createClass(conceptualMapInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.conceptualMapInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.conceptualMapInstrumentClass);
 
 		return this.conceptualMapInstrumentClass;
 	}

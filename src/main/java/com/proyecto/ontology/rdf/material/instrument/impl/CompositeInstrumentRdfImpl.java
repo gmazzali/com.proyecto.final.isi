@@ -4,6 +4,7 @@ import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.CompositeInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.CompositeInstrumentRdf;
 
 /**
@@ -28,15 +29,15 @@ public abstract class CompositeInstrumentRdfImpl<I extends CompositeInstrument> 
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String compositeInstrumentClassName = this.namespace + CompositeInstrument.class.getSimpleName();
+		String compositeInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_COMPOSITE;
 		this.compositeInstrumentClass = ontology.getOntClass(compositeInstrumentClassName);
 		if (this.compositeInstrumentClass == null) {
 			this.compositeInstrumentClass = ontology.createClass(compositeInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.compositeInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.compositeInstrumentClass);
 
 		return this.compositeInstrumentClass;
 	}

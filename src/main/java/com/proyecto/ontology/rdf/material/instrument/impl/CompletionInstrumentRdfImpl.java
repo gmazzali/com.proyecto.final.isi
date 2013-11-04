@@ -14,9 +14,9 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.CompletionAnswer;
 import com.proyecto.model.material.instrument.CompletionInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.answer.CompletionAnswerRdf;
 import com.proyecto.ontology.rdf.material.instrument.CompletionInstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos de correspondencia dentro de la ontología.
@@ -47,18 +47,18 @@ public class CompletionInstrumentRdfImpl extends ObjectiveActivityInstrumentRdfI
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String completionInstrumentClassName = this.namespace + CompletionInstrument.class.getSimpleName();
+		String completionInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_COMPLETION;
 		this.completionInstrumentClass = ontology.getOntClass(completionInstrumentClassName);
 		if (this.completionInstrumentClass == null) {
 			this.completionInstrumentClass = ontology.createClass(completionInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.completionInstrumentClass);
 		}
 
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.completionInstrumentClass);
+
 		// Creamos las relaciones.
-		String complete = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_COMPLETION_HAVE_COMPLETE;
+		String complete = this.namespace + OntologyConstants.PropertyName.INSTRUMENT_COMPLETION_HAS_COMPLETE;
 		this.haveComplete = ontology.getObjectProperty(complete);
 		if (this.haveComplete == null) {
 			this.haveComplete = ontology.createObjectProperty(complete);

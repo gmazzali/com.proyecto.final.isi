@@ -4,6 +4,7 @@ import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.SemiFormalInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.SemiFormalInstrumentRdf;
 
 /**
@@ -27,15 +28,15 @@ public abstract class SemiFormalInstrumentRdfImpl<I extends SemiFormalInstrument
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String semiformalInstrumentClassName = this.namespace + SemiFormalInstrument.class.getSimpleName();
+		String semiformalInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL;
 		this.semiformalInstrumentClass = ontology.getOntClass(semiformalInstrumentClassName);
 		if (this.semiformalInstrumentClass == null) {
 			this.semiformalInstrumentClass = ontology.createClass(semiformalInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.semiformalInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.semiformalInstrumentClass);
 
 		return this.semiformalInstrumentClass;
 	}

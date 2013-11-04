@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.MultipleChoiceInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.MultipleChoiceInstrumentRdf;
 
 /**
@@ -27,15 +28,15 @@ public class MultipleChoiceInstrumentRdfImpl extends ChoiceInstrumentRdfImpl<Mul
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String multipleChoiceInstrumentClassName = this.namespace + MultipleChoiceInstrument.class.getSimpleName();
+		String multipleChoiceInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_CHOICE_MULTIPLE;
 		this.multipleChoiceInstrumentClass = ontology.getOntClass(multipleChoiceInstrumentClassName);
 		if (this.multipleChoiceInstrumentClass == null) {
 			this.multipleChoiceInstrumentClass = ontology.createClass(multipleChoiceInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.multipleChoiceInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.multipleChoiceInstrumentClass);
 
 		return this.multipleChoiceInstrumentClass;
 	}

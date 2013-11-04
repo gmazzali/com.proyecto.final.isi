@@ -12,8 +12,8 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.RelationAnswer;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.answer.RelationAnswerRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define comportamiento de las respuestas para las relaciones dentro de la ontología.
@@ -39,24 +39,24 @@ public class RelationAnswerRdfImpl extends AnswerRdfImpl<RelationAnswer> impleme
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String relationAnswerClassName = this.namespace + RelationAnswer.class.getSimpleName();
+		String relationAnswerClassName = this.namespace + OntologyConstants.ClassName.ANSWER_RELATION;
 		this.relationAnswerClass = ontology.getOntClass(relationAnswerClassName);
 		if (this.relationAnswerClass == null) {
 			this.relationAnswerClass = ontology.createClass(relationAnswerClassName);
-
-			// Cargamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.relationAnswerClass);
 		}
 
+		// Cargamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.relationAnswerClass);
+
 		// Creamos las relaciones.
-		String leftSide = this.namespace + Constants.Ontology.PROPERTY_ANSWER_RELATION_LEFT_SIDE;
+		String leftSide = this.namespace + OntologyConstants.PropertyName.ANSWER_RELATION_HAS_LEFT_SIDE;
 		this.haveLeftSide = ontology.getDatatypeProperty(leftSide);
 		if (this.haveLeftSide == null) {
 			this.haveLeftSide = ontology.createDatatypeProperty(leftSide);
 		}
 
-		String rightSide = this.namespace + Constants.Ontology.PROPERTY_ANSWER_RELATION_RIGHT_SIDE;
+		String rightSide = this.namespace + OntologyConstants.PropertyName.ANSWER_RELATION_HAS_RIGHT_SIDE;
 		this.haveRightSide = ontology.getDatatypeProperty(rightSide);
 		if (this.haveRightSide == null) {
 			this.haveRightSide = ontology.createDatatypeProperty(rightSide);

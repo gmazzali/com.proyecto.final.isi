@@ -17,10 +17,10 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.activity.Activity;
 import com.proyecto.model.material.reactive.Reactive;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.factory.material.reactive.ReactiveFactoryRdf;
 import com.proyecto.ontology.rdf.material.MaterialRdfImpl;
 import com.proyecto.ontology.rdf.material.activity.ActivityRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de las actividades dentro de una ontología.
@@ -52,20 +52,20 @@ public class ActivityRdfImpl extends MaterialRdfImpl<Activity> implements Activi
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String activityClassName = this.namespace + Activity.class.getSimpleName();
+		String activityClassName = this.namespace + OntologyConstants.ClassName.ACTIVITY;
 		this.activityClass = ontology.getOntClass(activityClassName);
 		if (this.activityClass == null) {
 			this.activityClass = ontology.createClass(activityClassName);
 		}
 
 		// Creamos las relaciones.
-		String description = this.namespace + Constants.Ontology.PROPERTY_ACTIVITY_HAVE_DESCRIPTION;
+		String description = this.namespace + OntologyConstants.PropertyName.ACTIVITY_HAS_DESCRIPTION;
 		this.haveDescription = ontology.getDatatypeProperty(description);
 		if (this.haveDescription == null) {
 			this.haveDescription = ontology.createDatatypeProperty(description);
 		}
 
-		String reactive = this.namespace + Constants.Ontology.PROPERTY_ACTIVITY_HAVE_REACTIVE;
+		String reactive = this.namespace + OntologyConstants.PropertyName.ACTIVITY_HAS_REACTIVE;
 		this.haveReactive = ontology.getObjectProperty(reactive);
 		if (this.haveReactive == null) {
 			this.haveReactive = ontology.createObjectProperty(reactive);

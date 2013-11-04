@@ -12,8 +12,8 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.EssayActivityAnswer;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.answer.EssayActivityAnswerRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define comportamiento de las respuestas para ensayos dentro de la ontología.
@@ -38,18 +38,18 @@ public class EssayActivityAnswerRdfImpl extends AnswerRdfImpl<EssayActivityAnswe
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String essayActivityAnswerClassName = this.namespace + EssayActivityAnswer.class.getSimpleName();
+		String essayActivityAnswerClassName = this.namespace + OntologyConstants.ClassName.ANSWER_TEXT;
 		this.essayActivityAnswerClass = ontology.getOntClass(essayActivityAnswerClassName);
 		if (this.essayActivityAnswerClass == null) {
 			this.essayActivityAnswerClass = ontology.createClass(essayActivityAnswerClassName);
-
-			// Cargamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.essayActivityAnswerClass);
 		}
 
+		// Cargamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.essayActivityAnswerClass);
+
 		// Creamos las relaciones.
-		String answer = this.namespace + Constants.Ontology.PROPERTY_ANSWER_ESSAY_HAVE_DESCRIPTION;
+		String answer = this.namespace + OntologyConstants.PropertyName.ANSWER_ESSAY_HAS_DESCRIPTION;
 		this.haveAnswer = ontology.getDatatypeProperty(answer);
 		if (this.haveAnswer == null) {
 			this.haveAnswer = ontology.createDatatypeProperty(answer);
