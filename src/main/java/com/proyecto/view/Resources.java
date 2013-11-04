@@ -71,7 +71,7 @@ public class Resources {
 	 */
 	public static final ImageIcon PROPERTY_TO_RULE_ICON = Resources.createStaticImage("property_name_32.png", Resources.width, Resources.height);
 	/**
-	 * El icono de agregar un par de parentesis a una regla.
+	 * El icono de agregar un par de paréntesis a una regla.
 	 */
 	public static final ImageIcon PARENTESIS_TO_RULE_ICON = Resources.createStaticImage("parentesis_32.png", Resources.width, Resources.height);
 	/**
@@ -82,6 +82,14 @@ public class Resources {
 	 * El icono de agregar el componentes que permite definir un error a una regla.
 	 */
 	public static final ImageIcon ERROR_TO_RULE_ICON = Resources.createStaticImage("error_32.png", Resources.width, Resources.height);
+	/**
+	 * El icono de agregar el símbolo para la regla de encadenamiento hacia adelante.
+	 */
+	public static final ImageIcon FORWARD_RULE_ICON = Resources.createStaticImage("forward_rule_32.png", Resources.width, Resources.height);
+	/**
+	 * El icono de agregar el símbolo para la regla de encadenamiento hacia atrás.
+	 */
+	public static final ImageIcon BACKWARD_RULE_ICON = Resources.createStaticImage("backward_rule_32.png", Resources.width, Resources.height);
 
 	/**
 	 * El icono para una pantalla de CRUD.
