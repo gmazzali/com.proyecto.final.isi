@@ -100,7 +100,7 @@ public class RuleFormDialog extends JDialog {
 	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
-		this.setBounds(100, 100, 690, 394);
+		this.setBounds(100, 100, 690, 386);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.setFont(new Font("Arial", Font.PLAIN, 12));
 
@@ -214,15 +214,15 @@ public class RuleFormDialog extends JDialog {
 		contentPanel.add(this.errorButton);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 307, 668, 2);
+		separator.setBounds(10, 302, 668, 2);
 		contentPanel.add(separator);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(549, 321, 35, 35);
+		this.progressLabel.setBounds(549, 316, 35, 35);
 		contentPanel.add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
-		this.commitButton.setBounds(596, 321, 35, 35);
+		this.commitButton.setBounds(596, 316, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -232,7 +232,7 @@ public class RuleFormDialog extends JDialog {
 		contentPanel.add(this.commitButton);
 
 		this.cancelButton = new JButton(Resources.CLOSE_ICON);
-		this.cancelButton.setBounds(643, 321, 35, 35);
+		this.cancelButton.setBounds(643, 316, 35, 35);
 		this.cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
