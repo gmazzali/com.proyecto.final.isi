@@ -65,16 +65,20 @@ public class RuleFormDialog extends JDialog {
 	/**
 	 * Los botones de acción.
 	 */
-	private JButton btnNewButton;
-	private JButton button;
-	private JButton button_1;
-	private JButton button_2;
 	private JButton commitButton;
 	private JButton cancelButton;
 	/**
 	 * El label de progreso.
 	 */
 	private JLabel progressLabel;
+	/**
+	 * Los botones de acciones para la regla.
+	 */
+	private JButton classNameButton;
+	private JButton propertyNameButton;
+	private JButton corchetesButton;
+	private JButton parentesisButton;
+	private JButton errorButton;
 
 	/**
 	 * El constructor de una ventana de edición de reglas.
@@ -90,7 +94,7 @@ public class RuleFormDialog extends JDialog {
 	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
-		this.setBounds(100, 100, 690, 408);
+		this.setBounds(100, 100, 690, 394);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.setFont(new Font("Arial", Font.PLAIN, 12));
 
@@ -118,11 +122,11 @@ public class RuleFormDialog extends JDialog {
 
 		JLabel ruleLabel = new JLabel(HolderMessage.getMessage("rule.form.label.rule"));
 		ruleLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleLabel.setBounds(10, 149, 668, 16);
+		ruleLabel.setBounds(10, 149, 574, 16);
 		contentPanel.add(ruleLabel);
 
 		JScrollPane ruleScrollPane = new JScrollPane();
-		ruleScrollPane.setBounds(6, 166, 672, 118);
+		ruleScrollPane.setBounds(6, 166, 578, 129);
 		ruleScrollPane.setFont(this.getFont());
 		contentPanel.add(ruleScrollPane);
 
@@ -133,60 +137,48 @@ public class RuleFormDialog extends JDialog {
 		ruleScrollPane.setViewportView(this.ruleTextArea);
 		this.ruleTextArea.setBorder(new LineBorder(Color.LIGHT_GRAY));
 
-		this.btnNewButton = new JButton("=>");
-		this.btnNewButton.setBounds(10, 291, 53, 23);
-		this.btnNewButton.addActionListener(new ActionListener() {
+		this.classNameButton = new JButton("[ ]");
+		this.classNameButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.classNameButton.setBounds(596, 166, 35, 35);
+		this.classNameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int pos = RuleFormDialog.this.ruleTextArea.getCaretPosition();
 				RuleFormDialog.this.ruleTextArea.insert("=>", pos);
 			}
 		});
-		contentPanel.add(this.btnNewButton);
+		contentPanel.add(this.classNameButton);
 
-		this.button = new JButton("|");
-		this.button.setBounds(65, 291, 53, 23);
-		this.button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int pos = RuleFormDialog.this.ruleTextArea.getCaretPosition();
-				RuleFormDialog.this.ruleTextArea.insert("|", pos);
-			}
-		});
-		contentPanel.add(this.button);
+		this.propertyNameButton = new JButton("[ ]");
+		this.propertyNameButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.propertyNameButton.setBounds(643, 166, 35, 35);
+		contentPanel.add(this.propertyNameButton);
 
-		this.button_1 = new JButton("?");
-		this.button_1.setBounds(117, 291, 53, 23);
-		this.button_1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int pos = RuleFormDialog.this.ruleTextArea.getCaretPosition();
-				RuleFormDialog.this.ruleTextArea.insert("?", pos);
-			}
-		});
-		contentPanel.add(this.button_1);
+		this.parentesisButton = new JButton("[ ]");
+		this.parentesisButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.parentesisButton.setBounds(596, 213, 35, 35);
+		contentPanel.add(this.parentesisButton);
 
-		this.button_2 = new JButton("=");
-		this.button_2.setBounds(170, 291, 53, 23);
-		this.button_2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int pos = RuleFormDialog.this.ruleTextArea.getCaretPosition();
-				RuleFormDialog.this.ruleTextArea.insert("=", pos);
-			}
-		});
-		contentPanel.add(this.button_2);
+		this.corchetesButton = new JButton("[ ]");
+		this.corchetesButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.corchetesButton.setBounds(643, 213, 35, 35);
+		contentPanel.add(this.corchetesButton);
+
+		this.errorButton = new JButton("[ ]");
+		this.errorButton.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.errorButton.setBounds(596, 260, 82, 35);
+		contentPanel.add(this.errorButton);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 326, 668, 2);
+		separator.setBounds(10, 307, 668, 2);
 		contentPanel.add(separator);
 
 		this.progressLabel = new JLabel();
-		this.progressLabel.setBounds(549, 340, 35, 35);
+		this.progressLabel.setBounds(549, 321, 35, 35);
 		contentPanel.add(this.progressLabel);
 
 		this.commitButton = new JButton(Resources.COMMIT_ICON);
-		this.commitButton.setBounds(596, 340, 35, 35);
+		this.commitButton.setBounds(596, 321, 35, 35);
 		this.commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -196,7 +188,7 @@ public class RuleFormDialog extends JDialog {
 		contentPanel.add(this.commitButton);
 
 		this.cancelButton = new JButton(Resources.CLOSE_ICON);
-		this.cancelButton.setBounds(643, 340, 35, 35);
+		this.cancelButton.setBounds(643, 321, 35, 35);
 		this.cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -211,10 +203,12 @@ public class RuleFormDialog extends JDialog {
 		this.ruleTextArea.setEnabled(enabled);
 		this.descriptionTextArea.setEnabled(enabled);
 
-		this.btnNewButton.setEnabled(enabled);
-		this.button.setEnabled(enabled);
-		this.button_1.setEnabled(enabled);
-		this.button_2.setEnabled(enabled);
+		this.classNameButton.setEnabled(enabled);
+		this.propertyNameButton.setEnabled(enabled);
+		this.parentesisButton.setEnabled(enabled);
+		this.corchetesButton.setEnabled(enabled);
+		this.errorButton.setEnabled(enabled);
+
 		this.commitButton.setEnabled(enabled);
 		this.cancelButton.setEnabled(enabled);
 	}
