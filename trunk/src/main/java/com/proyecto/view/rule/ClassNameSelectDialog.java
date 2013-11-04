@@ -1,13 +1,13 @@
 package com.proyecto.view.rule;
 
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -31,11 +31,6 @@ public class ClassNameSelectDialog extends JDialog {
 	 */
 	@Value("${ontology.namespace}")
 	private String namespace;
-	/**
-	 * El prefijo del nombre de la ontología.
-	 */
-	@Value("${ontology.namespace.prefix}")
-	private String namespacePrefix;
 
 	/**
 	 * La lista que va a desplegar los nombres de las clases.
@@ -61,17 +56,25 @@ public class ClassNameSelectDialog extends JDialog {
 		this.setModal(true);
 		this.setResizable(false);
 		this.setFont(new Font("Arial", Font.PLAIN, 12));
-		this.setBounds(100, 100, 250, 312);
+		this.setBounds(100, 100, 320, 320);
 		this.getContentPane().setLayout(null);
 
 		JScrollPane classNameScrollPane = new JScrollPane();
-		classNameScrollPane.setBounds(12, 11, 220, 262);
+		classNameScrollPane.setBounds(12, 11, 292, 270);
 		classNameScrollPane.setFont(this.getFont());
 		this.getContentPane().add(classNameScrollPane);
 
 		this.classNameJList = new JList<String>();
 		this.classNameJList.setFont(classNameScrollPane.getFont());
 		this.classNameJList.setModel(new DefaultListModel<String>());
+		this.classNameJList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					ClassNameSelectDialog.this.selectClassName();
+				}
+			}
+		});
 		classNameScrollPane.setViewportView(this.classNameJList);
 	}
 
@@ -80,11 +83,11 @@ public class ClassNameSelectDialog extends JDialog {
 	 */
 	private void initClassNameList() {
 		DefaultListModel<String> classModel = new DefaultListModel<String>();
-		
+
 		for (String className : OntologyConstants.CLASES) {
 			classModel.addElement(className);
 		}
-		
+
 		this.classNameJList.setModel(classModel);
 	}
 
@@ -93,10 +96,10 @@ public class ClassNameSelectDialog extends JDialog {
 	 */
 	private void selectClassName() {
 		// Si tenemos algún nombre de clase seleccionada.
-		Integer index = classNameJList.getSelectedIndex();
+		Integer index = this.classNameJList.getSelectedIndex();
 		if (index != -1) {
 			// Tomamos la clase seleccionada.
-			DefaultListModel<String> classModel = this.classNameJList.getModel();
+			DefaultListModel<String> classModel = (DefaultListModel<String>) this.classNameJList.getModel();
 			this.classSelected = classModel.get(index);
 			// Cerramos la ventana.
 			this.dispose();
@@ -124,23 +127,5 @@ public class ClassNameSelectDialog extends JDialog {
 		this.classSelected = null;
 
 		return this;
-	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					ClassNameSelectDialog dialog = new ClassNameSelectDialog();
-					dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 }

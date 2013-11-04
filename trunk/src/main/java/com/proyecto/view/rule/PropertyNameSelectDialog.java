@@ -1,13 +1,15 @@
 package com.proyecto.view.rule;
 
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -31,11 +33,6 @@ public class PropertyNameSelectDialog extends JDialog {
 	 */
 	@Value("${ontology.namespace}")
 	private String namespace;
-	/**
-	 * El prefijo del nombre de la ontología.
-	 */
-	@Value("${ontology.namespace.prefix}")
-	private String namespacePrefix;
 
 	/**
 	 * La lista de los nombre de las clases.
@@ -64,7 +61,7 @@ public class PropertyNameSelectDialog extends JDialog {
 	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
-		this.setBounds(100, 100, 569, 300);
+		this.setBounds(100, 100, 610, 300);
 		this.setFont(new Font("Arial", Font.PLAIN, 12));
 		this.getContentPane().setLayout(null);
 
@@ -76,16 +73,30 @@ public class PropertyNameSelectDialog extends JDialog {
 		this.classNameJList = new JList<String>();
 		this.classNameJList.setFont(classNameScrollPane.getFont());
 		this.classNameJList.setModel(new DefaultListModel<String>());
+		this.classNameJList.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				PropertyNameSelectDialog.this.initPropertyNameList();
+			}
+		});
 		classNameScrollPane.setViewportView(this.classNameJList);
 
 		JScrollPane propertyNameScrollPane = new JScrollPane();
-		propertyNameScrollPane.setBounds(257, 11, 294, 250);
+		propertyNameScrollPane.setBounds(257, 11, 337, 250);
 		propertyNameScrollPane.setFont(this.getFont());
 		this.getContentPane().add(propertyNameScrollPane);
 
 		this.propertyNameJList = new JList<String>();
 		this.propertyNameJList.setFont(propertyNameScrollPane.getFont());
 		this.propertyNameJList.setModel(new DefaultListModel<String>());
+		this.propertyNameJList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					PropertyNameSelectDialog.this.selectPropertyName();
+				}
+			}
+		});
 		propertyNameScrollPane.setViewportView(this.propertyNameJList);
 	}
 
@@ -106,10 +117,10 @@ public class PropertyNameSelectDialog extends JDialog {
 	 * La función que carga todos los nombres de las propiedades dentro de la lista.
 	 */
 	private void initPropertyNameList() {
-		Integer index = classNameJList.getSelectedIndex();
+		Integer index = this.classNameJList.getSelectedIndex();
 
 		if (index != -1) {
-			DefaultListModel<String> classModel = this.classNameJList.getModel();
+			DefaultListModel<String> classModel = (DefaultListModel<String>) this.classNameJList.getModel();
 			DefaultListModel<String> propertyModel = new DefaultListModel<String>();
 			String className = classModel.get(index);
 
@@ -126,11 +137,13 @@ public class PropertyNameSelectDialog extends JDialog {
 	 */
 	private void selectPropertyName() {
 		// Si tenemos algún nombre de una propiedad seleccionada.
-		Integer index = propertyNameJList.getSelectedIndex();
+		Integer index = this.propertyNameJList.getSelectedIndex();
+
 		if (index != -1) {
 			// Tomamos la propiedad seleccionada.
-			DefaultListModel<String> classModel = this.propertyNameJList.getModel();
+			DefaultListModel<String> classModel = (DefaultListModel<String>) this.propertyNameJList.getModel();
 			this.propertySelected = classModel.get(index);
+
 			// Cerramos la ventana.
 			this.dispose();
 		}
@@ -157,23 +170,5 @@ public class PropertyNameSelectDialog extends JDialog {
 		this.propertySelected = null;
 
 		return this;
-	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					PropertyNameSelectDialog dialog = new PropertyNameSelectDialog();
-					dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 }

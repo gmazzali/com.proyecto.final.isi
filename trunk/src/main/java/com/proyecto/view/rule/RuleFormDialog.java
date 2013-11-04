@@ -82,6 +82,8 @@ public class RuleFormDialog extends JDialog {
 	private JButton propertyNameButton;
 	private JButton corchetesButton;
 	private JButton parentesisButton;
+	private JButton forwardRuleButton;
+	private JButton backwardRuleButton;
 	private JButton errorButton;
 
 	/**
@@ -126,11 +128,11 @@ public class RuleFormDialog extends JDialog {
 
 		JLabel ruleLabel = new JLabel(HolderMessage.getMessage("rule.form.label.rule"));
 		ruleLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		ruleLabel.setBounds(10, 149, 574, 16);
+		ruleLabel.setBounds(10, 149, 600, 16);
 		contentPanel.add(ruleLabel);
 
 		JScrollPane ruleScrollPane = new JScrollPane();
-		ruleScrollPane.setBounds(6, 166, 578, 129);
+		ruleScrollPane.setBounds(6, 166, 604, 124);
 		ruleScrollPane.setFont(this.getFont());
 		contentPanel.add(ruleScrollPane);
 
@@ -142,51 +144,71 @@ public class RuleFormDialog extends JDialog {
 		this.ruleTextArea.setBorder(new LineBorder(Color.LIGHT_GRAY));
 
 		this.classNameButton = new JButton(Resources.CLASS_TO_RULE_ICON);
-		this.classNameButton.setBounds(596, 166, 35, 35);
+		this.classNameButton.setBounds(616, 166, 30, 30);
 		this.classNameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				addClassNameToRule();
+				RuleFormDialog.this.addClassNameToRule();
 			}
 		});
 		contentPanel.add(this.classNameButton);
 
 		this.propertyNameButton = new JButton(Resources.PROPERTY_TO_RULE_ICON);
-		this.propertyNameButton.setBounds(643, 166, 35, 35);
+		this.propertyNameButton.setBounds(648, 166, 30, 30);
 		this.propertyNameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				addPropertyNameToRule();
+				RuleFormDialog.this.addPropertyNameToRule();
 			}
 		});
 		contentPanel.add(this.propertyNameButton);
 
 		this.parentesisButton = new JButton(Resources.PARENTESIS_TO_RULE_ICON);
-		this.parentesisButton.setBounds(596, 213, 35, 35);
+		this.parentesisButton.setBounds(616, 198, 30, 30);
 		this.parentesisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				addStringToRule("()");
+				RuleFormDialog.this.addStringToRule("( )");
 			}
 		});
 		contentPanel.add(this.parentesisButton);
 
 		this.corchetesButton = new JButton(Resources.CORCHETES_TO_RULE_ICON);
-		this.corchetesButton.setBounds(643, 213, 35, 35);
+		this.corchetesButton.setBounds(648, 198, 30, 30);
 		this.corchetesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				addStringToRule("[]");
+				RuleFormDialog.this.addStringToRule("[ ]");
 			}
 		});
 		contentPanel.add(this.corchetesButton);
 
+		this.forwardRuleButton = new JButton(Resources.FORWARD_RULE_ICON);
+		this.forwardRuleButton.setBounds(616, 229, 30, 30);
+		this.forwardRuleButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RuleFormDialog.this.addStringToRule(" -> ");
+			}
+		});
+		contentPanel.add(this.forwardRuleButton);
+
+		this.backwardRuleButton = new JButton(Resources.BACKWARD_RULE_ICON);
+		this.backwardRuleButton.setBounds(648, 229, 30, 30);
+		this.backwardRuleButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RuleFormDialog.this.addStringToRule(" <- ");
+			}
+		});
+		contentPanel.add(this.backwardRuleButton);
+
 		this.errorButton = new JButton(Resources.ERROR_TO_RULE_ICON);
-		this.errorButton.setBounds(596, 260, 82, 35);
+		this.errorButton.setBounds(616, 260, 62, 30);
 		this.errorButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				addErrorValidationToRule();
+				RuleFormDialog.this.addErrorValidationToRule();
 			}
 		});
 		contentPanel.add(this.errorButton);
@@ -229,6 +251,8 @@ public class RuleFormDialog extends JDialog {
 		this.propertyNameButton.setEnabled(enabled);
 		this.parentesisButton.setEnabled(enabled);
 		this.corchetesButton.setEnabled(enabled);
+		this.forwardRuleButton.setEnabled(enabled);
+		this.backwardRuleButton.setEnabled(enabled);
 		this.errorButton.setEnabled(enabled);
 
 		this.commitButton.setEnabled(enabled);
@@ -269,7 +293,7 @@ public class RuleFormDialog extends JDialog {
 	 * La función encargada de cargar el consecuente que describe un error para la aplicación de una regla.
 	 */
 	private void addErrorValidationToRule() {
-		addStringToRule("(?x rb:violation error('summary', 'description', args))");
+		this.addStringToRule("(?x rb:violation error('summary', 'description', args))");
 	}
 
 	/**
