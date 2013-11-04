@@ -1,5 +1,7 @@
 package com.proyecto.util;
 
+import com.hp.hpl.jena.reasoner.rulesys.Rule;
+
 /**
  * La clase que nos permite validar distintos campos dentro de la aplicación.
  * 
@@ -28,7 +30,14 @@ public class Validator {
 	 * @return TRUE en caso de que la regla este acorde a los parámetros establecidos, en caso contrario retornar FALSE.
 	 */
 	public static Boolean ruleValidator(String rule) {
-		String pattern = "[\\sa-záéíóúñü0-9]+";
-		return rule == null ? false : rule.toLowerCase().trim().matches(pattern);
+		Boolean valid = null;
+		try {
+			Rule.parseRule(rule);
+			valid = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			valid = false;
+		}
+		return valid;
 	}
 }
