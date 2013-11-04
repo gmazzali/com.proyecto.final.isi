@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.Answer;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.ProyectoRdfImpl;
 import com.proyecto.ontology.rdf.answer.AnswerRdf;
 
@@ -30,7 +31,7 @@ public class AnswerRdfImpl<A extends Answer> extends ProyectoRdfImpl<A> implemen
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
-		String answerClassName = this.namespace + Answer.class.getSimpleName();
+		String answerClassName = this.namespace + OntologyConstants.ClassName.ANSWER;
 		this.answerClass = ontology.getOntClass(answerClassName);
 		if (this.answerClass == null) {
 			this.answerClass = ontology.createClass(answerClassName);

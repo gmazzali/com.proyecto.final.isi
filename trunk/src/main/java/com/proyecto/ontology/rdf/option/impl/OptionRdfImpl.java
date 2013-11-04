@@ -15,10 +15,10 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.option.Option;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.ProyectoRdfImpl;
 import com.proyecto.ontology.rdf.answer.TrueFalseAnswerRdf;
 import com.proyecto.ontology.rdf.option.OptionRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de las opciones dentro de la ontología.
@@ -53,20 +53,20 @@ public class OptionRdfImpl<O extends Option> extends ProyectoRdfImpl<O> implemen
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String optionClassName = this.namespace + Option.class.getSimpleName();
+		String optionClassName = this.namespace + OntologyConstants.ClassName.OPTION;
 		this.optionClass = ontology.getOntClass(optionClassName);
 		if (this.optionClass == null) {
 			this.optionClass = ontology.createClass(optionClassName);
 		}
 
 		// Creamos las relaciones.
-		String description = this.namespace + Constants.Ontology.PROPERTY_OPTION_HAVE_DESCRIPTION;
+		String description = this.namespace + OntologyConstants.PropertyName.OPTION_HAS_DESCRIPTION;
 		this.haveDescription = ontology.getDatatypeProperty(description);
 		if (this.haveDescription == null) {
 			this.haveDescription = ontology.createDatatypeProperty(description);
 		}
 
-		String answer = this.namespace + Constants.Ontology.PROPERTY_OPTION_HAVE_ANSWER;
+		String answer = this.namespace + OntologyConstants.PropertyName.OPTION_HAS_ANSWER;
 		this.haveAnswer = ontology.getObjectProperty(answer);
 		if (this.haveAnswer == null) {
 			this.haveAnswer = ontology.createObjectProperty(answer);

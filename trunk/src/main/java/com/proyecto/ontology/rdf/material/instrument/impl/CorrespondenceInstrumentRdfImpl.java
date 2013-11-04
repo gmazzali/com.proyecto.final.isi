@@ -14,9 +14,9 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.RelationAnswer;
 import com.proyecto.model.material.instrument.CorrespondenceInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.answer.RelationAnswerRdf;
 import com.proyecto.ontology.rdf.material.instrument.CorrespondenceInstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos de correspondencia dentro de la ontología.
@@ -48,18 +48,18 @@ public class CorrespondenceInstrumentRdfImpl extends ObjectiveActivityInstrument
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String correspondenceInstrumentClassName = this.namespace + CorrespondenceInstrument.class.getSimpleName();
+		String correspondenceInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_CORRESPONDENCE;
 		this.correspondenceInstrumentClass = ontology.getOntClass(correspondenceInstrumentClassName);
 		if (this.correspondenceInstrumentClass == null) {
 			this.correspondenceInstrumentClass = ontology.createClass(correspondenceInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.correspondenceInstrumentClass);
 		}
 
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.correspondenceInstrumentClass);
+
 		// Creamos las relaciones.
-		String relations = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_CORRESPONDENCE_HAVE_RELATION;
+		String relations = this.namespace + OntologyConstants.PropertyName.INSTRUMENT_CORRESPONDENCE_HAS_RELATION;
 		this.haveRelation = ontology.getObjectProperty(relations);
 		if (this.haveRelation == null) {
 			this.haveRelation = ontology.createObjectProperty(relations);

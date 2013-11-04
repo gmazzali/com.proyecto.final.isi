@@ -13,9 +13,9 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.model.material.instrument.ChoiceInstrument;
 import com.proyecto.model.option.Option;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.factory.option.OptionFactoryRdf;
 import com.proyecto.ontology.rdf.material.instrument.ChoiceInstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos formales objetivos de selección dentro de la ontología.
@@ -49,18 +49,18 @@ public abstract class ChoiceInstrumentRdfImpl<I extends ChoiceInstrument> extend
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String choiceInstrumentClassName = this.namespace + ChoiceInstrument.class.getSimpleName();
+		String choiceInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_FORMAL_OBJECTIVE_CHOICE;
 		this.choiceInstrumentClass = ontology.getOntClass(choiceInstrumentClassName);
 		if (this.choiceInstrumentClass == null) {
 			this.choiceInstrumentClass = ontology.createClass(choiceInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.choiceInstrumentClass);
 		}
 
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.choiceInstrumentClass);
+
 		// Cargamos las relaciones.
-		String option = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_CHOICE_HAVE_OPTION;
+		String option = this.namespace + OntologyConstants.PropertyName.INSTRUMENT_CHOICE_HAS_OPTION;
 		this.haveOption = ontology.getObjectProperty(option);
 		if (this.haveOption == null) {
 			this.haveOption = ontology.createObjectProperty(option);

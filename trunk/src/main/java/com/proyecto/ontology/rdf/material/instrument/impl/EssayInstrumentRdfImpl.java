@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.EssayInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.EssayInstrumentRdf;
 
 /**
@@ -26,15 +27,15 @@ public class EssayInstrumentRdfImpl extends SimpleInstrumentRdfImpl<EssayInstrum
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String essayInstrumentClassName = this.namespace + EssayInstrument.class.getSimpleName();
+		String essayInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_SIMPLE_ESSAY;
 		this.essayInstrumentClass = ontology.getOntClass(essayInstrumentClassName);
 		if (this.essayInstrumentClass == null) {
 			this.essayInstrumentClass = ontology.createClass(essayInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.essayInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.essayInstrumentClass);
 
 		return this.essayInstrumentClass;
 	}

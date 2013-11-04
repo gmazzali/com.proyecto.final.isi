@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.option.Distractor;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.option.DistractorRdf;
 
 /**
@@ -26,15 +27,15 @@ public class DistractorRdfImpl extends OptionRdfImpl<Distractor> implements Dist
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String distractorOptionClassName = this.namespace + Distractor.class.getSimpleName();
+		String distractorOptionClassName = this.namespace + OntologyConstants.ClassName.OPTION_DISTRACTOR;
 		this.distractorOptionClass = ontology.getOntClass(distractorOptionClassName);
 		if (this.distractorOptionClass == null) {
 			this.distractorOptionClass = ontology.createClass(distractorOptionClassName);
-
-			// Cargamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.distractorOptionClass);
 		}
+
+		// Cargamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.distractorOptionClass);
 
 		return this.distractorOptionClass;
 	}

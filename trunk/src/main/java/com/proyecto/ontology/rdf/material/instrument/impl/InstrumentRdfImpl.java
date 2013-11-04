@@ -12,9 +12,9 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.Instrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.MaterialRdfImpl;
 import com.proyecto.ontology.rdf.material.instrument.InstrumentRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los instrumentos dentro de la ontología.
@@ -42,14 +42,14 @@ public class InstrumentRdfImpl<I extends Instrument> extends MaterialRdfImpl<I> 
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String instrumentClassName = this.namespace + Instrument.class.getSimpleName();
+		String instrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT;
 		this.instrumentClass = ontology.getOntClass(instrumentClassName);
 		if (this.instrumentClass == null) {
 			this.instrumentClass = ontology.createClass(instrumentClassName);
 		}
 
 		// Creamos las relaciones.
-		String description = this.namespace + Constants.Ontology.PROPERTY_INSTRUMENT_HAVE_DESCRIPTION;
+		String description = this.namespace + OntologyConstants.PropertyName.INSTRUMENT_HAS_DESCRIPTION;
 		this.haveDescription = ontology.getDatatypeProperty(description);
 		if (this.haveDescription == null) {
 			this.haveDescription = ontology.createDatatypeProperty(description);

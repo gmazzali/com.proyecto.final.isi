@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.PortfolioInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.PortfolioInstrumentRdf;
 
 /**
@@ -26,15 +27,15 @@ public class PortfolioInstrumentRdfImpl extends CompositeInstrumentRdfImpl<Portf
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String portfolioInstrumentClassName = this.namespace + PortfolioInstrument.class.getSimpleName();
+		String portfolioInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_COMPOSITE_PORTFOLIO;
 		this.portfolioInstrumentClass = ontology.getOntClass(portfolioInstrumentClassName);
 		if (this.portfolioInstrumentClass == null) {
 			this.portfolioInstrumentClass = ontology.createClass(portfolioInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.portfolioInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.portfolioInstrumentClass);
 
 		return this.portfolioInstrumentClass;
 	}

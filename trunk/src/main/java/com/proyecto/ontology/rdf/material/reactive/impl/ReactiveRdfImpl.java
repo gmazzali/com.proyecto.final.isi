@@ -15,10 +15,10 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.reactive.Reactive;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.factory.material.instrument.InstrumentFactoryRdf;
 import com.proyecto.ontology.rdf.material.MaterialRdfImpl;
 import com.proyecto.ontology.rdf.material.reactive.ReactiveRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los reactivos dentro de una ontología.
@@ -50,20 +50,20 @@ public class ReactiveRdfImpl extends MaterialRdfImpl<Reactive> implements Reacti
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String reactiveClassName = this.namespace + Reactive.class.getSimpleName();
+		String reactiveClassName = this.namespace + OntologyConstants.ClassName.REACTIVE;
 		this.reactiveClass = ontology.getOntClass(reactiveClassName);
 		if (this.reactiveClass == null) {
 			this.reactiveClass = ontology.createClass(reactiveClassName);
 		}
 
 		// Creamos las relaciones.
-		String description = this.namespace + Constants.Ontology.PROPERTY_REACTIVE_HAVE_DESCRIPTION;
+		String description = this.namespace + OntologyConstants.PropertyName.REACTIVE_HAS_DESCRIPTION;
 		this.haveDescription = ontology.getDatatypeProperty(description);
 		if (this.haveDescription == null) {
 			this.haveDescription = ontology.createDatatypeProperty(description);
 		}
 
-		String instrument = this.namespace + Constants.Ontology.PROPERTY_REACTIVE_HAVE_INSTRUMENT;
+		String instrument = this.namespace + OntologyConstants.PropertyName.REACTIVE_HAS_INSTRUMENT;
 		this.haveInstrument = ontology.getObjectProperty(instrument);
 		if (this.haveInstrument == null) {
 			this.haveInstrument = ontology.createObjectProperty(instrument);

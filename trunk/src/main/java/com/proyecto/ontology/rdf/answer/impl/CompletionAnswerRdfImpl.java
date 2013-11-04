@@ -12,8 +12,8 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.answer.CompletionAnswer;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.answer.CompletionAnswerRdf;
-import com.proyecto.util.Constants;
 
 /**
  * La clase que implementa la interfaz que define comportamiento de las respuestas para completar dentro de la ontología.
@@ -39,24 +39,24 @@ public class CompletionAnswerRdfImpl extends AnswerRdfImpl<CompletionAnswer> imp
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase solo si es nula.
-		String completionAnswerClassName = this.namespace + CompletionAnswer.class.getSimpleName();
+		String completionAnswerClassName = this.namespace + OntologyConstants.ClassName.ANSWER_COMPLETE;
 		this.completionAnswerClass = ontology.getOntClass(completionAnswerClassName);
 		if (this.completionAnswerClass == null) {
 			this.completionAnswerClass = ontology.createClass(completionAnswerClassName);
-
-			// Cargamos el padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.completionAnswerClass);
 		}
 
+		// Cargamos el padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.completionAnswerClass);
+
 		// Creamos las relaciones si son nulas.
-		String index = this.namespace + Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_INDEX;
+		String index = this.namespace + OntologyConstants.PropertyName.ANSWER_COMPLETE_HAS_INDEX;
 		this.haveIndex = ontology.getDatatypeProperty(index);
 		if (this.haveIndex == null) {
 			this.haveIndex = ontology.createDatatypeProperty(index);
 		}
 
-		String phrase = this.namespace + Constants.Ontology.PROPERTY_ANSWER_COMPLETE_HAVE_PHRASE;
+		String phrase = this.namespace + OntologyConstants.PropertyName.ANSWER_COMPLETE_HAS_PHRASE;
 		this.havePhrase = ontology.getDatatypeProperty(phrase);
 		if (this.havePhrase == null) {
 			this.havePhrase = ontology.createDatatypeProperty(phrase);

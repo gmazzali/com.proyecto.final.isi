@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.RestrictedEssayActivityInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.RestrictedEssayActivityInstrumentRdf;
 
 /**
@@ -27,15 +28,15 @@ public class RestrictedEssayActivityInstrumentRdfImpl extends EssayActivityInstr
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String restrictedEssayActivityInstrumentClassName = this.namespace + RestrictedEssayActivityInstrument.class.getSimpleName();
+		String restrictedEssayActivityInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_FORMAL_ESSAY_RESTRICTED;
 		this.restrictedEssayActivityInstrumentClass = ontology.getOntClass(restrictedEssayActivityInstrumentClassName);
 		if (this.restrictedEssayActivityInstrumentClass == null) {
 			this.restrictedEssayActivityInstrumentClass = ontology.createClass(restrictedEssayActivityInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.restrictedEssayActivityInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.restrictedEssayActivityInstrumentClass);
 
 		return this.restrictedEssayActivityInstrumentClass;
 	}

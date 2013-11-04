@@ -4,6 +4,7 @@ import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.model.material.instrument.FormalInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.FormalInstrumentRdf;
 
 /**
@@ -27,15 +28,15 @@ public abstract class FormalInstrumentRdfImpl<I extends FormalInstrument> extend
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String formalInstrumentClassName = this.namespace + FormalInstrument.class.getSimpleName();
+		String formalInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_FORMAL;
 		this.formalInstrumentClass = ontology.getOntClass(formalInstrumentClassName);
 		if (this.formalInstrumentClass == null) {
 			this.formalInstrumentClass = ontology.createClass(formalInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.formalInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.formalInstrumentClass);
 
 		return this.formalInstrumentClass;
 	}

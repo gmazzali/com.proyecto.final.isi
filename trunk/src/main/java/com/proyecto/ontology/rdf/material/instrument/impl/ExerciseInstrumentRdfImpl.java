@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.instrument.ExerciseInstrument;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.rdf.material.instrument.ExerciseInstrumentRdf;
 
 /**
@@ -26,15 +27,15 @@ public class ExerciseInstrumentRdfImpl extends SimpleInstrumentRdfImpl<ExerciseI
 	@Override
 	public OntClass initClass(OntModel ontology) {
 		// Creamos la clase si es nula.
-		String exerciseInstrumentClassName = this.namespace + ExerciseInstrument.class.getSimpleName();
+		String exerciseInstrumentClassName = this.namespace + OntologyConstants.ClassName.INSTRUMENT_SEMIFORMAL_SIMPLE_EXERCISE;
 		this.exerciseInstrumentClass = ontology.getOntClass(exerciseInstrumentClassName);
 		if (this.exerciseInstrumentClass == null) {
 			this.exerciseInstrumentClass = ontology.createClass(exerciseInstrumentClassName);
-
-			// Creamos la clase padre.
-			OntClass superClass = super.initClass(ontology);
-			superClass.addSubClass(this.exerciseInstrumentClass);
 		}
+
+		// Creamos la clase padre.
+		OntClass superClass = super.initClass(ontology);
+		superClass.addSubClass(this.exerciseInstrumentClass);
 
 		return this.exerciseInstrumentClass;
 	}
