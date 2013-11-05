@@ -152,6 +152,15 @@ public class OntologyConstants {
 	}
 
 	/**
+	 * El namespace de la ontología. Por omisión esta es "http://www.assessments.com/#"
+	 */
+	public static String NAMESPACE = HolderMessage.getMessage("ontology.namespace");
+	/**
+	 * EL prefijo del namespace de la ontología. Por omisión esta es "ns"
+	 */
+	public static String NAMESPACE_PREFIX = HolderMessage.getMessage("ontology.namespace.prefix");
+	
+	/**
 	 * El conjunto de las propiedades propias de la ontología.
 	 */
 	public static List<String> ONTOLOGY_PROPERTIES;

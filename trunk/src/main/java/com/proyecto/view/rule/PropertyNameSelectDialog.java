@@ -29,12 +29,6 @@ public class PropertyNameSelectDialog extends JDialog {
 	private static final long serialVersionUID = -2312760597467093929L;
 
 	/**
-	 * El nombre de la ontología.
-	 */
-	@Value("${ontology.namespace}")
-	private String namespace;
-
-	/**
 	 * La lista de los nombre de las clases.
 	 */
 	private JList<String> classNameJList;
@@ -155,7 +149,7 @@ public class PropertyNameSelectDialog extends JDialog {
 	 * @return El nombre de la propiedad seleccionada.
 	 */
 	public String getPropertySelected() {
-		return this.propertySelected != null ? this.namespace + this.propertySelected : null;
+		return this.propertySelected != null ? OntologyConstants.NAMESPACE + this.propertySelected : null;
 	}
 
 	/**
