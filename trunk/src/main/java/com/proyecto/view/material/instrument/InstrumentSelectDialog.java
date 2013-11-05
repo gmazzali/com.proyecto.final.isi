@@ -322,7 +322,9 @@ public class InstrumentSelectDialog extends JDialog {
 		this.setTitle(HolderMessage.getMessage("instrument.select.title"));
 
 		// Seteamos el tipo de instrumento que podemos crear dentro de esta ventana.
+		this.instrument = null;
 		this.instrumentTypes = instrumentTypes;
+		this.instrumentClass = null;
 		this.updateLevelOneComboBox();
 
 		return this;
