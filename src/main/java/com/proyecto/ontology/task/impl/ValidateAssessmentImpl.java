@@ -24,6 +24,7 @@ import com.proyecto.annotation.RdfService;
 import com.proyecto.model.material.assessment.Assessment;
 import com.proyecto.model.rule.Rule;
 import com.proyecto.model.rule.RuleSet;
+import com.proyecto.ontology.OntologyConstants;
 import com.proyecto.ontology.factory.material.assessment.AssessmentFactoryRdf;
 import com.proyecto.ontology.task.ValidateAssessment;
 import com.proyecto.service.rule.RuleService;
@@ -50,16 +51,6 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 	 */
 	@Value("${ontology.print.mode}")
 	private String printMode;
-	/**
-	 * El nombre de la ontología.
-	 */
-	@Value("${ontology.namespace}")
-	private String namespace;
-	/**
-	 * El prefijo del nombre de la ontología.
-	 */
-	@Value("${ontology.namespace.prefix}")
-	private String namespacePrefix;
 	/**
 	 * El valor de debug para el razonador.
 	 */
@@ -120,7 +111,7 @@ public class ValidateAssessmentImpl implements ValidateAssessment {
 
 			// Creamos la ontología y la cargamos con la evaluación.
 			OntModel ontology = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM_RULE_INF);
-			ontology.setNsPrefix(this.namespacePrefix, this.namespace);
+			ontology.setNsPrefix(OntologyConstants.NAMESPACE_PREFIX, OntologyConstants.NAMESPACE);
 			ontology.removeAll();
 
 			ValidateAssessmentImpl.this.assessmentFactoryRdf.loadEntityToOntology(ontology, ValidateAssessmentImpl.this.assessment);

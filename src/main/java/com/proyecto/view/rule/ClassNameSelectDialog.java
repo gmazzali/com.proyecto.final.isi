@@ -27,12 +27,6 @@ public class ClassNameSelectDialog extends JDialog {
 	private static final long serialVersionUID = -3600502749588025504L;
 
 	/**
-	 * El nombre de la ontología.
-	 */
-	@Value("${ontology.namespace}")
-	private String namespace;
-
-	/**
 	 * La lista que va a desplegar los nombres de las clases.
 	 */
 	private JList<String> classNameJList;
@@ -112,7 +106,7 @@ public class ClassNameSelectDialog extends JDialog {
 	 * @return El nombre de la clase seleccionada.
 	 */
 	public String getClassSelected() {
-		return this.classSelected != null ? this.namespace + this.classSelected : null;
+		return this.classSelected != null ? OntologyConstants.NAMESPACE + this.classSelected : null;
 	}
 
 	/**

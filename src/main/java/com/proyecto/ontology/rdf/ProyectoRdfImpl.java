@@ -1,11 +1,10 @@
 package com.proyecto.ontology.rdf;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import com.common.util.model.Persistence;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.proyecto.ontology.OntologyConstants;
 
 /**
  * La clase que implementa la interfaz que define el comportamiento de los componentes dentro de la ontología.
@@ -22,10 +21,10 @@ public abstract class ProyectoRdfImpl<E extends Persistence<?>> implements Proye
 
 	/**
 	 * El nombre de la ontología.
+	 * 
+	 * @see OntologyConstants#NAMESPACE
 	 */
-	@Value("${ontology.namespace}")
-	protected String namespace;
-	
+	protected String namespace = OntologyConstants.NAMESPACE;
 
 	@Override
 	public Individual createIndividual(OntModel ontology, E entity) {
