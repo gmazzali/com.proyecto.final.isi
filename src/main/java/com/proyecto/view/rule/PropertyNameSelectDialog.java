@@ -11,8 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import com.common.util.annotations.View;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.ontology.OntologyConstants;

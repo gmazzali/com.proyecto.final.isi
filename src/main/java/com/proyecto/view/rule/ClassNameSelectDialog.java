@@ -9,8 +9,6 @@ import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import com.common.util.annotations.View;
 import com.common.util.holder.HolderMessage;
 import com.proyecto.ontology.OntologyConstants;
