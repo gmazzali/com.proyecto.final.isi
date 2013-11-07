@@ -7,7 +7,7 @@
 
 	<properties>
 		<jdk.version>1.7</jdk.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
 		<junit-version>4.11</junit-version>
 		<pellet-version>2.3.2</pellet-version>
 		<jena-version>2.6.4</jena-version>
@@ -38,11 +38,39 @@
 					<target>${jdk.version}</target>
 					<archive>
 						<manifest>
+							<mainClass>com.proyecto.view.login.LoginDialog</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.proyecto.view.login.LoginDialog</mainClass>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
