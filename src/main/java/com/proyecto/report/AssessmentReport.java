@@ -14,6 +14,11 @@ import com.proyecto.model.material.assessment.Assessment;
 public interface AssessmentReport extends Serializable {
 
 	/**
+	 * La extensión del archivo de reporte.
+	 */
+	public static final String EXTENSION = ".pdf";
+
+	/**
 	 * La función encargada de crear el reporte y guardarlo dentro de un archivo dentro del sistema.
 	 * 
 	 * @param path

@@ -95,7 +95,7 @@ public class AssessmentReportImpl implements AssessmentReport {
 		this.assessmentPDF = new Document(PageSize.A4);
 		this.contActivity = 1;
 
-		File file = new File(path + ".pdf");
+		File file = new File(path + AssessmentReport.EXTENSION);
 		try {
 			// Donde se va a guardar el PDF y la apertura del mismo.
 			PdfWriter.getInstance(this.assessmentPDF, new FileOutputStream(file));

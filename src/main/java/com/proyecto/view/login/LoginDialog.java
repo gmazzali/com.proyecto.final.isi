@@ -78,11 +78,13 @@ public class LoginDialog extends JDialog {
 	private void init() {
 		this.setModal(true);
 		this.setResizable(false);
+		this.setFont(new Font("Arial", Font.PLAIN, 12));
 		this.setTitle(HolderMessage.getMessage("login.form.title"));
-		this.setBounds(100, 100, 349, 196);
+		this.setBounds(100, 100, 349, 217);
 		this.getContentPane().setLayout(new BorderLayout());
 
 		JPanel contentPanel = new JPanel();
+		contentPanel.setFont(this.getFont());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -94,7 +96,8 @@ public class LoginDialog extends JDialog {
 		contentPanel.add(userNameLabel);
 
 		this.userNameTextField = new JTextField();
-		this.userNameTextField.setBounds(10, 34, 324, 25);
+		this.userNameTextField.setBounds(10, 34, 324, 35);
+		this.userNameTextField.setFont(this.getFont());
 		this.userNameTextField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -106,11 +109,12 @@ public class LoginDialog extends JDialog {
 		JLabel userPassLabel = new JLabel(HolderMessage.getMessage("login.form.label.password"));
 		userPassLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		userPassLabel.setFont(new Font("Arial", Font.BOLD, 11));
-		userPassLabel.setBounds(10, 70, 324, 16);
+		userPassLabel.setBounds(10, 80, 324, 16);
 		contentPanel.add(userPassLabel);
 
 		this.userPassField = new JPasswordField();
-		this.userPassField.setBounds(10, 88, 324, 25);
+		this.userPassField.setBounds(10, 98, 324, 35);
+		this.userPassField.setFont(this.getFont());
 		this.userPassField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -120,7 +124,7 @@ public class LoginDialog extends JDialog {
 		contentPanel.add(this.userPassField);
 
 		JButton commitButton = new JButton(Resources.COMMIT_ICON);
-		commitButton.setBounds(255, 124, 35, 35);
+		commitButton.setBounds(254, 145, 35, 35);
 		commitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -131,7 +135,7 @@ public class LoginDialog extends JDialog {
 		this.getRootPane().setDefaultButton(commitButton);
 
 		JButton rejectButton = new JButton(Resources.CLOSE_ICON);
-		rejectButton.setBounds(300, 124, 35, 35);
+		rejectButton.setBounds(299, 145, 35, 35);
 		rejectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
