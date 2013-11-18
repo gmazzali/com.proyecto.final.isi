@@ -698,7 +698,7 @@ public class MainWindowFrame extends JFrame {
 							MainWindowFrame.this.beforeExecuteProccess(MainWindowFrame.this.assessmentProgressLabel, false);
 
 							// Obtenemos el path de ubicación.
-							String path = MainWindowFrame.this.assessmentReportFileChosser.getSelectedFile().getAbsolutePath() + ".pdf";
+							String path = MainWindowFrame.this.assessmentReportFileChosser.getSelectedFile().getAbsolutePath();
 
 							// Creamos el reporte.
 							File report = MainWindowFrame.this.assessmentReport.createAssessmentReport(path, assessment);
@@ -791,6 +791,7 @@ public class MainWindowFrame extends JFrame {
 		this.updateAgentData();
 		this.updateAssessmentList();
 		this.updateRuleSetList();
+		this.clearResults();
 
 		return this;
 	}

@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>proyecto-final</groupId>
 	<artifactId>aonet-ontology</artifactId>
@@ -73,31 +72,29 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.1</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-									<resource>META-INF/spring.handlers</resource>
-								</transformer>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-									<resource>META-INF/spring.schemas</resource>
-								</transformer>
-							</transformers>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-shade-plugin</artifactId> -->
+			<!-- <version>2.1</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <phase>package</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>shade</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <transformers> -->
+			<!-- <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer"> -->
+			<!-- <resource>META-INF/spring.handlers</resource> -->
+			<!-- </transformer> -->
+			<!-- <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer"> -->
+			<!-- <resource>META-INF/spring.schemas</resource> -->
+			<!-- </transformer> -->
+			<!-- </transformers> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
 
@@ -143,107 +140,13 @@
 			<version>${jena-version}</version>
 		</dependency>
 
-		<!-- Las dependencias de PELLET -->
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-core</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-common</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-jena</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-datatypes</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-modularity</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-explanation</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-el</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-pellint</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-rules</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-owlapiv3</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-cli</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.ansell.pellet</groupId>
-			<artifactId>pellet-query</artifactId>
-			<version>${pellet-version}</version>
-		</dependency>
-
-		<!-- LAs dependencias de los TEST -->
+		<!-- Las dependencias de los TEST -->
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit-version}</version>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- Las dependencias de PROTEGE -->
-
-		<dependency>
-			<groupId>org.protege</groupId>
-			<artifactId>protege-editor-owl</artifactId>
-			<version>${protege-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.protege</groupId>
-			<artifactId>protege-editor-core-application</artifactId>
-			<version>${protege-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.sourceforge.owlapi</groupId>
-			<artifactId>owlapi-distribution</artifactId>
-			<version>3.4.2</version>
 		</dependency>
 
 	</dependencies>
