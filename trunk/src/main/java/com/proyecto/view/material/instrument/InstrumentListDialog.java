@@ -364,6 +364,9 @@ public class InstrumentListDialog extends BaseListDialog<Instrument> {
 		// No seleccionamos nada en el combo y lo habilitamos.
 		this.levelOneComboBox.setSelectedIndex(-1);
 		this.levelOneComboBox.setEnabled(true);
+
+		// TODO Llamada para que se actualice el contenido de la ventana.
+		this.setEnabled(true);
 	}
 
 	/**
