@@ -1,0 +1,7 @@
+# Introducción #
+
+El presente sistema es parte de un proyecto final de carrera para ingenieria en sistemas de información de la Universidad Tecnológica Nacional facultad Santa Fe.
+
+## Detalle ##
+
+Presenta un sistema donde se administran evaluaciones. Estas son evaluadas mediante un conjunto de reglas que son aplicadas a una ontologia creada mediante esta evaluación para informar al usuario sobre el estado en el que se encuentra dicha evaluación.
