@@ -1,0 +1,141 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ns="http://www.assessments.com/#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" > 
+  <rdf:Description rdf:about="http://www.assessments.com/#Option">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#optionHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueFalseAnwer">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Answer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#reactiveHasInstrument">
+    <rdfs:range rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Reactive"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Reactive_1">
+    <ns:reactiveHasInstrument rdf:resource="http://www.assessments.com/#SingleChoiceInstrument_1"/>
+    <ns:reactiveHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactivo 1</ns:reactiveHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#Reactive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Activity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#SingleChoiceInstrument_1">
+    <ns:choiceInstrumentHasOption rdf:nodeID="A0"/>
+    <ns:instrumentHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Seleccion simple 1</ns:instrumentHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#SingleChoiceInstrument"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#assessmentHasActivities">
+    <rdfs:range rdf:resource="http://www.assessments.com/#Activity"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Assessment"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#FormalInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Instrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Activity_1">
+    <ns:activityHasReactives rdf:nodeID="A1"/>
+    <ns:activityHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Actividad 1</ns:activityHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#Activity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Assessment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#SingleChoiceInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Answer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#assessmentHasMoment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A1">
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    <rdf:first rdf:resource="http://www.assessments.com/#Reactive_1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#truefalseAnswerHasValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueOption">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Reactive">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueFalseAnwer_3">
+    <ns:truefalseAnswerHasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</ns:truefalseAnswerHasValue>
+    <rdf:type rdf:resource="http://www.assessments.com/#TrueFalseAnwer"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A2">
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    <rdf:first rdf:resource="http://www.assessments.com/#Activity_1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#optionHasAnswer">
+    <rdfs:range rdf:resource="http://www.assessments.com/#TrueFalseAnwer"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Option"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#activityHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#TrueOption_3">
+    <ns:optionHasAnswer rdf:resource="http://www.assessments.com/#TrueFalseAnwer_3"/>
+    <ns:optionHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Todas las anteriores</ns:optionHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#TrueOption"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#ChoiceInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#ObjectiveInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#assessmentHasDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#instrumentHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#reactiveHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Instrument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#activityHasReactives">
+    <rdfs:range rdf:resource="http://www.assessments.com/#Reactive"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#Activity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A0">
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    <rdf:first rdf:resource="http://www.assessments.com/#TrueOption_3"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#choiceInstrumentHasOption">
+    <rdfs:range rdf:resource="http://www.assessments.com/#Option"/>
+    <rdfs:domain rdf:resource="http://www.assessments.com/#ChoiceInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#assessmentHasDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#ObjectiveInstrument">
+    <rdfs:subClassOf rdf:resource="http://www.assessments.com/#FormalInstrument"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.assessments.com/#Assessment_1">
+    <ns:assessmentHasActivities rdf:nodeID="A2"/>
+    <ns:assessmentHasMoment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Diagnóstica</ns:assessmentHasMoment>
+    <ns:assessmentHasDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2013-09-25 00:00:00.0</ns:assessmentHasDate>
+    <ns:assessmentHasDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pepito 1</ns:assessmentHasDescription>
+    <rdf:type rdf:resource="http://www.assessments.com/#Assessment"/>
+  </rdf:Description>
+</rdf:RDF>
