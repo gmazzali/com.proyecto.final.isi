@@ -7,7 +7,7 @@
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
-		<junit-version>4.11</junit-version>
+		<junit-version>4.13.1</junit-version>
 		<pellet-version>2.3.2</pellet-version>
 		<jena-version>2.6.4</jena-version>
 		<protege-version>4.1.0</protege-version>
